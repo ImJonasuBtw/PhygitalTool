@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalTool\\PygitalTool.csproj",
+      "projectUniqueName": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalTool\\PygitalTool.csproj",
       "projectName": "PygitalTool",
-      "projectPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalTool\\PygitalTool.csproj",
+      "projectPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalTool\\PygitalTool.csproj",
       "packagesPath": "C:\\Users\\Jonas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalTool\\obj\\",
+      "outputPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalTool\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\PygitalToolWeb.csproj": {}
+    "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\PygitalToolWeb.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\PygitalToolWeb.csproj": {
+    "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\PygitalToolWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\PygitalToolWeb.csproj",
+        "projectUniqueName": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\PygitalToolWeb.csproj",
         "projectName": "PygitalToolWeb",
-        "projectPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\PygitalToolWeb.csproj",
+        "projectPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\PygitalToolWeb.csproj",
         "packagesPath": "C:\\Users\\Jonas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\obj\\",
+        "outputPath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

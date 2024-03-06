@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v6221j8iatFDrAtZHkcpR+/Wmm+VBxeJLA/cEfsCa8vwj8Tfvz6Mh8WNkUcIh0/QWpaKaPJqMuJpMJzRgTugJQ==",
+  "dgSpecHash": "M8W5uGczqeY822svuQD68wNnyQWPFojo+uWzHnc5I1HH1JcOqau9Bxzy+Q1j0A7botj0kyder8Knp/IPWcNr+Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\PygitalTool\\PygitalToolWeb\\PygitalToolWeb.csproj",
+  "projectFilePath": "C:\\Users\\Jonas\\Documents\\TI_2\\.NET\\dotnet\\PygitalToolWeb\\PygitalToolWeb.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
