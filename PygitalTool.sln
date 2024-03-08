@@ -1,8 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PygitalTool", "PygitalTool\PygitalTool.csproj", "{0F6654E5-DB1B-46A5-A978-6727E56AC833}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{0F6654E5-DB1B-46A5-A978-6727E56AC833}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PygitalToolWeb", "PygitalToolWeb\PygitalToolWeb.csproj", "{51443D62-30E7-40FB-89E8-FF1B52CC3B2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{722CDC41-F1FC-41D7-8AC7-1F432FB0A3CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{E3F955C6-28E1-491F-B42C-DF8BFB228B64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{51443D62-30E7-40FB-89E8-FF1B52CC3B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51443D62-30E7-40FB-89E8-FF1B52CC3B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51443D62-30E7-40FB-89E8-FF1B52CC3B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{722CDC41-F1FC-41D7-8AC7-1F432FB0A3CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722CDC41-F1FC-41D7-8AC7-1F432FB0A3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722CDC41-F1FC-41D7-8AC7-1F432FB0A3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722CDC41-F1FC-41D7-8AC7-1F432FB0A3CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3F955C6-28E1-491F-B42C-DF8BFB228B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3F955C6-28E1-491F-B42C-DF8BFB228B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3F955C6-28E1-491F-B42C-DF8BFB228B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3F955C6-28E1-491F-B42C-DF8BFB228B64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
