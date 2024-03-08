@@ -12,6 +12,7 @@
 # Ignore PygitalTool and PygitaltoolWev obj folders
 PygitalTool/obj/
 PygitaltoolWev/obj/
+wwwroot/dist/
 
 # User-specific files
 *.suo
