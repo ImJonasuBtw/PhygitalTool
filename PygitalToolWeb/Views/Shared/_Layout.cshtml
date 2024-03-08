@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - PygitalToolWeb</title>
     <script src="~/dist/site.entry.js" defer></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <link rel="stylesheet" href="~/dist/site.css">
 </head>
 <body>
 <header>
@@ -23,6 +25,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -39,6 +44,5 @@
         &copy; 2024 - PygitalToolWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
-@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
