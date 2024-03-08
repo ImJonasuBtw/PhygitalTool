@@ -7,7 +7,7 @@ namespace DAL.EF;
 
 public class PhygitalToolDbContext : DbContext
 {
-    private DbSet<Question> Questions { get; set; }
+    public DbSet<Question> Questions { get; set; }
     
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
@@ -18,7 +18,7 @@ public class PhygitalToolDbContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=database_name;Username=postgres;Password=Student_1234;");
 
         }
 
@@ -28,6 +28,7 @@ public class PhygitalToolDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+       // modelBuilder.Entity<Question>().ToTable("Questions");
     }
     
     public bool CreateDataBase(bool dropDatabase)
