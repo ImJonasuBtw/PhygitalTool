@@ -12,9 +12,20 @@
 
 
 
+
+
+
+
+
+
+
+
     <ItemGroup>
-      <Folder Include="BL\" />
-      <Folder Include="DAL\" />
+      <Compile Remove="Domain\Flow\Condition.cs" />
+      <Compile Remove="Domain\Platform\BackOffice.cs" />
+      <Compile Remove="Domain\Projects\Export.cs" />
+      <Compile Remove="Domain\Flow\Answer.cs" />
+      <Compile Remove="Domain\Flow\UserInput.cs" />
     </ItemGroup>
 
 </Project>

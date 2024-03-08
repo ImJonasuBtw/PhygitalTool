@@ -1,6 +1,6 @@
 namespace PygitalTool.Domain.Util;
 
-public enum Lanuage
+public enum Language
 {
     English, Dutch
 }
