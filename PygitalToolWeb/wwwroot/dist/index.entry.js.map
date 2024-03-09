@@ -1,1 +1,1 @@
-{"version":3,"file":"index.entry.js","mappings":";;;;;;AAAa;AACb;AACA","sources":["webpack://phygital-tool-web/./src/js/index.ts"],"sourcesContent":["\"use strict\";\nconsole.log('The \\'index\\' bundle has been loaded!');\nconsole.log('test test jonas is een daggoe');\n"],"names":[],"sourceRoot":""}
+{"version":3,"file":"index.entry.js","mappings":";;;;;;AAAa;AACb","sources":["webpack://phygital-tool-web/./src/js/index.ts"],"sourcesContent":["\"use strict\";\nconsole.log('The \\'index\\' bundle has been loaded!');\n"],"names":[],"sourceRoot":""}
