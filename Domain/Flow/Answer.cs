@@ -1,4 +1,4 @@
-namespace Domain.Domain.Flow;
+namespace Domain.Flow;
 
 public class Answer
 {

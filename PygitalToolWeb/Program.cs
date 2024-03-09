@@ -1,9 +1,32 @@
+using DAL.EF;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+var connectionString = builder.Configuration.GetConnectionString("PhygitalDbContextConnection") ??
+                       throw new InvalidOperationException(
+                           "Connection string 'PhygitalDbContextConnection' not found.");
+
+builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
+    optionsBuilder.UseNpgsql(connectionString));
+
+
 var app = builder.Build();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    PhygitalToolDbContext ctx = scope.ServiceProvider.GetRequiredService<PhygitalToolDbContext>();
+    bool isDatabaseCreated = ctx.CreateDataBase(true);
+
+    if (isDatabaseCreated)
+    {
+        Console.Write("Data Seeded");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
