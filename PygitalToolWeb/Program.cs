@@ -1,17 +1,21 @@
+using BL;
+using DAL;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
 var connectionString = builder.Configuration.GetConnectionString("PhygitalDbContextConnection") ??
                        throw new InvalidOperationException(
                            "Connection string 'PhygitalDbContextConnection' not found.");
 
 builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString));
+builder.Services.AddScoped<IRepositoryRetrieval, RetrievalRepository>();
+builder.Services.AddScoped<IRepositoryPersistance, PersistanceRepository>();
+builder.Services.AddScoped<IFlowManager, FlowManger>();
+builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
