@@ -11,7 +11,7 @@ public class Question
     public QuestionType QuestionType { get;  set; }
     
     //nav
-    public ICollection<AnswerPossibility> AnswerPossibilities { get;  set; }
+    public ICollection<AnswerPossibility> AnswerPossibilities { get;  set; } = new List<AnswerPossibility>();
     public Domain.Flow.Flow Flow { get;  set; }
 
     public Question()
