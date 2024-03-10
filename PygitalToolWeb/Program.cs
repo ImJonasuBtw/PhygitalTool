@@ -24,6 +24,7 @@ using (var scope = app.Services.CreateScope())
 
     if (isDatabaseCreated)
     {
+        DataSeeder.Seed(ctx);
         Console.Write("Data Seeded");
     }
 }
