@@ -12,4 +12,16 @@ public class Flow
     
     //nav
     public ICollection<Question> Questions { get;  set; }
+
+    public Flow()
+    {
+        Questions = new List<Question>();
+    }
+
+    public Flow(int flowId, FlowType flowType, Language language)
+    {
+        FlowId = flowId;
+        FlowType = flowType;
+        Language = language;
+    }
 }

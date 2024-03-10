@@ -10,4 +10,10 @@ public class AnswerPossibility
     
     //Nav
     public Question Question { get; set; }
+
+    public AnswerPossibility(int answerPossibilityId, string description)
+    {
+        AnswerPossibilityId = answerPossibilityId;
+        Description = description;
+    }
 }
