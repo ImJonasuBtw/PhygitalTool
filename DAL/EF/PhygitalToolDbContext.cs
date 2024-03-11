@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Domain.Domain.Flow;
 using Domain.Flow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -8,6 +9,7 @@ namespace DAL.EF;
 public class PhygitalToolDbContext : DbContext
 {
     public DbSet<Question> Questions { get; set; }
+    public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }
     
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {

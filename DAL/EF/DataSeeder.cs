@@ -25,7 +25,7 @@ public class DataSeeder
         var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang");
         var answerPossibility4 = new AnswerPossibility(4, "huisvesting");
         var answerPossibility5 = new AnswerPossibility(5, "gezondheidszorg & welzijn");
-        var answerPossibility6 = new AnswerPossibility(5, "Ondersteunen van lokale handel");
+        var answerPossibility6 = new AnswerPossibility(6, "Ondersteunen van lokale handel");
             
         //linking questions to Answerpossibilities (except for open)
             //single choice
@@ -35,8 +35,18 @@ public class DataSeeder
             singleChoice1.AnswerPossibilities.Add(answerPossibility4);
             singleChoice1.AnswerPossibilities.Add(answerPossibility5);
             singleChoice1.AnswerPossibilities.Add(answerPossibility6);
-            
-            
+        // add object to the context
+        context.Questions.Add(singleChoice1);
+        context.AnswerPossibilities.Add(answerPossibility1);
+        context.AnswerPossibilities.Add(answerPossibility2);
+        context.AnswerPossibilities.Add(answerPossibility3);
+        context.AnswerPossibilities.Add(answerPossibility4);
+        context.AnswerPossibilities.Add(answerPossibility5);
+        context.AnswerPossibilities.Add(answerPossibility6);
+        
+        
+            context.SaveChanges();
+            context.ChangeTracker.Clear();
 
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace DAL.EF;
+﻿using Domain.Flow;
+
+namespace DAL.EF;
 
 public class RetrievalRepository : IRepositoryRetrieval
 {
@@ -7,5 +9,11 @@ public class RetrievalRepository : IRepositoryRetrieval
     public RetrievalRepository(PhygitalToolDbContext context)
     {
         _context = context;
+    }
+
+    public Question readQuestion(int id)
+    {
+        //Return Question of a certain id
+        return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
     }
 }
