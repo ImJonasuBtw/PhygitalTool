@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Domain.Flow;
 
 namespace BL;
 
@@ -11,5 +12,11 @@ public class FlowManger : IFlowManager
     {
         _repositoryPersistance = repositoryPersistance;
         _repositoryRetrieval = repositoryRetrieval;
+    }
+
+    public Question getQuestion(int id)
+    {
+        
+       return  _repositoryRetrieval.readQuestion(id);
     }
 }
