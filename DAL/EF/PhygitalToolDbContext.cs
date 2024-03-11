@@ -10,6 +10,7 @@ public class PhygitalToolDbContext : DbContext
 {
     public DbSet<Question> Questions { get; set; }
     public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }
+    public DbSet<UserInput> UserInputs { get; set; }
     
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
