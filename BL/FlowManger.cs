@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Domain.Domain.Flow;
 using Domain.Flow;
 
 namespace BL;
@@ -14,9 +15,22 @@ public class FlowManger : IFlowManager
         _repositoryRetrieval = repositoryRetrieval;
     }
 
-    public Question getQuestion(int id)
+    
+    public Question GetQuestionWithAnswerPossibilities(int id)
     {
-        
-       return  _repositoryRetrieval.readQuestion(id);
+        return  _repositoryRetrieval.ReadQuestionWithAnswerPossibilities(id);
+    }
+
+    public UserInput AddUserInput(int userId, int flowId, int answerId)
+    {
+        //creates a new Userinput.
+        UserInput userInput = new UserInput(userId, flowId, answerId);
+        _repositoryPersistance.CreateUserInput(userInput);
+        return userInput;
+    }
+
+    public IEnumerable<UserInput> GetAllUserInputs()
+    {
+        return _repositoryRetrieval.ReadAllUserInputs();
     }
 }

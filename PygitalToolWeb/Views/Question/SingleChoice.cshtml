@@ -1,3 +1,4 @@
+
 @model Domain.Flow.Question
 
 @{
@@ -7,5 +8,14 @@
 
 <h2>Test Voor de single Choice</h2>
 
+<body>
 <p>@Model.QuestionText</p>
 <p>Duid één antwoord aan</p>
+
+<form method="post" action="/Question/SaveAnswer">
+@foreach (var answerPossibility in Model.AnswerPossibilities)
+{
+     <button type="submit" name="selectedAnswer" value="@answerPossibility.AnswerPossibilityId">@answerPossibility.Description</button>
+}
+</form>
+</body>

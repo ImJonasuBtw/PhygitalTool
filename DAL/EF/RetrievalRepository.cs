@@ -1,4 +1,6 @@
-﻿using Domain.Flow;
+﻿using Domain.Domain.Flow;
+using Domain.Flow;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF;
 
@@ -10,10 +12,16 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         _context = context;
     }
-
-    public Question readQuestion(int id)
+    
+    public Question ReadQuestionWithAnswerPossibilities(int id)
     {
         //Return Question of a certain id
-        return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.Include(q=>q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
+    }
+
+    public IEnumerable<UserInput> ReadAllUserInputs()
+    {
+        //Return all userInputs
+        return _context.UserInputs;
     }
 }

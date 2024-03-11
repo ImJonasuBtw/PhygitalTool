@@ -1,8 +1,12 @@
-﻿using Domain.Flow;
+﻿using Domain.Domain.Flow;
+using Domain.Flow;
 
 namespace BL;
 
 public interface IFlowManager
 {
-    Question getQuestion(int id);
+    Question GetQuestionWithAnswerPossibilities(int id);
+
+    UserInput AddUserInput(int userId, int flowId, int answerId);
+    IEnumerable<UserInput> GetAllUserInputs();
 }
