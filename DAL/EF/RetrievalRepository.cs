@@ -12,10 +12,16 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         _context = context;
     }
-    
-    public Question ReadQuestionWithAnswerPossibilities(int id)
+
+    public Question ReadQuestion(int id)
     {
         //Return Question of a certain id
+        return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
+    }
+
+    public Question ReadQuestionWithAnswerPossibilities(int id)
+    {
+        //Return Question of a certain id with the answerPossibilities
         return _context.Questions.Include(q=>q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
     }
 
@@ -23,5 +29,11 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         //Return all userInputs
         return _context.UserInputs;
+    }
+
+    public IEnumerable<Answer> ReadAllAnswers()
+    {
+        //Return all Answers
+        return _context.Answers;
     }
 }

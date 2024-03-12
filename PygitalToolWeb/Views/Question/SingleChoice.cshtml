@@ -12,10 +12,10 @@
 <p>@Model.QuestionText</p>
 <p>Duid één antwoord aan</p>
 
-<form method="post" action="/Question/SaveAnswer">
+<form method="post" action="/Question/SaveAnswerAndUserInput">
 @foreach (var answerPossibility in Model.AnswerPossibilities)
 {
-     <button type="submit" name="selectedAnswer" value="@answerPossibility.AnswerPossibilityId">@answerPossibility.Description</button>
+     <button type="submit" name="selectedAnswer" value="@answerPossibility.Description">@answerPossibility.Description</button>
 }
 </form>
 </body>

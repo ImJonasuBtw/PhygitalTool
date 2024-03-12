@@ -15,7 +15,12 @@ public class FlowManger : IFlowManager
         _repositoryRetrieval = repositoryRetrieval;
     }
 
-    
+
+    public Question GetQuestion(int id)
+    {
+        return _repositoryRetrieval.ReadQuestion(id);
+    }
+
     public Question GetQuestionWithAnswerPossibilities(int id)
     {
         return  _repositoryRetrieval.ReadQuestionWithAnswerPossibilities(id);
@@ -32,5 +37,18 @@ public class FlowManger : IFlowManager
     public IEnumerable<UserInput> GetAllUserInputs()
     {
         return _repositoryRetrieval.ReadAllUserInputs();
+    }
+
+    public Answer AddAnswer(int answerId,string answerDes)
+    {
+        //creates a new answer
+        Answer answer = new Answer(answerId, answerDes);
+         _repositoryPersistance.CreateAnswer(answer);
+         return answer;
+    }
+
+    public IEnumerable<Answer> GetAllAnswers()
+    {
+        return _repositoryRetrieval.ReadAllAnswers();
     }
 }
