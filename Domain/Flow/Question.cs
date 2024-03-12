@@ -13,10 +13,12 @@ public class Question
     //nav
     public ICollection<AnswerPossibility> AnswerPossibilities { get;  set; } = new List<AnswerPossibility>();
     public Domain.Flow.Flow Flow { get;  set; }
+    public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
     public Question()
     {
         AnswerPossibilities = new List<AnswerPossibility>();
+        Answers = new List<Answer>();
         Flow = new Domain.Flow.Flow();
     }
 

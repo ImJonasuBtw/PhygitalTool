@@ -11,6 +11,7 @@ public class PhygitalToolDbContext : DbContext
     public DbSet<Question> Questions { get; set; }
     public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }
     public DbSet<UserInput> UserInputs { get; set; }
+    public DbSet<Answer> Answers{ get; set; }
     
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
@@ -31,6 +32,10 @@ public class PhygitalToolDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<Answer>()
+            .HasOne(a => a.AnswerPossibility)
+            .WithOne(ap => ap.Answer)
+            .HasForeignKey<Answer>("AnswerPossibilityID");
        // modelBuilder.Entity<Question>().ToTable("Questions");
     }
     

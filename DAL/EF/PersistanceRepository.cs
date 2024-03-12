@@ -1,4 +1,5 @@
 ﻿using Domain.Domain.Flow;
+using Domain.Flow;
 
 namespace DAL.EF;
 
@@ -16,6 +17,13 @@ public class PersistanceRepository : IRepositoryPersistance
     {
         // saves the new user input
         _context.UserInputs.Add(userInput);
+        _context.SaveChanges();
+    }
+
+    public void CreateAnswer(Answer answer)
+    {
+        //saves te new Answer
+        _context.Answers.Add(answer);
         _context.SaveChanges();
     }
 }
