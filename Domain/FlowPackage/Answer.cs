@@ -1,6 +1,6 @@
 using Domain.Domain.Flow;
 
-namespace Domain.Flow;
+namespace Domain.FlowPackage;
 
 public class Answer
 {

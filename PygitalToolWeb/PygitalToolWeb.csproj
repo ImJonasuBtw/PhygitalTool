@@ -38,6 +38,15 @@
           <ProjectReference Include="..\DAL\DAL.csproj" />
         </ItemGroup>
     
+        <ItemGroup>
+          <Folder Include="Pages\" />
+        </ItemGroup>
+    
+        <ItemGroup>
+          <AdditionalFiles Include="Views\LiniareFlow\FLowView.cshtml" />
+        </ItemGroup>
+    
+    
     
     
     

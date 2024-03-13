@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Domain.Domain.Flow;
-using Domain.Flow;
+using Domain.FlowPackage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -11,19 +11,19 @@ public class PhygitalToolDbContext : DbContext
     public DbSet<Question> Questions { get; set; }
     public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }
     public DbSet<UserInput> UserInputs { get; set; }
-    public DbSet<Answer> Answers{ get; set; }
-    
+    public DbSet<Answer> Answers { get; set; }
+    public DbSet<Flow> Flows { get; set; }
+
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
-        
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=database_name;Username=postgres;Password=Student_1234;");
-
+            optionsBuilder.UseNpgsql(
+                "Host=localhost;Port=5432;Database=database_name;Username=postgres;Password=Student_1234;");
         }
 
         optionsBuilder.LogTo(message => Debug.WriteLine(message), LogLevel.Information);
@@ -36,15 +36,16 @@ public class PhygitalToolDbContext : DbContext
             .HasOne(a => a.AnswerPossibility)
             .WithOne(ap => ap.Answer)
             .HasForeignKey<Answer>("AnswerPossibilityID");
-       // modelBuilder.Entity<Question>().ToTable("Questions");
+        // modelBuilder.Entity<Question>().ToTable("Questions");
     }
-    
+
     public bool CreateDataBase(bool dropDatabase)
     {
         if (dropDatabase)
         {
             Database.EnsureDeleted();
         }
+
         return Database.EnsureCreated();
     }
 }

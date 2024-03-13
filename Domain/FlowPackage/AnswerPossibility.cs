@@ -1,6 +1,4 @@
-using Domain.Flow;
-
-namespace Domain.Domain.Flow;
+namespace Domain.FlowPackage;
 
 public class AnswerPossibility
 {

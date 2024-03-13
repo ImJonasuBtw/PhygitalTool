@@ -1,7 +1,6 @@
 using Domain.Domain.Util;
-using Domain.Flow;
 
-namespace Domain.Domain.Flow;
+namespace Domain.FlowPackage;
 
 public class Flow
 {

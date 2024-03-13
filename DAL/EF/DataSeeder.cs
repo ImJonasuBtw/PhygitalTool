@@ -1,6 +1,6 @@
 ﻿using Domain.Domain.Flow;
 using Domain.Domain.Util;
-using Domain.Flow;
+using Domain.FlowPackage;
 
 namespace DAL.EF;
 
@@ -41,7 +41,10 @@ public static class DataSeeder
         var answerPossibility14 = new AnswerPossibility(14, "Ik weet het nog niet");
         var answerPossibility15 = new AnswerPossibility(15, "Eerder wel");
         var answerPossibility16 = new AnswerPossibility(16, "Zeker wel");
-
+        
+        //creating flow 
+        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch);
+        
         //linking questions to Answerpossibilities (except for open)
         //single choice
         singleChoice1.AnswerPossibilities.Add(answerPossibility1);
@@ -64,6 +67,8 @@ public static class DataSeeder
         
         
         // add objects to the context
+        context.Flows.Add(flow1);
+        
         context.Questions.Add(singleChoice1);
         context.Questions.Add(multipleChoice1);
         context.Questions.Add(range1);
@@ -86,8 +91,9 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility14);
         context.AnswerPossibilities.Add(answerPossibility15);
         context.AnswerPossibilities.Add(answerPossibility16);
-
-
+        
+        
+        
         context.SaveChanges();
         context.ChangeTracker.Clear();
     }
