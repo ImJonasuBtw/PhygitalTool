@@ -1,7 +1,6 @@
-using Domain.Domain.Flow;
 using Domain.Domain.Util;
 
-namespace Domain.Flow;
+namespace Domain.FlowPackage;
 
 public class Question
 {
@@ -12,14 +11,14 @@ public class Question
     
     //nav
     public ICollection<AnswerPossibility> AnswerPossibilities { get;  set; } = new List<AnswerPossibility>();
-    public Domain.Flow.Flow Flow { get;  set; }
+    public FlowPackage.Flow Flow { get;  set; }
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
     public Question()
     {
         AnswerPossibilities = new List<AnswerPossibility>();
         Answers = new List<Answer>();
-        Flow = new Domain.Flow.Flow();
+        Flow = new FlowPackage.Flow();
     }
 
     public Question(int questionId, string questionText, QuestionType questionType)

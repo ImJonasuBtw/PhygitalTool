@@ -1,5 +1,5 @@
 ﻿using Domain.Domain.Flow;
-using Domain.Flow;
+using Domain.FlowPackage;
 
 namespace BL;
 
