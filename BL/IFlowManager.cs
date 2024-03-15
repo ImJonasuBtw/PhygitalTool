@@ -15,4 +15,6 @@ public interface IFlowManager
     IEnumerable<Answer> GetAllAnswers();
     Flow GetFlow(int flowId);
     ICollection<Question> GetFlowQuestions(int flowId);
+    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId);
+    public Question GetFirstFlowQuestion(int flowId);
 }
