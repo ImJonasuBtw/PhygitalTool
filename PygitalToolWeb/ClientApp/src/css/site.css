@@ -20,3 +20,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.selected {
+  background-color: red; /* pas aan naar jouw voorkeur */
+  font-weight: bold; /* of elke andere stijl die je wilt toevoegen */
+}

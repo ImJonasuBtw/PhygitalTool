@@ -1,0 +1,94 @@
+
+@model Domain.FlowPackage.Question
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Test Voor range vraag</h2>
+
+<p>@Model.QuestionText</p>
+<p>Kies 1 van de opties</p>
+
+
+
+<div class="slider-container">
+    <input type="range" min="0" max="4" value="0" step="1" class="slider" id="myRange">
+    <div class="slider-labels">
+        @foreach (var answerPossibility in Model.AnswerPossibilities)
+        {
+            <span>@answerPossibility.Description</span>
+        }
+    </div>
+    <p>Gekozen: <span id="sliderValue">Slecht</span></p>
+    <form id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput">
+        <!-- Knop om het formulier in te dienen -->
+        <button type="button" id="submitButton">Klaar</button>
+    </form>
+</div>
+
+
+<script>
+ var slider = document.getElementById("myRange");
+    var output = document.getElementById("sliderValue");
+    var labels = Array.from(document.querySelectorAll('.slider-labels span')).map(span => span.textContent);
+    
+    slider.oninput = function() {
+        output.innerHTML = labels[this.value];
+    }
+    document.getElementById('submitButton').addEventListener('click', function() {
+            var selectedValue = document.getElementById('sliderValue').textContent;
+    
+            // Voeg de geselecteerde waarde toe als een verborgen veld aan het formulier
+            var hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'selectedAnswer'; // De naam moet overeenkomen met de parameter in de actiemethode van de controller
+            hiddenInput.value = selectedValue;
+            console.log(hiddenInput.value);
+            document.getElementById('answersForm').appendChild(hiddenInput);
+    
+            // Verzend het formulier
+            document.getElementById('answersForm').submit();
+        });
+</script>
+
+<style>
+        .slider-container {
+            width: 800px;
+            margin: 50px auto;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+    </style>
+
