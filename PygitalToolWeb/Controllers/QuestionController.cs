@@ -24,7 +24,7 @@ public class QuestionController : Controller
         
     }
     [HttpPost]
-    public IActionResult SaveAnswerAndUserInput(string selectedAnswer)
+    public IActionResult SaveAnswerAndUserInput(string selectedAnswer , int currentFlow, int currentQuestion)
     {
         // logic to store the user's response in the database
         int newUserid;
@@ -53,13 +53,14 @@ public class QuestionController : Controller
         //TODO Jonas Still has to make the flow :)
         _flowManager.AddAnswer(newAnswerId, selectedAnswer);
         _flowManager.AddUserInput(newUserid, 1, newUserid);
+
+      
         
-        
-        return View("index");
+        return RedirectToAction("GetNextQuestion", "LiniareFlow", new { flowId = currentFlow, questionId = currentQuestion});
     }
 
       [HttpPost]
-    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers)
+    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion)
     {
         // Logica om de antwoorden van de gebruiker in de database op te slaan
         int newUserid;
@@ -98,8 +99,8 @@ public class QuestionController : Controller
 
         _flowManager.AddUserInput(newUserid, 1, newUserid);
         // Opmerking: Je zou de nieuwe antwoord-ID's kunnen doorgeven aan de volgende actie, afhankelijk van je vereisten.
-
-        return View("index");
+            
+        return RedirectToAction("GetNextQuestion", "LiniareFlow", new { flowId = currentFlow, questionId = currentQuestion});
     }
 
     public IActionResult Open(int id)

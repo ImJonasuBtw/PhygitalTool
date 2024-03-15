@@ -22,7 +22,7 @@ public class FlowManger : IFlowManager
 
     public Question GetQuestionWithAnswerPossibilities(int id)
     {
-        return  _repositoryRetrieval.ReadQuestionWithAnswerPossibilities(id);
+        return _repositoryRetrieval.ReadQuestionWithAnswerPossibilities(id);
     }
 
     public UserInput AddUserInput(int userId, int flowId, int answerId)
@@ -38,12 +38,12 @@ public class FlowManger : IFlowManager
         return _repositoryRetrieval.ReadAllUserInputs();
     }
 
-    public Answer AddAnswer(int answerId,string answerDes)
+    public Answer AddAnswer(int answerId, string answerDes)
     {
         //creates a new answer
         Answer answer = new Answer(answerId, answerDes);
-         _repositoryPersistance.CreateAnswer(answer);
-         return answer;
+        _repositoryPersistance.CreateAnswer(answer);
+        return answer;
     }
 
     public IEnumerable<Answer> GetAllAnswers()
@@ -60,4 +60,16 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadFlowQuestions(flowId);
     }
+
+    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId)
+    {
+        return _repositoryRetrieval.ReadNextQuestionInFlow(flowId, currentQuestionId);
+    }
+
+    public Question GetFirstFlowQuestion(int flowId)
+    {
+        return _repositoryRetrieval.ReadFirstFlowQuestion(flowId);
+    }
+
+
 }

@@ -25,13 +25,22 @@ public class LiniareFlowController : Controller
         Flow flow = _flowManager.GetFlow(flowId);
         return View("FLowView",flow);
     }
-    
-    public IActionResult GetNextQuestion(int flowId)
+
+    public IActionResult getFirstQuestion(int flowid)
     {
-        ICollection<Question> questions = _flowManager.GetFlowQuestions(flowId);
-        var flowLenght = questions.Count;
-        var testquestion = questions.ElementAt(1);
-        return View("QuestionView",testquestion );
+        Question question = _flowManager.GetFirstFlowQuestion(flowid);
+        return View("QuestionView",question );
+    }
+    
+    public IActionResult GetNextQuestion(int flowId , int questionId)
+    {
+        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
+        if (nextQuestion == null)
+        {
+            Flow flow = _flowManager.GetFlow(flowId);
+            return View("FlowEndView", flow );
+        }
+        return View("QuestionView",nextQuestion );
     }
     
     

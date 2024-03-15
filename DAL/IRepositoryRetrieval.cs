@@ -12,4 +12,8 @@ public interface IRepositoryRetrieval
     IEnumerable<Answer> ReadAllAnswers();
     Flow ReadFlow(int flowId);
     public ICollection<Question> ReadFlowQuestions(int flowId);
+
+    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);
+
+    public Question ReadFirstFlowQuestion(int flowId);
 }

@@ -53,4 +53,43 @@ public class RetrievalRepository : IRepositoryRetrieval
             .OrderBy(q => q.QuestionId) // Order the questions
             .ToList(); // Convert to List
     }
+    
+    public Question ReadFirstFlowQuestion(int flowId)
+    {
+        var flow = _context.Flows
+            .Include(f => f.Questions) // Eager loading questions
+            .ThenInclude(q => q.AnswerPossibilities)
+            .FirstOrDefault(f => f.FlowId == flowId); // Retrieve the flow by ID
+
+        return flow?.Questions
+            .OrderBy(q => q.QuestionId) // Order the questions
+            .FirstOrDefault(); // Get the first question
+    }
+    
+    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
+    {
+        // Retrieve all questions in the flow, ordered by QuestionId
+        var questionsInFlow = ReadFlowQuestions(flowId);
+
+        if (questionsInFlow == null || !questionsInFlow.Any())
+        {
+            // If there are no questions in the flow, return null
+            return null;
+        }
+
+        // Find the index of the current question
+        var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
+
+        // Check if there's a next question
+        if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+        {
+            // If there is a next question, return it
+            return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+        }
+
+        // If the current question is the last one or not found, return null
+        return null;
+    }
+
+    
 }
