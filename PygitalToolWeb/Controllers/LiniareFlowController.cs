@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Domain.Domain.Flow;
+using Domain.Domain.Util;
 using Domain.FlowPackage;
 
 namespace PygitalToolWeb.Controllers;
@@ -10,6 +11,7 @@ public class LiniareFlowController : Controller
 {
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
+    private int i = 0;
 
     public LiniareFlowController(IFlowManager flowManager, ILogger<QuestionController> logger)
     {
@@ -20,11 +22,18 @@ public class LiniareFlowController : Controller
     // GET
     public IActionResult StartFLow(int flowId)
     {
-        return View("FLowView");
+        Flow flow = _flowManager.GetFlow(flowId);
+        return View("FLowView",flow);
     }
-
-    public IActionResult nextQuestion(int flowId)
+    
+    public IActionResult GetNextQuestion(int flowId)
     {
-        return View("FLowView");
+        ICollection<Question> questions = _flowManager.GetFlowQuestions(flowId);
+        var flowLenght = questions.Count;
+        var testquestion = questions.ElementAt(i);
+        i++;
+        return View("QuestionView",testquestion );
     }
+    
+    
 }
