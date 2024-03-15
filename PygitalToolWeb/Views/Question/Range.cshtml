@@ -24,33 +24,40 @@
     <p>Gekozen: <span id="sliderValue">Slecht</span></p>
     <form id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput">
         <!-- Knop om het formulier in te dienen -->
-        <button type="button" id="submitButton">Klaar</button>
+        <button type="button" id="submitButtonRange">Klaar</button>
     </form>
 </div>
 
 
 <script>
- var slider = document.getElementById("myRange");
-    var output = document.getElementById("sliderValue");
-    var labels = Array.from(document.querySelectorAll('.slider-labels span')).map(span => span.textContent);
-    
-    slider.oninput = function() {
-        output.innerHTML = labels[this.value];
-    }
-    document.getElementById('submitButton').addEventListener('click', function() {
-            var selectedValue = document.getElementById('sliderValue').textContent;
-    
-            // Voeg de geselecteerde waarde toe als een verborgen veld aan het formulier
-            var hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'selectedAnswer'; // De naam moet overeenkomen met de parameter in de actiemethode van de controller
-            hiddenInput.value = selectedValue;
-            console.log(hiddenInput.value);
-            document.getElementById('answersForm').appendChild(hiddenInput);
-    
-            // Verzend het formulier
-            document.getElementById('answersForm').submit();
-        });
+ function configureSlider() {
+     var slider = document.getElementById("myRange");
+     var output = document.getElementById("sliderValue");
+     var labels = Array.from(document.querySelectorAll('.slider-labels span')).map(span => span.textContent);
+     
+     slider.oninput = function() {
+         output.innerHTML = labels[this.value];
+     }
+ 
+     var submitButton = document.getElementById('submitButtonRange');
+     submitButton.addEventListener('click', function() {
+         var selectedValue = document.getElementById('sliderValue').textContent;
+     
+         // Voeg de geselecteerde waarde toe als een verborgen veld aan het formulier
+         var hiddenInput = document.createElement('input');
+         hiddenInput.type = 'hidden';
+         hiddenInput.name = 'selectedAnswer'; // De naam moet overeenkomen met de parameter in de actiemethode van de controller
+         hiddenInput.value = selectedValue;
+         console.log(hiddenInput.value);
+         document.getElementById('answersForm').appendChild(hiddenInput);
+     
+         // Verzend het formulier
+         document.getElementById('answersForm').submit();
+     });
+ }
+ 
+ // Roep de functie aan om de slider en de submitknop te configureren
+ configureSlider();
 </script>
 
 <style>

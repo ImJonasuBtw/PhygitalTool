@@ -26,7 +26,19 @@
 </form>
 
 <script>
-    document.getElementById('submitButton').addEventListener('click', function() {
+function configureAnswerButtons() {
+    var answerButtons = document.querySelectorAll('.answerButton');
+    answerButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            console.log("geklikt");
+            button.classList.toggle('selected');
+        });
+    });
+}
+
+function configureSubmitButton() {
+    var submitButton = document.getElementById('submitButton');
+    submitButton.addEventListener('click', function() {
         console.log("true");
         // Array om geselecteerde antwoorden op te slaan
         var selectedAnswers = [];
@@ -36,7 +48,6 @@
         answerButtons.forEach(button => {
             if (button.classList.contains('selected')) {
                 console.log(button.value);
-             
                 selectedAnswers.push(button.value);
             }
         });
@@ -51,13 +62,12 @@
         // Verzend het formulier
         document.getElementById('answersForm').submit();
     });
-      var answerButtons = document.querySelectorAll('.answerButton');
-        answerButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                console.log("geklikt");
-                button.classList.toggle('selected')
-            });
-        });
+}
+
+// Roep de functies aan om de knoppen te configureren
+configureAnswerButtons();
+configureSubmitButton();
+
     
   
 
