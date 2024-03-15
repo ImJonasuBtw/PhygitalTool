@@ -1,10 +1,13 @@
-﻿@model dynamic
+﻿@model Domain.FlowPackage.Flow
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>Start FLow</h2>
+<h2>Start linaire flow @Model.FlowId</h2>
 
 
+<li class="nav-item">
+    <a class="nav-link text-dark" asp-area="" asp-controller="LiniareFlow" asp-action="GetNextQuestion" asp-route-flowid=@Model.FlowId>Test</a>
+</li>

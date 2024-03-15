@@ -64,6 +64,11 @@ public static class DataSeeder
         range1.AnswerPossibilities.Add(answerPossibility15);
         range1.AnswerPossibilities.Add(answerPossibility16);
         
+        flow1.Questions.Add(singleChoice1);
+        flow1.Questions.Add(range1);
+        flow1.Questions.Add(multipleChoice1);
+        flow1.Questions.Add(open1);
+        
         
         
         // add objects to the context

@@ -51,4 +51,14 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadAllAnswers();
     }
+
+    public Flow GetFlow(int flowId)
+    {
+        return _repositoryRetrieval.ReadFlow(flowId);
+    }
+
+    public ICollection<Question> GetFlowQuestions(int flowId)
+    {
+        return _repositoryRetrieval.ReadFlowQuestions(flowId);
+    }
 }

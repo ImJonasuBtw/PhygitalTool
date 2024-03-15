@@ -10,4 +10,6 @@ public interface IRepositoryRetrieval
 
     IEnumerable<UserInput> ReadAllUserInputs();
     IEnumerable<Answer> ReadAllAnswers();
+    Flow ReadFlow(int flowId);
+    public ICollection<Question> ReadFlowQuestions(int flowId);
 }

@@ -1,0 +1,45 @@
+﻿@using Domain.Domain.Util
+@model Domain.FlowPackage.Question
+
+<h1>@Model.QuestionText</h1>
+
+<div class="questionContainer">
+    @if (Model.QuestionType == QuestionType.SingleChoice)
+    {
+        <p>@Model.QuestionText</p>
+        <p>Duid één antwoord aan</p>
+
+        <form method="post" action="/Question/SaveAnswerAndUserInput">
+            @foreach (var answerPossibility in Model.AnswerPossibilities)
+            {
+                <button type="submit" name="selectedAnswer" value="@answerPossibility.Description" asp-action="GetNextQuestion" asp-route-flowid=@Model.Flow.FlowId>@answerPossibility.Description</button>
+            }
+            
+        </form>
+    }
+    @if (Model.QuestionType == QuestionType.Open)
+    {
+        <form method="post" action="/Question/SaveAnswerAndUserInput"onsubmit="return validateForm()" >
+            <input type="text" class="form-control" id="selectedAnswer" name="selectedAnswer" />
+            <button type="submit" class="btn btn-primary" id="Submit">Submit</button>
+    
+        </form>
+    }
+    
+    <!-- Add similar blocks for other question types -->
+</div>
+
+
+
+<script>
+    function validateForm() {
+        var answer = document.getElementById("selectedAnswer").value;
+        console.log(answer);
+        if (answer.trim() === "") {
+            alert("Please enter your answer.");
+            return false; // answer is empty
+        }
+        
+        return true; 
+    }
+</script>

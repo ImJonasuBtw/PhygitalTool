@@ -36,4 +36,21 @@ public class RetrievalRepository : IRepositoryRetrieval
         //Return all Answers
         return _context.Answers;
     }
+
+    public Flow ReadFlow(int flowId)
+    {
+        return _context.Flows.SingleOrDefault(f => f.FlowId == flowId);
+    }
+
+    public ICollection<Question> ReadFlowQuestions(int flowId)
+    {
+        var flow = _context.Flows
+            .Include(f => f.Questions) // Eager loading questions
+            .ThenInclude(q => q.AnswerPossibilities)
+            .FirstOrDefault(f => f.FlowId == flowId); // Retrieve the flow by ID
+
+        return flow?.Questions
+            .OrderBy(q => q.QuestionId) // Order the questions
+            .ToList(); // Convert to List
+    }
 }
