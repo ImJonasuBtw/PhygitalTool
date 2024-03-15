@@ -115,9 +115,8 @@ public class QuestionController : Controller
     }
     public IActionResult Range(int id)
     {
-        Question question = _flowManager.GetQuestion(id);
+        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
         return View(question);
-        
     }
     
 }
