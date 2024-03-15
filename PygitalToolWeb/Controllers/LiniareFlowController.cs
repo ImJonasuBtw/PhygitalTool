@@ -11,7 +11,7 @@ public class LiniareFlowController : Controller
 {
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
-    private int i = 0;
+
 
     public LiniareFlowController(IFlowManager flowManager, ILogger<QuestionController> logger)
     {
@@ -30,8 +30,7 @@ public class LiniareFlowController : Controller
     {
         ICollection<Question> questions = _flowManager.GetFlowQuestions(flowId);
         var flowLenght = questions.Count;
-        var testquestion = questions.ElementAt(i);
-        i++;
+        var testquestion = questions.ElementAt(1);
         return View("QuestionView",testquestion );
     }
     
