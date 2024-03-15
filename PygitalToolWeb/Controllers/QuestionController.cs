@@ -57,11 +57,67 @@ public class QuestionController : Controller
         
         return View("index");
     }
+
+      [HttpPost]
+    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers)
+    {
+        // Logica om de antwoorden van de gebruiker in de database op te slaan
+        int newUserid;
+        int[] newAnswerIds = new int[selectedAnswers.Length];
+
+        // TODO: Bepalen of het dezelfde gebruiker is of niet, voor de gebruikers-ID
+        if (_flowManager.GetAllUserInputs().IsNullOrEmpty())
+        {
+            newUserid = 1;
+        }
+        else
+        {
+            int maxUserId = _flowManager.GetAllUserInputs().Max(a => a.UserId);
+            newUserid = maxUserId + 1;
+        }
+
+        // Loop door alle geselecteerde antwoorden en sla ze op in de database
+        for (int i = 0; i < selectedAnswers.Length; i++)
+        {
+            int newAnswerId;
+            if (_flowManager.GetAllAnswers().IsNullOrEmpty())
+            {
+                newAnswerId = 1;
+            }
+            else
+            {
+                int maxAnswerId = _flowManager.GetAllAnswers().Max(a => a.AnswerId);
+                newAnswerId = maxAnswerId + 1;
+            }
+            
+            // TODO: Jonas moet nog de rest van de logica implementeren :)
+            _flowManager.AddAnswer(newAnswerId, selectedAnswers[i]);
+            _flowManager.AddUserInput(newUserid, 1, newUserid);
+            newAnswerIds[i] = newAnswerId;
+        }
+
+        _flowManager.AddUserInput(newUserid, 1, newUserid);
+        // Opmerking: Je zou de nieuwe antwoord-ID's kunnen doorgeven aan de volgende actie, afhankelijk van je vereisten.
+
+        return View("index");
+    }
+
     public IActionResult Open(int id)
     {
         Question question = _flowManager.GetQuestion(id);
         return View(question);
         
     }
-  
+    public IActionResult MultipleChoice(int id)
+    {
+        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
+        return View(question);
+    }
+    public IActionResult Range(int id)
+    {
+        Question question = _flowManager.GetQuestion(id);
+        return View(question);
+        
+    }
+    
 }
