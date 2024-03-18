@@ -13,6 +13,8 @@ public class PhygitalToolDbContext : DbContext
     public DbSet<UserInput> UserInputs { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Flow> Flows { get; set; }
+    
+    public DbSet<ContactInformation> ContactInformations { get; set; }
 
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
@@ -36,6 +38,10 @@ public class PhygitalToolDbContext : DbContext
             .HasOne(a => a.AnswerPossibility)
             .WithOne(ap => ap.Answer)
             .HasForeignKey<Answer>("AnswerPossibilityID");
+        
+        modelBuilder.Entity<ContactInformation>()
+            .HasKey(ci => ci.ContactInformationId);
+        
         // modelBuilder.Entity<Question>().ToTable("Questions");
     }
 

@@ -26,7 +26,7 @@ public class LiniareFlowController : Controller
         return View("FLowView",flow);
     }
 
-    public IActionResult getFirstQuestion(int flowid)
+    public IActionResult GetFirstQuestion(int flowid)
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowid);
         return View("QuestionView",question );

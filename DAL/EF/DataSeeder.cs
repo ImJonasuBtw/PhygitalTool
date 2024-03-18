@@ -70,7 +70,6 @@ public static class DataSeeder
         flow1.Questions.Add(open1);
         
         
-        
         // add objects to the context
         context.Flows.Add(flow1);
         
