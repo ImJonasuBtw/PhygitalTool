@@ -38,10 +38,10 @@ public class FlowManger : IFlowManager
         return _repositoryRetrieval.ReadAllUserInputs();
     }
 
-    public Answer AddAnswer(int answerId, string answerDes)
+    public Answer AddAnswer(int answerId, string answerDes,int Questionid)
     {
         //creates a new answer
-        Answer answer = new Answer(answerId, answerDes);
+        Answer answer = new Answer(answerId, answerDes , Questionid);
         _repositoryPersistance.CreateAnswer(answer);
         return answer;
     }
