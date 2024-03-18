@@ -8,23 +8,41 @@ public static class DataSeeder
 {
     public static void Seed(PhygitalToolDbContext context)
     {
-        //creating Questions
-        //single choice
+        // Creating Questions
+        // Linear Flow
+        //  Single choice
         var singleChoice1 = new Question(1,
             "Als jij de begroting van je stad of gemeente zou opmaken, waar zou je dan in de komende jaren vooral op inzetten?",
             QuestionType.SingleChoice);
-        //multiple choice
+        //  Multiple choice
         var multipleChoice1 = new Question(2,
             "Wat zou jou helpen om een keuze te maken tussen de verschillende partijen?",
             QuestionType.MultipleChoice);
-        //range
+        //  Range
         var range1 = new Question(3, "Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
             QuestionType.Range);
-        //open
+        //  Open
         var open1 = new Question(4, "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
             QuestionType.Open);
+        
+        // Circular Flow
+        //  Single choice
+        var singleChoice2 = new Question(5,
+            "Wat is volgens u de grootste uitdaging waar de gemeenteraad de komende termijn voor staat?",
+            QuestionType.SingleChoice);
+        //  Multiple choice
+        var multipleChoice2 = new Question(6,
+            "Welke thema's vindt u het belangrijkst bij het bepalen van uw stem voor de gemeenteraadsverkiezingen?",
+            QuestionType.MultipleChoice);
+        //  Range
+        var range2 = new Question(7, "In hoeverre bent u het eens met de volgende stelling: \"De besluiten die de gemeenteraad neemt, hebben een directe impact op mijn dagelijks leven.\"",
+            QuestionType.Range);
+        //  Open
+        var open2 = new Question(8, "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
+            QuestionType.Open);
 
-        //creating answerposibilities
+        // Creating Answer Possibilities
+        // Linear Flow
         var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie");
         var answerPossibility2 = new AnswerPossibility(2, "vrije tijd, sport, cultuur");
         var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang");
@@ -42,11 +60,30 @@ public static class DataSeeder
         var answerPossibility15 = new AnswerPossibility(15, "Eerder wel");
         var answerPossibility16 = new AnswerPossibility(16, "Zeker wel");
         
-        //creating flow 
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch);
+        // Circular Flow
+        var answerPossibility17 = new AnswerPossibility(17, "Infrastructuur");
+        var answerPossibility18 = new AnswerPossibility(18, "Milieuproblemen");
+        var answerPossibility19 = new AnswerPossibility(19, "Werkgelegenheid");
+        var answerPossibility20 = new AnswerPossibility(20, "Sociale Voorzieningen");
+        var answerPossibility21 = new AnswerPossibility(21, "Economische Ontwikkeling");
+        var answerPossibility22 = new AnswerPossibility(22, "Ondersteuning van Kwetsbare Groepen");
+        var answerPossibility23 = new AnswerPossibility(23, "Duurzaamheid en Milieu");
+        var answerPossibility24 = new AnswerPossibility(24, "Onderwijs en Kinderopvang");
+        var answerPossibility25 = new AnswerPossibility(25, "Veiligheid en Openbare Orde");
+        var answerPossibility26 = new AnswerPossibility(26, "Cultuur, Sport en Recreatie");
+        var answerPossibility27 = new AnswerPossibility(27, "Lokale Belastingen en Financieel Beleid");
+        var answerPossibility28 = new AnswerPossibility(28, "Zeker niet");
+        var answerPossibility29 = new AnswerPossibility(29, "Eerder niet");
+        var answerPossibility30 = new AnswerPossibility(30, "Ik weet het nog niet");
+        var answerPossibility31 = new AnswerPossibility(31, "Eerder wel");
+        var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
         
-        //linking questions to Answerpossibilities (except for open)
-        //single choice
+        // Creating Linear and Circular Flow 
+        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch);
+        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch);
+        
+        // Linking Answer Possibilities to Questions (except for open)
+        // Linear Flow
         singleChoice1.AnswerPossibilities.Add(answerPossibility1);
         singleChoice1.AnswerPossibilities.Add(answerPossibility2);
         singleChoice1.AnswerPossibilities.Add(answerPossibility3);
@@ -64,20 +101,49 @@ public static class DataSeeder
         range1.AnswerPossibilities.Add(answerPossibility15);
         range1.AnswerPossibilities.Add(answerPossibility16);
         
+        // Circular Flow
+        singleChoice2.AnswerPossibilities.Add(answerPossibility17);
+        singleChoice2.AnswerPossibilities.Add(answerPossibility18);
+        singleChoice2.AnswerPossibilities.Add(answerPossibility19);
+        singleChoice2.AnswerPossibilities.Add(answerPossibility20);
+        singleChoice2.AnswerPossibilities.Add(answerPossibility21);
+        singleChoice2.AnswerPossibilities.Add(answerPossibility22);
+        multipleChoice2.AnswerPossibilities.Add(answerPossibility23);
+        multipleChoice2.AnswerPossibilities.Add(answerPossibility24);
+        multipleChoice2.AnswerPossibilities.Add(answerPossibility25);
+        multipleChoice2.AnswerPossibilities.Add(answerPossibility26);
+        multipleChoice2.AnswerPossibilities.Add(answerPossibility27);
+        range2.AnswerPossibilities.Add(answerPossibility28);
+        range2.AnswerPossibilities.Add(answerPossibility29);
+        range2.AnswerPossibilities.Add(answerPossibility30);
+        range2.AnswerPossibilities.Add(answerPossibility31);
+        range2.AnswerPossibilities.Add(answerPossibility32);
+        
+        // Adding Questions to Flows
+        // Linear Flow
         flow1.Questions.Add(singleChoice1);
         flow1.Questions.Add(range1);
         flow1.Questions.Add(multipleChoice1);
         flow1.Questions.Add(open1);
         
-        
-        // add objects to the context
+        // Circular Flow
+        flow2.Questions.Add(singleChoice2);
+        flow2.Questions.Add(range2);
+        flow2.Questions.Add(multipleChoice2);
+        flow2.Questions.Add(open2);
+        // Adding objects to the context
         context.Flows.Add(flow1);
+        context.Flows.Add(flow2);
         
         context.Questions.Add(singleChoice1);
         context.Questions.Add(multipleChoice1);
         context.Questions.Add(range1);
         context.Questions.Add(open1);
         
+        context.Questions.Add(singleChoice2);
+        context.Questions.Add(multipleChoice2);
+        context.Questions.Add(range2);
+        context.Questions.Add(open2);
         
         context.AnswerPossibilities.Add(answerPossibility1);
         context.AnswerPossibilities.Add(answerPossibility2);
@@ -96,7 +162,22 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility15);
         context.AnswerPossibilities.Add(answerPossibility16);
         
-        
+        context.AnswerPossibilities.Add(answerPossibility17);
+        context.AnswerPossibilities.Add(answerPossibility18);
+        context.AnswerPossibilities.Add(answerPossibility19);
+        context.AnswerPossibilities.Add(answerPossibility20);
+        context.AnswerPossibilities.Add(answerPossibility21);
+        context.AnswerPossibilities.Add(answerPossibility22);
+        context.AnswerPossibilities.Add(answerPossibility23);
+        context.AnswerPossibilities.Add(answerPossibility24);
+        context.AnswerPossibilities.Add(answerPossibility25);
+        context.AnswerPossibilities.Add(answerPossibility26);
+        context.AnswerPossibilities.Add(answerPossibility27);
+        context.AnswerPossibilities.Add(answerPossibility28);
+        context.AnswerPossibilities.Add(answerPossibility29);
+        context.AnswerPossibilities.Add(answerPossibility30);
+        context.AnswerPossibilities.Add(answerPossibility31);
+        context.AnswerPossibilities.Add(answerPossibility32);
         
         context.SaveChanges();
         context.ChangeTracker.Clear();

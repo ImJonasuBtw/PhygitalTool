@@ -70,6 +70,4 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadFirstFlowQuestion(flowId);
     }
-
-
 }
