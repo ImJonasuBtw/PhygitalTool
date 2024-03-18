@@ -50,9 +50,10 @@ public class QuestionController : Controller
             newAnswerId = MaxAnswerId + 1;
         }
         
-        //TODO Jonas Still has to make the flow :)
-        _flowManager.AddAnswer(newAnswerId, selectedAnswer);
-        _flowManager.AddUserInput(newUserid, 1, newUserid);
+        
+        _flowManager.AddAnswer(newAnswerId, selectedAnswer,currentQuestion);
+       
+        _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
 
       
         
@@ -91,13 +92,14 @@ public class QuestionController : Controller
                 newAnswerId = maxAnswerId + 1;
             }
             
-            // TODO: Jonas moet nog de rest van de logica implementeren :)
-            _flowManager.AddAnswer(newAnswerId, selectedAnswers[i]);
-            _flowManager.AddUserInput(newUserid, 1, newUserid);
+            
+           _flowManager.AddAnswer(newAnswerId, selectedAnswers[i],currentQuestion);
+        
+            _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
             newAnswerIds[i] = newAnswerId;
         }
 
-        _flowManager.AddUserInput(newUserid, 1, newUserid);
+        _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
         // Opmerking: Je zou de nieuwe antwoord-ID's kunnen doorgeven aan de volgende actie, afhankelijk van je vereisten.
             
         return RedirectToAction("GetNextQuestion", "LiniareFlow", new { flowId = currentFlow, questionId = currentQuestion});

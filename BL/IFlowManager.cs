@@ -11,7 +11,7 @@ public interface IFlowManager
     UserInput AddUserInput(int userId, int flowId, int answerId);
     IEnumerable<UserInput> GetAllUserInputs();
 
-    Answer AddAnswer(int answerId, string answer);
+    Answer AddAnswer(int answerId, string answer,int Questionid);
     IEnumerable<Answer> GetAllAnswers();
     Flow GetFlow(int flowId);
     ICollection<Question> GetFlowQuestions(int flowId);
