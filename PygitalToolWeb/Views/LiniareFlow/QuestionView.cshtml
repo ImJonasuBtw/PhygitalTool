@@ -70,6 +70,9 @@
 @if (Model.Flow.FlowType == FlowType.Circular)
 {
     <div>
+        <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP CIRCULAR FLOW</a>
+    </div>
+    <div>
         <p>TIMER</p>
     </div>
 }
