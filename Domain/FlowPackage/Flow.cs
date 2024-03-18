@@ -13,6 +13,7 @@ public class Flow
     
     //nav
     public ICollection<Question> Questions { get;  set; } = new List<Question>();
+    public ICollection<ContactInformation> ContactInformations { get; set; } = new List<ContactInformation>();
 
     public Flow()
     {
