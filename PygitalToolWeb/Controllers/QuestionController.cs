@@ -1,7 +1,8 @@
-
 using BL;
+using Domain.Domain.Util;
 using Domain.FlowPackage;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace PygitalToolWeb.Controllers;
@@ -21,15 +22,15 @@ public class QuestionController : Controller
     {
         Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
         return View(question);
-        
     }
+
     [HttpPost]
-    public IActionResult SaveAnswerAndUserInput(string selectedAnswer , int currentFlow, int currentQuestion)
+    public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion)
     {
         // logic to store the user's response in the database
         int newUserid;
         int newAnswerId;
-       //TODO Knowing if it's the same user or not, for the userID
+        //TODO Knowing if it's the same user or not, for the userID
         if (_flowManager.GetAllUserInputs().IsNullOrEmpty())
         {
             newUserid = 1;
@@ -37,7 +38,7 @@ public class QuestionController : Controller
         else
         {
             int maxUserId = _flowManager.GetAllUserInputs().Max(a => a.UserId);
-             newUserid = maxUserId+1;
+            newUserid = maxUserId + 1;
         }
 
         if (_flowManager.GetAllAnswers().IsNullOrEmpty())
@@ -49,18 +50,23 @@ public class QuestionController : Controller
             int MaxAnswerId = _flowManager.GetAllAnswers().Max(a => a.AnswerId);
             newAnswerId = MaxAnswerId + 1;
         }
-        
-        
-        _flowManager.AddAnswer(newAnswerId, selectedAnswer,currentQuestion);
-       
+
+
+        _flowManager.AddAnswer(newAnswerId, selectedAnswer, currentQuestion);
         _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
 
-      
+
+        if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
+        {
+            return RedirectToAction("GetNextQuestion", "CircularFlow",
+                new { flowId = currentFlow, questionId = currentQuestion });
+        }
         
-        return RedirectToAction("GetNextQuestion", "LiniareFlow", new { flowId = currentFlow, questionId = currentQuestion});
+        return RedirectToAction("GetNextQuestion", "LiniareFlow",
+            new { flowId = currentFlow, questionId = currentQuestion });
     }
 
-      [HttpPost]
+    [HttpPost]
     public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion)
     {
         // Logica om de antwoorden van de gebruiker in de database op te slaan
@@ -91,35 +97,41 @@ public class QuestionController : Controller
                 int maxAnswerId = _flowManager.GetAllAnswers().Max(a => a.AnswerId);
                 newAnswerId = maxAnswerId + 1;
             }
-            
-            
-           _flowManager.AddAnswer(newAnswerId, selectedAnswers[i],currentQuestion);
-        
+
+
+            _flowManager.AddAnswer(newAnswerId, selectedAnswers[i], currentQuestion);
+
             _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
             newAnswerIds[i] = newAnswerId;
         }
-
-        _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
+        
         // Opmerking: Je zou de nieuwe antwoord-ID's kunnen doorgeven aan de volgende actie, afhankelijk van je vereisten.
-            
-        return RedirectToAction("GetNextQuestion", "LiniareFlow", new { flowId = currentFlow, questionId = currentQuestion});
+
+        if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
+        {
+            return RedirectToAction("GetNextQuestion", "CircularFlow",
+                new { flowId = currentFlow, questionId = currentQuestion });
+        }
+        
+        return RedirectToAction("GetNextQuestion", "LiniareFlow",
+                new { flowId = currentFlow, questionId = currentQuestion });
     }
 
     public IActionResult Open(int id)
     {
         Question question = _flowManager.GetQuestion(id);
         return View(question);
-        
     }
+
     public IActionResult MultipleChoice(int id)
     {
         Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
         return View(question);
     }
+
     public IActionResult Range(int id)
     {
         Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
         return View(question);
     }
-    
 }

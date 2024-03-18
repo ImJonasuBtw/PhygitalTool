@@ -1,0 +1,10 @@
+@model Domain.FlowPackage.Flow
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Start Circulaire flow @Model.FlowId</h2>
+
+<a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="getFirstQuestion" asp-route-flowId=@Model.FlowId >Test</a>
