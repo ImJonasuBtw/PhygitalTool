@@ -1,15 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.FlowPackage;
 
 public class ContactInformation
 {
     public int ContactInformationId;
-    public string Email;
-    public string Name;
+    
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; }
+    
+    [Required]
+    [StringLength(100)]
+    public string Name { get; set; }
 
+    public int FlowId { get; set; } 
     
     //nav
+    [ForeignKey("FlowId")] 
     public Flow Flow { get;  set; }
 
 
@@ -22,5 +31,11 @@ public class ContactInformation
         ContactInformationId = contactInformationId;
         Email = email;
         Name = name;
+    }
+
+    public ContactInformation(Flow flow)
+    {
+        Flow = flow;
+        FlowId = flow?.FlowId ?? 0;
     }
 }
