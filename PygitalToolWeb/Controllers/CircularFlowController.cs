@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Domain.FlowPackage;
 
 
-
 namespace PygitalToolWeb.Controllers;
 
 public class CircularFlowController : Controller
@@ -22,7 +21,7 @@ public class CircularFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("CircularFlowView",flow);
+        return View("CircularFlowView", flow);
     }
 
     public IActionResult GetFirstQuestion(int flowId)
@@ -30,15 +29,22 @@ public class CircularFlowController : Controller
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
         return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
     }
-    
-    public IActionResult GetNextQuestion(int flowId , int questionId)
+
+    public IActionResult GetNextQuestion(int flowId, int questionId)
     {
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
         if (nextQuestion == null)
         {
-            Flow flow = _flowManager.GetFlow(flowId);
-        return View("CircularFlowEndView", flow );
+            Question question = _flowManager.GetFirstFlowQuestion(flowId);
+            return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
         }
-        return View("~/Views/LiniareFlow/QuestionView.cshtml",nextQuestion );
+
+        return View("~/Views/LiniareFlow/QuestionView.cshtml", nextQuestion);
+    }
+
+    public IActionResult EndFlow(int flowId)
+    {
+        Flow flow = _flowManager.GetFlow(flowId);
+        return View("CircularFlowEndView", flow);
     }
 }
