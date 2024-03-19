@@ -17,4 +17,6 @@ public interface IFlowManager
     ICollection<Question> GetFlowQuestions(int flowId);
     public Question GetNextQuestionInFlow(int flowId, int currentQuestionId);
     public Question GetFirstFlowQuestion(int flowId);
+
+    public void SaveContactInformation(ContactInformation contactInformation);
 }

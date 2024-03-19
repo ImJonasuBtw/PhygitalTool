@@ -70,4 +70,9 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadFirstFlowQuestion(flowId);
     }
+
+    public void SaveContactInformation(ContactInformation contactInformation)
+    {
+        _repositoryPersistance.SaveContactInformation(contactInformation);
+    }
 }
