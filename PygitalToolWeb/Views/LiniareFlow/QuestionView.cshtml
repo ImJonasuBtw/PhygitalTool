@@ -4,7 +4,7 @@
 <h1>@Model.QuestionText</h1>
 
 <div class="questionContainer">
-    @if (Model.QuestionType == QuestionType.SingleChoice)
+    @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Linear)
     {
         <p>@Model.QuestionText</p>
         <p>Duid één antwoord aan</p>
@@ -65,15 +65,33 @@
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
         </form>
     }
+    @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
+    {
+        <p>@Model.QuestionText</p>
+        <p>Duid 1 antwoord aan</p>
+        @foreach (var answerPossibility in Model.AnswerPossibilities)
+        {
+            <button class="unselected answerButton" value="@answerPossibility.Description">@answerPossibility.Description</button>
+        }
+
+        <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
+            <button type="button" id="submitButton">Klaar</button>
+            <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
+            <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+        </form>
+    }
 </div>
 
 @if (Model.Flow.FlowType == FlowType.Circular)
 {
+    <script src="~/dist/circularFlow.entry.js"></script>
+    
     <div>
-        <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP CIRCULAR FLOW</a>
+        <p>Timer: </p>
+        <p id="circular-timer"></p>
     </div>
     <div>
-        <p>TIMER</p>
+        <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
     </div>
 }
 
