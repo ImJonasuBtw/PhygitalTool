@@ -5,4 +5,23 @@
     Layout = "_Layout";
 }
 
-<h2>title</h2>
+<h2>Laat hier je contactinformatie achter , zodat we je kunnen bereiken :)</h2>
+
+<form asp-controller="ContactInformation" asp-action="Contact" method="post">
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control"/>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Name</label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    
+    <input asp-for="FlowId" type="hidden" value="@Model.Flow.FlowId"/>
+  
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

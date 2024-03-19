@@ -1,4 +1,5 @@
-﻿@model Domain.FlowPackage.Flow
+﻿
+@model Domain.FlowPackage.Flow
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
@@ -6,5 +7,12 @@
 
 <h2>Liniare Flow END</h2>
 
- <!-- Link currently goes to google , this needs to be changed to contact info page :) -->
-<img src="@Url.Action("Generate", "QrCode", new { data = "google.com" })" alt="QR Code" />
+@{
+    var scheme = Context.Request.Scheme;
+    var host = Context.Request.Host.ToString(); 
+    var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.FlowId});
+
+    var fullUrl = $"{scheme}://{host}{actionPath}";
+}
+
+<img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code" />

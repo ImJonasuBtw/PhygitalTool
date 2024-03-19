@@ -26,4 +26,10 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.Answers.Add(answer);
         _context.SaveChanges();
     }
+
+    public void SaveContactInformation(ContactInformation contactInformation)
+    {
+        _context.ContactInformations.Add(contactInformation);
+        _context.SaveChanges();
+    }
 }
