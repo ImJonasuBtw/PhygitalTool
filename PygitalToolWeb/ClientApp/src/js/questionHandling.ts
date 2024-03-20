@@ -16,14 +16,14 @@ function configureSlider(): void {
     const output: HTMLElement = document.getElementById("sliderValue") as HTMLElement;
     const labels: string[] = Array.from(document.querySelectorAll('.slider-labels span')).map(span => (span as HTMLElement).textContent || '');
 
-    slider.oninput = function(): void {
+    slider.oninput = function (): void {
         const index: number = parseInt(slider.value, 10);
         output.innerHTML = labels[index];
     };
 
     const submitButton = document.getElementById('submitButton');
     if (submitButton) {
-        submitButton.addEventListener('click', function(): void {
+        submitButton.addEventListener('click', function (): void {
             const selectedValue: string = output.textContent || '';
 
             const hiddenInput: HTMLInputElement = document.createElement('input');
@@ -41,7 +41,7 @@ function configureSlider(): void {
 function configureAnswerButtons(): void {
     const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButton');
     answerButtons.forEach(button => {
-        button.addEventListener('click', function(): void {
+        button.addEventListener('click', function (): void {
             console.log("Clicked");
             button.classList.toggle('selected');
         });
@@ -50,7 +50,7 @@ function configureAnswerButtons(): void {
 
 function configureSubmitButton(): void {
     const submitButton: HTMLElement | null = document.getElementById('submitButton');
-    submitButton?.addEventListener('click', function(): void {
+    submitButton?.addEventListener('click', function (): void {
         console.log("true");
         const selectedAnswers: string[] = [];
 
@@ -74,9 +74,49 @@ function configureSubmitButton(): void {
     });
 }
 
+function configureSubmitButtonSingleChoiceCircular(): void {
+    const submitButton: HTMLElement | null = document.getElementById('submitButtonCircular');
+    submitButton?.addEventListener('click', function (): void {
+        let selectedAnswer: string = "no answer";
+
+        const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonCircular')
+        answerButtons.forEach(button => {
+            if (button.classList.contains('selected')) {
+                const value = button.getAttribute('value');
+                if (value) {
+                    selectedAnswer = value;
+                }
+            }
+        });
+
+        const hiddenInput: HTMLInputElement = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'selectedAnswer';
+        hiddenInput.value = selectedAnswer;
+        document.getElementById('answersFormCircular')?.appendChild(hiddenInput);
+        (document.getElementById('answersFormCircular') as HTMLFormElement)?.submit();
+    });
+}
+
+function configureAnswerButtonsSingleChoiceCircular(): void {
+    const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonCircular');
+    answerButtons.forEach(button => {
+        button.addEventListener('click', function (): void {
+            answerButtons.forEach(button => {
+                if (button.classList.contains('selected')) {
+                    button.classList.toggle('selected');
+                }
+            });
+            button.classList.toggle('selected');
+        });
+    });
+}
+
 // Initialize configurations
 document.addEventListener('DOMContentLoaded', () => {
     configureAnswerButtons();
+    configureAnswerButtonsSingleChoiceCircular();
     configureSubmitButton();
+    configureSubmitButtonSingleChoiceCircular();
     configureSlider();
 });

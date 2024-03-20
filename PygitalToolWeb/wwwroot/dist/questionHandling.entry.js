@@ -85,10 +85,47 @@ function configureSubmitButton() {
         (_b = document.getElementById('answersForm')) === null || _b === void 0 ? void 0 : _b.submit();
     });
 }
+function configureSubmitButtonSingleChoiceCircular() {
+    const submitButton = document.getElementById('submitButtonCircular');
+    submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener('click', function () {
+        var _a, _b;
+        let selectedAnswer = "no answer";
+        const answerButtons = document.querySelectorAll('.answerButtonCircular');
+        answerButtons.forEach(button => {
+            if (button.classList.contains('selected')) {
+                const value = button.getAttribute('value');
+                if (value) {
+                    selectedAnswer = value;
+                }
+            }
+        });
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'selectedAnswer';
+        hiddenInput.value = selectedAnswer;
+        (_a = document.getElementById('answersFormCircular')) === null || _a === void 0 ? void 0 : _a.appendChild(hiddenInput);
+        (_b = document.getElementById('answersFormCircular')) === null || _b === void 0 ? void 0 : _b.submit();
+    });
+}
+function configureAnswerButtonsSingleChoiceCircular() {
+    const answerButtons = document.querySelectorAll('.answerButtonCircular');
+    answerButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            answerButtons.forEach(button => {
+                if (button.classList.contains('selected')) {
+                    button.classList.toggle('selected');
+                }
+            });
+            button.classList.toggle('selected');
+        });
+    });
+}
 // Initialize configurations
 document.addEventListener('DOMContentLoaded', () => {
     configureAnswerButtons();
+    configureAnswerButtonsSingleChoiceCircular();
     configureSubmitButton();
+    configureSubmitButtonSingleChoiceCircular();
     configureSlider();
 });
 

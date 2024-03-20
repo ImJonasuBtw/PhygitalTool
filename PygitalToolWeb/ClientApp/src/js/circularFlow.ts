@@ -4,7 +4,10 @@ const timerLength: number = 5;
 function timer(): void {
     let button: HTMLElement | null;
     button = document.getElementById('submitButton');
-    if (!button) {
+    if (button == null) {
+        button = document.getElementById('submitButtonCircular')
+    }
+    if (button == null) {
         button = document.getElementById('Submit');
     }
 
@@ -30,7 +33,7 @@ function setTimerText(): void {
 
     if (timerElement) {
         timerElement.textContent = timeLeft.toString();
-        
+
         const countdown = setInterval(() => {
             timeLeft--;
             timerElement.textContent = timeLeft.toString();

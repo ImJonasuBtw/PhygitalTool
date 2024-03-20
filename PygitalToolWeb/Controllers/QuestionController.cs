@@ -51,7 +51,10 @@ public class QuestionController : Controller
             newAnswerId = MaxAnswerId + 1;
         }
 
-
+        if (selectedAnswer.IsNullOrEmpty())
+        {
+            selectedAnswer = "no answer";
+        }
         _flowManager.AddAnswer(newAnswerId, selectedAnswer, currentQuestion);
         _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
 
@@ -98,9 +101,10 @@ public class QuestionController : Controller
                 newAnswerId = maxAnswerId + 1;
             }
 
-
-            _flowManager.AddAnswer(newAnswerId, selectedAnswers[i], currentQuestion);
-
+            _flowManager.AddAnswer(newAnswerId, 
+                selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i],
+                currentQuestion);
+            
             _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
             newAnswerIds[i] = newAnswerId;
         }

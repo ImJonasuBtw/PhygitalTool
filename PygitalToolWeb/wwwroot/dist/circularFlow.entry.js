@@ -10,7 +10,10 @@ const timerLength = 5;
 function timer() {
     let button;
     button = document.getElementById('submitButton');
-    if (!button) {
+    if (button == null) {
+        button = document.getElementById('submitButtonCircular');
+    }
+    if (button == null) {
         button = document.getElementById('Submit');
     }
     if (button) {
