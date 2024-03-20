@@ -82,32 +82,34 @@
     }
 </div>
 
-@if (Model.Flow.FlowType == FlowType.Circular)
-{
-    <script src="~/dist/circularFlow.entry.js"></script>
-    <style>
+<div>
+    @if (Model.Flow.FlowType == FlowType.Circular)
+    {
+        <script src="~/dist/circularFlow.entry.js"></script>
+        <style>
         .submit-button {
             display: none;
         }
     </style>
+
+        <div>
+            <p>Timer: </p>
+            <p id="circular-timer"></p>
+        </div>
+        <div>
+            <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
+        </div>
+
+        var scheme = Context.Request.Scheme;
+        var host = Context.Request.Host.ToString();
+        var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId });
+
+        var fullUrl = $"{scheme}://{host}{actionPath}";
+
+        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code"/>
+    }
     
-    <div>
-        <p>Timer: </p>
-        <p id="circular-timer"></p>
-    </div>
-    <div>
-        <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
-    </div>
-
-    var scheme = Context.Request.Scheme;
-    var host = Context.Request.Host.ToString();
-    var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId });
-
-    var fullUrl = $"{scheme}://{host}{actionPath}";
-
-    <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code"/>
-}
-
+</div>
 
 @section Scripts
 {
@@ -156,6 +158,5 @@
         .selected {
                  background-color: #00ffd0 !important; /* pas aan naar jouw voorkeur */
                  font-weight: bold; /* of elke andere stijl die je wilt toevoegen */
-               }
-        
-    </style>
+        }
+</style>

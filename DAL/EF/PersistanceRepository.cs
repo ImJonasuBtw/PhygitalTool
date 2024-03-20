@@ -22,7 +22,7 @@ public class PersistanceRepository : IRepositoryPersistance
 
     public void CreateAnswer(Answer answer)
     {
-        //saves te new Answer
+        //saves the new Answer
         _context.Answers.Add(answer);
         _context.SaveChanges();
     }

@@ -1,5 +1,6 @@
 ﻿using DAL;
 using Domain.FlowPackage;
+using Domain.Projects;
 
 namespace BL;
 
@@ -38,10 +39,10 @@ public class FlowManger : IFlowManager
         return _repositoryRetrieval.ReadAllUserInputs();
     }
 
-    public Answer AddAnswer(int answerId, string answerDes,int Questionid)
+    public Answer AddAnswer(int answerId, string answerDes, int questionId)
     {
         //creates a new answer
-        Answer answer = new Answer(answerId, answerDes , Questionid);
+        Answer answer = new Answer(answerId, answerDes , questionId);
         _repositoryPersistance.CreateAnswer(answer);
         return answer;
     }
@@ -74,5 +75,10 @@ public class FlowManger : IFlowManager
     public void SaveContactInformation(ContactInformation contactInformation)
     {
         _repositoryPersistance.SaveContactInformation(contactInformation);
+    }
+
+    public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId)
+    {
+        return _repositoryRetrieval.ReadFlowSubTheme(flowId, subThemeId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Domain.Domain.Flow;
 using Domain.FlowPackage;
+using Domain.Projects;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF;
@@ -22,7 +23,7 @@ public class RetrievalRepository : IRepositoryRetrieval
     public Question ReadQuestionWithAnswerPossibilities(int id)
     {
         //Return Question of a certain id with the answerPossibilities
-        return _context.Questions.Include(q=>q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.Include(q => q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
     }
 
     public IEnumerable<UserInput> ReadAllUserInputs()
@@ -39,7 +40,10 @@ public class RetrievalRepository : IRepositoryRetrieval
 
     public Flow ReadFlow(int flowId)
     {
-        return _context.Flows.SingleOrDefault(f => f.FlowId == flowId);
+        return _context.Flows
+            .Include(f => f.FlowSubThemes)
+            .ThenInclude(fst => fst.SubTheme)
+            .SingleOrDefault(f => f.FlowId == flowId);
     }
 
     public ICollection<Question> ReadFlowQuestions(int flowId)
@@ -53,7 +57,7 @@ public class RetrievalRepository : IRepositoryRetrieval
             .OrderBy(q => q.QuestionId) // Order the questions
             .ToList(); // Convert to List
     }
-    
+
     public Question ReadFirstFlowQuestion(int flowId)
     {
         var flow = _context.Flows
@@ -65,7 +69,7 @@ public class RetrievalRepository : IRepositoryRetrieval
             .OrderBy(q => q.QuestionId) // Order the questions
             .FirstOrDefault(); // Get the first question
     }
-    
+
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
         // Retrieve all questions in the flow, ordered by QuestionId
@@ -91,5 +95,11 @@ public class RetrievalRepository : IRepositoryRetrieval
         return null;
     }
 
-    
+    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
+    {
+        return _context.FlowSubThemes
+            .Include(f => f.Flow)
+            .Include(s => s.SubTheme)
+            .FirstOrDefault(flowSubTheme => flowSubTheme.Flow.FlowId == flowId && flowSubTheme.SubTheme.SubThemeId == subThemeId);
+    }
 }
