@@ -79,8 +79,8 @@ public static class DataSeeder
         var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
         
         // Creating Linear and Circular Flow 
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch);
-        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch);
+        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch,"flow over gemeentebeleid");
+        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
         
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow

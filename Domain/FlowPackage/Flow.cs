@@ -20,10 +20,11 @@ public class Flow
         
     }
 
-    public Flow(int flowId, FlowType flowType, Language language)
+    public Flow(int flowId, FlowType flowType, Language language, string flowDescription)
     {
         FlowId = flowId;
         FlowType = flowType;
         Language = language;
+        FlowDescription = flowDescription;
     }
 }
