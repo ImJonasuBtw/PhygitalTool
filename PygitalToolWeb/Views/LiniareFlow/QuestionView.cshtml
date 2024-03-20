@@ -22,7 +22,7 @@
     {
         <form method="post" action="/Question/SaveAnswerAndUserInput"onsubmit="return validateForm()">
             <input type="text" class="form-control" id="selectedAnswer" name="selectedAnswer"/>
-            <button type="submit" class="btn btn-primary" id="Submit">Submit</button>
+            <button type="submit" class="btn btn-primary submit-button" id="Submit">Submit</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
 
@@ -34,17 +34,17 @@
         <p>Kies 1 van de opties</p>
 
         <div class="slider-container">
-            <input type="range" min="0" max="4" value="0" step="1" class="slider" id="myRange">
+            <input type="range" min="0" max="4" value="2" step="1" class="slider" id="myRange">
             <div class="slider-labels">
                 @foreach (var answerPossibility in Model.AnswerPossibilities)
                 {
                     <span>@answerPossibility.Description</span>
                 }
             </div>
-            <p>Gekozen: <span id="sliderValue">Slecht</span></p>
+            <p>Gekozen: <span id="sliderValue">Ik weet het nog niet</span></p>
             <form id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput">
                 <!-- Knop om het formulier in te dienen -->
-                <button type="button" id="submitButton">Klaar</button>
+                <button type="button" class="submit-button" id="submitButton">Klaar</button>
                 <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
                 <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
             </form>
@@ -60,7 +60,7 @@
         }
 
         <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
-            <button type="button" id="submitButton">Klaar</button>
+            <button type="button" class="submit-button" id="submitButton">Klaar</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
         </form>
@@ -71,11 +71,11 @@
         <p>Duid 1 antwoord aan</p>
         @foreach (var answerPossibility in Model.AnswerPossibilities)
         {
-            <button class="unselected answerButton" value="@answerPossibility.Description">@answerPossibility.Description</button>
+            <button class="unselected answerButtonCircular" value="@answerPossibility.Description">@answerPossibility.Description</button>
         }
 
-        <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
-            <button type="button" id="submitButton">Klaar</button>
+        <form id="answersFormCircular" method="post" action="/Question/SaveAnswerAndUserInput">
+            <button type="button" class="submit-button" id="submitButtonCircular">Klaar</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
         </form>
@@ -85,6 +85,11 @@
 @if (Model.Flow.FlowType == FlowType.Circular)
 {
     <script src="~/dist/circularFlow.entry.js"></script>
+    <style>
+        .submit-button {
+            display: none;
+        }
+    </style>
     
     <div>
         <p>Timer: </p>
@@ -93,6 +98,14 @@
     <div>
         <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
     </div>
+
+    var scheme = Context.Request.Scheme;
+    var host = Context.Request.Host.ToString();
+    var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId });
+
+    var fullUrl = $"{scheme}://{host}{actionPath}";
+
+    <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code"/>
 }
 
 

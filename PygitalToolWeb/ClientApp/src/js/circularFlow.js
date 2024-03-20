@@ -1,8 +1,12 @@
 var timerLength = 5;
+// timer that clicks the submit button when finished
 function timer() {
     var button;
     button = document.getElementById('submitButton');
-    if (!button) {
+    if (button == null) {
+        button = document.getElementById('submitButtonCircular');
+    }
+    if (button == null) {
         button = document.getElementById('Submit');
     }
     if (button) {
@@ -12,14 +16,12 @@ function timer() {
             }
         }
         var timer_1 = setTimeout(clickButton, timerLength * 1000);
-        console.log("timer started");
         button.addEventListener('click', function () {
             clearTimeout(timer_1);
-            console.log("timer interrupted");
-            console.log("submitted");
         });
     }
 }
+// text update for visual timer
 function setTimerText() {
     var timerElement = document.getElementById('circular-timer');
     var timeLeft = timerLength;
