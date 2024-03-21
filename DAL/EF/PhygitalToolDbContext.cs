@@ -39,10 +39,10 @@ public class PhygitalToolDbContext : DbContext
             .HasOne(a => a.AnswerPossibility)
             .WithOne(ap => ap.Answer)
             .HasForeignKey<Answer>("AnswerPossibilityID");
-        
+
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
-        
+
         modelBuilder.Entity<FlowSubTheme>()
             .HasOne(flowSubTheme => flowSubTheme.Flow)
             .WithMany(flow => flow.FlowSubThemes)
@@ -52,10 +52,10 @@ public class PhygitalToolDbContext : DbContext
             .HasOne(flowSubTheme => flowSubTheme.SubTheme)
             .WithMany(subThemes => subThemes.FlowSubThemes)
             .HasForeignKey("FK_SubThemeId");
-        
+
         modelBuilder.Entity<FlowSubTheme>()
-            .HasKey( "FK_FlowId", "FK_SubThemeId" );
-        
+            .HasKey("FK_FlowId", "FK_SubThemeId");
+
         // modelBuilder.Entity<Question>().ToTable("Questions");
     }
 

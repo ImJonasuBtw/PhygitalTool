@@ -17,12 +17,7 @@ public class QuestionController : Controller
         _flowManager = iflowManager;
     }
 
-    public IActionResult SingleChoice(int id)
-    {
-        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
-        return View(question);
-    }
-
+    // Slaat de input van de user op voor single choice, range of 
     [HttpPost]
     public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion,
         int subThemeId)
@@ -30,7 +25,7 @@ public class QuestionController : Controller
         // logic to store the user's response in the database
         int newUserid;
         int newAnswerId;
-        //TODO Knowing if it's the same user or not, for the userID
+        // TODO Knowing if it's the same user or not, for the userID
         if (_flowManager.GetAllUserInputs().IsNullOrEmpty())
         {
             newUserid = 1;
@@ -59,22 +54,23 @@ public class QuestionController : Controller
         _flowManager.AddAnswer(newAnswerId, selectedAnswer, currentQuestion);
         _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
 
-
+        // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
                 new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
-
+        
         return RedirectToAction("GetNextQuestion", "LinearFlow",
             new { flowId = currentFlow, questionId = currentQuestion });
     }
 
+    // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.
     [HttpPost]
     public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion,
         int subThemeId)
     {
-        //save user with answer to database
+        // Save user with answer to database
         int newUserid;
         int[] newAnswerIds = new int[selectedAnswers.Length];
 
@@ -113,7 +109,7 @@ public class QuestionController : Controller
         }
 
         // Note: You could pass the new answer IDs to the next action, depending on your requirements.
-
+        // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
@@ -124,18 +120,28 @@ public class QuestionController : Controller
             new { flowId = currentFlow, questionId = currentQuestion });
     }
 
+    // Returns view of a single choice question
+    public IActionResult SingleChoice(int id)
+    {
+        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
+        return View(question);
+    }
+
+    // Returns an open question view using its id
     public IActionResult Open(int id)
     {
         Question question = _flowManager.GetQuestion(id);
         return View(question);
     }
 
+    // Returns a multiple choice question view using its id
     public IActionResult MultipleChoice(int id)
     {
         Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
         return View(question);
     }
 
+    // Returns a range question view using its id
     public IActionResult Range(int id)
     {
         Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);

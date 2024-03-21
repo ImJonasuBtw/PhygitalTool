@@ -16,6 +16,7 @@ public class CircularFlowController : Controller
         _logger = logger;
     }
 
+    // Launches a Flow after a user/supervisor selects it. Returns a SubThemView to select the subtheme.
     // GET
     public IActionResult StartFLow(int flowId)
     {
@@ -23,6 +24,7 @@ public class CircularFlowController : Controller
         return View("~/Views/SubTheme/SubThemeView.cshtml", flow);
     }
 
+    // Returns the first question view of a flow after a user/supervisor selects the subtheme.
     public IActionResult GetFirstQuestion(int flowId, int subThemeId)
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
@@ -30,6 +32,8 @@ public class CircularFlowController : Controller
         return View("~/Views/LinearFlow/QuestionView.cshtml", question);
     }
 
+    // Returns the view of the next question after the timer has ran out on the previous one.
+    // Shows the subtheme information view after each x-amount of questions.
     public IActionResult GetNextQuestion(int flowId, int questionId, int subThemeId)
     {
         int x = 3;
@@ -49,7 +53,7 @@ public class CircularFlowController : Controller
             return View("~/Views/LinearFlow/QuestionView.cshtml", question);
         }
 
-        // Every "x" questions, show a different view.
+        // Every "x" questions, show the subtheme information view.
         if (questionCount == x)
         {
             // Reset counter
@@ -64,6 +68,7 @@ public class CircularFlowController : Controller
         return View("~/Views/LinearFlow/QuestionView.cshtml", nextQuestion);
     }
     
+    // Stops the flow when the "stop" button is pressed.
     public IActionResult EndFlow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);

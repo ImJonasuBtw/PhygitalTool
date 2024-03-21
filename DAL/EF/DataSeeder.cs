@@ -95,16 +95,18 @@ public static class DataSeeder
         // Creating Linear and Circular Flow 
         var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
         var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
-        
-        var flowSubTheme1 = new FlowSubTheme{Flow = flow1, SubTheme = subTheme1};
-        var flowSubTheme2 = new FlowSubTheme{Flow = flow1, SubTheme = subTheme3};
-        var flowSubTheme3 = new FlowSubTheme{Flow = flow2, SubTheme = subTheme1};
-        var flowSubTheme4 = new FlowSubTheme{Flow = flow2, SubTheme = subTheme2};
-        var flowSubTheme5 = new FlowSubTheme{Flow = flow2, SubTheme = subTheme3};
-        
+
+        // Creating flowSubTheme intermediary classes
+        var flowSubTheme1 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme1 };
+        var flowSubTheme2 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme3 };
+        var flowSubTheme3 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme1 };
+        var flowSubTheme4 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme2 };
+        var flowSubTheme5 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme3 };
+
+        // Adding FlowSubThemes to flows
         flow1.FlowSubThemes.AddRange(new[] { flowSubTheme1, flowSubTheme2 });
         flow2.FlowSubThemes.AddRange(new[] { flowSubTheme3, flowSubTheme4, flowSubTheme5 });
-        
+
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow
         singleChoice1.AnswerPossibilities.Add(answerPossibility1);
