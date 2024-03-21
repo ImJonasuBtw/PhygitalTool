@@ -1,4 +1,4 @@
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class AnswerPossibility
 {

@@ -1,5 +1,5 @@
-@using Domain.Domain.Util
-@model Domain.FlowPackage.FlowSubTheme
+@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.FlowSubTheme
 
 <h2>@Model.SubTheme.SubThemeName</h2>
 
@@ -7,7 +7,7 @@
 
 @if (Model.Flow.FlowType == FlowType.Linear)
 {
-    <a class="nav-link text-dark" asp-area="" asp-controller="LiniareFlow"
+    <a class="nav-link text-dark" asp-area="" asp-controller="LinearFlow"
        asp-action="GetFirstQuestion" asp-route-flowId="@Model.Flow.FlowId">
         Start
     </a>
@@ -30,4 +30,3 @@
 @section Scripts {
     <script src="~/dist/circularFlow.entry.js"></script>
 }
-

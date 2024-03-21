@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
-using Domain.FlowPackage;
-using Domain.Projects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class PhygitalToolDbContext : DbContext
 {

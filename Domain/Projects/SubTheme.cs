@@ -1,7 +1,6 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using Domain.FlowPackage;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace Domain.Projects;
+namespace PhygitalTool.Domain.Projects;
 
 public class SubTheme
 {

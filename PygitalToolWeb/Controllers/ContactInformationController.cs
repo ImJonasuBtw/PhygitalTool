@@ -1,8 +1,8 @@
-﻿using BL;
-using Domain.FlowPackage;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class ContactInformationController : Controller
 {

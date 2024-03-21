@@ -1,8 +1,6 @@
-﻿using Domain.Domain.Flow;
-using Domain.FlowPackage;
-using Domain.Projects;
+﻿using PhygitalTool.Domain.FlowPackage;
 
-namespace DAL;
+namespace PhygitalTool.DAL;
 
 public interface IRepositoryRetrieval
 {

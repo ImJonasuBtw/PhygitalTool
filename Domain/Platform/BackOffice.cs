@@ -1,4 +1,4 @@
-namespace Domain.Domain.Platform;
+namespace PhygitalTool.Domain.Platform;
 
 public class BackOffice
 {

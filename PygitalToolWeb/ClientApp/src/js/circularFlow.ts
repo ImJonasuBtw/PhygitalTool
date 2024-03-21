@@ -1,4 +1,4 @@
-const timerLength: number = 2;
+const timerLength: number = 5;
 
 // timer that clicks the submit button when finished
 function timer(): void {

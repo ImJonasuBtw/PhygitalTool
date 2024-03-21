@@ -1,4 +1,4 @@
-namespace Domain.Extensions;
+namespace PhygitalTool.Domain.Extensions;
 
 public static class CollectionExtensions
 {

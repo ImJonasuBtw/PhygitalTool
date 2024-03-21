@@ -1,6 +1,6 @@
-using Domain.Domain.Util;
+using PhygitalTool.Domain.Util;
 
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Question
 {

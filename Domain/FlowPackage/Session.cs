@@ -1,4 +1,4 @@
-namespace Domain.Domain.Flow;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Session
 {

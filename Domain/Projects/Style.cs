@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace Domain.Domain.Projects;
+namespace PhygitalTool.Domain.Projects;
 
 public class Style
 {

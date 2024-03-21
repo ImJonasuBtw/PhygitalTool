@@ -1,7 +1,7 @@
-using BL;
-using DAL;
-using DAL.EF;
 using Microsoft.EntityFrameworkCore;
+using PhygitalTool.BL;
+using PhygitalTool.DAL;
+using PhygitalTool.DAL.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 

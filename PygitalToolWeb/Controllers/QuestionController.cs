@@ -1,11 +1,10 @@
-using BL;
-using Domain.Domain.Util;
-using Domain.FlowPackage;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class QuestionController : Controller
 {
@@ -25,7 +24,8 @@ public class QuestionController : Controller
     }
 
     [HttpPost]
-    public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion, int subThemeId)
+    public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion,
+        int subThemeId)
     {
         // logic to store the user's response in the database
         int newUserid;
@@ -55,6 +55,7 @@ public class QuestionController : Controller
         {
             selectedAnswer = "no answer";
         }
+
         _flowManager.AddAnswer(newAnswerId, selectedAnswer, currentQuestion);
         _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
 
@@ -64,15 +65,16 @@ public class QuestionController : Controller
             return RedirectToAction("GetNextQuestion", "CircularFlow",
                 new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
-        
-        return RedirectToAction("GetNextQuestion", "LiniareFlow",
+
+        return RedirectToAction("GetNextQuestion", "LinearFlow",
             new { flowId = currentFlow, questionId = currentQuestion });
     }
 
     [HttpPost]
-    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion, int subThemeId)
+    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion,
+        int subThemeId)
     {
-        // Logica om de antwoorden van de gebruiker in de database op te slaan
+        //save user with answer to database
         int newUserid;
         int[] newAnswerIds = new int[selectedAnswers.Length];
 
@@ -87,7 +89,8 @@ public class QuestionController : Controller
             newUserid = maxUserId + 1;
         }
 
-        // Loop door alle geselecteerde antwoorden en sla ze op in de database
+
+        // Loop through all selected answers and save them to the database
         for (int i = 0; i < selectedAnswers.Length; i++)
         {
             int newAnswerId;
@@ -101,24 +104,24 @@ public class QuestionController : Controller
                 newAnswerId = maxAnswerId + 1;
             }
 
-            _flowManager.AddAnswer(newAnswerId, 
+            _flowManager.AddAnswer(newAnswerId,
                 selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i],
                 currentQuestion);
-            
+
             _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
             newAnswerIds[i] = newAnswerId;
         }
-        
-        // Opmerking: Je zou de nieuwe antwoord-ID's kunnen doorgeven aan de volgende actie, afhankelijk van je vereisten.
+
+        // Note: You could pass the new answer IDs to the next action, depending on your requirements.
 
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
                 new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
-        
-        return RedirectToAction("GetNextQuestion", "LiniareFlow",
-                new { flowId = currentFlow, questionId = currentQuestion });
+
+        return RedirectToAction("GetNextQuestion", "LinearFlow",
+            new { flowId = currentFlow, questionId = currentQuestion });
     }
 
     public IActionResult Open(int id)

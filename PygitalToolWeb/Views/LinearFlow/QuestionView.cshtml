@@ -1,5 +1,5 @@
-﻿@using Domain.Domain.Util
-@model Domain.FlowPackage.Question
+﻿@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.Question
 
 <h1>@Model.QuestionText</h1>
 
@@ -106,7 +106,8 @@
 
         var fullUrl = $"{scheme}://{host}{actionPath}";
 
-        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code"/>
+        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
+
     }
 
 </div>

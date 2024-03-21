@@ -1,11 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using QRCoder;
-using System.Drawing;
-using System.Drawing.Imaging;
-using PygitalToolWeb.Models;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class QrCodeController : Controller
 {

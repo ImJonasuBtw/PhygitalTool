@@ -1,8 +1,6 @@
-using Domain.Domain.Projects;
-using Domain.Domain.Util;
-using Domain.Projects;
+using PhygitalTool.Domain.Util;
 
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Flow
 {

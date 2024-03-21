@@ -1,4 +1,4 @@
-namespace Domain.Domain.Projects;
+namespace PhygitalTool.Domain.Projects;
 
 public class MainTheme
 {

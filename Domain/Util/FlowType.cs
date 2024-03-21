@@ -1,4 +1,4 @@
-namespace Domain.Domain.Util;
+namespace PhygitalTool.Domain.Util;
 
 public enum FlowType
 {
