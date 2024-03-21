@@ -21,27 +21,50 @@ public class CircularFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("CircularFlowView", flow);
+        return View("~/Views/SubTheme/SubThemeView.cshtml", flow);
     }
 
-    public IActionResult GetFirstQuestion(int flowId)
+    public IActionResult GetFirstQuestion(int flowId, int subThemeId)
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
+        TempData["subThemeId"] = subThemeId;
         return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
     }
 
-    public IActionResult GetNextQuestion(int flowId, int questionId)
+    public IActionResult GetNextQuestion(int flowId, int questionId, int subThemeId)
     {
+        int x = 3;
+
+        // Increment question count stored in session. Initialize if not set.
+        int questionCount = HttpContext.Session.GetInt32("QuestionCount") ?? 0;
+        questionCount++;
+        HttpContext.Session.SetInt32("QuestionCount", questionCount);
+
+        // Get the next question.
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
+
         if (nextQuestion == null)
         {
             Question question = _flowManager.GetFirstFlowQuestion(flowId);
+            TempData["subThemeId"] = subThemeId;
             return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
         }
 
+        // Every "x" questions, show a different view.
+        if (questionCount == x)
+        {
+            // Reset counter
+            HttpContext.Session.SetInt32("QuestionCount", 0);
+            var flowSubTheme = _flowManager.GetFlowSubTheme(flowId, subThemeId);
+            TempData["questionId"] = questionId;
+            return View("~/Views/SubTheme/SubThemeInformationCircularView.cshtml", flowSubTheme);
+        }
+
+        // Show the standard question view.
+        TempData["subThemeId"] = subThemeId;
         return View("~/Views/LiniareFlow/QuestionView.cshtml", nextQuestion);
     }
-
+    
     public IActionResult EndFlow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);

@@ -1,5 +1,6 @@
 ﻿using Domain.Domain.Flow;
 using Domain.FlowPackage;
+using Domain.Projects;
 
 namespace BL;
 
@@ -11,7 +12,7 @@ public interface IFlowManager
     UserInput AddUserInput(int userId, int flowId, int answerId);
     IEnumerable<UserInput> GetAllUserInputs();
 
-    Answer AddAnswer(int answerId, string answer,int Questionid);
+    Answer AddAnswer(int answerId, string answer,int questionId);
     IEnumerable<Answer> GetAllAnswers();
     Flow GetFlow(int flowId);
     ICollection<Question> GetFlowQuestions(int flowId);
@@ -19,4 +20,5 @@ public interface IFlowManager
     public Question GetFirstFlowQuestion(int flowId);
 
     public void SaveContactInformation(ContactInformation contactInformation);
+    public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId);
 }

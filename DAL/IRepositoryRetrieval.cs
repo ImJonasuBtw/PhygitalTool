@@ -1,5 +1,6 @@
 ﻿using Domain.Domain.Flow;
 using Domain.FlowPackage;
+using Domain.Projects;
 
 namespace DAL;
 
@@ -16,4 +17,6 @@ public interface IRepositoryRetrieval
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);
 
     public Question ReadFirstFlowQuestion(int flowId);
+
+    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId);
 }

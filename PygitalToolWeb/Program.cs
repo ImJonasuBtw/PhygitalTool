@@ -15,11 +15,25 @@ builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
 builder.Services.AddScoped<IRepositoryRetrieval, RetrievalRepository>();
 builder.Services.AddScoped<IRepositoryPersistance, PersistanceRepository>();
 builder.Services.AddScoped<IFlowManager, FlowManger>();
+
+builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20); // Set session timeout duration
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true; // Make the session cookie essential
+});
+
 builder.Services.AddControllersWithViews();
 
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 using (var scope = app.Services.CreateScope())
 {
@@ -47,6 +61,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

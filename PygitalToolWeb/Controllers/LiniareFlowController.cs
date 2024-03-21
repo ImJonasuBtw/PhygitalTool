@@ -23,13 +23,13 @@ public class LiniareFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("FLowView",flow);
+        return View("~/Views/SubTheme/SubThemeView.cshtml",flow);
     }
 
-    public IActionResult GetFirstQuestion(int flowid)
+    public IActionResult GetFirstQuestion(int flowId)
     {
-        Question question = _flowManager.GetFirstFlowQuestion(flowid);
-        return View("QuestionView",question );
+        Question question = _flowManager.GetFirstFlowQuestion(flowId);
+        return View("QuestionView", question);
     }
     
     public IActionResult GetNextQuestion(int flowId , int questionId)

@@ -1,0 +1,26 @@
+@using Domain.Domain.Util
+@model Domain.FlowPackage.FlowSubTheme
+
+<h2>@Model.SubTheme.SubThemeName</h2>
+
+<p>@Model.SubTheme.SubThemeInformation</p>
+
+
+<a class="nav-link text-dark" id="submitButton"
+   asp-area=""
+   asp-controller="CircularFlow"
+   asp-action="GetNextQuestion"
+   asp-route-flowId="@Model.Flow.FlowId"
+   asp-route-questionId="@TempData["questionId"]"
+   asp-route-subThemeId="@Model.SubTheme.SubThemeId">
+</a>
+
+@if (Model.Flow.FlowType == FlowType.Circular)
+{
+    <p id="circular-timer"></p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
+}
+
+@section Scripts {
+    <script src="~/dist/circularFlow.entry.js"></script>
+}

@@ -1,0 +1,29 @@
+@using Domain.Domain.Projects
+@model Domain.FlowPackage.Flow
+
+@{
+    Layout = "_Layout";
+}
+
+<h2>Selecteer SubThema</h2>
+
+<ul>
+    @if (Model.FlowSubThemes != null)
+    {
+        @foreach (var flowSubTheme in Model.FlowSubThemes)
+        {
+            <li>
+                <a class="nav-link text-dark" asp-area=""
+                   asp-controller="SubTheme" asp-action="ShowSubThemeInformation"
+                   asp-route-flowId="@Model.FlowId"
+                   asp-route-subThemeId="@flowSubTheme.SubTheme.SubThemeId">
+                    @flowSubTheme.SubTheme.SubThemeName
+                </a>
+            </li>
+        }
+    }
+    else
+    {
+        <p>kutspel</p>
+    }
+</ul>
