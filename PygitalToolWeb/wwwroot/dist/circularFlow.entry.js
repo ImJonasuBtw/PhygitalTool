@@ -5,7 +5,7 @@ var __webpack_exports__ = {};
   !*** ./src/js/circularFlow.ts ***!
   \********************************/
 
-const timerLength = 5;
+const timerLength = 2;
 // timer that clicks the submit button when finished
 function timer() {
     let button;

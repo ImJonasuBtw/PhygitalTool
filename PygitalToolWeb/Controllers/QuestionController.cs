@@ -25,7 +25,7 @@ public class QuestionController : Controller
     }
 
     [HttpPost]
-    public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion)
+    public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion, int subThemeId)
     {
         // logic to store the user's response in the database
         int newUserid;
@@ -62,7 +62,7 @@ public class QuestionController : Controller
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
-                new { flowId = currentFlow, questionId = currentQuestion });
+                new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
         
         return RedirectToAction("GetNextQuestion", "LiniareFlow",
@@ -70,7 +70,7 @@ public class QuestionController : Controller
     }
 
     [HttpPost]
-    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion)
+    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion, int subThemeId)
     {
         // Logica om de antwoorden van de gebruiker in de database op te slaan
         int newUserid;
@@ -114,7 +114,7 @@ public class QuestionController : Controller
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
-                new { flowId = currentFlow, questionId = currentQuestion });
+                new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
         
         return RedirectToAction("GetNextQuestion", "LiniareFlow",
