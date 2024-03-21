@@ -1,6 +1,7 @@
-namespace Domain.Domain.Util;
+namespace PhygitalTool.Domain.Util;
 
 public enum FormatType
 {
-    Csv, Xls
+    Csv,
+    Xls
 }

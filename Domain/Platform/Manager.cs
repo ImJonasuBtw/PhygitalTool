@@ -1,8 +1,7 @@
-using Domain.Domain.Platform;
+namespace PhygitalTool.Domain.Platform;
 
-namespace Domain.Domain;
-
-public class Manager: SystemUser
+public class Manager : SystemUser
 {
-    public int ManagerId { get;  set; }
+    // Prop
+    public int ManagerId { get; set; }
 }

@@ -1,8 +1,7 @@
-using Domain.Domain.Platform;
-
-namespace Domain.Domain;
+namespace PhygitalTool.Domain.Platform;
 
 public class Supervisor : SystemUser
 {
-    public int SupervisorId { get;  set; }
+    // Prop
+    public int SupervisorId { get; set; }
 }

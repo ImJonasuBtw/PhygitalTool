@@ -1,4 +1,4 @@
-var timerLength = 5;
+var timerLength = 2;
 // timer that clicks the submit button when finished
 function timer() {
     var button;

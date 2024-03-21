@@ -1,8 +1,9 @@
-﻿using Domain.Domain.Flow;
-using Domain.Domain.Util;
-using Domain.FlowPackage;
+﻿using PhygitalTool.Domain.Extensions;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public static class DataSeeder
 {
@@ -24,7 +25,7 @@ public static class DataSeeder
         //  Open
         var open1 = new Question(4, "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
             QuestionType.Open);
-        
+
         // Circular Flow
         //  Single choice
         var singleChoice2 = new Question(5,
@@ -35,10 +36,12 @@ public static class DataSeeder
             "Welke thema's vindt u het belangrijkst bij het bepalen van uw stem voor de gemeenteraadsverkiezingen?",
             QuestionType.MultipleChoice);
         //  Range
-        var range2 = new Question(7, "In hoeverre bent u het eens met de volgende stelling: \"De besluiten die de gemeenteraad neemt, hebben een directe impact op mijn dagelijks leven.\"",
+        var range2 = new Question(7,
+            "In hoeverre bent u het eens met de volgende stelling: \"De besluiten die de gemeenteraad neemt, hebben een directe impact op mijn dagelijks leven.\"",
             QuestionType.Range);
         //  Open
-        var open2 = new Question(8, "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
+        var open2 = new Question(8,
+            "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
             QuestionType.Open);
 
         // Creating Answer Possibilities
@@ -50,16 +53,19 @@ public static class DataSeeder
         var answerPossibility5 = new AnswerPossibility(5, "gezondheidszorg & welzijn");
         var answerPossibility6 = new AnswerPossibility(6, "Ondersteunen van lokale handel");
         var answerPossibility7 = new AnswerPossibility(7, "Meer lessen op school rond de partijprogramma’s");
-        var answerPossibility8 = new AnswerPossibility(8, "Activiteiten in mijn jeugdclub, sportclub… rond de verkiezingen");
-        var answerPossibility9 = new AnswerPossibility(9, "Een bezoek van de partijen aan mijn school, jeugd/sportclub, …");
+        var answerPossibility8 =
+            new AnswerPossibility(8, "Activiteiten in mijn jeugdclub, sportclub… rond de verkiezingen");
+        var answerPossibility9 =
+            new AnswerPossibility(9, "Een bezoek van de partijen aan mijn school, jeugd/sportclub, …");
         var answerPossibility10 = new AnswerPossibility(10, "Een gesprek met mijn ouders rond de gemeentepolitiek");
-        var answerPossibility11 = new AnswerPossibility(11, "Een debat georganiseerd door een jeugdhuis met de verschillende partijen");
+        var answerPossibility11 =
+            new AnswerPossibility(11, "Een debat georganiseerd door een jeugdhuis met de verschillende partijen");
         var answerPossibility12 = new AnswerPossibility(12, "Zeker niet");
         var answerPossibility13 = new AnswerPossibility(13, "Eerder niet");
         var answerPossibility14 = new AnswerPossibility(14, "Ik weet het nog niet");
         var answerPossibility15 = new AnswerPossibility(15, "Eerder wel");
         var answerPossibility16 = new AnswerPossibility(16, "Zeker wel");
-        
+
         // Circular Flow
         var answerPossibility17 = new AnswerPossibility(17, "Infrastructuur");
         var answerPossibility18 = new AnswerPossibility(18, "Milieuproblemen");
@@ -77,11 +83,30 @@ public static class DataSeeder
         var answerPossibility30 = new AnswerPossibility(30, "Ik weet het nog niet");
         var answerPossibility31 = new AnswerPossibility(31, "Eerder wel");
         var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
-        
+
+        // Creating SubThemes
+        var subTheme1 = new SubTheme(1, "KiesIntenties",
+            "Ben je nog aan het twijfelen over op wie je wilt stemmen bij de aankomende verkiezingen? Het is belangrijk om te overwegen welke kandidaten het beste aansluiten bij jouw waarden en visie voor de toekomst van onze gemeente. Neem de tijd om de verschillende partijprogramma's te bekijken en de standpunten van de kandidaten te onderzoeken, zodat je een weloverwogen keuze kunt maken op verkiezingsdag.");
+        var subTheme2 = new SubTheme(2, "Redenen om (niet) te gaan stemmen",
+            "Stemmen is een belangrijk onderdeel van onze democratie, maar soms kunnen er redenen zijn waarom mensen ervoor kiezen om niet te stemmen. Of het nu gaat om twijfels over het nut van hun stem, ontevredenheid over het politieke systeem, of praktische obstakels zoals tijdgebrek, het is essentieel om deze redenen te begrijpen en manieren te vinden om de betrokkenheid van alle burgers bij het democratische proces te vergroten.");
+        var subTheme3 = new SubTheme(3, "Gevoel van betrokkenheid bij lokaal beleid",
+            "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
+
         // Creating Linear and Circular Flow 
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch,"flow over gemeentebeleid");
+        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
         var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
-        
+
+        // Creating flowSubTheme intermediary classes
+        var flowSubTheme1 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme1 };
+        var flowSubTheme2 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme3 };
+        var flowSubTheme3 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme1 };
+        var flowSubTheme4 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme2 };
+        var flowSubTheme5 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme3 };
+
+        // Adding FlowSubThemes to flows
+        flow1.FlowSubThemes.AddRange(new[] { flowSubTheme1, flowSubTheme2 });
+        flow2.FlowSubThemes.AddRange(new[] { flowSubTheme3, flowSubTheme4, flowSubTheme5 });
+
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow
         singleChoice1.AnswerPossibilities.Add(answerPossibility1);
@@ -100,7 +125,7 @@ public static class DataSeeder
         range1.AnswerPossibilities.Add(answerPossibility14);
         range1.AnswerPossibilities.Add(answerPossibility15);
         range1.AnswerPossibilities.Add(answerPossibility16);
-        
+
         // Circular Flow
         singleChoice2.AnswerPossibilities.Add(answerPossibility17);
         singleChoice2.AnswerPossibilities.Add(answerPossibility18);
@@ -118,33 +143,38 @@ public static class DataSeeder
         range2.AnswerPossibilities.Add(answerPossibility30);
         range2.AnswerPossibilities.Add(answerPossibility31);
         range2.AnswerPossibilities.Add(answerPossibility32);
-        
+
         // Adding Questions to Flows
         // Linear Flow
         flow1.Questions.Add(singleChoice1);
         flow1.Questions.Add(range1);
         flow1.Questions.Add(multipleChoice1);
         flow1.Questions.Add(open1);
-        
+
         // Circular Flow
         flow2.Questions.Add(singleChoice2);
         flow2.Questions.Add(range2);
         flow2.Questions.Add(multipleChoice2);
         flow2.Questions.Add(open2);
+
         // Adding objects to the context
+        context.SubThemes.Add(subTheme1);
+        context.SubThemes.Add(subTheme2);
+        context.SubThemes.Add(subTheme3);
+
         context.Flows.Add(flow1);
         context.Flows.Add(flow2);
-        
+
         context.Questions.Add(singleChoice1);
         context.Questions.Add(multipleChoice1);
         context.Questions.Add(range1);
         context.Questions.Add(open1);
-        
+
         context.Questions.Add(singleChoice2);
         context.Questions.Add(multipleChoice2);
         context.Questions.Add(range2);
         context.Questions.Add(open2);
-        
+
         context.AnswerPossibilities.Add(answerPossibility1);
         context.AnswerPossibilities.Add(answerPossibility2);
         context.AnswerPossibilities.Add(answerPossibility3);
@@ -161,7 +191,7 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility14);
         context.AnswerPossibilities.Add(answerPossibility15);
         context.AnswerPossibilities.Add(answerPossibility16);
-        
+
         context.AnswerPossibilities.Add(answerPossibility17);
         context.AnswerPossibilities.Add(answerPossibility18);
         context.AnswerPossibilities.Add(answerPossibility19);
@@ -178,7 +208,13 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility30);
         context.AnswerPossibilities.Add(answerPossibility31);
         context.AnswerPossibilities.Add(answerPossibility32);
-        
+
+        context.FlowSubThemes.Add(flowSubTheme1);
+        context.FlowSubThemes.Add(flowSubTheme2);
+        context.FlowSubThemes.Add(flowSubTheme3);
+        context.FlowSubThemes.Add(flowSubTheme4);
+        context.FlowSubThemes.Add(flowSubTheme5);
+
         context.SaveChanges();
         context.ChangeTracker.Clear();
     }

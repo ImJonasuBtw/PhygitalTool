@@ -1,6 +1,7 @@
+// Length of the timer for each question in a circular flow
 const timerLength: number = 5;
 
-// timer that clicks the submit button when finished
+// Timer that clicks the submit button when time runs out
 function timer(): void {
     let button: HTMLElement | null;
     button = document.getElementById('submitButton');
@@ -26,7 +27,7 @@ function timer(): void {
     }
 }
 
-// text update for visual timer
+// HTML text updater to display the timer to the user
 function setTimerText(): void {
     const timerElement: HTMLElement | null = document.getElementById('circular-timer');
     let timeLeft = timerLength;

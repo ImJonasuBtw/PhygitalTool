@@ -1,7 +1,8 @@
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Note
 {
-    public int NoteId { get;  set; }
-    public string Description { get;  set; }
+    // Prop
+    public int NoteId { get; set; }
+    public string Description { get; set; }
 }

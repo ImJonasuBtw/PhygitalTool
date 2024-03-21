@@ -1,17 +1,17 @@
-using Domain.Domain.Util;
+using PhygitalTool.Domain.Util;
 
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Question
 {
-    //prop
-    public int QuestionId { get;  set; }
-    public string QuestionText { get;  set; }
-    public QuestionType QuestionType { get;  set; }
-    
-    //nav
-    public ICollection<AnswerPossibility> AnswerPossibilities { get;  set; } = new List<AnswerPossibility>();
-    public Flow Flow { get;  set; }
+    // Prop
+    public int QuestionId { get; set; }
+    public string QuestionText { get; set; }
+    public QuestionType QuestionType { get; set; }
+
+    // Nav
+    public ICollection<AnswerPossibility> AnswerPossibilities { get; set; } = new List<AnswerPossibility>();
+    public Flow Flow { get; set; }
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 
     public Question()
@@ -27,5 +27,4 @@ public class Question
         QuestionText = questionText;
         QuestionType = questionType;
     }
-    
 }

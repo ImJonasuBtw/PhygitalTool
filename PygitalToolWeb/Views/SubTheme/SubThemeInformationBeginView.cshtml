@@ -1,0 +1,32 @@
+@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.FlowSubTheme
+
+<h2>@Model.SubTheme.SubThemeName</h2>
+
+<p>@Model.SubTheme.SubThemeInformation</p>
+
+@if (Model.Flow.FlowType == FlowType.Linear)
+{
+    <a class="nav-link text-dark" asp-area="" asp-controller="LinearFlow"
+       asp-action="GetFirstQuestion" asp-route-flowId="@Model.Flow.FlowId">
+        Start
+    </a>
+}
+@if (Model.Flow.FlowType == FlowType.Circular)
+{
+    <a class="nav-link text-dark" id="submitButton" asp-area="" asp-controller="CircularFlow"
+       asp-action="GetFirstQuestion"
+       asp-route-flowId="@Model.Flow.FlowId"
+       asp-route-subThemeId="@Model.SubTheme.SubThemeId">
+    </a>
+}
+
+@if (Model.Flow.FlowType == FlowType.Circular)
+{
+    <p id="circular-timer"></p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
+}
+
+@section Scripts {
+    <script src="~/dist/circularFlow.entry.js"></script>
+}

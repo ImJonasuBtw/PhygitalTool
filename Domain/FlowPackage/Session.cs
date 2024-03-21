@@ -1,6 +1,7 @@
-namespace Domain.Domain.Flow;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class Session
 {
-    public int SessionId { get;  set; }
+    // Prop
+    public int SessionId { get; set; }
 }

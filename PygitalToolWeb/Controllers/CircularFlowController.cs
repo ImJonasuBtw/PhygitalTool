@@ -1,9 +1,8 @@
-using BL;
 using Microsoft.AspNetCore.Mvc;
-using Domain.FlowPackage;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class CircularFlowController : Controller
 {
@@ -17,31 +16,59 @@ public class CircularFlowController : Controller
         _logger = logger;
     }
 
+    // Launches a Flow after a user/supervisor selects it. Returns a SubThemView to select the subtheme.
     // GET
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("CircularFlowView", flow);
+        return View("~/Views/SubTheme/SubThemeView.cshtml", flow);
     }
 
-    public IActionResult GetFirstQuestion(int flowId)
+    // Returns the first question view of a flow after a user/supervisor selects the subtheme.
+    public IActionResult GetFirstQuestion(int flowId, int subThemeId)
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
-        return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
+        TempData["subThemeId"] = subThemeId;
+        return View("~/Views/LinearFlow/QuestionView.cshtml", question);
     }
 
-    public IActionResult GetNextQuestion(int flowId, int questionId)
+    // Returns the view of the next question after the timer has ran out on the previous one.
+    // Shows the subtheme information view after each x-amount of questions.
+    public IActionResult GetNextQuestion(int flowId, int questionId, int subThemeId)
     {
+        int x = 3;
+
+        // Increment question count stored in session. Initialize if not set.
+        int questionCount = HttpContext.Session.GetInt32("QuestionCount") ?? 0;
+        questionCount++;
+        HttpContext.Session.SetInt32("QuestionCount", questionCount);
+
+        // Get the next question.
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
+
         if (nextQuestion == null)
         {
             Question question = _flowManager.GetFirstFlowQuestion(flowId);
-            return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
+            TempData["subThemeId"] = subThemeId;
+            return View("~/Views/LinearFlow/QuestionView.cshtml", question);
         }
 
-        return View("~/Views/LiniareFlow/QuestionView.cshtml", nextQuestion);
-    }
+        // Every "x" questions, show the subtheme information view.
+        if (questionCount == x)
+        {
+            // Reset counter
+            HttpContext.Session.SetInt32("QuestionCount", 0);
+            var flowSubTheme = _flowManager.GetFlowSubTheme(flowId, subThemeId);
+            TempData["questionId"] = questionId;
+            return View("~/Views/SubTheme/SubThemeInformationCircularView.cshtml", flowSubTheme);
+        }
 
+        // Show the standard question view.
+        TempData["subThemeId"] = subThemeId;
+        return View("~/Views/LinearFlow/QuestionView.cshtml", nextQuestion);
+    }
+    
+    // Stops the flow when the "stop" button is pressed.
     public IActionResult EndFlow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);

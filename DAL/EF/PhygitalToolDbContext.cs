@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
-using Domain.Domain.Flow;
-using Domain.FlowPackage;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class PhygitalToolDbContext : DbContext
 {
@@ -13,7 +13,8 @@ public class PhygitalToolDbContext : DbContext
     public DbSet<UserInput> UserInputs { get; set; }
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Flow> Flows { get; set; }
-    
+    public DbSet<SubTheme> SubThemes { get; set; }
+    public DbSet<FlowSubTheme> FlowSubThemes { get; set; }
     public DbSet<ContactInformation> ContactInformations { get; set; }
 
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
@@ -38,10 +39,23 @@ public class PhygitalToolDbContext : DbContext
             .HasOne(a => a.AnswerPossibility)
             .WithOne(ap => ap.Answer)
             .HasForeignKey<Answer>("AnswerPossibilityID");
-        
+
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
-        
+
+        modelBuilder.Entity<FlowSubTheme>()
+            .HasOne(flowSubTheme => flowSubTheme.Flow)
+            .WithMany(flow => flow.FlowSubThemes)
+            .HasForeignKey("FK_FlowId");
+
+        modelBuilder.Entity<FlowSubTheme>()
+            .HasOne(flowSubTheme => flowSubTheme.SubTheme)
+            .WithMany(subThemes => subThemes.FlowSubThemes)
+            .HasForeignKey("FK_SubThemeId");
+
+        modelBuilder.Entity<FlowSubTheme>()
+            .HasKey("FK_FlowId", "FK_SubThemeId");
+
         // modelBuilder.Entity<Question>().ToTable("Questions");
     }
 

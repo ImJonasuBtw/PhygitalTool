@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PygitalToolWeb.Models;
+namespace PhygitalTool.Web.Models;
 
 public class ContactViewModel
 {

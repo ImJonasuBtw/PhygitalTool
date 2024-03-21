@@ -1,7 +1,6 @@
-﻿using Domain.Domain.Flow;
-using Domain.FlowPackage;
+﻿using PhygitalTool.Domain.FlowPackage;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class PersistanceRepository : IRepositoryPersistance
 {
@@ -12,7 +11,7 @@ public class PersistanceRepository : IRepositoryPersistance
         _context = context;
     }
 
-
+    // Creates a new userInput
     public void CreateUserInput(UserInput userInput)
     {
         // saves the new user input
@@ -20,13 +19,15 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    // Creates a new answer
     public void CreateAnswer(Answer answer)
     {
-        //saves te new Answer
+        //saves the new Answer
         _context.Answers.Add(answer);
         _context.SaveChanges();
     }
 
+    // Saves Contact Information when user submits form.
     public void SaveContactInformation(ContactInformation contactInformation)
     {
         _context.ContactInformations.Add(contactInformation);

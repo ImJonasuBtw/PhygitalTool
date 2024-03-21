@@ -1,12 +1,11 @@
-﻿@using Domain.Domain.Util
-@model Domain.FlowPackage.Question
+﻿@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.Question
 
 <h1>@Model.QuestionText</h1>
 
 <div class="questionContainer">
     @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Linear)
     {
-        <p>@Model.QuestionText</p>
         <p>Duid één antwoord aan</p>
 
         <form method="post" action="/Question/SaveAnswerAndUserInput">
@@ -25,12 +24,12 @@
             <button type="submit" class="btn btn-primary submit-button" id="Submit">Submit</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+            <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
 
         </form>
     }
     @if (Model.QuestionType == QuestionType.Range)
     {
-        <p>@Model.QuestionText</p>
         <p>Kies 1 van de opties</p>
 
         <div class="slider-container">
@@ -47,12 +46,12 @@
                 <button type="button" class="submit-button" id="submitButton">Klaar</button>
                 <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
                 <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+                <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
             </form>
         </div>
     }
     @if (Model.QuestionType == QuestionType.MultipleChoice)
     {
-        <p>@Model.QuestionText</p>
         <p>Duid 1 of meerdere antwoorden aan</p>
         @foreach (var answerPossibility in Model.AnswerPossibilities)
         {
@@ -63,11 +62,11 @@
             <button type="button" class="submit-button" id="submitButton">Klaar</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+            <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
         </form>
     }
     @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
     {
-        <p>@Model.QuestionText</p>
         <p>Duid 1 antwoord aan</p>
         @foreach (var answerPossibility in Model.AnswerPossibilities)
         {
@@ -78,36 +77,40 @@
             <button type="button" class="submit-button" id="submitButtonCircular">Klaar</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+            <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
         </form>
     }
 </div>
 
-@if (Model.Flow.FlowType == FlowType.Circular)
-{
-    <script src="~/dist/circularFlow.entry.js"></script>
-    <style>
+<div>
+    @if (Model.Flow.FlowType == FlowType.Circular)
+    {
+        <script src="~/dist/circularFlow.entry.js"></script>
+        <style>
         .submit-button {
             display: none;
         }
     </style>
-    
-    <div>
-        <p>Timer: </p>
-        <p id="circular-timer"></p>
-    </div>
-    <div>
-        <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
-    </div>
 
-    var scheme = Context.Request.Scheme;
-    var host = Context.Request.Host.ToString();
-    var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId });
+        <div>
+            <p>Timer: </p>
+            <p id="circular-timer"></p>
+        </div>
+        <div>
+            <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
+        </div>
 
-    var fullUrl = $"{scheme}://{host}{actionPath}";
+        var scheme = Context.Request.Scheme;
+        var host = Context.Request.Host.ToString();
+        var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId });
 
-    <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code"/>
-}
+        var fullUrl = $"{scheme}://{host}{actionPath}";
 
+        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
+
+    }
+
+</div>
 
 @section Scripts
 {
@@ -156,6 +159,5 @@
         .selected {
                  background-color: #00ffd0 !important; /* pas aan naar jouw voorkeur */
                  font-weight: bold; /* of elke andere stijl die je wilt toevoegen */
-               }
-        
-    </style>
+        }
+</style>

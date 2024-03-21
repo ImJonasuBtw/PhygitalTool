@@ -4,7 +4,11 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        <AssemblyName>PhygitalTool.BL</AssemblyName>
+        <RootNamespace>PhygitalTool.BL</RootNamespace>
     </PropertyGroup>
+
+
 
     <ItemGroup>
       <ProjectReference Include="..\DAL\DAL.csproj" />

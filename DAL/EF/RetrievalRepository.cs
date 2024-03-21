@@ -1,8 +1,7 @@
-﻿using Domain.Domain.Flow;
-using Domain.FlowPackage;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class RetrievalRepository : IRepositoryRetrieval
 {
@@ -13,35 +12,40 @@ public class RetrievalRepository : IRepositoryRetrieval
         _context = context;
     }
 
+    // Returns Question of a certain id
     public Question ReadQuestion(int id)
     {
-        //Return Question of a certain id
         return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
     }
 
+    // Returns Question of a certain id with the answerPossibilities
     public Question ReadQuestionWithAnswerPossibilities(int id)
     {
-        //Return Question of a certain id with the answerPossibilities
-        return _context.Questions.Include(q=>q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.Include(q => q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
     }
 
+    // Returns all userInputs
     public IEnumerable<UserInput> ReadAllUserInputs()
     {
-        //Return all userInputs
         return _context.UserInputs;
     }
 
+    // Returns all Answers
     public IEnumerable<Answer> ReadAllAnswers()
     {
-        //Return all Answers
         return _context.Answers;
     }
 
+    // Returns a flow with FlowSubTheme and SubTheme
     public Flow ReadFlow(int flowId)
     {
-        return _context.Flows.SingleOrDefault(f => f.FlowId == flowId);
+        return _context.Flows
+            .Include(f => f.FlowSubThemes)
+            .ThenInclude(fst => fst.SubTheme)
+            .SingleOrDefault(f => f.FlowId == flowId);
     }
 
+    // Returns a collection of questions from a certain flow
     public ICollection<Question> ReadFlowQuestions(int flowId)
     {
         var flow = _context.Flows
@@ -53,7 +57,8 @@ public class RetrievalRepository : IRepositoryRetrieval
             .OrderBy(q => q.QuestionId) // Order the questions
             .ToList(); // Convert to List
     }
-    
+
+    // Returns the first question of a flow
     public Question ReadFirstFlowQuestion(int flowId)
     {
         var flow = _context.Flows
@@ -65,7 +70,8 @@ public class RetrievalRepository : IRepositoryRetrieval
             .OrderBy(q => q.QuestionId) // Order the questions
             .FirstOrDefault(); // Get the first question
     }
-    
+
+    // Returns the next question in a flow after given currentQuestionId
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
         // Retrieve all questions in the flow, ordered by QuestionId
@@ -91,5 +97,13 @@ public class RetrievalRepository : IRepositoryRetrieval
         return null;
     }
 
-    
+    // Returns a FlowSubTheme using a flowId and subThemeId
+    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
+    {
+        return _context.FlowSubThemes
+            .Include(f => f.Flow)
+            .Include(s => s.SubTheme)
+            .FirstOrDefault(flowSubTheme =>
+                flowSubTheme.Flow.FlowId == flowId && flowSubTheme.SubTheme.SubThemeId == subThemeId);
+    }
 }

@@ -1,8 +1,8 @@
-﻿using BL;
-using Domain.FlowPackage;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class ContactInformationController : Controller
 {
@@ -15,14 +15,15 @@ public class ContactInformationController : Controller
         _flowManager = flowManager;
         _logger = logger;
     }
-
+    
     // GET
     public IActionResult Index(int id)
     {
-        var contactinfostart = new ContactInformation(_flowManager.GetFlow(id));
-        return View("index", contactinfostart);
+        var contactInfoStart = new ContactInformation(_flowManager.GetFlow(id));
+        return View("index", contactInfoStart);
     }
     
+    // Returns to home after user fills in contact form
     [HttpPost]
     public IActionResult Contact(ContactInformation contactInformation)
     {

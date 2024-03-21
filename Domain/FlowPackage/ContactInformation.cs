@@ -1,25 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Domain.FlowPackage;
+namespace PhygitalTool.Domain.FlowPackage;
 
 public class ContactInformation
 {
+    // Prop
     public int ContactInformationId;
-    
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
-    
-    [Required]
-    [StringLength(100)]
-    public string Name { get; set; }
 
-    public int FlowId { get; set; } 
-    
-    //nav
-    [ForeignKey("FlowId")] 
-    public Flow Flow { get;  set; }
+    [Required] [EmailAddress] public string Email { get; set; }
+
+    [Required] [StringLength(100)] public string Name { get; set; }
+
+    public int FlowId { get; set; }
+
+    // nav
+    [ForeignKey("FlowId")] public Flow Flow { get; set; }
 
 
     public ContactInformation()
