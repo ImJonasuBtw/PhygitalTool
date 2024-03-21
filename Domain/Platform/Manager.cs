@@ -1,6 +1,7 @@
 namespace PhygitalTool.Domain.Platform;
 
-public class Manager: SystemUser
+public class Manager : SystemUser
 {
-    public int ManagerId { get;  set; }
+    // Prop
+    public int ManagerId { get; set; }
 }

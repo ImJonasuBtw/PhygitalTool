@@ -5,8 +5,7 @@ namespace PhygitalTool.Domain.FlowPackage;
 
 public class FlowSubTheme
 {
-    [Key]
-    public Flow Flow { get; set; }
-    [Key]
-    public SubTheme SubTheme { get; set; }
+    // Intermediary class between Flow and SubTheme as it's got a many-to-many relation.
+    [Key] public Flow Flow { get; set; }
+    [Key] public SubTheme SubTheme { get; set; }
 }

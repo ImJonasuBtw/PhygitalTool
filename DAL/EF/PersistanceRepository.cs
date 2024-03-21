@@ -11,7 +11,7 @@ public class PersistanceRepository : IRepositoryPersistance
         _context = context;
     }
 
-
+    // Creates a new userInput
     public void CreateUserInput(UserInput userInput)
     {
         // saves the new user input
@@ -19,6 +19,7 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    // Creates a new answer
     public void CreateAnswer(Answer answer)
     {
         //saves the new Answer
@@ -26,6 +27,7 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    // Saves Contact Information when user submits form.
     public void SaveContactInformation(ContactInformation contactInformation)
     {
         _context.ContactInformations.Add(contactInformation);
