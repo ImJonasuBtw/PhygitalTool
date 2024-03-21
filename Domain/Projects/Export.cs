@@ -1,6 +1,6 @@
-using Domain.Domain.Util;
+using PhygitalTool.Domain.Util;
 
-namespace Domain.Domain.Projects;
+namespace PhygitalTool.Domain.Projects;
 
 public class Export
 {

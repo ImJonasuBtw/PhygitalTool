@@ -1,4 +1,4 @@
-namespace PygitalToolWeb.Models;
+namespace PhygitalTool.Web.Models;
 
 public class ErrorViewModel
 {

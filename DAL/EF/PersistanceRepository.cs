@@ -1,7 +1,6 @@
-﻿using Domain.Domain.Flow;
-using Domain.FlowPackage;
+﻿using PhygitalTool.Domain.FlowPackage;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class PersistanceRepository : IRepositoryPersistance
 {

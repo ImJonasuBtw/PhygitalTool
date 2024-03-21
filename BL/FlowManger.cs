@@ -1,8 +1,7 @@
-﻿using DAL;
-using Domain.FlowPackage;
-using Domain.Projects;
+﻿using PhygitalTool.DAL;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace BL;
+namespace PhygitalTool.BL;
 
 public class FlowManger : IFlowManager
 {

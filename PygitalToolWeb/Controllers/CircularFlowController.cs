@@ -1,9 +1,8 @@
-using BL;
 using Microsoft.AspNetCore.Mvc;
-using Domain.FlowPackage;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class CircularFlowController : Controller
 {
@@ -28,7 +27,7 @@ public class CircularFlowController : Controller
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
         TempData["subThemeId"] = subThemeId;
-        return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
+        return View("~/Views/LinearFlow/QuestionView.cshtml", question);
     }
 
     public IActionResult GetNextQuestion(int flowId, int questionId, int subThemeId)
@@ -47,7 +46,7 @@ public class CircularFlowController : Controller
         {
             Question question = _flowManager.GetFirstFlowQuestion(flowId);
             TempData["subThemeId"] = subThemeId;
-            return View("~/Views/LiniareFlow/QuestionView.cshtml", question);
+            return View("~/Views/LinearFlow/QuestionView.cshtml", question);
         }
 
         // Every "x" questions, show a different view.
@@ -62,7 +61,7 @@ public class CircularFlowController : Controller
 
         // Show the standard question view.
         TempData["subThemeId"] = subThemeId;
-        return View("~/Views/LiniareFlow/QuestionView.cshtml", nextQuestion);
+        return View("~/Views/LinearFlow/QuestionView.cshtml", nextQuestion);
     }
     
     public IActionResult EndFlow(int flowId)

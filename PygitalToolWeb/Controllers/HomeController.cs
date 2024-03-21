@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PygitalToolWeb.Models;
+using PhygitalTool.Web.Models;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class HomeController : Controller
 {

@@ -1,9 +1,8 @@
-using BL;
-using Domain.FlowPackage;
-using Domain.Projects;
 using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
 public class SubThemeController : Controller
 {
@@ -19,6 +18,6 @@ public class SubThemeController : Controller
     public IActionResult ShowSubThemeInformation(int flowId, int subThemeId)
     {
         FlowSubTheme flowSubTheme = _flowManager.GetFlowSubTheme(flowId, subThemeId);
-        return View("SubThemeInformationView", flowSubTheme);
+        return View("SubThemeInformationBeginView", flowSubTheme);
     }
 }

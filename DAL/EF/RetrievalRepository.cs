@@ -1,9 +1,7 @@
-﻿using Domain.Domain.Flow;
-using Domain.FlowPackage;
-using Domain.Projects;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public class RetrievalRepository : IRepositoryRetrieval
 {

@@ -1,5 +1,5 @@
-@using Domain.Domain.Util
-@model Domain.FlowPackage.FlowSubTheme
+@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.FlowSubTheme
 
 <h2>@Model.SubTheme.SubThemeName</h2>
 
@@ -20,6 +20,17 @@
     <p id="circular-timer"></p>
     <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="EndFlow" asp-route-flowId="@Model.Flow.FlowId">STOP</a>
 }
+
+
+@{
+    var scheme = Context.Request.Scheme;
+    var host = Context.Request.Host.ToString(); 
+    var actionPath = Url.Action("Index", "ContactInformation", new { id = Model.Flow.FlowId});
+
+    var fullUrl = $"{scheme}://{host}{actionPath}";
+}
+<img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
+
 
 @section Scripts {
     <script src="~/dist/circularFlow.entry.js"></script>

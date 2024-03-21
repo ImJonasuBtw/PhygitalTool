@@ -1,19 +1,16 @@
-﻿using BL;
-using Microsoft.AspNetCore.Mvc;
-using Domain;
-using Domain.Domain.Flow;
-using Domain.Domain.Util;
-using Domain.FlowPackage;
+﻿using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
+using PhygitalTool.Domain.FlowPackage;
 
-namespace PygitalToolWeb.Controllers;
+namespace PhygitalTool.Web.Controllers;
 
-public class LiniareFlowController : Controller
+public class LinearFlowController : Controller
 {
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
 
 
-    public LiniareFlowController(IFlowManager flowManager, ILogger<QuestionController> logger)
+    public LinearFlowController(IFlowManager flowManager, ILogger<QuestionController> logger)
     {
         _flowManager = flowManager;
         _logger = logger;

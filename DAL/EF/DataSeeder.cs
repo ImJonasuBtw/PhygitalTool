@@ -1,9 +1,9 @@
-﻿using Domain.Domain.Util;
-using Domain.Extensions;
-using Domain.FlowPackage;
-using Domain.Projects;
+﻿using PhygitalTool.Domain.Extensions;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 
-namespace DAL.EF;
+namespace PhygitalTool.DAL.EF;
 
 public static class DataSeeder
 {

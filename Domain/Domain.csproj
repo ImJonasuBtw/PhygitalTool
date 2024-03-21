@@ -4,22 +4,11 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        <AssemblyName>PhygitalTool.Domain</AssemblyName>
+        <RootNamespace>PhygitalTool.Domain</RootNamespace>
     </PropertyGroup>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     <ItemGroup>
       <Compile Remove="Domain\Flow\Condition.cs" />
       <Compile Remove="Domain\Platform\BackOffice.cs" />

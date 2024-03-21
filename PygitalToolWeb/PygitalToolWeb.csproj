@@ -2,12 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <IsPackable>false</IsPackable>
                 <MpaRoot>ClientApp\</MpaRoot>
                 <WWWRoot>wwwroot\</WWWRoot>
                 <DefaultItemExcludes>$(DefaultItemExcludes);$(MpaRoot)node_modules\**</DefaultItemExcludes>
+        <AssemblyName>PhygitalTool.Web</AssemblyName>
+        <RootNamespace>PhygitalTool.Web</RootNamespace>
     </PropertyGroup>
 
 
@@ -40,9 +42,6 @@
           <ProjectReference Include="..\DAL\DAL.csproj" />
         </ItemGroup>
     
-        <ItemGroup>
-          <AdditionalFiles Include="Views\LiniareFlow\FLowView.cshtml" />
-        </ItemGroup>
     
     
     

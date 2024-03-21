@@ -1,6 +1,4 @@
-using Domain.Domain.Platform;
-
-namespace Domain.Domain;
+namespace PhygitalTool.Domain.Platform;
 
 public class Admin: SystemUser
 {
