@@ -53,6 +53,7 @@ public class QuestionController : Controller
 
         _flowManager.AddAnswer(newAnswerId, selectedAnswer, currentQuestion);
         _flowManager.AddUserInput(newUserid, currentFlow, newUserid);
+        //todo: usermanager
 
         // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)

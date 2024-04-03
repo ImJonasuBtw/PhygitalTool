@@ -1,0 +1,43 @@
+﻿@model PhygitalTool.Domain.Platform.BackOffice
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 bg-light min-vh-100">
+            <!-- User Info -->
+            <div class="text-center mt-4">
+                <img src="https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg" alt="Profile Picture" class="rounded-circle" style="width: 100px; height: 100px;">
+                <h5>Mark</h5>
+                <p>mycompany</p>
+            </div>
+
+            <div class="nav flex-column">
+                <a href="#" class="nav-link active">Projecten <span class="badge badge-primary">3</span></a>
+                <a href="#" class="nav-link">Flows <span class="badge badge-primary">9</span></a>
+                <a href="#" class="nav-link">Instellingen</a>
+                <a href="#" class="nav-link">Logout</a>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="col-md-9">
+            <h2 class="mt-4">Projecten</h2>
+            <div class="d-flex justify-content-start">
+                @foreach (var project in Model.Projects)
+                {
+                    <div class="p-2">
+                        <button type="button" class="btn btn-outline-primary"> @project.ProjectName </button>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>

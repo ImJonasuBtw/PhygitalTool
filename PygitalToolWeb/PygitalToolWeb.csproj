@@ -42,6 +42,13 @@
           <ProjectReference Include="..\DAL\DAL.csproj" />
         </ItemGroup>
     
+        <ItemGroup>
+          <AdditionalFiles Include="Views\BackOffice\ProjectsView.cshtml" />
+        </ItemGroup>
+    
+    
+    
+    
     
     
     

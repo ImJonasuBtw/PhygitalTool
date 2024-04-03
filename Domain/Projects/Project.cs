@@ -1,3 +1,4 @@
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.Domain.Projects;
@@ -10,4 +11,23 @@ public class Project
     public string ProjectName { get; set; }
     public DateTime CreationDate { get; set; }
     public ProjectStatus Status { get; set; }
+
+    // Foreign key property for BackOffice
+    public int BackOfficeId { get; set; } 
+    
+    //nav
+    public BackOffice BackOffice { get; set; }
+
+    public Project()
+    {
+    }
+
+    public Project(int projectId, string description, string projectName, DateTime creationDate, ProjectStatus status)
+    {
+        ProjectId = projectId;
+        Description = description;
+        ProjectName = projectName;
+        CreationDate = creationDate;
+        Status = status;
+    }
 }
