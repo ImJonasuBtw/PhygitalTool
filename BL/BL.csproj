@@ -7,21 +7,13 @@
         <AssemblyName>PhygitalTool.BL</AssemblyName>
         <RootNamespace>PhygitalTool.BL</RootNamespace>
     </PropertyGroup>
-
-
+    
 
     <ItemGroup>
       <ProjectReference Include="..\DAL\DAL.csproj" />
     </ItemGroup>
 
-
-
-
-
-
-
-
-
+    
     <ItemGroup>
       <Folder Include="Users\" />
     </ItemGroup>

@@ -29,9 +29,9 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new UserInput and returns it
-    public UserInput AddUserInput(int userId, int flowId, int answerId)
+    public UserInput AddUserInput( int flowId, int answerId)
     {
-        UserInput userInput = new UserInput(userId, flowId, answerId);
+        UserInput userInput = new UserInput( flowId, answerId);
         _repositoryPersistance.CreateUserInput(userInput);
         return userInput;
     }
@@ -95,20 +95,7 @@ public class FlowManger : IFlowManager
 
     public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
     {
-        //todo ID fiksen
-        // logic to store the user's response in the database
-        int newUserid;
         int newAnswerId;
-        // TODO Knowing if it's the same user or not, for the userID
-        if (GetAllUserInputs().IsNullOrEmpty())
-        {
-            newUserid = 1;
-        }
-        else
-        {
-            int maxUserId = GetAllUserInputs().Max(a => a.UserId);
-            newUserid = maxUserId + 1;
-        }
 
         if (GetAllAnswers().IsNullOrEmpty())
         {
@@ -125,7 +112,7 @@ public class FlowManger : IFlowManager
             selectedAnswer = "no answer";
         }
         AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
-        AddUserInput(newUserid,currentFlow,newAnswerId);
+        AddUserInput(currentFlow,newAnswerId);
     }
 
     
