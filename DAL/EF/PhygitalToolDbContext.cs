@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PhygitalTool.Domain.FlowPackage;
@@ -7,7 +9,7 @@ using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
 
-public class PhygitalToolDbContext : DbContext
+public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Question> Questions { get; set; }
     public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }

@@ -31,6 +31,6 @@ public interface IRepositoryRetrieval
 
     // Returns a FlowSubTheme using a flowId and subThemeId
     public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId);
-    public BackOffice ReadBackOfficeForManager(int managerId);
+    public BackOffice ReadBackOfficeForManager(string managerId);
     BackOffice ReadBackOffice(int backofficeId);
 }

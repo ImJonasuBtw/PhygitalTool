@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhygitalTool.BL;
 using PhygitalTool.DAL;
 using PhygitalTool.DAL.EF;
+using PhygitalTool.Domain.Platform;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,10 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDefaultIdentity<Manager>() 
+    .AddRoles<IdentityRole>() 
+    .AddEntityFrameworkStores<PhygitalToolDbContext>(); 
+
 
 var app = builder.Build();
 
@@ -39,12 +45,14 @@ if (!app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
+    var services = scope.ServiceProvider;
     PhygitalToolDbContext ctx = scope.ServiceProvider.GetRequiredService<PhygitalToolDbContext>();
+    UserManager<Manager> userManager = services.GetRequiredService<UserManager<Manager>>();
     bool isDatabaseCreated = ctx.CreateDataBase(true);
 
     if (isDatabaseCreated)
     {
-        DataSeeder.Seed(ctx);
+        DataSeeder.Seed(ctx, userManager);
         Console.Write("Data Seeded");
     }
 }
@@ -62,10 +70,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//first auth then auth
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
 
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
