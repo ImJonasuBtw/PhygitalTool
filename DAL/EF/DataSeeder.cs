@@ -1,5 +1,6 @@
 ﻿using PhygitalTool.Domain.Extensions;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
@@ -9,6 +10,38 @@ public static class DataSeeder
 {
     public static void Seed(PhygitalToolDbContext context)
     {
+        //creating dummy users
+        //creating backoffice env 
+        var backOffice1 = new BackOffice(1, "TestOffice");
+            //managers
+            var manager1 = new Manager(1,"Jhonny","test","test");
+            context.Managers.Add(manager1);
+        //creating projects 
+        var project1 = new Project
+        {
+            ProjectId = 1,
+            Description = "test",
+            ProjectName = "proj1",
+            CreationDate = default,
+            Status = ProjectStatus.Active
+        };
+        var project2 = new Project
+        {
+            ProjectId = 2,
+            Description = "test",
+            ProjectName = "proj2",
+            CreationDate = default,
+            Status = ProjectStatus.Active
+        };
+            backOffice1.Projects.Add(project1);
+            backOffice1.Projects.Add(project2);
+            backOffice1.Managers.Add(manager1);
+            context.Projects.Add(project1);
+            context.Projects.Add(project2);
+        context.BackOffices.Add(backOffice1);
+        
+        
+        
         // Creating Questions
         // Linear Flow
         //  Single choice

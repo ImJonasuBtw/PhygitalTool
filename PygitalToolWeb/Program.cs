@@ -15,6 +15,8 @@ builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
 builder.Services.AddScoped<IRepositoryRetrieval, RetrievalRepository>();
 builder.Services.AddScoped<IRepositoryPersistance, PersistanceRepository>();
 builder.Services.AddScoped<IFlowManager, FlowManger>();
+builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
+builder.Services.AddScoped<IProjectManager, ProjectManager>();
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>

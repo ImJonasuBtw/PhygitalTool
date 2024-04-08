@@ -12,6 +12,7 @@ public class ContactInformation
 
     [Required] [StringLength(100)] public string Name { get; set; }
 
+    //fk
     public int FlowId { get; set; }
 
     // nav
