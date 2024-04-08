@@ -124,4 +124,11 @@ public class RetrievalRepository : IRepositoryRetrieval
 
         return backOffice;
     }
+
+    public BackOffice ReadBackOffice(int backofficeId)
+    {
+        return _context.BackOffices
+            .Include(bo => bo.Projects)
+            .SingleOrDefault(office => office.BackOfficeId == backofficeId);
+    }
 }

@@ -18,4 +18,9 @@ public class BackOfficeManager : IBackOfficeManager
     {
         return _repositoryRetrieval.ReadBackOfficeForManager(managerId);
     }
+
+    public BackOffice GetBackOffice(int backofficeId)
+    {
+        return _repositoryRetrieval.ReadBackOffice(backofficeId);
+    }
 }

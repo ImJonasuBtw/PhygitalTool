@@ -12,14 +12,14 @@
         <div class="col-md-3 bg-light min-vh-100">
             <!-- User Info -->
             <div class="text-center mt-4">
-                <img src="https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg" alt="Profile Picture" class="rounded-circle" style="width: 100px; height: 100px;">
+                <img src="https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg" alt="Profile Picture" class="rounded-circle img-fluid">
                 <h5>Mark</h5>
                 <p>mycompany</p>
             </div>
 
             <div class="nav flex-column">
-                <a href="#" class="nav-link active">Projecten <span class="badge badge-primary">3</span></a>
-                <a href="#" class="nav-link">Flows <span class="badge badge-primary">9</span></a>
+                <a href="#" class="nav-link active">Projecten <span class="badge badge-primary">@Model.Projects.Count</span></a>
+                <a href="#" class="nav-link">Flows <span class="badge badge-primary"></span></a>
                 <a href="#" class="nav-link">Instellingen</a>
                 <a href="#" class="nav-link">Logout</a>
             </div>
@@ -35,9 +35,41 @@
                         <button type="button" class="btn btn-outline-primary"> @project.ProjectName </button>
                     </div>
                 }
-
             </div>
         </div>
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal" style="position: fixed; bottom: 20px; right: 20px;">
+            +
+        </button>
 
+        
+        <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="newProjectModalLabel">Nieuw project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("Create", "BackOffice", FormMethod.Post))
+                        {
+                            <div class="form-group">
+                                <label for="project-name">Naam</label>
+                                <input type="text" class="form-control" id="project-name" name="projectName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-description">Beschrijving</label>
+                                <textarea class="form-control" id="project-description" name="projectDescription" required></textarea>
+                            </div>
+                            <input type="hidden" name="BackOfficeId" value="@Model.BackOfficeId" />
+                            <input type="hidden" name="managerId" value="@TempData["ManagerId"]" />
+                            <button type="submit" class="btn btn-primary">Opslaan</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

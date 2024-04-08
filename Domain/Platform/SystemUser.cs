@@ -1,3 +1,5 @@
+using System.Security.Principal;
+
 namespace PhygitalTool.Domain.Platform;
 
 public interface ISystemUser

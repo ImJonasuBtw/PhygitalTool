@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
 
@@ -31,6 +32,12 @@ public class PersistanceRepository : IRepositoryPersistance
     public void SaveContactInformation(ContactInformation contactInformation)
     {
         _context.ContactInformations.Add(contactInformation);
+        _context.SaveChanges();
+    }
+
+    public void CreateProject(Project project)
+    {
+        _context.Projects.Add(project);
         _context.SaveChanges();
     }
 }

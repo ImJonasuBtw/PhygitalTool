@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Util;
 
@@ -6,6 +7,7 @@ namespace PhygitalTool.Domain.Projects;
 public class Project
 {
     // Prop
+    [Key]
     public int ProjectId { get; set; }
     public string Description { get; set; }
     public string ProjectName { get; set; }
