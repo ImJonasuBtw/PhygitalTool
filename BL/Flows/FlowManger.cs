@@ -1,5 +1,7 @@
-﻿using PhygitalTool.DAL;
+﻿using Microsoft.IdentityModel.Tokens;
+using PhygitalTool.DAL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
 
@@ -41,7 +43,7 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new answer using an answerId, answerDes and the questionId its connected to, and returns it.
-    public Answer AddAnswer(int answerId, string answerDes, int questionId)
+    public Answer AddAnswer( int answerId,string answerDes, int questionId)
     {
         //creates a new answer
         Answer answer = new Answer(answerId, answerDes, questionId);
@@ -90,4 +92,41 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadFlowSubTheme(flowId, subThemeId);
     }
+
+    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
+    {
+        //todo ID fiksen
+        // logic to store the user's response in the database
+        int newUserid;
+        int newAnswerId;
+        // TODO Knowing if it's the same user or not, for the userID
+        if (GetAllUserInputs().IsNullOrEmpty())
+        {
+            newUserid = 1;
+        }
+        else
+        {
+            int maxUserId = GetAllUserInputs().Max(a => a.UserId);
+            newUserid = maxUserId + 1;
+        }
+
+        if (GetAllAnswers().IsNullOrEmpty())
+        {
+            newAnswerId = 1;
+        }
+        else
+        {
+            int MaxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
+            newAnswerId = MaxAnswerId + 1;
+        }
+
+        if (selectedAnswer.IsNullOrEmpty())
+        {
+            selectedAnswer = "no answer";
+        }
+        AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
+        AddUserInput(newUserid,currentFlow,newAnswerId);
+    }
+
+    
 }

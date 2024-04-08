@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
 
@@ -39,4 +40,7 @@ public interface IFlowManager
 
     // Returns a FlowSubTheme using its flowId and subThemeId
     public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId);
+
+   public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion);
+   
 }
