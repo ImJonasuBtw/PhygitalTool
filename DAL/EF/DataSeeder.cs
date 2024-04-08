@@ -1,4 +1,5 @@
-﻿using PhygitalTool.Domain.Extensions;
+﻿using Microsoft.AspNetCore.Identity;
+using PhygitalTool.Domain.Extensions;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -8,14 +9,33 @@ namespace PhygitalTool.DAL.EF;
 
 public static class DataSeeder
 {
-    public static void Seed(PhygitalToolDbContext context)
+    public static void Seed(PhygitalToolDbContext context, UserManager<Manager> userManager)
     {
         //creating dummy users
         //creating backoffice env 
         var backOffice1 = new BackOffice(1, "TestOffice");
-            //managers
-            var manager1 = new Manager(1,"Jhonny","test","test");
-            context.Managers.Add(manager1);
+        context.BackOffices.Add(backOffice1);
+        context.SaveChanges();
+         
+        // Managers
+        if (!context.Users.Any(u => u.Email == "manager1@example.com"))
+        {
+            var manager1 = new Manager
+            {
+                UserName = "manager1@example.com", // Use the email as the username if you're not using separate usernames
+                Email = "manager1@example.com",
+                EmailConfirmed = true,
+                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+            };
+    
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            if (!creationResult.Succeeded)
+            {
+                // If creation fails, log or handle the error as needed
+                throw new System.Exception("Failed to create dummy manager.");
+            }
+        }
+
         //creating projects 
         var project1 = new Project
         {
@@ -35,10 +55,8 @@ public static class DataSeeder
         };
             backOffice1.Projects.Add(project1);
             backOffice1.Projects.Add(project2);
-            backOffice1.Managers.Add(manager1);
             context.Projects.Add(project1);
             context.Projects.Add(project2);
-        context.BackOffices.Add(backOffice1);
         
         
         

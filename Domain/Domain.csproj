@@ -10,26 +10,16 @@
 
     
     <ItemGroup>
-      <Compile Remove="Domain\Flow\Condition.cs" />
-      <Compile Remove="Domain\Platform\BackOffice.cs" />
-      <Compile Remove="Domain\Projects\Export.cs" />
-      <Compile Remove="Domain\Flow\Answer.cs" />
-      <Compile Remove="Domain\Flow\UserInput.cs" />
-    </ItemGroup>
+        <Compile Remove="Domain\Flow\Condition.cs" />
+        <Compile Remove="Domain\Platform\BackOffice.cs" />
+        <Compile Remove="Domain\Projects\Export.cs" />
+        <Compile Remove="Domain\Flow\Answer.cs" />
+        <Compile Remove="Domain\Flow\UserInput.cs" />
+    </ItemGroup> 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
+    </ItemGroup> 
 
 </Project>

@@ -109,11 +109,11 @@ public class RetrievalRepository : IRepositoryRetrieval
     }
 
     // Returns the backoffice with projects of a specific manager
-    public BackOffice ReadBackOfficeForManager(int managerId)
+    public BackOffice ReadBackOfficeForManager(string managerId)
     {
   
         var backOfficeId = _context.Managers
-            .Where(manager => manager.ManagerId == managerId)
+            .Where(manager => manager.Id == managerId)
             .Select(manager => manager.BackOfficeId) 
             .FirstOrDefault();
 
