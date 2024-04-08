@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -21,8 +24,10 @@ public class BackOfficeController : Controller
     }
 
     // GET
-    public IActionResult Index(int managerId)
+    [Authorize]
+    public IActionResult Index()
     {
+        string managerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         BackOffice backOffice = _backOfficeManager.GetBackOfficeForManager(managerId);
         TempData["ManagerId"] = managerId;
         return View("ProjectsView", backOffice);

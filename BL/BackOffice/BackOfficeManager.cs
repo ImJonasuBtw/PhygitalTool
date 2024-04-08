@@ -14,7 +14,7 @@ public class BackOfficeManager : IBackOfficeManager
         _repositoryRetrieval = repositoryRetrieval;
     }
 
-    public BackOffice GetBackOfficeForManager(int managerId)
+    public BackOffice GetBackOfficeForManager(string managerId)
     {
         return _repositoryRetrieval.ReadBackOfficeForManager(managerId);
     }

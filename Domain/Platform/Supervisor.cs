@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace PhygitalTool.Domain.Platform;
 
-public class Supervisor : ISystemUser
+public class Supervisor : IdentityUser
 {
     // Prop
     public int SupervisorId { get; set; }

@@ -4,7 +4,7 @@ namespace PhygitalTool.BL;
 
 public interface IBackOfficeManager
 {
-    BackOffice GetBackOfficeForManager(int managerId);
+    BackOffice GetBackOfficeForManager(string managerId);
 
     BackOffice GetBackOffice(int backofficeId);
 }
