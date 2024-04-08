@@ -5,8 +5,9 @@ var __webpack_exports__ = {};
   !*** ./src/js/circularFlow.ts ***!
   \********************************/
 
+// Length of the timer for each question in a circular flow
 const timerLength = 5;
-// timer that clicks the submit button when finished
+// Timer that clicks the submit button when time runs out
 function timer() {
     let button;
     button = document.getElementById('submitButton');
@@ -28,7 +29,7 @@ function timer() {
         });
     }
 }
-// text update for visual timer
+// HTML text updater to display the timer to the user
 function setTimerText() {
     const timerElement = document.getElementById('circular-timer');
     let timeLeft = timerLength;

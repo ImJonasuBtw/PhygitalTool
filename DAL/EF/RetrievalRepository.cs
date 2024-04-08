@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 
 namespace PhygitalTool.DAL.EF;
 
@@ -105,5 +106,29 @@ public class RetrievalRepository : IRepositoryRetrieval
             .Include(s => s.SubTheme)
             .FirstOrDefault(flowSubTheme =>
                 flowSubTheme.Flow.FlowId == flowId && flowSubTheme.SubTheme.SubThemeId == subThemeId);
+    }
+
+    // Returns the backoffice with projects of a specific manager
+    public BackOffice ReadBackOfficeForManager(int managerId)
+    {
+  
+        var backOfficeId = _context.Managers
+            .Where(manager => manager.ManagerId == managerId)
+            .Select(manager => manager.BackOfficeId) 
+            .FirstOrDefault();
+
+        
+        var backOffice = _context.BackOffices
+            .Include(bo => bo.Projects) 
+            .FirstOrDefault(bo => bo.BackOfficeId == backOfficeId);
+
+        return backOffice;
+    }
+
+    public BackOffice ReadBackOffice(int backofficeId)
+    {
+        return _context.BackOffices
+            .Include(bo => bo.Projects)
+            .SingleOrDefault(office => office.BackOfficeId == backofficeId);
     }
 }
