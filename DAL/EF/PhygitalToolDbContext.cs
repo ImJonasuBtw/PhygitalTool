@@ -41,10 +41,6 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Answer>()
-            .HasOne(a => a.AnswerPossibility)
-            .WithOne(ap => ap.Answer)
-            .HasForeignKey<Answer>("AnswerPossibilityID");
 
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);

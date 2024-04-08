@@ -12,7 +12,7 @@ public interface IFlowManager
     Question GetQuestionWithAnswerPossibilities(int id);
 
     // Creates a new UserInput and returns it
-    UserInput AddUserInput(int userId, int flowId, int answerId);
+    UserInput AddUserInput( int flowId, int answerId);
 
     // Returns all userInputs
     IEnumerable<UserInput> GetAllUserInputs();
