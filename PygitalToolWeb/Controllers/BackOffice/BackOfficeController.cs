@@ -1,12 +1,9 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
-using PhygitalTool.Domain.Platform;
-using PhygitalTool.Domain.Projects;
 
-namespace PhygitalTool.Web.Controllers;
+namespace PhygitalTool.Web.Controllers.BackOffice;
 
 public class BackOfficeController : Controller
 {
@@ -28,31 +25,8 @@ public class BackOfficeController : Controller
     public IActionResult Index()
     {
         string managerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        BackOffice backOffice = _backOfficeManager.GetBackOfficeForManager(managerId);
-        TempData["ManagerId"] = managerId;
+        Domain.Platform.BackOffice backOffice = _backOfficeManager.GetBackOfficeForManager(managerId);
         return View("ProjectsView", backOffice);
     }
-
-    [HttpPost]
-    public IActionResult Create(Project project, int backOfficeId, int managerId)
-    {
-        BackOffice backOffice = _backOfficeManager.GetBackOffice(backOfficeId);
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                project.BackOfficeId = backOfficeId;
-                project.CreationDate = DateTime.UtcNow;
-                _projectManager.AddProject(project);
-                
-                return RedirectToAction(nameof(Index), new {managerId});
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error creating project");
-                ModelState.AddModelError(string.Empty, "An error occurred while creating the project.");
-            }
-        }
-        return View("ProjectsView", backOffice);
-    }
+    
 }

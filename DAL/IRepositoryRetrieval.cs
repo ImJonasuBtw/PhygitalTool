@@ -1,5 +1,6 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL;
 
@@ -33,4 +34,7 @@ public interface IRepositoryRetrieval
     public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId);
     public BackOffice ReadBackOfficeForManager(string managerId);
     BackOffice ReadBackOffice(int backofficeId);
+    Project ReadProjectWithThemes(int projectId);
+    MainTheme ReadThemeWithSubthemes(int themeId);
+    SubTheme ReadSubthemeWithFlowSubthemes(int subThemeId);
 }

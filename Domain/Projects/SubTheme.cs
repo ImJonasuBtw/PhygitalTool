@@ -11,6 +11,7 @@ public class SubTheme
 
     // Nav
     public ICollection<FlowSubTheme> FlowSubThemes { get; set; } = new List<FlowSubTheme>();
+    public MainTheme MainTheme { get; set; }
 
     public SubTheme()
     {

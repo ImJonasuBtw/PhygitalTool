@@ -1,0 +1,16 @@
+﻿@model PhygitalTool.Domain.Projects.SubTheme
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+@foreach (var flowSubTheme in Model.FlowSubThemes)
+{
+    <div class="p-2">
+        <a class="btn btn-outline-primary">@flowSubTheme.Flow.FlowDescription </a>
+    </div>
+}
+

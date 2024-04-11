@@ -22,6 +22,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Project> Projects { get; set; }
     public DbSet<BackOffice> BackOffices { get; set; }
     public DbSet<Manager> Managers { get; set; }
+    public DbSet<MainTheme> MainThemes { get; set; }
 
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {

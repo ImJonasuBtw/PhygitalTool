@@ -1,0 +1,17 @@
+﻿@using PhygitalTool.Domain.Projects
+@model PhygitalTool.Domain.Projects.Project
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Themas</h2>
+
+<h3>@Model.ProjectName</h3>
+@foreach (var mainTheme in Model.MainThemes)
+{
+    <div class="p-2">
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Themes" asp-action="Index" asp-route-themeId="@mainTheme.ThemeId">@mainTheme.ThemeName </a>
+    </div>
+}
