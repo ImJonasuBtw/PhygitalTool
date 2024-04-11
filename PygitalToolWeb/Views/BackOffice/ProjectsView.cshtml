@@ -12,9 +12,15 @@
         <div class="col-md-3 bg-light min-vh-100">
             <!-- User Info -->
             <div class="text-center mt-4">
-                <img src="https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg" alt="Profile Picture" class="rounded-circle img-fluid">
-                <h5>Mark</h5>
-                <p>mycompany</p>
+                @foreach (var manager in Model.Managers)
+                {
+                    if (manager.UserName == User.Identity?.Name)
+                    {
+                        <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <h5>@manager.UserName</h5>
+                        <p>mycompany</p>
+                    }
+                }
             </div>
 
             <div class="nav flex-column">
@@ -32,44 +38,15 @@
                 @foreach (var project in Model.Projects)
                 {
                     <div class="p-2">
-                        <button type="button" class="btn btn-outline-primary"> @project.ProjectName </button>
+                        <a class="btn btn-outline-primary" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-projectId="@project.ProjectId">@project.ProjectName</a>
                     </div>
                 }
             </div>
         </div>
-        
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal" style="position: fixed; bottom: 20px; right: 20px;">
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal" >
             +
         </button>
-
         
-        <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="newProjectModalLabel">Nieuw project</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @using (Html.BeginForm("Create", "BackOffice", FormMethod.Post))
-                        {
-                            <div class="form-group">
-                                <label for="project-name">Naam</label>
-                                <input type="text" class="form-control" id="project-name" name="projectName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="project-description">Beschrijving</label>
-                                <textarea class="form-control" id="project-description" name="projectDescription" required></textarea>
-                            </div>
-                            <input type="hidden" name="BackOfficeId" value="@Model.BackOfficeId" />
-                            <input type="hidden" name="managerId" value="@TempData["ManagerId"]" />
-                            <button type="submit" class="btn btn-primary">Opslaan</button>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

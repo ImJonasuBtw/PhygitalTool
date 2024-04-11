@@ -18,4 +18,19 @@ public class ProjectManager : IProjectManager
     {
         _repositoryPersistance.CreateProject(project);
     }
+
+    public Project GetProjectWithThemes(int projectId)
+    {
+       return _repositoryRetrieval.ReadProjectWithThemes(projectId);
+    }
+
+    public MainTheme GetThemeWithSubthemes(int themeId)
+    {
+        return _repositoryRetrieval.ReadThemeWithSubthemes(themeId);
+    }
+
+    public SubTheme GetSubThemeWithFlowSubthemes(int subThemeId)
+    {
+        return _repositoryRetrieval.ReadSubthemeWithFlowSubthemes(subThemeId);
+    }
 }

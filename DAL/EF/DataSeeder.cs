@@ -25,9 +25,10 @@ public static class DataSeeder
                 UserName = "manager1@example.com", // Use the email as the username if you're not using separate usernames
                 Email = "manager1@example.com",
                 EmailConfirmed = true,
+                ImageUrl = "https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg",
                 BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
             };
-    
+            
             var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
             if (!creationResult.Succeeded)
             {
@@ -35,7 +36,6 @@ public static class DataSeeder
                 throw new System.Exception("Failed to create dummy manager.");
             }
         }
-
         //creating projects 
         var project1 = new Project
         {
@@ -57,8 +57,18 @@ public static class DataSeeder
             backOffice1.Projects.Add(project2);
             context.Projects.Add(project1);
             context.Projects.Add(project2);
-        
-        
+
+            var MainTheme1 = new MainTheme("TestThema1", "blablabla");
+            var MainTheme2 = new MainTheme("TestThema2", "blablabla");
+            var MainTheme3 = new MainTheme("TestThema3", "blablabla");
+
+            context.MainThemes.Add(MainTheme1);
+            context.MainThemes.Add(MainTheme2);
+            context.MainThemes.Add(MainTheme3);
+            
+            project1.MainThemes.Add(MainTheme1);
+            project1.MainThemes.Add(MainTheme2);
+            project1.MainThemes.Add(MainTheme3);
         
         // Creating Questions
         // Linear Flow
@@ -212,6 +222,10 @@ public static class DataSeeder
         context.SubThemes.Add(subTheme1);
         context.SubThemes.Add(subTheme2);
         context.SubThemes.Add(subTheme3);
+        
+        MainTheme1.SubThemes.Add(subTheme1);
+        MainTheme1.SubThemes.Add(subTheme2);
+        MainTheme1.SubThemes.Add(subTheme3);
 
         context.Flows.Add(flow1);
         context.Flows.Add(flow2);

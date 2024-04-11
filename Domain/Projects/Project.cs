@@ -19,6 +19,7 @@ public class Project
     
     //nav
     public BackOffice BackOffice { get; set; }
+    public ICollection<MainTheme> MainThemes { get; set; } = new List<MainTheme>();
 
     public Project()
     {

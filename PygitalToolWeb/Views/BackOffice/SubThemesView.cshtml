@@ -1,0 +1,16 @@
+﻿@model PhygitalTool.Domain.Projects.MainTheme
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>SubThemas</h2>
+
+<h3>@Model.ThemeName</h3>
+@foreach (var subTheme in Model.SubThemes)
+{
+    <div class="p-2">
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">@subTheme.SubThemeName </a>
+    </div>
+}
