@@ -1,62 +1,60 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+// Checks if form input is empty
 function validateForm() {
-    var answer = document.getElementById("selectedAnswer").value;
-    console.log(answer);
+    const answer = document.getElementById("selectedAnswer").value;
     if (answer.trim() === "") {
         alert("Please enter your answer.");
         return false; // answer is empty
     }
     return true;
 }
+// Logic for the slider in the range question. Makes sure the right value is returned.
 function configureSlider() {
-    var slider = document.getElementById("myRange");
-    var output = document.getElementById("sliderValue");
-    var labels = Array.from(document.querySelectorAll('.slider-labels span')).map(function (span) { return span.textContent || ''; });
+    const slider = document.getElementById("myRange");
+    const output = document.getElementById("sliderValue");
+    const labels = Array.from(document.querySelectorAll('.slider-labels span')).map(span => span.textContent || '');
     slider.oninput = function () {
-        var index = parseInt(slider.value, 10);
+        const index = parseInt(slider.value, 10);
         output.innerHTML = labels[index];
     };
-    var submitButton = document.getElementById('submitButton');
+    const submitButton = document.getElementById('submitButton');
     if (submitButton) {
         submitButton.addEventListener('click', function () {
             var _a, _b;
-            var selectedValue = output.textContent || '';
-            var hiddenInput = document.createElement('input');
+            const selectedValue = output.textContent || '';
+            const hiddenInput = document.createElement('input');
             hiddenInput.type = 'hidden';
             hiddenInput.name = 'selectedAnswer';
             hiddenInput.value = selectedValue;
-            console.log(hiddenInput.value);
             (_a = document.getElementById('answersForm')) === null || _a === void 0 ? void 0 : _a.appendChild(hiddenInput);
             (_b = document.getElementById('answersForm')) === null || _b === void 0 ? void 0 : _b.submit();
         });
     }
 }
+// Toggles the buttons 'selected' class based on if the user pressed it.
 function configureAnswerButtons() {
-    var answerButtons = document.querySelectorAll('.answerButton');
-    answerButtons.forEach(function (button) {
+    const answerButtons = document.querySelectorAll('.answerButton');
+    answerButtons.forEach(button => {
         button.addEventListener('click', function () {
-            console.log("Clicked");
             button.classList.toggle('selected');
         });
     });
 }
+// Configures the submit button to return the correct selected value(s) when being pressed.
 function configureSubmitButton() {
-    var submitButton = document.getElementById('submitButton');
+    const submitButton = document.getElementById('submitButton');
     submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener('click', function () {
         var _a, _b;
-        console.log("true");
-        var selectedAnswers = ["no answers selected"];
-        var answerButtons = document.querySelectorAll('.answerButton');
-        answerButtons.forEach(function (button) {
+        const selectedAnswers = [];
+        const answerButtons = document.querySelectorAll('.answerButton');
+        answerButtons.forEach(button => {
             if (button.classList.contains('selected')) {
-                var value = button.getAttribute('value');
+                const value = button.getAttribute('value');
                 if (value !== null) { // Check for `null` before pushing
                     selectedAnswers.push(value);
                 }
             }
         });
-        var hiddenInput = document.createElement('input');
+        const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'selectedAnswers';
         hiddenInput.value = JSON.stringify(selectedAnswers);
@@ -64,21 +62,23 @@ function configureSubmitButton() {
         (_b = document.getElementById('answersForm')) === null || _b === void 0 ? void 0 : _b.submit();
     });
 }
+// Since the circular flow works with a timer, it's answer possibilities can't make it go to the next question immediately.
+// Uses the logic of the muliple choice question, but slightly altered so that it can only select one.
 function configureSubmitButtonSingleChoiceCircular() {
-    var submitButton = document.getElementById('submitButtonCircular');
+    const submitButton = document.getElementById('submitButtonCircular');
     submitButton === null || submitButton === void 0 ? void 0 : submitButton.addEventListener('click', function () {
         var _a, _b;
-        var selectedAnswer = "no answer selected";
-        var answerButtons = document.querySelectorAll('.answerButtonCircular');
-        answerButtons.forEach(function (button) {
+        let selectedAnswer = "no answer";
+        const answerButtons = document.querySelectorAll('.answerButtonCircular');
+        answerButtons.forEach(button => {
             if (button.classList.contains('selected')) {
-                var value = button.getAttribute('value');
+                const value = button.getAttribute('value');
                 if (value) {
                     selectedAnswer = value;
                 }
             }
         });
-        var hiddenInput = document.createElement('input');
+        const hiddenInput = document.createElement('input');
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'selectedAnswer';
         hiddenInput.value = selectedAnswer;
@@ -86,11 +86,12 @@ function configureSubmitButtonSingleChoiceCircular() {
         (_b = document.getElementById('answersFormCircular')) === null || _b === void 0 ? void 0 : _b.submit();
     });
 }
+// Configures the answer buttons for a single choice question in a circular flow to deselect when another is pressed.
 function configureAnswerButtonsSingleChoiceCircular() {
-    var answerButtons = document.querySelectorAll('.answerButtonCircular');
-    answerButtons.forEach(function (button) {
+    const answerButtons = document.querySelectorAll('.answerButtonCircular');
+    answerButtons.forEach(button => {
         button.addEventListener('click', function () {
-            answerButtons.forEach(function (button) {
+            answerButtons.forEach(button => {
                 if (button.classList.contains('selected')) {
                     button.classList.toggle('selected');
                 }
@@ -100,10 +101,11 @@ function configureAnswerButtonsSingleChoiceCircular() {
     });
 }
 // Initialize configurations
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     configureAnswerButtons();
     configureAnswerButtonsSingleChoiceCircular();
     configureSubmitButton();
     configureSubmitButtonSingleChoiceCircular();
     configureSlider();
 });
+export {};

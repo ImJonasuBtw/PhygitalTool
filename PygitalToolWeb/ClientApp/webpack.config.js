@@ -7,7 +7,8 @@ module.exports = {
         validation: './src/js/validation.ts',
         index: './src/js/index.ts',
         questionHandling: './src/js/questionHandling.ts',
-        circularFlow: './src/js/circularFlow.ts'
+        circularFlow: './src/js/circularFlow.ts',
+        projectCreation: './src/js/ProjectCreation.ts'
     },
     output: {
         filename: '[name].entry.js',

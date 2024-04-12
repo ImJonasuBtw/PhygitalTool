@@ -39,7 +39,6 @@ public static class DataSeeder
         //creating projects 
         var project1 = new Project
         {
-            ProjectId = 1,
             Description = "test",
             ProjectName = "proj1",
             CreationDate = default,
@@ -47,7 +46,6 @@ public static class DataSeeder
         };
         var project2 = new Project
         {
-            ProjectId = 2,
             Description = "test",
             ProjectName = "proj2",
             CreationDate = default,
