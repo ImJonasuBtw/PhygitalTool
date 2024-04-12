@@ -1,0 +1,9 @@
+### Add porject
+POST http://localhost:5108//api/ProjectCreation/AddProjectToBackoffice
+Content-Type: application/json
+
+{
+  "projectName": "newProject.projectName",
+  "description": "newProject.description",
+  "backOfficeId": "1"
+}
