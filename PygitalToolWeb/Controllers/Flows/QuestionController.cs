@@ -31,9 +31,8 @@ public class QuestionController : Controller
             return RedirectToAction("GetNextQuestion", "CircularFlow",
                 new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
-
         return RedirectToAction("GetNextQuestion", "LinearFlow",
-            new { flowId = currentFlow, questionId = currentQuestion });
+            new { flowId = currentFlow, questionId = currentQuestion, answer = selectedAnswer});
     }
 
     // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.
