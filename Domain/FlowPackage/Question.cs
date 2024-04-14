@@ -8,6 +8,7 @@ public class Question
     public int QuestionId { get; set; }
     public string QuestionText { get; set; }
     public QuestionType QuestionType { get; set; }
+    public bool IsConditional { get; set; }
 
     // Nav
     public ICollection<AnswerPossibility> AnswerPossibilities { get; set; } = new List<AnswerPossibility>();
@@ -26,5 +27,12 @@ public class Question
         QuestionId = questionId;
         QuestionText = questionText;
         QuestionType = questionType;
+    }
+    public Question(int questionId, string questionText, QuestionType questionType, bool isConditional)
+    {
+        QuestionId = questionId;
+        QuestionText = questionText;
+        QuestionType = questionType;
+        IsConditional = isConditional;
     }
 }

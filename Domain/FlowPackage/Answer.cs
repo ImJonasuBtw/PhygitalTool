@@ -10,7 +10,6 @@ public class Answer
 
     // Nav
     public Question Question { get; set; }
-
     public Answer()
     {
     }
@@ -20,7 +19,6 @@ public class Answer
         AnswerId = answerId;
         AnswerText = openAnswer;
     }
-
     public Answer(int answerId, string answerText, int questionId)
     {
         AnswerId = answerId;
