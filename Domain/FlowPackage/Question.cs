@@ -13,6 +13,7 @@ public class Question
     public ICollection<AnswerPossibility> AnswerPossibilities { get; set; } = new List<AnswerPossibility>();
     public Flow Flow { get; set; }
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    public bool IsConditional { get; set; }
 
     public Question()
     {
@@ -26,5 +27,12 @@ public class Question
         QuestionId = questionId;
         QuestionText = questionText;
         QuestionType = questionType;
+    }
+    public Question(int questionId, string questionText, QuestionType questionType, bool isConditional)
+    {
+        QuestionId = questionId;
+        QuestionText = questionText;
+        QuestionType = questionType;
+        IsConditional = isConditional;
     }
 }

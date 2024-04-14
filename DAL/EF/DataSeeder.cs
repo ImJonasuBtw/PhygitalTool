@@ -74,7 +74,7 @@ public static class DataSeeder
         //  Single choice
         var singleChoice1 = new Question(1,
             "Als jij de begroting van je stad of gemeente zou opmaken, waar zou je dan in de komende jaren vooral op inzetten?",
-            QuestionType.SingleChoice);
+            QuestionType.SingleChoice, true);
         //  Multiple choice
         var multipleChoice1 = new Question(2,
             "Wat zou jou helpen om een keuze te maken tussen de verschillende partijen?",
@@ -106,9 +106,9 @@ public static class DataSeeder
 
         // Creating Answer Possibilities
         // Linear Flow
-        var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie");
+        var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie", 4);
         var answerPossibility2 = new AnswerPossibility(2, "vrije tijd, sport, cultuur");
-        var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang");
+        var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang", 3);
         var answerPossibility4 = new AnswerPossibility(4, "huisvesting");
         var answerPossibility5 = new AnswerPossibility(5, "gezondheidszorg & welzijn");
         var answerPossibility6 = new AnswerPossibility(6, "Ondersteunen van lokale handel");

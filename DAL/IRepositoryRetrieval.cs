@@ -26,6 +26,7 @@ public interface IRepositoryRetrieval
 
     // Returns the first question of a flow
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);
+    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
 
     // Returns the next question in a flow after given currentQuestionId
     public Question ReadFirstFlowQuestion(int flowId);
