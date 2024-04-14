@@ -25,6 +25,7 @@ public class LinearFlowController : Controller
     }
 
     // Launches the first question of a flow, using the GetFirstFlowQuestion method
+    
     public IActionResult GetFirstQuestion(int flowId)
     {
         Question question = _flowManager.GetFirstFlowQuestion(flowId);
@@ -32,9 +33,21 @@ public class LinearFlowController : Controller
     }
     
     // Returns the View of the next question after the user submitted the last one.
+    [HttpGet("GetNextQuestion/{flowId}/{questionId}")]
     public IActionResult GetNextQuestion(int flowId , int questionId)
     {
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
+        if (nextQuestion == null)
+        {
+            Flow flow = _flowManager.GetFlow(flowId);
+            return View("FlowEndView", flow );
+        }
+        return View("QuestionView",nextQuestion );
+    }
+    [HttpGet("GetNextQuestion/{flowId}/{questionId}/{answer}")]
+    public IActionResult GetNextQuestion(int flowId , int questionId, string answer)
+    {
+        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId, answer);
         if (nextQuestion == null)
         {
             Flow flow = _flowManager.GetFlow(flowId);
