@@ -74,10 +74,6 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadNextQuestionInFlow(flowId, currentQuestionId);
     }
-    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
-    {
-        return _repositoryRetrieval.ReadNextQuestionInFlow(flowId, currentQuestionId, answer);
-    }
 
     // Returns the first Question from a flow
     public Question GetFirstFlowQuestion(int flowId)

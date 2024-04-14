@@ -43,6 +43,8 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Project>().Property(p => p.ProjectId).ValueGeneratedOnAdd();
+
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
 

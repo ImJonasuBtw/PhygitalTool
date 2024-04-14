@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -9,12 +8,10 @@ namespace PhygitalTool.DAL.EF;
 public class RetrievalRepository : IRepositoryRetrieval
 {
     private readonly PhygitalToolDbContext _context;
-    private readonly ILogger<RetrievalRepository> _logger;
 
-    public RetrievalRepository(PhygitalToolDbContext context, ILogger<RetrievalRepository> logger)
+    public RetrievalRepository(PhygitalToolDbContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     // Returns Question of a certain id
@@ -33,11 +30,6 @@ public class RetrievalRepository : IRepositoryRetrieval
     public IEnumerable<UserInput> ReadAllUserInputs()
     {
         return _context.UserInputs;
-    }
-
-    public Answer ReadAnswer(int answerId)
-    {
-        return _context.Answers.SingleOrDefault(a => a.AnswerId == answerId);
     }
 
     // Returns all Answers
@@ -160,7 +152,6 @@ public class RetrievalRepository : IRepositoryRetrieval
         return null;
     }
 
-
     // Returns a FlowSubTheme using a flowId and subThemeId
     public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
     {
@@ -217,4 +208,5 @@ public class RetrievalRepository : IRepositoryRetrieval
             .ThenInclude(theme => theme.Flow)
             .FirstOrDefault(theme => theme.SubThemeId == subThemeId);
     }
+
 }

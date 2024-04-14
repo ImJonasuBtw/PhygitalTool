@@ -31,7 +31,6 @@ public interface IFlowManager
 
     // Returns the next question after currentQuestionId in a certain flow
     public Question GetNextQuestionInFlow(int flowId, int currentQuestionId);
-    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
 
     // Returns the first Question from a flow
     public Question GetFirstFlowQuestion(int flowId);

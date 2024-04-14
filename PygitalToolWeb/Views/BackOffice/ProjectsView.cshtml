@@ -32,7 +32,7 @@
         </div>
 
         <!-- Projects -->
-        <div class="col-md-9">
+        <div class="col-md-9" id="projects-container">
             <h2 class="mt-4">Projecten</h2>
             <div class="d-flex justify-content-start">
                 @foreach (var project in Model.Projects)
@@ -44,9 +44,10 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newProjectModal" >
-            +
-        </button>
-        
+        <button type="button" class="btn btn-primary" id="add-project-button">+</button>
+
     </div>
+    @section Scripts {
+       <script id="project-script" src="~/dist/projectCreation.entry.js" defer="defer" data-backoffice-id="@Model.BackOfficeId"></script>
+    }
 </div>

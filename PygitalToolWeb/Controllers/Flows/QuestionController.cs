@@ -33,7 +33,7 @@ public class QuestionController : Controller
         }
 
         return RedirectToAction("GetNextQuestion", "LinearFlow",
-            new { flowId = currentFlow, questionId = currentQuestion, answer = selectedAnswer});
+            new { flowId = currentFlow, questionId = currentQuestion });
     }
 
     // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.
@@ -44,8 +44,10 @@ public class QuestionController : Controller
         // Loop through all selected answers and save them to the database
         for (int i = 0; i < selectedAnswers.Length; i++)
         {
+        
             _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow, currentQuestion);
             
+     
         }
         // Note: You could pass the new answer IDs to the next action, depending on your requirements.
         // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.
