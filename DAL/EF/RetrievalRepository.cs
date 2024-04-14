@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -9,12 +8,10 @@ namespace PhygitalTool.DAL.EF;
 public class RetrievalRepository : IRepositoryRetrieval
 {
     private readonly PhygitalToolDbContext _context;
-    private readonly ILogger<RetrievalRepository> _logger;
 
-    public RetrievalRepository(PhygitalToolDbContext context, ILogger<RetrievalRepository> logger)
+    public RetrievalRepository(PhygitalToolDbContext context)
     {
         _context = context;
-        _logger = logger;
     }
 
     // Returns Question of a certain id
@@ -33,11 +30,6 @@ public class RetrievalRepository : IRepositoryRetrieval
     public IEnumerable<UserInput> ReadAllUserInputs()
     {
         return _context.UserInputs;
-    }
-
-    public Answer ReadAnswer(int answerId)
-    {
-        return _context.Answers.SingleOrDefault(a => a.AnswerId == answerId);
     }
 
     // Returns all Answers
@@ -82,39 +74,6 @@ public class RetrievalRepository : IRepositoryRetrieval
     }
 
     // Returns the next question in a flow after given currentQuestionId
-    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
-    {
-        // Retrieve all questions in the flow, ordered by QuestionId
-        var questionsInFlow = ReadFlowQuestions(flowId);
-        Question currentQuestion = ReadQuestion(currentQuestionId);
-
-        if (currentQuestion.IsConditional)
-        {
-            foreach (var answerPossibility in ReadQuestionWithAnswerPossibilities(currentQuestionId).AnswerPossibilities)
-            {
-                if (answer == answerPossibility.Description)
-                {
-                    _logger.LogInformation("Antwoordovereenkomst gevonden voor vraag ID: " + answerPossibility.NextQuestionId);
-                    // Return the next question if found based on the answer possibility
-                    return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
-                    
-                }
-            }
-            // If the answer does not match any answer possibility, throw an exception
-            throw new Exception("Het gegeven antwoord komt niet overeen met een geldige optie voor deze vraag: " + currentQuestionId);
-        }
-
-        // If the current question is not conditional, proceed with the default logic to get the next question
-        if (questionsInFlow == null || !questionsInFlow.Any())
-        {
-            // If there are no questions in the flow, throw an exception
-            throw new Exception("Er zijn geen vragen beschikbaar in deze stroom.");
-        }
-        throw new Exception("De huidige vraag is de laatste in de stroom of kan niet worden gevonden, en er is geen volgende vraag beschikbaar.");
-    }
-
-
-    // Returns the next question in a flow after given currentQuestionId
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
         // Retrieve all questions in the flow, ordered by QuestionId
@@ -139,7 +98,6 @@ public class RetrievalRepository : IRepositoryRetrieval
         // If the current question is the last one or not found, return null
         return null;
     }
-
 
     // Returns a FlowSubTheme using a flowId and subThemeId
     public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
