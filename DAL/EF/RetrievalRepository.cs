@@ -94,24 +94,44 @@ public class RetrievalRepository : IRepositoryRetrieval
             {
                 if (answer == answerPossibility.Description)
                 {
-                    _logger.LogInformation("Antwoordovereenkomst gevonden voor vraag ID: " + answerPossibility.NextQuestionId);
-                    // Return the next question if found based on the answer possibility
-                    return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
-                    
+                    // If there is a NextQuestionId specified, return the corresponding question
+                    if (answerPossibility.NextQuestionId != 0)
+                    {
+                        return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
+                    }
+
+                    // If NextQuestionId is not specified, return the next question in the flow
+                    var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
+
+                    // Check if there's a next question
+                    if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+                    {
+                        // If there is a next question, return it
+                        return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+                    }
                 }
             }
-            // If the answer does not match any answer possibility, throw an exception
-            throw new Exception("Het gegeven antwoord komt niet overeen met een geldige optie voor deze vraag: " + currentQuestionId);
+        }
+        else
+        {
+            // If the current question is not conditional, proceed with the default logic to get the next question
+            var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
+
+            // Check if there's a next question
+            if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+            {
+                // If there is a next question, return it
+                return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+            }
         }
 
-        // If the current question is not conditional, proceed with the default logic to get the next question
-        if (questionsInFlow == null || !questionsInFlow.Any())
-        {
-            // If there are no questions in the flow, throw an exception
-            throw new Exception("Er zijn geen vragen beschikbaar in deze stroom.");
-        }
-        throw new Exception("De huidige vraag is de laatste in de stroom of kan niet worden gevonden, en er is geen volgende vraag beschikbaar.");
+        // If there's no next question in the flow, return null
+        return null;
     }
+
+
+
+
 
 
     // Returns the next question in a flow after given currentQuestionId
