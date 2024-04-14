@@ -17,7 +17,7 @@ public class FlowCreationController : Controller
     // GET
     public IActionResult Index(int subThemeId)
     {
-        SubTheme subTheme = _projectManager.GetSubThemeWithFlowSubthemes(subThemeId);
+        SubTheme subTheme = _projectManager.GetSubThemeWithFlows(subThemeId);
         return View("~/Views/BackOffice/FlowsView.cshtml", subTheme);
     }
 }

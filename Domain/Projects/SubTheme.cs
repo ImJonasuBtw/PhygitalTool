@@ -10,7 +10,7 @@ public class SubTheme
     public string SubThemeInformation { get; set; }
 
     // Nav
-    public ICollection<FlowSubTheme> FlowSubThemes { get; set; } = new List<FlowSubTheme>();
+    public ICollection<Flow> Flows { get; set; } = new List<Flow>();
     public MainTheme MainTheme { get; set; }
 
     public SubTheme()

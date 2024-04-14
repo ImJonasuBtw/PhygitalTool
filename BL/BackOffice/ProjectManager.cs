@@ -29,8 +29,8 @@ public class ProjectManager : IProjectManager
         return _repositoryRetrieval.ReadThemeWithSubthemes(themeId);
     }
 
-    public SubTheme GetSubThemeWithFlowSubthemes(int subThemeId)
+    public SubTheme GetSubThemeWithFlows(int subThemeId)
     {
-        return _repositoryRetrieval.ReadSubthemeWithFlowSubthemes(subThemeId);
+        return _repositoryRetrieval.ReadSubThemeWithFlows(subThemeId);
     }
 }

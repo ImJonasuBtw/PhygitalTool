@@ -17,7 +17,6 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Answer> Answers { get; set; }
     public DbSet<Flow> Flows { get; set; }
     public DbSet<SubTheme> SubThemes { get; set; }
-    public DbSet<FlowSubTheme> FlowSubThemes { get; set; }
     public DbSet<ContactInformation> ContactInformations { get; set; }
     public DbSet<Project> Projects { get; set; }
     public DbSet<BackOffice> BackOffices { get; set; }
@@ -47,19 +46,6 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
-
-        modelBuilder.Entity<FlowSubTheme>()
-            .HasOne(flowSubTheme => flowSubTheme.Flow)
-            .WithMany(flow => flow.FlowSubThemes)
-            .HasForeignKey("FK_FlowId");
-
-        modelBuilder.Entity<FlowSubTheme>()
-            .HasOne(flowSubTheme => flowSubTheme.SubTheme)
-            .WithMany(subThemes => subThemes.FlowSubThemes)
-            .HasForeignKey("FK_SubThemeId");
-
-        modelBuilder.Entity<FlowSubTheme>()
-            .HasKey("FK_FlowId", "FK_SubThemeId");
 
         // modelBuilder.Entity<Question>().ToTable("Questions");
               
