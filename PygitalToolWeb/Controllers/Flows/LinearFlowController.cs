@@ -21,7 +21,7 @@ public class LinearFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("~/Views/SubTheme/SubThemeView.cshtml",flow);
+        return View("~/Views/SubTheme/SubThemeInformationBeginView.cshtml",flow);
     }
 
     // Launches the first question of a flow, using the GetFirstFlowQuestion method
