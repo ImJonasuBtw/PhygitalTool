@@ -43,5 +43,16 @@ public class LinearFlowController : Controller
         return View("QuestionView",nextQuestion );
     }
     
+    [HttpGet("GetNextQuestion/{flowId}/{questionId}/{answer}")]
+    public IActionResult GetNextQuestion(int flowId , int questionId, string answer)
+    {
+        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId, answer);
+        if (nextQuestion == null)
+        {
+            Flow flow = _flowManager.GetFlow(flowId);
+            return View("FlowEndView", flow );
+        }
+        return View("QuestionView",nextQuestion );
+    }
     
 }
