@@ -7,5 +7,5 @@ public interface IProjectManager
     void AddProject(Project project);
     Project GetProjectWithThemes(int projectId);
     MainTheme GetThemeWithSubthemes(int themeId);
-    SubTheme GetSubThemeWithFlowSubthemes(int subThemeId);
+    SubTheme GetSubThemeWithFlows(int subThemeId);
 }

@@ -21,7 +21,7 @@ public class CircularFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("~/Views/SubTheme/SubThemeView.cshtml", flow);
+        return View("~/Views/SubTheme/SubThemeInformationBeginView.cshtml", flow);
     }
 
     // Returns the first question view of a flow after a user/supervisor selects the subtheme.
@@ -58,9 +58,9 @@ public class CircularFlowController : Controller
         {
             // Reset counter
             HttpContext.Session.SetInt32("QuestionCount", 0);
-            var flowSubTheme = _flowManager.GetFlowSubTheme(flowId, subThemeId);
+            var flow = _flowManager.GetFlow(flowId);
             TempData["questionId"] = questionId;
-            return View("~/Views/SubTheme/SubThemeInformationCircularView.cshtml", flowSubTheme);
+            return View("~/Views/SubTheme/SubThemeInformationCircularView.cshtml", flow);
         }
 
         // Show the standard question view.

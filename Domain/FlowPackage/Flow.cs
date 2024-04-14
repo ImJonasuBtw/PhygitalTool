@@ -1,3 +1,4 @@
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.Domain.FlowPackage;
@@ -12,7 +13,7 @@ public class Flow
     public Language Language { get; set; }
 
     // Nav
-    public ICollection<FlowSubTheme> FlowSubThemes { get; set; } = new List<FlowSubTheme>();
+    public SubTheme SubTheme { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     public ICollection<ContactInformation> ContactInformations { get; set; } = new List<ContactInformation>();
 

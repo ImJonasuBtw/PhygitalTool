@@ -7,10 +7,14 @@
 
 <h2>title</h2>
 
-@foreach (var flowSubTheme in Model.FlowSubThemes)
+@foreach (var flow in Model.Flows)
 {
     <div class="p-2">
-        <a class="btn btn-outline-primary">@flowSubTheme.Flow.FlowDescription </a>
+        <a class="btn btn-outline-primary"
+           asp-controller="SubTheme"
+           asp-action="ShowSubThemeInformation"
+           asp-route-flowId="@flow.FlowId">
+            @flow.FlowDescription (@flow.FlowType)
+        </a>
     </div>
 }
-

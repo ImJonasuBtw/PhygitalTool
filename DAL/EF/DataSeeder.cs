@@ -53,20 +53,21 @@ public static class DataSeeder
         };
             backOffice1.Projects.Add(project1);
             backOffice1.Projects.Add(project2);
+            
             context.Projects.Add(project1);
             context.Projects.Add(project2);
 
-            var MainTheme1 = new MainTheme("TestThema1", "blablabla");
-            var MainTheme2 = new MainTheme("TestThema2", "blablabla");
-            var MainTheme3 = new MainTheme("TestThema3", "blablabla");
+            var mainTheme1 = new MainTheme("TestThema1", "blablabla");
+            var mainTheme2 = new MainTheme("TestThema2", "blablabla");
+            var mainTheme3 = new MainTheme("TestThema3", "blablabla");
 
-            context.MainThemes.Add(MainTheme1);
-            context.MainThemes.Add(MainTheme2);
-            context.MainThemes.Add(MainTheme3);
+            context.MainThemes.Add(mainTheme1);
+            context.MainThemes.Add(mainTheme2);
+            context.MainThemes.Add(mainTheme3);
             
-            project1.MainThemes.Add(MainTheme1);
-            project1.MainThemes.Add(MainTheme2);
-            project1.MainThemes.Add(MainTheme3);
+            project1.MainThemes.Add(mainTheme1);
+            project1.MainThemes.Add(mainTheme2);
+            project1.MainThemes.Add(mainTheme3);
         
         // Creating Questions
         // Linear Flow
@@ -151,21 +152,6 @@ public static class DataSeeder
         var subTheme3 = new SubTheme(3, "Gevoel van betrokkenheid bij lokaal beleid",
             "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
 
-        // Creating Linear and Circular Flow 
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
-        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
-
-        // Creating flowSubTheme intermediary classes
-        var flowSubTheme1 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme1 };
-        var flowSubTheme2 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme3 };
-        var flowSubTheme3 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme1 };
-        var flowSubTheme4 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme2 };
-        var flowSubTheme5 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme3 };
-
-        // Adding FlowSubThemes to flows
-        flow1.FlowSubThemes.AddRange(new[] { flowSubTheme1, flowSubTheme2 });
-        flow2.FlowSubThemes.AddRange(new[] { flowSubTheme3, flowSubTheme4, flowSubTheme5 });
-
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow
         singleChoice1.AnswerPossibilities.Add(answerPossibility1);
@@ -203,6 +189,20 @@ public static class DataSeeder
         range2.AnswerPossibilities.Add(answerPossibility31);
         range2.AnswerPossibilities.Add(answerPossibility32);
 
+        
+        // Adding SubThemes to MainTheme
+        mainTheme1.SubThemes.Add(subTheme1);
+        mainTheme1.SubThemes.Add(subTheme2);
+        mainTheme1.SubThemes.Add(subTheme3);
+        
+        // Creating Flows
+        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
+        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
+        
+        // Adding Flows to SubTheme
+        subTheme1.Flows.Add(flow1);
+        subTheme1.Flows.Add(flow2);
+        
         // Adding Questions to Flows
         // Linear Flow
         flow1.Questions.Add(singleChoice1);
@@ -220,10 +220,6 @@ public static class DataSeeder
         context.SubThemes.Add(subTheme1);
         context.SubThemes.Add(subTheme2);
         context.SubThemes.Add(subTheme3);
-        
-        MainTheme1.SubThemes.Add(subTheme1);
-        MainTheme1.SubThemes.Add(subTheme2);
-        MainTheme1.SubThemes.Add(subTheme3);
 
         context.Flows.Add(flow1);
         context.Flows.Add(flow2);
@@ -271,12 +267,6 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility30);
         context.AnswerPossibilities.Add(answerPossibility31);
         context.AnswerPossibilities.Add(answerPossibility32);
-
-        context.FlowSubThemes.Add(flowSubTheme1);
-        context.FlowSubThemes.Add(flowSubTheme2);
-        context.FlowSubThemes.Add(flowSubTheme3);
-        context.FlowSubThemes.Add(flowSubTheme4);
-        context.FlowSubThemes.Add(flowSubTheme5);
 
         context.SaveChanges();
         context.ChangeTracker.Clear();

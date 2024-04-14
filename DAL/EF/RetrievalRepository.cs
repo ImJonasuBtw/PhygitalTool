@@ -42,8 +42,7 @@ public class RetrievalRepository : IRepositoryRetrieval
     public Flow ReadFlow(int flowId)
     {
         return _context.Flows
-            .Include(f => f.FlowSubThemes)
-            .ThenInclude(fst => fst.SubTheme)
+            .Include(fst => fst.SubTheme)
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
@@ -152,16 +151,6 @@ public class RetrievalRepository : IRepositoryRetrieval
         return null;
     }
 
-    // Returns a FlowSubTheme using a flowId and subThemeId
-    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
-    {
-        return _context.FlowSubThemes
-            .Include(f => f.Flow)
-            .Include(s => s.SubTheme)
-            .FirstOrDefault(flowSubTheme =>
-                flowSubTheme.Flow.FlowId == flowId && flowSubTheme.SubTheme.SubThemeId == subThemeId);
-    }
-
     // Returns the backoffice with projects of a specific manager
     public BackOffice ReadBackOfficeForManager(string managerId)
     {
@@ -201,12 +190,10 @@ public class RetrievalRepository : IRepositoryRetrieval
             .FirstOrDefault(theme => theme.ThemeId == themeId);
     }
 
-    public SubTheme ReadSubthemeWithFlowSubthemes(int subThemeId)
+    public SubTheme ReadSubThemeWithFlows(int subThemeId)
     {
         return _context.SubThemes
-            .Include(theme => theme.FlowSubThemes)
-            .ThenInclude(theme => theme.Flow)
-            .FirstOrDefault(theme => theme.SubThemeId == subThemeId);
+            .Include(s => s.Flows)
+            .FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
     }
-
 }

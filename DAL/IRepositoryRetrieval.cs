@@ -30,12 +30,10 @@ public interface IRepositoryRetrieval
 
     // Returns the next question in a flow after given currentQuestionId
     public Question ReadFirstFlowQuestion(int flowId);
-
-    // Returns a FlowSubTheme using a flowId and subThemeId
-    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId);
+    
     public BackOffice ReadBackOfficeForManager(string managerId);
     BackOffice ReadBackOffice(int backofficeId);
     Project ReadProjectWithThemes(int projectId);
     MainTheme ReadThemeWithSubthemes(int themeId);
-    SubTheme ReadSubthemeWithFlowSubthemes(int subThemeId);
+    SubTheme ReadSubThemeWithFlows(int subthemeId);
 }

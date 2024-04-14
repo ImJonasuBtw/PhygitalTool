@@ -91,12 +91,6 @@ public class FlowManger : IFlowManager
         _repositoryPersistance.SaveContactInformation(contactInformation);
     }
 
-    // Returns a FlowSubTheme using its flowId and subThemeId
-    public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId)
-    {
-        return _repositoryRetrieval.ReadFlowSubTheme(flowId, subThemeId);
-    }
-
     public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
     {
         int newAnswerId;

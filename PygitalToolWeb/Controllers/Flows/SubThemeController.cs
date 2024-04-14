@@ -16,9 +16,9 @@ public class SubThemeController : Controller
     }
 
     // Returns the information view after a user/supervisor selects a subtheme
-    public IActionResult ShowSubThemeInformation(int flowId, int subThemeId)
+    public IActionResult ShowSubThemeInformation(int flowId)
     {
-        FlowSubTheme flowSubTheme = _flowManager.GetFlowSubTheme(flowId, subThemeId);
-        return View("SubThemeInformationBeginView", flowSubTheme);
+        Flow flow = _flowManager.GetFlow(flowId);
+        return View("SubThemeInformationBeginView", flow);
     }
 }
