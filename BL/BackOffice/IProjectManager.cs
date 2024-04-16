@@ -1,4 +1,5 @@
-﻿using PhygitalTool.Domain.Projects;
+﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.BL;
 
@@ -9,4 +10,9 @@ public interface IProjectManager
     Project GetProjectWithThemes(int projectId);
     MainTheme GetThemeWithSubthemes(int themeId);
     SubTheme GetSubThemeWithFlows(int subThemeId);
+   
+    void AddFlow(Flow flow);
+    void AddQuestion(Question question);
+
+    void AddAnswerPossibility(AnswerPossibility answerPossibility);
 }

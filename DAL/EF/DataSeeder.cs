@@ -72,35 +72,35 @@ public static class DataSeeder
         // Creating Questions
         // Linear Flow
         //  Single choice
-        var singleChoice1 = new Question(1,
+        var singleChoice1 = new Question(
             "Als jij de begroting van je stad of gemeente zou opmaken, waar zou je dan in de komende jaren vooral op inzetten?",
             QuestionType.SingleChoice, true);
         //  Multiple choice
-        var multipleChoice1 = new Question(2,
+        var multipleChoice1 = new Question(
             "Wat zou jou helpen om een keuze te maken tussen de verschillende partijen?",
             QuestionType.MultipleChoice);
         //  Range
-        var range1 = new Question(3, "Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
+        var range1 = new Question( "Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
             QuestionType.Range);
         //  Open
-        var open1 = new Question(4, "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
+        var open1 = new Question( "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
             QuestionType.Open);
 
         // Circular Flow
         //  Single choice
-        var singleChoice2 = new Question(5,
+        var singleChoice2 = new Question(
             "Wat is volgens u de grootste uitdaging waar de gemeenteraad de komende termijn voor staat?",
             QuestionType.SingleChoice);
         //  Multiple choice
-        var multipleChoice2 = new Question(6,
+        var multipleChoice2 = new Question(
             "Welke thema's vindt u het belangrijkst bij het bepalen van uw stem voor de gemeenteraadsverkiezingen?",
             QuestionType.MultipleChoice);
         //  Range
-        var range2 = new Question(7,
+        var range2 = new Question(
             "In hoeverre bent u het eens met de volgende stelling: \"De besluiten die de gemeenteraad neemt, hebben een directe impact op mijn dagelijks leven.\"",
             QuestionType.Range);
         //  Open
-        var open2 = new Question(8,
+        var open2 = new Question(
             "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
             QuestionType.Open);
 
@@ -196,8 +196,10 @@ public static class DataSeeder
         mainTheme1.SubThemes.Add(subTheme3);
         
         // Creating Flows
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
-        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
+        var flow1 = new Flow("Test1L", FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
+        
+        var flow2 = new Flow("Test2C", FlowType.Circular, Language.Dutch, "flow over milieu");
+        
         
         // Adding Flows to SubTheme
         subTheme1.Flows.Add(flow1);

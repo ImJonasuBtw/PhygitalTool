@@ -11,6 +11,10 @@ public class AnswerPossibility
     public Answer Answer { get; set; }
     public int NextQuestionId { get; set; }
 
+    public AnswerPossibility()
+    {
+    }
+
     public AnswerPossibility(int answerPossibilityId, string description)
     {
         AnswerPossibilityId = answerPossibilityId;
