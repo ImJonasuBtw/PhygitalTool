@@ -145,11 +145,11 @@ public static class DataSeeder
         var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
 
         // Creating SubThemes
-        var subTheme1 = new SubTheme(1, "KiesIntenties",
+        var subTheme1 = new SubTheme("KiesIntenties",
             "Ben je nog aan het twijfelen over op wie je wilt stemmen bij de aankomende verkiezingen? Het is belangrijk om te overwegen welke kandidaten het beste aansluiten bij jouw waarden en visie voor de toekomst van onze gemeente. Neem de tijd om de verschillende partijprogramma's te bekijken en de standpunten van de kandidaten te onderzoeken, zodat je een weloverwogen keuze kunt maken op verkiezingsdag.");
-        var subTheme2 = new SubTheme(2, "Redenen om (niet) te gaan stemmen",
+        var subTheme2 = new SubTheme("Redenen om (niet) te gaan stemmen",
             "Stemmen is een belangrijk onderdeel van onze democratie, maar soms kunnen er redenen zijn waarom mensen ervoor kiezen om niet te stemmen. Of het nu gaat om twijfels over het nut van hun stem, ontevredenheid over het politieke systeem, of praktische obstakels zoals tijdgebrek, het is essentieel om deze redenen te begrijpen en manieren te vinden om de betrokkenheid van alle burgers bij het democratische proces te vergroten.");
-        var subTheme3 = new SubTheme(3, "Gevoel van betrokkenheid bij lokaal beleid",
+        var subTheme3 = new SubTheme("Gevoel van betrokkenheid bij lokaal beleid",
             "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
 
         // Linking Answer Possibilities to Questions (except for open)

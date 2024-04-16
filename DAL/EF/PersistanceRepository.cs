@@ -40,4 +40,9 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.Projects.Add(project);
         _context.SaveChanges();
     }
+    public void CreateSubTheme(SubTheme subTheme)
+    {
+        _context.SubThemes.Add(subTheme);
+        _context.SaveChanges();
+    }
 }

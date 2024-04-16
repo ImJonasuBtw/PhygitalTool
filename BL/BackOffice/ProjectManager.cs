@@ -18,6 +18,10 @@ public class ProjectManager : IProjectManager
     {
         _repositoryPersistance.CreateProject(project);
     }
+    public void AddSubTheme(SubTheme subTheme)
+    {
+        _repositoryPersistance.CreateSubTheme(subTheme);
+    }
 
     public Project GetProjectWithThemes(int projectId)
     {
