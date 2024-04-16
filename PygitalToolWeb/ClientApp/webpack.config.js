@@ -8,7 +8,8 @@ module.exports = {
         index: './src/js/index.ts',
         questionHandling: './src/js/questionHandling.ts',
         circularFlow: './src/js/circularFlow.ts',
-        projectCreation: './src/js/ProjectCreation.ts'
+        projectCreation: './src/js/ProjectCreation.ts',
+        subthemeCreation: './src/js/subThemeCreation.ts'
     },
     output: {
         filename: '[name].entry.js',

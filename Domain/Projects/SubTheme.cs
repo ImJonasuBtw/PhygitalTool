@@ -12,15 +12,21 @@ public class SubTheme
     // Nav
     public ICollection<Flow> Flows { get; set; } = new List<Flow>();
     public MainTheme MainTheme { get; set; }
+    public int MainThemeId { get; set; }
 
     public SubTheme()
     {
     }
 
-    public SubTheme(int subThemeId, string subThemeName, string subThemeInformation)
+    public SubTheme( string subThemeName, string subThemeInformation)
     {
-        SubThemeId = subThemeId;
         SubThemeName = subThemeName;
         SubThemeInformation = subThemeInformation;
+    }
+    public SubTheme( string subThemeName, string subThemeInformation, int mainThemeId)
+    {
+        SubThemeName = subThemeName;
+        SubThemeInformation = subThemeInformation;
+        MainThemeId = mainThemeId;
     }
 }

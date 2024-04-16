@@ -32,7 +32,7 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
         `;
 
         const scriptElement = document.getElementById('project-script');
-        const backOfficeId = scriptElement?.getAttribute('data-backoffice-id');
+        const backOfficeId = scriptElement?.getAttribute('data-maintheme-id');
 
         document.getElementById('cancel-button')?.addEventListener('click', loadProjects);
         document.getElementById('new-project-form')?.addEventListener('submit', async function(event) {

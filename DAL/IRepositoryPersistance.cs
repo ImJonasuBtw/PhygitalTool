@@ -14,4 +14,5 @@ public interface IRepositoryPersistance
     // Saves Contact Information when user submits form.
     void SaveContactInformation(ContactInformation contactInformation);
     void CreateProject(Project project);
+    void CreateSubTheme(SubTheme subTheme);
 }

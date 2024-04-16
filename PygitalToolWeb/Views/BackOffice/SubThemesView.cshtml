@@ -4,13 +4,26 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+<div>
+     <h3>@Model.ThemeName</h3>
+    <!-- Projects -->
+    <div class="col-md-9" id="subthemas-container">
+        <h2 class="mt-4">SubThemas</h2>
+        <div class="d-flex justify-content-start">
+           @foreach (var subTheme in Model.SubThemes)
+           {
+               <div class="p-2">
+                   <a class="btn btn-outline-primary" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">@subTheme.SubThemeName </a>
+               </div>
+           }
 
-<h2>SubThemas</h2>
-
-<h3>@Model.ThemeName</h3>
-@foreach (var subTheme in Model.SubThemes)
-{
-    <div class="p-2">
-        <a class="btn btn-outline-primary" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">@subTheme.SubThemeName </a>
+        </div>
     </div>
-}
+    
+    <button type="button" class="btn btn-primary" id="add-subtheme-button">+</button>
+
+    @section Scripts {
+        <script id="subTheme-script" src="~/dist/subthemeCreation.entry.js" defer="defer" data-maintheme-id="@Model.ThemeId"></script>
+    }
+
+</div>
