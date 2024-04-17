@@ -2,6 +2,6 @@ namespace PhygitalTool.Domain.Util;
 
 public enum FlowType
 {
-    Circular,
-    Linear
+    Circular = 0,
+    Linear = 1
 }

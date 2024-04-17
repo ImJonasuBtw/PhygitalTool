@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace PhygitalTool.Domain.Platform;
 
-public class Admin : SystemUser
+public class Admin : IdentityUser
 {
-    // Prop
-    public int AdminId { get; set; }
+    
 }

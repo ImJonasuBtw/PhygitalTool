@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
 
@@ -33,4 +34,41 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.ContactInformations.Add(contactInformation);
         _context.SaveChanges();
     }
+
+    public void CreateProject(Project project)
+    {
+        _context.Projects.Add(project);
+        _context.SaveChanges();
+    }
+    public void CreateSubTheme(SubTheme subTheme)
+    {
+        _context.SubThemes.Add(subTheme);
+        _context.SaveChanges();
+    }
+
+    public void CreateFlow(Flow flow)
+    {
+        _context.Flows.Add(flow);
+        _context.SaveChanges();
+    }
+
+    public void CreateQuestion(Question question)
+    {
+        _context.Questions.Add(question);
+        _context.SaveChanges();
+    }
+
+    public void RemoveProject(int projectId)
+    {
+        // Fetch the project from the database
+        var project = _context.Projects.Find(projectId);
+        if (project == null)
+        {
+            throw new ArgumentException("Project not found");
+        }
+        
+        _context.Projects.Remove(project);
+        _context.SaveChanges();
+    }
+
 }

@@ -7,7 +7,11 @@ module.exports = {
         validation: './src/js/validation.ts',
         index: './src/js/index.ts',
         questionHandling: './src/js/questionHandling.ts',
-        circularFlow: './src/js/circularFlow.ts'
+        projectCreation: './src/js/ProjectCreation.ts',
+        circularFlow: './src/js/circularFlow.ts',
+        addFlow: './src/js/addFlow.ts',
+        addQuestion: './src/js/addQuestion.ts',
+        subthemeCreation: './src/js/subThemeCreation.ts'
     },
     output: {
         filename: '[name].entry.js',

@@ -1,7 +1,9 @@
-var timerLength = 2;
-// timer that clicks the submit button when finished
+"use strict";
+// Length of the timer for each question in a circular flow
+const timerLength = 5;
+// Timer that clicks the submit button when time runs out
 function timer() {
-    var button;
+    let button;
     button = document.getElementById('submitButton');
     if (button == null) {
         button = document.getElementById('submitButtonCircular');
@@ -15,29 +17,29 @@ function timer() {
                 button.click();
             }
         }
-        var timer_1 = setTimeout(clickButton, timerLength * 1000);
+        const timer = setTimeout(clickButton, timerLength * 1000);
         button.addEventListener('click', function () {
-            clearTimeout(timer_1);
+            clearTimeout(timer);
         });
     }
 }
-// text update for visual timer
+// HTML text updater to display the timer to the user
 function setTimerText() {
-    var timerElement = document.getElementById('circular-timer');
-    var timeLeft = timerLength;
+    const timerElement = document.getElementById('circular-timer');
+    let timeLeft = timerLength;
     if (timerElement) {
         timerElement.textContent = timeLeft.toString();
-        var countdown_1 = setInterval(function () {
+        const countdown = setInterval(() => {
             timeLeft--;
             timerElement.textContent = timeLeft.toString();
             if (timeLeft <= 0) {
-                clearInterval(countdown_1);
+                clearInterval(countdown);
                 timerElement.textContent = "0";
             }
         }, 1000);
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     timer();
     setTimerText();
 });

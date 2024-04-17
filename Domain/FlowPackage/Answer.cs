@@ -10,7 +10,6 @@ public class Answer
 
     // Nav
     public Question Question { get; set; }
-    public AnswerPossibility AnswerPossibility { get; set; }
 
     public Answer()
     {

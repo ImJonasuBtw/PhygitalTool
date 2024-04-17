@@ -21,7 +21,7 @@ public class LinearFlowController : Controller
     public IActionResult StartFLow(int flowId)
     {
         Flow flow = _flowManager.GetFlow(flowId);
-        return View("~/Views/SubTheme/SubThemeView.cshtml",flow);
+        return View("~/Views/SubTheme/SubThemeInformationBeginView.cshtml",flow);
     }
 
     // Launches the first question of a flow, using the GetFirstFlowQuestion method
@@ -43,5 +43,16 @@ public class LinearFlowController : Controller
         return View("QuestionView",nextQuestion );
     }
     
+    [HttpGet("GetNextQuestion/{flowId}/{questionId}/{answer}")]
+    public IActionResult GetNextQuestion(int flowId , int questionId, string answer)
+    {
+        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId, answer);
+        if (nextQuestion == null)
+        {
+            Flow flow = _flowManager.GetFlow(flowId);
+            return View("FlowEndView", flow );
+        }
+        return View("QuestionView",nextQuestion );
+    }
     
 }

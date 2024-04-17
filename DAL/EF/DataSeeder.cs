@@ -1,5 +1,7 @@
-﻿using PhygitalTool.Domain.Extensions;
+﻿using Microsoft.AspNetCore.Identity;
+using PhygitalTool.Domain.Extensions;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
@@ -7,48 +9,106 @@ namespace PhygitalTool.DAL.EF;
 
 public static class DataSeeder
 {
-    public static void Seed(PhygitalToolDbContext context)
+    public static void Seed(PhygitalToolDbContext context, UserManager<Manager> userManager)
     {
+        //creating dummy users
+        //creating backoffice env 
+        var backOffice1 = new BackOffice(1, "TestOffice");
+        context.BackOffices.Add(backOffice1);
+        context.SaveChanges();
+         
+        // Managers
+        if (!context.Users.Any(u => u.Email == "manager1@example.com"))
+        {
+            var manager1 = new Manager
+            {
+                UserName = "manager1@example.com", // Use the email as the username if you're not using separate usernames
+                Email = "manager1@example.com",
+                EmailConfirmed = true,
+                ImageUrl = "https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg",
+                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+            };
+            
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            if (!creationResult.Succeeded)
+            {
+                // If creation fails, log or handle the error as needed
+                throw new System.Exception("Failed to create dummy manager.");
+            }
+        }
+        //creating projects 
+        var project1 = new Project
+        {
+            Description = "test",
+            ProjectName = "proj1",
+            CreationDate = default,
+            Status = ProjectStatus.Active
+        };
+        var project2 = new Project
+        {
+            Description = "test",
+            ProjectName = "proj2",
+            CreationDate = default,
+            Status = ProjectStatus.Active
+        };
+            backOffice1.Projects.Add(project1);
+            backOffice1.Projects.Add(project2);
+            
+            context.Projects.Add(project1);
+            context.Projects.Add(project2);
+
+            var mainTheme1 = new MainTheme("TestThema1", "blablabla");
+            var mainTheme2 = new MainTheme("TestThema2", "blablabla");
+            var mainTheme3 = new MainTheme("TestThema3", "blablabla");
+
+            context.MainThemes.Add(mainTheme1);
+            context.MainThemes.Add(mainTheme2);
+            context.MainThemes.Add(mainTheme3);
+            
+            project1.MainThemes.Add(mainTheme1);
+            project1.MainThemes.Add(mainTheme2);
+            project1.MainThemes.Add(mainTheme3);
+        
         // Creating Questions
         // Linear Flow
         //  Single choice
-        var singleChoice1 = new Question(1,
+        var singleChoice1 = new Question(
             "Als jij de begroting van je stad of gemeente zou opmaken, waar zou je dan in de komende jaren vooral op inzetten?",
-            QuestionType.SingleChoice);
+            QuestionType.SingleChoice, true);
         //  Multiple choice
-        var multipleChoice1 = new Question(2,
+        var multipleChoice1 = new Question(
             "Wat zou jou helpen om een keuze te maken tussen de verschillende partijen?",
             QuestionType.MultipleChoice);
         //  Range
-        var range1 = new Question(3, "Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
+        var range1 = new Question( "Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
             QuestionType.Range);
         //  Open
-        var open1 = new Question(4, "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
+        var open1 = new Question( "Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
             QuestionType.Open);
 
         // Circular Flow
         //  Single choice
-        var singleChoice2 = new Question(5,
+        var singleChoice2 = new Question(
             "Wat is volgens u de grootste uitdaging waar de gemeenteraad de komende termijn voor staat?",
             QuestionType.SingleChoice);
         //  Multiple choice
-        var multipleChoice2 = new Question(6,
+        var multipleChoice2 = new Question(
             "Welke thema's vindt u het belangrijkst bij het bepalen van uw stem voor de gemeenteraadsverkiezingen?",
             QuestionType.MultipleChoice);
         //  Range
-        var range2 = new Question(7,
+        var range2 = new Question(
             "In hoeverre bent u het eens met de volgende stelling: \"De besluiten die de gemeenteraad neemt, hebben een directe impact op mijn dagelijks leven.\"",
             QuestionType.Range);
         //  Open
-        var open2 = new Question(8,
+        var open2 = new Question(
             "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
             QuestionType.Open);
 
         // Creating Answer Possibilities
         // Linear Flow
-        var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie");
+        var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie", 4);
         var answerPossibility2 = new AnswerPossibility(2, "vrije tijd, sport, cultuur");
-        var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang");
+        var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang", 3);
         var answerPossibility4 = new AnswerPossibility(4, "huisvesting");
         var answerPossibility5 = new AnswerPossibility(5, "gezondheidszorg & welzijn");
         var answerPossibility6 = new AnswerPossibility(6, "Ondersteunen van lokale handel");
@@ -85,27 +145,12 @@ public static class DataSeeder
         var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
 
         // Creating SubThemes
-        var subTheme1 = new SubTheme(1, "KiesIntenties",
+        var subTheme1 = new SubTheme("KiesIntenties",
             "Ben je nog aan het twijfelen over op wie je wilt stemmen bij de aankomende verkiezingen? Het is belangrijk om te overwegen welke kandidaten het beste aansluiten bij jouw waarden en visie voor de toekomst van onze gemeente. Neem de tijd om de verschillende partijprogramma's te bekijken en de standpunten van de kandidaten te onderzoeken, zodat je een weloverwogen keuze kunt maken op verkiezingsdag.");
-        var subTheme2 = new SubTheme(2, "Redenen om (niet) te gaan stemmen",
+        var subTheme2 = new SubTheme("Redenen om (niet) te gaan stemmen",
             "Stemmen is een belangrijk onderdeel van onze democratie, maar soms kunnen er redenen zijn waarom mensen ervoor kiezen om niet te stemmen. Of het nu gaat om twijfels over het nut van hun stem, ontevredenheid over het politieke systeem, of praktische obstakels zoals tijdgebrek, het is essentieel om deze redenen te begrijpen en manieren te vinden om de betrokkenheid van alle burgers bij het democratische proces te vergroten.");
-        var subTheme3 = new SubTheme(3, "Gevoel van betrokkenheid bij lokaal beleid",
+        var subTheme3 = new SubTheme("Gevoel van betrokkenheid bij lokaal beleid",
             "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
-
-        // Creating Linear and Circular Flow 
-        var flow1 = new Flow(1, FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
-        var flow2 = new Flow(2, FlowType.Circular, Language.Dutch, "flow over milieu");
-
-        // Creating flowSubTheme intermediary classes
-        var flowSubTheme1 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme1 };
-        var flowSubTheme2 = new FlowSubTheme { Flow = flow1, SubTheme = subTheme3 };
-        var flowSubTheme3 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme1 };
-        var flowSubTheme4 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme2 };
-        var flowSubTheme5 = new FlowSubTheme { Flow = flow2, SubTheme = subTheme3 };
-
-        // Adding FlowSubThemes to flows
-        flow1.FlowSubThemes.AddRange(new[] { flowSubTheme1, flowSubTheme2 });
-        flow2.FlowSubThemes.AddRange(new[] { flowSubTheme3, flowSubTheme4, flowSubTheme5 });
 
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow
@@ -144,6 +189,22 @@ public static class DataSeeder
         range2.AnswerPossibilities.Add(answerPossibility31);
         range2.AnswerPossibilities.Add(answerPossibility32);
 
+        
+        // Adding SubThemes to MainTheme
+        mainTheme1.SubThemes.Add(subTheme1);
+        mainTheme1.SubThemes.Add(subTheme2);
+        mainTheme1.SubThemes.Add(subTheme3);
+        
+        // Creating Flows
+        var flow1 = new Flow("Test1L", FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
+        
+        var flow2 = new Flow("Test2C", FlowType.Circular, Language.Dutch, "flow over milieu");
+        
+        
+        // Adding Flows to SubTheme
+        subTheme1.Flows.Add(flow1);
+        subTheme1.Flows.Add(flow2);
+        
         // Adding Questions to Flows
         // Linear Flow
         flow1.Questions.Add(singleChoice1);
@@ -208,12 +269,6 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility30);
         context.AnswerPossibilities.Add(answerPossibility31);
         context.AnswerPossibilities.Add(answerPossibility32);
-
-        context.FlowSubThemes.Add(flowSubTheme1);
-        context.FlowSubThemes.Add(flowSubTheme2);
-        context.FlowSubThemes.Add(flowSubTheme3);
-        context.FlowSubThemes.Add(flowSubTheme4);
-        context.FlowSubThemes.Add(flowSubTheme5);
 
         context.SaveChanges();
         context.ChangeTracker.Clear();

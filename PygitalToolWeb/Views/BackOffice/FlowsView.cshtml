@@ -1,0 +1,39 @@
+﻿@model PhygitalTool.Domain.Projects.SubTheme
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Flows</h2>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Flows-->
+        <div class="col-md-9" id="flow-container">
+            <h2 class="mt-4">Flows</h2>
+            <div class="d-flex justify-content-start">
+                  
+                @foreach (var flow in Model.Flows)
+                {
+                    <div class=card-body>
+                        <p class="card-title">@flow.FlowName </p>
+                        <p class="card-text">@flow.FlowType </p>
+          
+                    </div>
+                }
+
+            </div>
+        </div>
+
+       <button type="button" class="btn btn-primary" id="add-Flow-button">+</button>
+        
+    </div>
+</div>
+
+
+
+@section Scripts {
+   <script id="Flow-script" data-subtheme-id="@Model.SubThemeId" src="~/dist/addFlow.entry.js" defer="defer"></script>
+    <script id="Question-script" src="~/dist/addQuestion.entry.js" defer="defer" ></script>
+}
+

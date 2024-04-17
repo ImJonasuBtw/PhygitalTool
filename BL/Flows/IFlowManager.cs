@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
 
@@ -11,7 +12,7 @@ public interface IFlowManager
     Question GetQuestionWithAnswerPossibilities(int id);
 
     // Creates a new UserInput and returns it
-    UserInput AddUserInput(int userId, int flowId, int answerId);
+    UserInput AddUserInput( int flowId, int answerId);
 
     // Returns all userInputs
     IEnumerable<UserInput> GetAllUserInputs();
@@ -27,6 +28,7 @@ public interface IFlowManager
 
     // Returns a collection of question from a certain flow
     ICollection<Question> GetFlowQuestions(int flowId);
+    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
 
     // Returns the next question after currentQuestionId in a certain flow
     public Question GetNextQuestionInFlow(int flowId, int currentQuestionId);
@@ -37,6 +39,6 @@ public interface IFlowManager
     // Saves contactinformation
     public void SaveContactInformation(ContactInformation contactInformation);
 
-    // Returns a FlowSubTheme using its flowId and subThemeId
-    public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId);
+   public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion);
+   
 }

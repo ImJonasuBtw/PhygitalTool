@@ -1,4 +1,6 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL;
 
@@ -24,10 +26,14 @@ public interface IRepositoryRetrieval
 
     // Returns the first question of a flow
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);
+    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
 
     // Returns the next question in a flow after given currentQuestionId
     public Question ReadFirstFlowQuestion(int flowId);
-
-    // Returns a FlowSubTheme using a flowId and subThemeId
-    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId);
+    
+    public BackOffice ReadBackOfficeForManager(string managerId);
+    BackOffice ReadBackOffice(int backofficeId);
+    Project ReadProjectWithThemes(int projectId);
+    MainTheme ReadThemeWithSubthemes(int themeId);
+    SubTheme ReadSubThemeWithFlows(int subthemeId);
 }

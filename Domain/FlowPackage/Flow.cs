@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.Domain.FlowPackage;
@@ -5,24 +8,29 @@ namespace PhygitalTool.Domain.FlowPackage;
 public class Flow
 {
     // Prop
+    [Key]
+    
     public int FlowId { get; set; }
+    public string FlowName { get; set; }
 
     public string FlowDescription { get; set; }
     public FlowType FlowType { get; set; }
     public Language Language { get; set; }
-
     // Nav
-    public ICollection<FlowSubTheme> FlowSubThemes { get; set; } = new List<FlowSubTheme>();
+    public SubTheme SubTheme { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     public ICollection<ContactInformation> ContactInformations { get; set; } = new List<ContactInformation>();
+    
+   //Foreign key
+    public int SubThemeId { get; set; }
 
     public Flow()
     {
     }
 
-    public Flow(int flowId, FlowType flowType, Language language, string flowDescription)
+    public Flow(string flowName, FlowType flowType, Language language, string flowDescription)
     {
-        FlowId = flowId;
+        FlowName = flowName;
         FlowType = flowType;
         Language = language;
         FlowDescription = flowDescription;

@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL;
 
@@ -12,4 +13,9 @@ public interface IRepositoryPersistance
 
     // Saves Contact Information when user submits form.
     void SaveContactInformation(ContactInformation contactInformation);
+    void CreateProject(Project project);
+    void CreateFlow(Flow flow);
+    void CreateQuestion(Question question);
+    void CreateSubTheme(SubTheme subTheme);
+    void RemoveProject(int projectId);
 }

@@ -1,5 +1,7 @@
-﻿using PhygitalTool.DAL;
+﻿using Microsoft.IdentityModel.Tokens;
+using PhygitalTool.DAL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
 
@@ -27,9 +29,9 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new UserInput and returns it
-    public UserInput AddUserInput(int userId, int flowId, int answerId)
+    public UserInput AddUserInput( int flowId, int answerId)
     {
-        UserInput userInput = new UserInput(userId, flowId, answerId);
+        UserInput userInput = new UserInput( flowId, answerId);
         _repositoryPersistance.CreateUserInput(userInput);
         return userInput;
     }
@@ -41,7 +43,7 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new answer using an answerId, answerDes and the questionId its connected to, and returns it.
-    public Answer AddAnswer(int answerId, string answerDes, int questionId)
+    public Answer AddAnswer( int answerId,string answerDes, int questionId)
     {
         //creates a new answer
         Answer answer = new Answer(answerId, answerDes, questionId);
@@ -72,6 +74,10 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadNextQuestionInFlow(flowId, currentQuestionId);
     }
+    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
+    {
+        return _repositoryRetrieval.ReadNextQuestionInFlow(flowId, currentQuestionId, answer);
+    }
 
     // Returns the first Question from a flow
     public Question GetFirstFlowQuestion(int flowId)
@@ -85,9 +91,27 @@ public class FlowManger : IFlowManager
         _repositoryPersistance.SaveContactInformation(contactInformation);
     }
 
-    // Returns a FlowSubTheme using its flowId and subThemeId
-    public FlowSubTheme GetFlowSubTheme(int flowId, int subThemeId)
+    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
     {
-        return _repositoryRetrieval.ReadFlowSubTheme(flowId, subThemeId);
+        int newAnswerId;
+
+        if (GetAllAnswers().IsNullOrEmpty())
+        {
+            newAnswerId = 1;
+        }
+        else
+        {
+            int MaxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
+            newAnswerId = MaxAnswerId + 1;
+        }
+
+        if (selectedAnswer.IsNullOrEmpty())
+        {
+            selectedAnswer = "no answer";
+        }
+        AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
+        AddUserInput(currentFlow,newAnswerId);
     }
+
+    
 }

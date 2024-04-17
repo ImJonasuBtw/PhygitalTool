@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
 
@@ -40,8 +42,7 @@ public class RetrievalRepository : IRepositoryRetrieval
     public Flow ReadFlow(int flowId)
     {
         return _context.Flows
-            .Include(f => f.FlowSubThemes)
-            .ThenInclude(fst => fst.SubTheme)
+            .Include(fst => fst.SubTheme)
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
@@ -72,6 +73,59 @@ public class RetrievalRepository : IRepositoryRetrieval
     }
 
     // Returns the next question in a flow after given currentQuestionId
+    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
+    {
+        // Retrieve all questions in the flow, ordered by QuestionId
+        var questionsInFlow = ReadFlowQuestions(flowId);
+        Question currentQuestion = ReadQuestion(currentQuestionId);
+
+        if (currentQuestion.IsConditional)
+        {
+            foreach (var answerPossibility in ReadQuestionWithAnswerPossibilities(currentQuestionId).AnswerPossibilities)
+            {
+                if (answer == answerPossibility.Description)
+                {
+                    // If there is a NextQuestionId specified, return the corresponding question
+                    if (answerPossibility.NextQuestionId != 0)
+                    {
+                        return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
+                    }
+
+                    // If NextQuestionId is not specified, return the next question in the flow
+                    var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
+
+                    // Check if there's a next question
+                    if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+                    {
+                        // If there is a next question, return it
+                        return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+                    }
+                }
+            }
+        }
+        else
+        {
+            // If the current question is not conditional, proceed with the default logic to get the next question
+            var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
+
+            // Check if there's a next question
+            if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+            {
+                // If there is a next question, return it
+                return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+            }
+        }
+
+        // If there's no next question in the flow, return null
+        return null;
+    }
+
+
+
+
+
+
+    // Returns the next question in a flow after given currentQuestionId
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
         // Retrieve all questions in the flow, ordered by QuestionId
@@ -97,13 +151,49 @@ public class RetrievalRepository : IRepositoryRetrieval
         return null;
     }
 
-    // Returns a FlowSubTheme using a flowId and subThemeId
-    public FlowSubTheme ReadFlowSubTheme(int flowId, int subThemeId)
+    // Returns the backoffice with projects of a specific manager
+    public BackOffice ReadBackOfficeForManager(string managerId)
     {
-        return _context.FlowSubThemes
-            .Include(f => f.Flow)
-            .Include(s => s.SubTheme)
-            .FirstOrDefault(flowSubTheme =>
-                flowSubTheme.Flow.FlowId == flowId && flowSubTheme.SubTheme.SubThemeId == subThemeId);
+  
+        var backOfficeId = _context.Managers
+            .Where(manager => manager.Id == managerId)
+            .Select(manager => manager.BackOfficeId) 
+            .FirstOrDefault();
+
+        
+        var backOffice = _context.BackOffices
+            .Include(bo => bo.Projects)
+            .Include(bo => bo.Managers)
+            .FirstOrDefault(bo => bo.BackOfficeId == backOfficeId);
+
+        return backOffice;
+    }
+
+    public BackOffice ReadBackOffice(int backofficeId)
+    {
+        return _context.BackOffices
+            .Include(bo => bo.Projects)
+            .SingleOrDefault(office => office.BackOfficeId == backofficeId);
+    }
+
+    public Project ReadProjectWithThemes(int projectId)
+    {
+        return _context.Projects
+            .Include(p => p.MainThemes)
+            .FirstOrDefault(p => p.ProjectId == projectId);
+    }
+
+    public MainTheme ReadThemeWithSubthemes(int themeId)
+    {
+        return _context.MainThemes
+            .Include(t => t.SubThemes)
+            .FirstOrDefault(theme => theme.ThemeId == themeId);
+    }
+
+    public SubTheme ReadSubThemeWithFlows(int subThemeId)
+    {
+        return _context.SubThemes
+            .Include(s => s.Flows)
+            .FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
     }
 }
