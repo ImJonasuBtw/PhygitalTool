@@ -45,4 +45,16 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SubThemes.Add(subTheme);
         _context.SaveChanges();
     }
+
+    public void CreateFlow(Flow flow)
+    {
+        _context.Flows.Add(flow);
+        _context.SaveChanges();
+    }
+
+    public void CreateQuestion(Question question)
+    {
+        _context.Questions.Add(question);
+        _context.SaveChanges();
+    }
 }

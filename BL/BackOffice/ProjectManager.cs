@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.DAL;
+using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.BL;
@@ -36,5 +37,21 @@ public class ProjectManager : IProjectManager
     public SubTheme GetSubThemeWithFlows(int subThemeId)
     {
         return _repositoryRetrieval.ReadSubThemeWithFlows(subThemeId);
+    }
+    
+
+    public void AddFlow(Flow flow)
+    {
+        _repositoryPersistance.CreateFlow(flow);
+    }
+
+    public void AddQuestion(Question question)
+    {
+        _repositoryPersistance.CreateQuestion(question);
+    }
+
+    public void AddAnswerPossibility(AnswerPossibility answerPossibility)
+    {
+        throw new NotImplementedException();
     }
 }
