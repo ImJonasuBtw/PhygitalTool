@@ -38,4 +38,19 @@ public class ProjectCreationController : Controller
         return Ok();
     }
     
+    [HttpDelete("DeleteProject/{projectId}")]
+    public IActionResult DeleteProject(int projectId)
+    {
+        try
+        {
+            _projectManager.DeleteProject(projectId);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error deleting project: {ex.Message}");
+        }
+    }
+
+    
 }

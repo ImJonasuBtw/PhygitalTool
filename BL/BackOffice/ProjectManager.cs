@@ -26,7 +26,7 @@ public class ProjectManager : IProjectManager
 
     public Project GetProjectWithThemes(int projectId)
     {
-       return _repositoryRetrieval.ReadProjectWithThemes(projectId);
+        return _repositoryRetrieval.ReadProjectWithThemes(projectId);
     }
 
     public MainTheme GetThemeWithSubthemes(int themeId)
@@ -53,5 +53,10 @@ public class ProjectManager : IProjectManager
     public void AddAnswerPossibility(AnswerPossibility answerPossibility)
     {
         throw new NotImplementedException();
+    }
+
+    public void DeleteProject(int projectId)
+    { 
+        _repositoryPersistance.RemoveProject(projectId);
     }
 }

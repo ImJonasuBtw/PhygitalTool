@@ -16,12 +16,13 @@ public class Flow
     public string FlowDescription { get; set; }
     public FlowType FlowType { get; set; }
     public Language Language { get; set; }
-    public int SubthemeId { get; set; }
-
     // Nav
     public SubTheme SubTheme { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     public ICollection<ContactInformation> ContactInformations { get; set; } = new List<ContactInformation>();
+    
+   //Foreign key
+    public int SubThemeId { get; set; }
 
     public Flow()
     {

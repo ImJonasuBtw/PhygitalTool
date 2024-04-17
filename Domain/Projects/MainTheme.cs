@@ -14,6 +14,9 @@ public class MainTheme
     //nav
     public Project Project { get; set; }
     public ICollection<SubTheme> SubThemes { get; set; } = new List<SubTheme>();
+    // Foreign key
+    public int ProjectId{ get; set; }
+
 
     public MainTheme()
     {

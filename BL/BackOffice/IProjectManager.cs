@@ -10,6 +10,7 @@ public interface IProjectManager
     Project GetProjectWithThemes(int projectId);
     MainTheme GetThemeWithSubthemes(int themeId);
     SubTheme GetSubThemeWithFlows(int subThemeId);
+    void DeleteProject(int projectId);
    
     void AddFlow(Flow flow);
     void AddQuestion(Question question);
