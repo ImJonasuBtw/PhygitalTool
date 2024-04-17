@@ -38,7 +38,7 @@ console.log('The project.ts script bundle has been loaded!');
             </form>
         `;
         const scriptElement = document.getElementById('project-script');
-        const backOfficeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-maintheme-id');
+        const backOfficeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-backoffice-id');
         (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadProjects);
         (_b = document.getElementById('new-project-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
             return __awaiter(this, void 0, void 0, function* () {
@@ -49,7 +49,6 @@ console.log('The project.ts script bundle has been loaded!');
                     return;
                 const projectName = projectNameInput.value;
                 const description = descriptionInput.value;
-                // Create a new project instance
                 const newProject = new Project(description, projectName);
                 const response = yield fetch('/api/ProjectCreation/AddProjectToBackoffice', {
                     method: 'POST',
@@ -73,5 +72,29 @@ console.log('The project.ts script bundle has been loaded!');
     }
 });
 function loadProjects() {
-    window.location.reload();
+    window.location.href = window.location.href;
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
+        const button = event.relatedTarget;
+        const projectId = button.getAttribute('data-project-id');
+        const confirmDeleteButton = document.getElementById('delete-confirm');
+        console.log("Modal shown, project ID:", projectId);
+        confirmDeleteButton.onclick = () => {
+            if (projectId) {
+                deleteProject(parseInt(projectId));
+                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        };
+    });
+});
+function deleteProject(projectId) {
+    fetch(`/api/ProjectCreation/DeleteProject/` + projectId, {
+        method: 'DELETE'
+    });
+    loadProjects();
 }

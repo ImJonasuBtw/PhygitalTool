@@ -18,7 +18,8 @@ public class Question
     public Flow Flow { get; set; }
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
     public bool IsConditional { get; set; }
-
+    
+    
     public Question()
     {
         AnswerPossibilities = new List<AnswerPossibility>();

@@ -57,4 +57,18 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.Questions.Add(question);
         _context.SaveChanges();
     }
+
+    public void RemoveProject(int projectId)
+    {
+        // Fetch the project from the database
+        var project = _context.Projects.Find(projectId);
+        if (project == null)
+        {
+            throw new ArgumentException("Project not found");
+        }
+        
+        _context.Projects.Remove(project);
+        _context.SaveChanges();
+    }
+
 }

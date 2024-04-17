@@ -32,7 +32,7 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
         `;
 
         const scriptElement = document.getElementById('project-script');
-        const backOfficeId = scriptElement?.getAttribute('data-maintheme-id');
+        const backOfficeId = scriptElement?.getAttribute('data-backoffice-id');
 
         document.getElementById('cancel-button')?.addEventListener('click', loadProjects);
         document.getElementById('new-project-form')?.addEventListener('submit', async function(event) {
@@ -43,8 +43,6 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
 
             const projectName = projectNameInput.value;
             const description = descriptionInput.value;
-
-            // Create a new project instance
             const newProject = new Project(description, projectName);
 
             const response = await fetch('/api/ProjectCreation/AddProjectToBackoffice', {
@@ -69,5 +67,33 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
 });
 
 function loadProjects() {
-    window.location.reload();
+    window.location.href = window.location.href;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
+        const button = event.relatedTarget as HTMLElement;
+        const projectId = button.getAttribute('data-project-id');
+        const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
+
+        console.log("Modal shown, project ID:", projectId);
+
+        confirmDeleteButton.onclick = () => {
+            if (projectId) {
+                deleteProject(parseInt(projectId));
+                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        };
+    });
+});
+
+function deleteProject(projectId: number) {
+    fetch(`/api/ProjectCreation/DeleteProject/`+ projectId, {
+        method: 'DELETE'
+    })
+    loadProjects();
+}   

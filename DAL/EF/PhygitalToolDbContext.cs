@@ -41,6 +41,8 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // Existing configurations
         modelBuilder.Entity<Flow>().Property(f => f.FlowId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Project>().Property(p => p.ProjectId).ValueGeneratedOnAdd();
         modelBuilder.Entity<SubTheme>().Property(s => s.SubThemeId).ValueGeneratedOnAdd();
@@ -49,17 +51,54 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
 
-        // modelBuilder.Entity<Question>().ToTable("Questions");
-              
         modelBuilder.Entity<BackOffice>()
             .HasMany(b => b.Projects)
             .WithOne(p => p.BackOffice)
             .HasForeignKey(p => p.BackOfficeId);
-        
+
         modelBuilder.Entity<Manager>()
-            .HasOne(m => m.BackOffice) // Each manager has one BackOffice
-            .WithMany(b => b.Managers) // Each BackOffice has many managers
-            .HasForeignKey(m => m.BackOfficeId); // Foreign key in Manager table pointing to BackOffice
+            .HasOne(m => m.BackOffice)
+            .WithMany(b => b.Managers)
+            .HasForeignKey(m => m.BackOfficeId);
+        
+        modelBuilder.Entity<Project>()
+            .HasMany(p => p.MainThemes)
+            .WithOne(mt => mt.Project)
+            .HasForeignKey(mt => mt.ProjectId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<MainTheme>()
+            .HasMany(mt => mt.SubThemes)
+            .WithOne(st => st.MainTheme)
+            .HasForeignKey(st => st.MainThemeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<SubTheme>()
+            .HasMany(st => st.Flows)
+            .WithOne(f => f.SubTheme)
+            .HasForeignKey(f => f.SubThemeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Flow>()
+            .HasMany(f => f.Questions)
+            .WithOne(q => q.Flow)
+            .HasForeignKey(q => q.FlowId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Question>()
+            .HasMany(q => q.AnswerPossibilities)
+            .WithOne() 
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Question>()
+            .HasMany(q => q.Answers)
+            .WithOne() 
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Answer>()
+            .HasOne(a => a.Question) 
+            .WithMany(q => q.Answers) 
+            .HasForeignKey(a => a.QuestionId); 
     }
 
     public bool CreateDataBase(bool dropDatabase)

@@ -34,7 +34,7 @@ public class FlowCreationController : ControllerBase
             FlowName = flow.FlowName,
             FlowType = flow.FlowType,
             Language = flow.Language,
-            SubthemeId = flow.SubthemeId
+            SubThemeId = flow.SubthemeId
             
         };
         
