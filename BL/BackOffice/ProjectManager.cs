@@ -55,6 +55,11 @@ public class ProjectManager : IProjectManager
         throw new NotImplementedException();
     }
 
+    public void UpdateProject(Project project)
+    {
+        _repositoryPersistance.UpdateProject(project);
+    }
+
     public void DeleteProject(int projectId)
     { 
         _repositoryPersistance.RemoveProject(projectId);

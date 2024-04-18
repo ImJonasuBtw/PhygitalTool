@@ -16,4 +16,5 @@ public interface IProjectManager
     void AddQuestion(Question question);
 
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
+    void UpdateProject(Project existingProject);
 }

@@ -18,4 +18,5 @@ public interface IRepositoryPersistance
     void CreateQuestion(Question question);
     void CreateSubTheme(SubTheme subTheme);
     void RemoveProject(int projectId);
+    void UpdateProject(Project project);
 }
