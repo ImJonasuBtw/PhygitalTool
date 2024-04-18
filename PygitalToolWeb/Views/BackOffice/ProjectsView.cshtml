@@ -42,11 +42,9 @@
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title">@project.ProjectName</h5>
                                     <div>
-                                        <!-- Edit Button -->
-                                        <button class="btn btn-outline-secondary" asp-area="" asp-controller="Projects" asp-action="" asp-route-projectId="@project.ProjectId" title="Edit Project">
-                                            <i class="bi-pencil"></i>
-                                        </button>
-                                        <!-- Remove Button -->
+                                      <button class="btn btn-outline-secondary edit-project-button" data-project-id="@project.ProjectId" title="Edit Project">
+                                          <i class="bi-pencil"></i>
+                                      </button>
                                         <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-project-id="@project.ProjectId" title="Delete Project">
                                             <i class="bi-trash"></i>
                                         </button>
@@ -56,17 +54,19 @@
                                 <p class="card-text">@project.Description</p>
                                 <div class="mt-auto">
                                     <div class="d-flex align-items-center">
-                                        <a class="btn btn-primary me-2" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-projectId="@project.ProjectId">View Project</a>
+                                        <a class="btn btn-primary me-2" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-projectId="@project.ProjectId">Bekijk Themas</a>
                                         <span class="badge bg-secondary">@project.Status</span>
                                     </div>
                                 </div>
+                                <span class="badge bg-dark">@project.CreationDate</span>
                             </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
-        <!-- Confirmation Modal -->
+   
+        
         <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

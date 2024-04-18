@@ -71,4 +71,22 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void UpdateProject(Project project)
+    {
+        // Check if the project exists in the database
+        var existingProject = _context.Projects.Find(project.ProjectId);
+        if (existingProject == null)
+        {
+            throw new ArgumentException("Project not found");
+        }
+
+        // Update properties
+        existingProject.ProjectName = project.ProjectName;
+        existingProject.Description = project.Description;
+        existingProject.Status = project.Status;
+
+    
+        _context.SaveChanges();
+    }
+
 }
