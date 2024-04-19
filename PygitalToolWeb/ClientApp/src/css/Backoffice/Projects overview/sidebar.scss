@@ -1,0 +1,36 @@
+﻿.sidebar {
+  position: fixed; 
+  top: 0;          
+  left: 0;        
+  bottom: 0;       
+  width: 250px;    
+  background-color: $background-color;
+  color: $text-color;
+  padding: 2rem 0;
+  overflow-y: auto; 
+
+  img {
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    width: 80%;       
+    display: block;  
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nav-link {
+    display: block;
+    margin: 1rem 0;
+    color: $text-color;
+    text-decoration: none; 
+
+    &.active {
+      color: $primary-color;
+      font-weight: bold; 
+    }
+
+    .badge {
+      background-color: $primary-color;
+    }
+  }
+}

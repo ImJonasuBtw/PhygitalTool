@@ -1,4 +1,4 @@
-// Define a class to structure the project data
+import { Modal } from "bootstrap";
 class Project {
     public description: string;
     public projectName: string;
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmDeleteButton.onclick = () => {
             if (projectId) {
                 deleteProject(parseInt(projectId));
-                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                const modalInstance = Modal.getInstance(confirmationModal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }

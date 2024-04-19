@@ -33,7 +33,7 @@ public class SubThemeCreationController : Controller
             SubThemeInformation = subTheme.SubThemeInformation,
             MainThemeId = subTheme.MainThemeId
         };
-
+ 
         _projectManager.AddSubTheme(domainSubTheme);
         return Ok();
     }

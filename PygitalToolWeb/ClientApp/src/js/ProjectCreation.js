@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a;
-// Define a class to structure the project data
+import { Modal } from "bootstrap";
 class Project {
     constructor(description, projectName) {
         this.description = description;
@@ -84,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmDeleteButton.onclick = () => {
             if (projectId) {
                 deleteProject(parseInt(projectId));
-                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                const modalInstance = Modal.getInstance(confirmationModal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }

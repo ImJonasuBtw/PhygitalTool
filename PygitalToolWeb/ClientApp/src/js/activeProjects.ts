@@ -20,12 +20,31 @@ document.addEventListener("DOMContentLoaded", function () {
                     const isActive = status === "Active";
 
                     if (showOnlyActiveProjects && !isActive) {
-                        project.setAttribute("hidden", "true"); // Verberg project
+                        if (project instanceof HTMLElement) {
+                            project.style.display = "none"; // Completely hide the project
+                        }
                     } else {
-                        project.removeAttribute("hidden"); // Toon project
+                        if (project instanceof HTMLElement) {
+                            project.style.display = ""; // Reset display property to default
+                        }
                     }
                 }
             });
         });
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll<HTMLElement>('.clickable').forEach(card => {
+        card.addEventListener('click', (event: MouseEvent) => {
+            const target = event.target as HTMLElement; 
+            
+            if (!target.closest('button')) {
+                const url = card.getAttribute('data-href'); 
+                if (url) {
+                    window.location.href = url; 
+                }
+            }
+        });
+    });
 });

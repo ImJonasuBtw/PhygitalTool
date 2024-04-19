@@ -21,7 +21,7 @@ public interface IFlowManager
     Answer AddAnswer(int answerId, string answer, int questionId);
 
     // Returns all Answers
-    IEnumerable<Answer> GetAllAnswers();
+    IEnumerable<Answer> GetAllAnswers(); 
 
     // Returns a flow based on its id
     Flow GetFlow(int flowId);

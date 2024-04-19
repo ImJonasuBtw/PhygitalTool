@@ -7,4 +7,4 @@ public interface IBackOfficeManager
     BackOffice GetBackOfficeForManager(string managerId);
 
     BackOffice GetBackOffice(int backofficeId);
-}
+} 

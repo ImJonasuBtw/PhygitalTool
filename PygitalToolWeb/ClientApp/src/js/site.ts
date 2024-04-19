@@ -5,6 +5,7 @@ import 'bootstrap';
 
 // Custom CSS imports
 import '../css/site.css';
+import "../css/Backoffice/Projects overview/projectsOverviewStyles.scss";
 
 console.log('The \'site\' bundle has been loaded!');
 
