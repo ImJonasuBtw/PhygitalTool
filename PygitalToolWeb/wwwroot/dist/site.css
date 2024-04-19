@@ -20624,15 +20624,31 @@ body {
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss ***!
   \***********************************************************************************************************************************************************/
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 250px;
-  background-color: #f4f4f8;
+  background-color: rgba(244, 244, 248, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2rem 1rem;
   color: #333333;
-  padding: 2rem 0;
   overflow-y: auto;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 250px;
+    height: auto;
+    z-index: 1040;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
 }
 .sidebar img {
   border-radius: 50%;
@@ -20657,15 +20673,34 @@ body {
 }
 
 #projects-container {
-  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  padding: 2rem 2rem 2rem 1rem;
+}
+@media (min-width: 768px) and (max-width: 1800px) {
+  #projects-container {
+    margin-left: 250px;
+  }
+}
+@media (min-width: 1800px) {
+  #projects-container {
+    margin-left: 0;
+  }
+}
+#projects-container .row {
+  margin-right: 0;
+  margin-left: 0;
 }
 #projects-container .card {
-  background-color: #f4f4f8;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-  min-width: 250px;
-  max-width: 300px;
+  background-color: rgba(244, 244, 248, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+#projects-container .card:hover {
+  background-color: rgba(244, 244, 248, 0.7);
 }
 #projects-container .card .card-title {
   color: #333333;
@@ -20676,24 +20711,23 @@ body {
 #projects-container .card .badge {
   background-color: #6fa96e;
 }
-#projects-container .card a {
-  background-color: #ea63ff;
-}
-#projects-container .edit-project-button {
-  background-color: #f0f0f7;
+#projects-container .card .creationDate {
+  background: none;
   color: #333333;
-  border-color: #333333;
 }
-#projects-container .edit-project-button:hover {
-  background-color: #cfcfe5;
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
-#projects-container .btn-outline-danger {
-  color: #fc0000;
-  border-color: #fc0000;
-}
-#projects-container .btn-outline-danger:hover {
-  color: #f4f4f8;
-  background-color: #fc0000;
+.animated-background {
+  background: linear-gradient(-45deg, #a044ff, #b266ff, #c488ff, #d6aaff);
+  background-size: 400% 400%;
+  animation: gradientAnimation 60s ease infinite;
 }
 
 #confirmationModal .modal-content {

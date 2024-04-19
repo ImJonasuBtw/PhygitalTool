@@ -25,7 +25,7 @@ public static class DataSeeder
                 UserName = "manager1@example.com", // Use the email as the username if you're not using separate usernames
                 Email = "manager1@example.com",
                 EmailConfirmed = true,
-                ImageUrl = "https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg",
+                ImageUrl = "https://i.pinimg.com/564x/8b/1f/db/8b1fdb4efdaa1e593cbbe814a35a0f00.jpg",
                 BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
             };
             
