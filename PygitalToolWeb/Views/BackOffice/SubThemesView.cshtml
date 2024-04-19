@@ -4,23 +4,68 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
-<div>
-     <h3>@Model.ThemeName</h3>
-    <!-- Projects -->
-    <div class="col-md-9" id="subthemas-container">
-        <h2 class="mt-4">SubThemas</h2>
-        <div class="d-flex justify-content-start">
-           @foreach (var subTheme in Model.SubThemes)
-           {
-               <div class="p-2">
-                   <a class="btn btn-outline-primary" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">@subTheme.SubThemeName </a>
-               </div>
-           }
 
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Projects -->
+        <div class="col-md-9" id="subthemes-container">
+            <h2 class="mt-4">SubThema's</h2>
+            <div class="row">
+                @foreach (var subTheme in Model.SubThemes)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">@subTheme.SubThemeName</h5>
+                                    <div>
+                                        <button class="btn btn-outline-secondary edit-subtheme-button" data-subtheme-id="@subTheme.SubThemeId" title="Edit Project">
+                                            <i class="bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-subtheme-id="@subTheme.SubThemeId" title="Delete Project">
+                                            <i class="bi-trash"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <p class="card-text">@subTheme.SubThemeInformation</p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <a class="btn btn-primary me-2" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">Bekijk Flows</a>
+                                </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
+   
+        
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete this subTheme?
+                    </div>
+                    <div class="modal-footer">
+                        <form id="deleteForm" action="" method="post">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                            <button id="delete-confirm" type="submit" class="btn btn-danger">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <button type="button" style="position: fixed; bottom: 20px; right: 20px; background-color: purple; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: none;" id="add-subtheme-button">+</button>
+
+
     </div>
-    
-    <button type="button" class="btn btn-primary" id="add-subtheme-button">+</button>
 
     @section Scripts {
         <script id="subTheme-script" src="~/dist/subthemeCreation.entry.js" defer="defer" data-maintheme-id="@Model.ThemeId"></script>

@@ -24,6 +24,11 @@ public class ProjectManager : IProjectManager
         _repositoryPersistance.CreateSubTheme(subTheme);
     }
 
+    public void DeleteSubTheme(int subThemeId)
+    {
+        _repositoryPersistance.DeleteSubTheme(subThemeId);
+    }
+
     public Project GetProjectWithThemes(int projectId)
     {
         return _repositoryRetrieval.ReadProjectWithThemes(projectId);
@@ -63,5 +68,15 @@ public class ProjectManager : IProjectManager
     public void DeleteProject(int projectId)
     { 
         _repositoryPersistance.RemoveProject(projectId);
+    }
+
+    public SubTheme GetSubTheme(int subThemeId)
+    {
+        return _repositoryRetrieval.ReadSubTheme(subThemeId);
+    }
+
+    public void UpdateSubTheme(SubTheme subTheme)
+    {
+        _repositoryRetrieval.UpdateSubTheme(subTheme);
     }
 }

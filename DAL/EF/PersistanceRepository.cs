@@ -89,4 +89,18 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+
+    public void DeleteSubTheme(int subThemeId)
+    {
+        // Fetch the project from the database
+        var subTheme = _context.SubThemes.Find(subThemeId);
+        if (subTheme == null)
+        {
+            throw new ArgumentException("Subtheme not found");
+        }
+        
+        _context.SubThemes.Remove(subTheme);
+        _context.SaveChanges();
+    }
+
 }
