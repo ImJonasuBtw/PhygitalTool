@@ -36,4 +36,6 @@ public interface IRepositoryRetrieval
     Project ReadProjectWithThemes(int projectId);
     MainTheme ReadThemeWithSubthemes(int themeId);
     SubTheme ReadSubThemeWithFlows(int subthemeId);
+    SubTheme ReadSubTheme(int subTheme);
+    public void UpdateSubTheme(SubTheme subTheme);
 }
