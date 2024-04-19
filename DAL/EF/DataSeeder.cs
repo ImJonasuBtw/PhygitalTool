@@ -49,7 +49,7 @@ public static class DataSeeder
             Description = "test",
             ProjectName = "proj2",
             CreationDate = default,
-            Status = ProjectStatus.Active
+            Status = ProjectStatus.NonActive
         };
             backOffice1.Projects.Add(project1);
             backOffice1.Projects.Add(project2);
