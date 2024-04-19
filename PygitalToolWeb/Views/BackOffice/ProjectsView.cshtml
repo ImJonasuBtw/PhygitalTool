@@ -33,11 +33,17 @@
         <!-- Projects -->
         <div class="col-md-9" id="projects-container">
             <h2 class="mt-4">Projecten</h2>
+            <!-- Voeg deze toggle-knop toe aan je HTML -->
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="toggle-show-projects">
+                <label class="form-check-label" for="toggle-show-projects">Toon enkel actieve projecten</label>
+            </div>
+
             <div class="row">
                 @foreach (var project in Model.Projects)
                 {
                     <div class="col-md-4 mb-4">
-                        <div class="card">
+                        <div class="card" data-project-id="@project.ProjectId">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title">@project.ProjectName</h5>
@@ -55,7 +61,7 @@
                                 <div class="mt-auto">
                                     <div class="d-flex align-items-center">
                                         <a class="btn btn-primary me-2" asp-area="" asp-controller="Projects" asp-action="Index" asp-route-projectId="@project.ProjectId">Bekijk Themas</a>
-                                        <span class="badge bg-secondary">@project.Status</span>
+                                        <span class="badge bg-secondary project-status">@project.Status</span>
                                     </div>
                                 </div>
                                 <span class="badge bg-dark">@project.CreationDate</span>
@@ -95,6 +101,7 @@
 
     @section Scripts {
         <script id="project-script" src="~/dist/projectCreation.entry.js" defer="defer" data-backoffice-id="@Model.BackOfficeId"></script>
+         <script id="active-projects-script" src="~/dist/activeProjects.entry.js" defer="defer"></script>
     }
 
 </div>
