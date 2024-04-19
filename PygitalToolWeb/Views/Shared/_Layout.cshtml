@@ -34,6 +34,24 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="BackOffice" asp-action="Index">Projects/startscreen</a>
                         </li>
                     }
+                    <li>
+                        <a class="nav-link text-dark"
+                           asp-controller="SubTheme"
+                           asp-action="ShowSubThemeInformation"
+                           asp-route-flowId="1">
+                            Linaire flow doorlopen
+                        </a>
+
+                    </li>
+                    <li>
+                        <a class="nav-link text-dark"
+                           asp-controller="SubTheme"
+                           asp-action="ShowSubThemeInformation"
+                           asp-route-flowId="2">
+                            Circulair flow doorlopen
+                        </a>
+
+                    </li>
                 </ul>
                 <partial name="_LoginPartial"></partial>
             </div>
