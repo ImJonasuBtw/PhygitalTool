@@ -22,7 +22,7 @@ public interface IRepositoryRetrieval
     Flow ReadFlow(int flowId);
 
     // Returns a collection of questions from a certain flow
-    public ICollection<Question> ReadFlowQuestions(int flowId);
+    public ICollection<Question> ReadFlowQuestions(int flowId); 
 
     // Returns the first question of a flow
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);

@@ -29,7 +29,7 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new UserInput and returns it
-    public UserInput AddUserInput( int flowId, int answerId)
+    public UserInput AddUserInput( int flowId, int answerId) 
     {
         UserInput userInput = new UserInput( flowId, answerId);
         _repositoryPersistance.CreateUserInput(userInput);

@@ -15,7 +15,7 @@ public class RetrievalRepository : IRepositoryRetrieval
     }
 
     // Returns Question of a certain id
-    public Question ReadQuestion(int id)
+    public Question ReadQuestion(int id) 
     {
         return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
     }

@@ -58,7 +58,7 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
-    public void RemoveProject(int projectId)
+    public void RemoveProject(int projectId) 
     {
         // Fetch the project from the database
         var project = _context.Projects.Find(projectId);

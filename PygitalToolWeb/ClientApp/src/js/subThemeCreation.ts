@@ -169,7 +169,7 @@ function updateSubtheme(subthemeId: number): void {
         },
         body: JSON.stringify({
             SubThemeName: subthemeNameInput.value,
-            SubThemeInformation: informationInput.value
+            SubThemeInformation: informationInput.value 
         })
     })
         .then(response => {

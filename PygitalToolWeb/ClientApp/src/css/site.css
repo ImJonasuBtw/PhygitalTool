@@ -1,5 +1,7 @@
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,20 +10,22 @@ html {
   }
 }
 
+body {
+  margin-bottom: 60px;
+  background-color: #f2f2f2;
+  padding-top: 20px;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+.nav-item .btn {
+  width: 100%; /* Makes buttons full-width */
+  margin-bottom: 0.5rem;
 }
 
 .selected {
-  background-color: red; /* pas aan naar jouw voorkeur */
-  font-weight: bold; /* of elke andere stijl die je wilt toevoegen */
+  background-color: red;
+  font-weight: bold;
 }

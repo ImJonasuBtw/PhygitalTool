@@ -19,5 +19,5 @@ public class SubThemeController: Controller
     {
         SubTheme subTheme = _projectManager.GetSubTheme(subThemeId);
         return View("~/Views/BackOffice/FlowsView.cshtml",subTheme);
-    }
+    } 
 }

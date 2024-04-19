@@ -15,7 +15,7 @@ public class ProjectManager : IProjectManager
         _repositoryRetrieval = repositoryRetrieval;
     }
 
-    public void AddProject(Project project)
+    public void AddProject(Project project) 
     {
         _repositoryPersistance.CreateProject(project);
     }
