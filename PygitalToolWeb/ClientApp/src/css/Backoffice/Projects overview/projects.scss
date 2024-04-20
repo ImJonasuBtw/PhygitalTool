@@ -1,50 +1,73 @@
 ﻿#projects-container {
-  padding: 2rem;
+  transition: margin-left 0.3s ease;
+  padding: 2rem 2rem 2rem 1rem;
+  
   
 
+  @media (min-width: 768px) and (max-width: 1800px) {
+    margin-left: 250px;
+  }
+
+
+  @media (min-width: 1800px) {
+    margin-left: 0;
+  }
+
+  .row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
   .card {
-    background-color: $background-color;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-    min-width: 250px;
-    max-width: 300px;
-    border-radius: 10px; 
+    background-color: rgba($background-color, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+
+    &:hover {
+      background-color: rgba($background-color, 0.7);
+    }
+
 
     .card-title {
       color: $text-color;
     }
 
+
     .card-text {
       color: darken($text-color, 20%);
     }
 
+
     .badge {
-        background-color: $status-active;
+      background-color: $status-active;
     }
 
-    a {
-        background-color: $primary-color;
+ 
+    .creationDate {
+      background: none;
+      color: $text-color;
     }
+    
   }
+  
+}
 
-
-  .edit-project-button {
-    background-color: $btn-edit;
-    color: $text-color;
-    border-color: $text-color;
-
-    &:hover {
-      background-color: darken($btn-edit, 10%);
-    }
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-
-  .btn-outline-danger {
-    color: $btn-delete;
-    border-color: $btn-delete;
-
-    &:hover {
-      color: $background-color;
-      background-color: $btn-delete;
-    }
+  100% {
+    background-position: 100% 50%;
   }
 }
+
+.animated-background {
+  background: linear-gradient(-45deg, #a044ff, #b266ff, #c488ff, #d6aaff);
+  background-size: 400% 400%;
+  animation: gradientAnimation 60s ease infinite;
+}
+
