@@ -24,4 +24,5 @@ public interface IProjectManager
     void UpdateSubTheme(SubTheme subTheme);
     void UpdateMainTheme(MainTheme mainTheme);
     void UpdateProject(Project existingProject);
+    void DeleteFlow(int FlowId); 
 }

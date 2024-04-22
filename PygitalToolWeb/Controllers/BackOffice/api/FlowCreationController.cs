@@ -75,6 +75,19 @@ public class FlowCreationController : ControllerBase
         return Ok();
         
     }
+    [HttpDelete("DeleteFlow/{FlowId}")]
+    public IActionResult DeleteFlow(int flowId)
+    {
+        try
+        {
+            _projectManager.DeleteFlow(flowId);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error deleting flow: {ex.Message}");
+        }
+    }
 }
     
     

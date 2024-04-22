@@ -14,6 +14,7 @@ module.exports = {
         subThemeCreation: './src/js/subThemeCreation.ts',
         themeCreation: './src/js/themeCreation.ts',
         activeProjects: './src/js/activeProjects.ts',
+        editAndDeleteFlow: './src/js/editAndDeleteFlow.ts'
     },
     output: {
         filename: '[name].entry.js',

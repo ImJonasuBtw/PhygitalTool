@@ -74,6 +74,11 @@ public class ProjectManager : IProjectManager
         _repositoryPersistance.UpdateProject(project);
     }
 
+    public void DeleteFlow(int FlowId)
+    {
+        _repositoryPersistance.RemoveFlow(FlowId);
+    }
+
     public void DeleteProject(int projectId)
     { 
         _repositoryPersistance.RemoveProject(projectId);
