@@ -1,8 +1,26 @@
-﻿$primary-color: #ea63ff; 
-$background-color: #f4f4f8; 
-$text-color: #333333; 
-$btn-edit: #f0f0f7; 
-$btn-delete: #fc0000;
+﻿// Color Palette
+$primary-color: #ea63ff;
+$background-color: #f4f4f8;
+$text-color: #333333;
+$btn-edit: #f0f0f7;
+$btn-delete: #cb1b59;
 $light-color: #fff;
-$status-active : #6fa96e;
+$status-active: #9f00ee;
+$secondary-gradient-colors: #ff85b2, #ffa3c1, #ffc1d0;
 
+// Spacing
+$default-padding: 2rem;
+$default-margin: 1rem;
+$card-border-radius: 10px;
+
+// Transitions
+$default-transition-time: 0.2s;
+$margin-transition-time: 0.3s;
+
+// Media Queries Breakpoints
+$large-screen: 1800px;
+$tablet-screen: 768px;
+
+// Border Styles
+$card-border: 1px solid rgba($light-color, 0.2);
+$transparent-border: transparent;

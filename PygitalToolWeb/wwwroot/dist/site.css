@@ -20676,6 +20676,64 @@ body {
   transition: margin-left 0.3s ease;
   padding: 2rem 2rem 2rem 1rem;
 }
+#projects-container form {
+  background-color: rgba(244, 244, 248, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+#projects-container form .form-label {
+  color: #333333;
+  font-weight: bold;
+}
+#projects-container form .form-control {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  box-shadow: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #333333;
+}
+#projects-container form .form-control:focus {
+  border-color: #ea63ff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(234, 99, 255, 0.25);
+}
+#projects-container form textarea.form-control {
+  height: 150px;
+}
+#projects-container form .btn-primary {
+  background-color: #ea63ff;
+  border-color: #e74aff;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+#projects-container form .btn-primary:hover {
+  background-color: #e330ff;
+  border-color: #e330ff;
+}
+#projects-container form .btn-secondary {
+  background-color: #cb1b59;
+  border-color: #b4184f;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+#projects-container form .btn-secondary:hover {
+  background-color: #9e1545;
+  border-color: #9e1545;
+}
+#projects-container form button {
+  margin-right: 1rem;
+}
+#projects-container form button:last-child {
+  margin-right: 0;
+}
+#projects-container h2 {
+  font-weight: bold;
+}
 @media (min-width: 768px) and (max-width: 1800px) {
   #projects-container {
     margin-left: 250px;
@@ -20685,6 +20743,17 @@ body {
   #projects-container {
     margin-left: 0;
   }
+}
+#projects-container .form-check-input:checked {
+  background-color: rgba(234, 99, 255, 0.4);
+  border-color: transparent;
+  box-shadow: none;
+}
+#projects-container .form-check-input {
+  background-color: rgba(244, 244, 248, 0.4);
+  border-color: transparent;
+  box-shadow: none;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 #projects-container .row {
   margin-right: 0;
@@ -20704,12 +20773,13 @@ body {
 }
 #projects-container .card .card-title {
   color: #333333;
+  font-weight: bold;
 }
 #projects-container .card .card-text {
   color: black;
 }
 #projects-container .card .badge {
-  background-color: #6fa96e;
+  background-color: #ea63ff;
 }
 #projects-container .card .creationDate {
   background: none;
@@ -20718,16 +20788,16 @@ body {
 
 @keyframes gradientAnimation {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   100% {
     background-position: 100% 50%;
   }
 }
 .animated-background {
-  background: linear-gradient(-45deg, #a044ff, #b266ff, #c488ff, #d6aaff);
+  background: linear-gradient(-45deg, #ea63ff, #ff85b2, #ffa3c1, #ffc1d0);
   background-size: 400% 400%;
-  animation: gradientAnimation 60s ease infinite;
+  animation: gradientAnimation 20s ease infinite;
 }
 
 #confirmationModal .modal-content {
@@ -20744,8 +20814,8 @@ body {
   background-color: #f0f0f7;
 }
 #confirmationModal .btn-danger {
-  background-color: #fc0000;
-  border-color: #fc0000;
+  background-color: #cb1b59;
+  border-color: #cb1b59;
 }
 
 #add-project-button {
