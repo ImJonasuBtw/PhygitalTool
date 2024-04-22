@@ -45,6 +45,11 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SubThemes.Add(subTheme);
         _context.SaveChanges();
     }
+    public void CreateMainTheme(MainTheme mainTheme)
+    {
+        _context.MainThemes.Add(mainTheme);
+        _context.SaveChanges();
+    }
 
     public void CreateFlow(Flow flow)
     {
@@ -103,4 +108,16 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void DeleteMainTheme(int mainThemeId)
+    {
+        // Fetch the project from the database
+        var mainTheme = _context.MainThemes.Find(mainThemeId);
+        if (mainTheme == null)
+        {
+            throw new ArgumentException("Theme not found");
+        }
+        
+        _context.MainThemes.Remove(mainTheme);
+        _context.SaveChanges();
+    }
 }

@@ -46,6 +46,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<Flow>().Property(f => f.FlowId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Project>().Property(p => p.ProjectId).ValueGeneratedOnAdd();
         modelBuilder.Entity<SubTheme>().Property(s => s.SubThemeId).ValueGeneratedOnAdd();
+        modelBuilder.Entity<MainTheme>().Property(m => m.ThemeId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Question>().Property(q => q.QuestionId).ValueGeneratedOnAdd();
 
         modelBuilder.Entity<ContactInformation>()

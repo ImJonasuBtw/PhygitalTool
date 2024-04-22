@@ -17,7 +17,9 @@ public interface IRepositoryPersistance
     void CreateFlow(Flow flow);
     void CreateQuestion(Question question);
     void CreateSubTheme(SubTheme subTheme);
+    void CreateMainTheme(MainTheme mainTheme);
     void DeleteSubTheme(int subThemeId);
+    void DeleteMainTheme(int mainThemeId);
     void RemoveProject(int projectId);
     void UpdateProject(Project project);
 }
