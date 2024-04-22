@@ -22,9 +22,7 @@ public class Question
     
     public Question()
     {
-        AnswerPossibilities = new List<AnswerPossibility>();
-        Answers = new List<Answer>();
-        Flow = new Flow();
+        
     }
 
     public Question( string questionText, QuestionType questionType)

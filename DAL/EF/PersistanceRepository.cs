@@ -45,20 +45,33 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SubThemes.Add(subTheme);
         _context.SaveChanges();
     }
+    public void CreateMainTheme(MainTheme mainTheme)
+    {
+        _context.MainThemes.Add(mainTheme);
+        _context.SaveChanges();
+    }
 
-    public void CreateFlow(Flow flow)
+    public Flow CreateFlow(Flow flow)
     {
         _context.Flows.Add(flow);
         _context.SaveChanges();
+        var createdFlow =
+            _context.Flows.FirstOrDefault(f =>
+                f.FlowName == flow.FlowName && f.FlowDescription == flow.FlowDescription);
+
+        return createdFlow;
     }
 
-    public void CreateQuestion(Question question)
+    public Question CreateQuestion(Question question)
     {
         _context.Questions.Add(question);
         _context.SaveChanges();
+        var createdQuestion = _context.Questions.FirstOrDefault(q =>
+            q.QuestionText == question.QuestionText && q.QuestionType == question.QuestionType);
+        return createdQuestion;
     }
 
-    public void RemoveProject(int projectId)
+    public void RemoveProject(int projectId) 
     {
         // Fetch the project from the database
         var project = _context.Projects.Find(projectId);
@@ -71,4 +84,54 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void UpdateProject(Project project)
+    {
+        // Check if the project exists in the database
+        var existingProject = _context.Projects.Find(project.ProjectId);
+        if (existingProject == null)
+        {
+            throw new ArgumentException("Project not found");
+        }
+
+        // Update properties
+        existingProject.ProjectName = project.ProjectName;
+        existingProject.Description = project.Description;
+        existingProject.Status = project.Status;
+
+    
+        _context.SaveChanges();
+    }
+
+    public void createAnswerPossilility(AnswerPossibility answerPossibility)
+    {
+        _context.AnswerPossibilities.Add(answerPossibility);
+        _context.SaveChanges();
+    }
+
+
+    public void DeleteSubTheme(int subThemeId)
+    {
+        // Fetch the project from the database
+        var subTheme = _context.SubThemes.Find(subThemeId);
+        if (subTheme == null)
+        {
+            throw new ArgumentException("Subtheme not found");
+        }
+        
+        _context.SubThemes.Remove(subTheme);
+        _context.SaveChanges();
+    }
+
+    public void DeleteMainTheme(int mainThemeId)
+    {
+        // Fetch the project from the database
+        var mainTheme = _context.MainThemes.Find(mainThemeId);
+        if (mainTheme == null)
+        {
+            throw new ArgumentException("Theme not found");
+        }
+        
+        _context.MainThemes.Remove(mainTheme);
+        _context.SaveChanges();
+    }
 }

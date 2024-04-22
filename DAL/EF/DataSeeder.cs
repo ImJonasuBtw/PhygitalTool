@@ -25,7 +25,7 @@ public static class DataSeeder
                 UserName = "manager1@example.com", // Use the email as the username if you're not using separate usernames
                 Email = "manager1@example.com",
                 EmailConfirmed = true,
-                ImageUrl = "https://i.pinimg.com/564x/53/22/50/53225047d8032305f091ac846d5879f8.jpg",
+                ImageUrl = "https://i.pinimg.com/564x/8b/1f/db/8b1fdb4efdaa1e593cbbe814a35a0f00.jpg",
                 BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
             };
             
@@ -49,7 +49,7 @@ public static class DataSeeder
             Description = "test",
             ProjectName = "proj2",
             CreationDate = default,
-            Status = ProjectStatus.Active
+            Status = ProjectStatus.NonActive
         };
             backOffice1.Projects.Add(project1);
             backOffice1.Projects.Add(project2);
@@ -106,43 +106,43 @@ public static class DataSeeder
 
         // Creating Answer Possibilities
         // Linear Flow
-        var answerPossibility1 = new AnswerPossibility(1, "natuur & ecologie", 4);
-        var answerPossibility2 = new AnswerPossibility(2, "vrije tijd, sport, cultuur");
-        var answerPossibility3 = new AnswerPossibility(3, "onderwijs & kinderopvang", 3);
-        var answerPossibility4 = new AnswerPossibility(4, "huisvesting");
-        var answerPossibility5 = new AnswerPossibility(5, "gezondheidszorg & welzijn");
-        var answerPossibility6 = new AnswerPossibility(6, "Ondersteunen van lokale handel");
-        var answerPossibility7 = new AnswerPossibility(7, "Meer lessen op school rond de partijprogramma’s");
+        var answerPossibility1 = new AnswerPossibility( "natuur & ecologie", 4);
+        var answerPossibility2 = new AnswerPossibility( "vrije tijd, sport, cultuur");
+        var answerPossibility3 = new AnswerPossibility( "onderwijs & kinderopvang", 3);
+        var answerPossibility4 = new AnswerPossibility( "huisvesting");
+        var answerPossibility5 = new AnswerPossibility( "gezondheidszorg & welzijn");
+        var answerPossibility6 = new AnswerPossibility( "Ondersteunen van lokale handel");
+        var answerPossibility7 = new AnswerPossibility( "Meer lessen op school rond de partijprogramma’s");
         var answerPossibility8 =
-            new AnswerPossibility(8, "Activiteiten in mijn jeugdclub, sportclub… rond de verkiezingen");
+            new AnswerPossibility( "Activiteiten in mijn jeugdclub, sportclub… rond de verkiezingen");
         var answerPossibility9 =
-            new AnswerPossibility(9, "Een bezoek van de partijen aan mijn school, jeugd/sportclub, …");
-        var answerPossibility10 = new AnswerPossibility(10, "Een gesprek met mijn ouders rond de gemeentepolitiek");
+            new AnswerPossibility( "Een bezoek van de partijen aan mijn school, jeugd/sportclub, …");
+        var answerPossibility10 = new AnswerPossibility( "Een gesprek met mijn ouders rond de gemeentepolitiek");
         var answerPossibility11 =
-            new AnswerPossibility(11, "Een debat georganiseerd door een jeugdhuis met de verschillende partijen");
-        var answerPossibility12 = new AnswerPossibility(12, "Zeker niet");
-        var answerPossibility13 = new AnswerPossibility(13, "Eerder niet");
-        var answerPossibility14 = new AnswerPossibility(14, "Ik weet het nog niet");
-        var answerPossibility15 = new AnswerPossibility(15, "Eerder wel");
-        var answerPossibility16 = new AnswerPossibility(16, "Zeker wel");
+            new AnswerPossibility( "Een debat georganiseerd door een jeugdhuis met de verschillende partijen");
+        var answerPossibility12 = new AnswerPossibility( "Zeker niet");
+        var answerPossibility13 = new AnswerPossibility( "Eerder niet");
+        var answerPossibility14 = new AnswerPossibility( "Ik weet het nog niet");
+        var answerPossibility15 = new AnswerPossibility("Eerder wel");
+        var answerPossibility16 = new AnswerPossibility( "Zeker wel");
 
         // Circular Flow
-        var answerPossibility17 = new AnswerPossibility(17, "Infrastructuur");
-        var answerPossibility18 = new AnswerPossibility(18, "Milieuproblemen");
-        var answerPossibility19 = new AnswerPossibility(19, "Werkgelegenheid");
-        var answerPossibility20 = new AnswerPossibility(20, "Sociale Voorzieningen");
-        var answerPossibility21 = new AnswerPossibility(21, "Economische Ontwikkeling");
-        var answerPossibility22 = new AnswerPossibility(22, "Ondersteuning van Kwetsbare Groepen");
-        var answerPossibility23 = new AnswerPossibility(23, "Duurzaamheid en Milieu");
-        var answerPossibility24 = new AnswerPossibility(24, "Onderwijs en Kinderopvang");
-        var answerPossibility25 = new AnswerPossibility(25, "Veiligheid en Openbare Orde");
-        var answerPossibility26 = new AnswerPossibility(26, "Cultuur, Sport en Recreatie");
-        var answerPossibility27 = new AnswerPossibility(27, "Lokale Belastingen en Financieel Beleid");
-        var answerPossibility28 = new AnswerPossibility(28, "Zeker niet");
-        var answerPossibility29 = new AnswerPossibility(29, "Eerder niet");
-        var answerPossibility30 = new AnswerPossibility(30, "Ik weet het nog niet");
-        var answerPossibility31 = new AnswerPossibility(31, "Eerder wel");
-        var answerPossibility32 = new AnswerPossibility(32, "Zeker wel");
+        var answerPossibility17 = new AnswerPossibility( "Infrastructuur");
+        var answerPossibility18 = new AnswerPossibility( "Milieuproblemen");
+        var answerPossibility19 = new AnswerPossibility( "Werkgelegenheid");
+        var answerPossibility20 = new AnswerPossibility( "Sociale Voorzieningen");
+        var answerPossibility21 = new AnswerPossibility( "Economische Ontwikkeling");
+        var answerPossibility22 = new AnswerPossibility( "Ondersteuning van Kwetsbare Groepen");
+        var answerPossibility23 = new AnswerPossibility( "Duurzaamheid en Milieu");
+        var answerPossibility24 = new AnswerPossibility( "Onderwijs en Kinderopvang");
+        var answerPossibility25 = new AnswerPossibility( "Veiligheid en Openbare Orde");
+        var answerPossibility26 = new AnswerPossibility( "Cultuur, Sport en Recreatie");
+        var answerPossibility27 = new AnswerPossibility( "Lokale Belastingen en Financieel Beleid");
+        var answerPossibility28 = new AnswerPossibility( "Zeker niet");
+        var answerPossibility29 = new AnswerPossibility( "Eerder niet");
+        var answerPossibility30 = new AnswerPossibility( "Ik weet het nog niet");
+        var answerPossibility31 = new AnswerPossibility( "Eerder wel");
+        var answerPossibility32 = new AnswerPossibility( "Zeker wel");
 
         // Creating SubThemes
         var subTheme1 = new SubTheme("KiesIntenties",

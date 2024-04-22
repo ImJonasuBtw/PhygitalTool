@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 using PhygitalTool.Web.Models;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
@@ -25,12 +26,12 @@ public class ProjectCreationController : Controller
             return BadRequest(ModelState);
         }
         
-        var domainProject = new Domain.Projects.Project
+        var domainProject = new Project
         {
             Description = project.Description,
             ProjectName = project.ProjectName,
-            CreationDate = project.CreationDate,
-            Status = project.Status,
+            CreationDate = DateTime.UtcNow,
+            Status = ProjectStatus.NonActive,
             BackOfficeId = project.BackOfficeId
         };
 
@@ -51,6 +52,62 @@ public class ProjectCreationController : Controller
             return BadRequest($"Error deleting project: {ex.Message}");
         }
     }
-
     
+    [HttpGet("GetProjectDetails/{projectId}")]
+    public IActionResult GetProjectDetails(int projectId)
+    {
+        try
+        {
+            var project = _projectManager.GetProjectWithThemes(projectId);
+            if (project == null)
+            {
+                return NotFound($"Project with ID {projectId} not found.");
+            }
+
+            var model = new ProjectModel
+            {
+                ProjectName = project.ProjectName,
+                Description = project.Description,
+                ProjectId = project.ProjectId,
+                Status = project.Status,
+                BackOfficeId = project.BackOfficeId
+            };
+        
+            return Ok(model);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+    
+    [HttpPut("UpdateProject/{projectId}")]
+    public IActionResult UpdateProject(int projectId, [FromBody] ProjectModel projectModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var existingProject = _projectManager.GetProjectWithThemes(projectId);
+            if (existingProject == null)
+            {
+                return NotFound($"Project with ID {projectId} not found.");
+            }
+
+            existingProject.ProjectName = projectModel.ProjectName;
+            existingProject.Description = projectModel.Description;
+            existingProject.Status = projectModel.Status;
+       
+            _projectManager.UpdateProject(existingProject);
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 }

@@ -1,5 +1,13 @@
 let questionTypeWindow;
+let answerButtonCount = 0;
 console.log('The addQ.ts script bundle has been loaded!');
+export var QuestionType;
+(function (QuestionType) {
+    QuestionType[QuestionType["SingleChoice"] = 0] = "SingleChoice";
+    QuestionType[QuestionType["MultipleChoice"] = 1] = "MultipleChoice";
+    QuestionType[QuestionType["Range"] = 2] = "Range";
+    QuestionType[QuestionType["Open"] = 3] = "Open";
+})(QuestionType || (QuestionType = {}));
 export function addQuestion() {
     var _a;
     console.log('Add q button has been pressed!');
@@ -14,10 +22,10 @@ export function addQuestion() {
         <body>
         <h2>Selecteer het type vraag</h2>
         <form>
-            <input type="radio" name="questionType" value="single"> Single<br>
-            <input type="radio" name="questionType" value="open"> Open<br>
-            <input type="radio" name="questionType" value="range"> Range<br>
-            <input type="radio" name="questionType" value="multiple"> Multiple<br>
+            <input type="radio" name="questionType" value="${QuestionType.SingleChoice}"> Single<br>
+            <input type="radio" name="questionType" value="${QuestionType.Open}"> Open<br>
+            <input type="radio" name="questionType" value="${QuestionType.Range}"> Range<br>
+            <input type="radio" name="questionType" value="${QuestionType.MultipleChoice}"> Multiple<br>
             <button type="button" id="selecteer-button"">Selecteer</button>
         </form>
         </body>
@@ -33,11 +41,11 @@ function selectQuestionType() {
     if (!questionTypeWindow)
         return;
     // Vind het geselecteerde type vraag
-    let questionType = "";
+    let questionType = QuestionType.SingleChoice;
     const radios = questionTypeWindow.document.getElementsByName('questionType');
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].checked) {
-            questionType = radios[i].value;
+            questionType = parseInt(radios[i].value);
             break;
         }
     }
@@ -55,28 +63,39 @@ function addQuestionRow(questionType) {
     // Voeg een inputveld toe voor de vraag met aanduiding van het vraagtype
     const questionInput = document.createElement("input");
     questionInput.type = "text";
-    questionInput.name = questionType + "Question[]";
-    questionInput.placeholder = "Voeg een " + questionType + " vraag toe";
+    questionInput.name = questionType + "Question";
+    questionInput.placeholder = "Voeg een " + questionType.toString() + " vraag toe";
     row.appendChild(questionInput);
+    // Voeg een inputveld toe om het vraagtype op te slaan
+    const questionTypeInput = document.createElement("input");
+    questionTypeInput.type = "hidden";
+    questionTypeInput.name = "questionType";
+    questionTypeInput.value = questionType.toString();
+    row.appendChild(questionTypeInput);
     // Voeg extra inputveld toe voor mogelijke antwoorden, indien nodig
-    if (questionType !== "open") {
+    if (questionType !== 3) {
         const answerInput = document.createElement("input");
         answerInput.type = "text";
-        answerInput.name = questionType + "Answer[]";
+        answerInput.name = questionType + "Answer";
         answerInput.placeholder = "Voeg een antwoord toe";
         row.appendChild(answerInput);
-        // Voeg een knop toe om extra antwoordopties toe te voegen
-        const addAnswerButton = document.createElement("button");
-        addAnswerButton.type = "button";
-        addAnswerButton.textContent = "Voeg nog een antwoord toe";
-        addAnswerButton.onclick = function () {
-            const additionalAnswerInput = document.createElement("input");
-            additionalAnswerInput.type = "text";
-            additionalAnswerInput.name = questionType + "Answer[]";
-            additionalAnswerInput.placeholder = "Voeg een antwoord toe";
-            row.insertBefore(additionalAnswerInput, addAnswerButton);
-        };
-        row.appendChild(addAnswerButton);
+        if (answerButtonCount < 4) {
+            const addAnswerButton = document.createElement("button");
+            addAnswerButton.type = "button";
+            addAnswerButton.textContent = "Voeg nog een antwoord toe";
+            addAnswerButton.onclick = function () {
+                if (answerButtonCount >= 3) {
+                    addAnswerButton.disabled = true; // Uitschakelen knop na 5 keer klikken
+                }
+                const additionalAnswerInput = document.createElement("input");
+                additionalAnswerInput.type = "text";
+                additionalAnswerInput.name = questionType + "Answer";
+                additionalAnswerInput.placeholder = "Voeg een antwoord toe";
+                row.insertBefore(additionalAnswerInput, addAnswerButton);
+                answerButtonCount++;
+            };
+            row.appendChild(addAnswerButton);
+        }
     }
     questionsDiv.appendChild(row);
 }

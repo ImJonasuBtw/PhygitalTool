@@ -20592,6 +20592,8 @@ textarea.form-control-lg {
   \***********************************************************************************************************/
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -20599,22 +20601,170 @@ html {
     font-size: 16px;
   }
 }
+body {
+  margin-bottom: 60px;
+  background-color: #f2f2f2;
+  padding-top: 20px;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+.nav-item .btn {
+  width: 100%; /* Makes buttons full-width */
+  margin-bottom: 0.5rem;
 }
 
 .selected {
-  background-color: red; /* pas aan naar jouw voorkeur */
-  font-weight: bold; /* of elke andere stijl die je wilt toevoegen */
+  background-color: red;
+  font-weight: bold;
+}
+/*!***********************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss ***!
+  \***********************************************************************************************************************************************************/
+.sidebar {
+  background-color: rgba(244, 244, 248, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2rem 1rem;
+  color: #333333;
+  overflow-y: auto;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 250px;
+    height: auto;
+    z-index: 1040;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+}
+.sidebar img {
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.sidebar .nav-link {
+  display: block;
+  margin: 1rem 0;
+  color: #333333;
+  text-decoration: none;
+}
+.sidebar .nav-link.active {
+  color: #ea63ff;
+  font-weight: bold;
+}
+.sidebar .nav-link .badge {
+  background-color: #ea63ff;
+}
+
+#projects-container {
+  transition: margin-left 0.3s ease;
+  padding: 2rem 2rem 2rem 1rem;
+}
+@media (min-width: 768px) and (max-width: 1800px) {
+  #projects-container {
+    margin-left: 250px;
+  }
+}
+@media (min-width: 1800px) {
+  #projects-container {
+    margin-left: 0;
+  }
+}
+#projects-container .row {
+  margin-right: 0;
+  margin-left: 0;
+}
+#projects-container .card {
+  background-color: rgba(244, 244, 248, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+#projects-container .card:hover {
+  background-color: rgba(244, 244, 248, 0.7);
+}
+#projects-container .card .card-title {
+  color: #333333;
+}
+#projects-container .card .card-text {
+  color: black;
+}
+#projects-container .card .badge {
+  background-color: #6fa96e;
+}
+#projects-container .card .creationDate {
+  background: none;
+  color: #333333;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+.animated-background {
+  background: linear-gradient(-45deg, #a044ff, #b266ff, #c488ff, #d6aaff);
+  background-size: 400% 400%;
+  animation: gradientAnimation 60s ease infinite;
+}
+
+#confirmationModal .modal-content {
+  background-color: #f4f4f8;
+  border: none;
+}
+#confirmationModal .modal-header,
+#confirmationModal .modal-body,
+#confirmationModal .modal-footer {
+  border-bottom: 1px solid #d5d5e4;
+}
+#confirmationModal .btn-secondary {
+  color: #333333;
+  background-color: #f0f0f7;
+}
+#confirmationModal .btn-danger {
+  background-color: #fc0000;
+  border-color: #fc0000;
+}
+
+#add-project-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(234, 99, 255, 0.5);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  backdrop-filter: blur(10px);
+}
+#add-project-button:hover {
+  background-color: #e330ff;
 }
 
 /*# sourceMappingURL=site.css.map*/

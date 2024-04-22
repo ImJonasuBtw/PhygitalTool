@@ -6,7 +6,34 @@
 {
     <script src="~/dist/index.entry.js" defer></script>
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="container mt-5">
+    <div class="text-center">
+        <partial name="_LoginPartial"></partial>
+        <ul class="list-unstyled">
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <li class="nav-item mb-2">
+                    <a class="btn btn-outline-primary btn-block" asp-area="" asp-controller="BackOffice" asp-action="Index">Backoffice</a>
+                </li>
+            }
+
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                asp-controller="SubTheme"
+                asp-action="ShowSubThemeInformation"
+                asp-route-flowId="1">
+                    Linaire flow doorlopen
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                asp-controller="SubTheme"
+                asp-action="ShowSubThemeInformation"
+                asp-route-flowId="2">
+                    Circulair flow doorlopen
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>

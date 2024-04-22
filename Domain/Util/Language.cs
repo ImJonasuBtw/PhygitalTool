@@ -2,6 +2,6 @@ namespace PhygitalTool.Domain.Util;
 
 public enum Language
 {
-    English,
-    Dutch
+    English =0,
+    Dutch =1
 }

@@ -12,7 +12,7 @@ public class BackOfficeManager : IBackOfficeManager
     {
         _repositoryPersistance = repositoryPersistance;
         _repositoryRetrieval = repositoryRetrieval;
-    }
+    } 
 
     public BackOffice GetBackOfficeForManager(string managerId)
     {

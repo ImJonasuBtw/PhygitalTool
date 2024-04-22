@@ -13,9 +13,15 @@ public interface IRepositoryPersistance
 
     // Saves Contact Information when user submits form.
     void SaveContactInformation(ContactInformation contactInformation);
-    void CreateProject(Project project);
-    void CreateFlow(Flow flow);
-    void CreateQuestion(Question question);
+    void CreateProject(Project project); 
+    Flow CreateFlow(Flow flow);
+    Question CreateQuestion(Question question);
     void CreateSubTheme(SubTheme subTheme);
+    void CreateMainTheme(MainTheme mainTheme);
+    void DeleteSubTheme(int subThemeId);
+    void DeleteMainTheme(int mainThemeId);
     void RemoveProject(int projectId);
+    void UpdateProject(Project project);
+    void createAnswerPossilility(AnswerPossibility answerPossibility);
+
 }

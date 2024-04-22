@@ -15,13 +15,27 @@ public class ProjectManager : IProjectManager
         _repositoryRetrieval = repositoryRetrieval;
     }
 
-    public void AddProject(Project project)
+    public void AddProject(Project project) 
     {
         _repositoryPersistance.CreateProject(project);
     }
     public void AddSubTheme(SubTheme subTheme)
     {
         _repositoryPersistance.CreateSubTheme(subTheme);
+    }
+    public void AddMainTheme(MainTheme mainTheme)
+    {
+        _repositoryPersistance.CreateMainTheme(mainTheme);
+    }
+
+    public void DeleteSubTheme(int subThemeId)
+    {
+        _repositoryPersistance.DeleteSubTheme(subThemeId);
+    }
+    
+    public void DeleteMainTheme(int mainThemeId)
+    {
+        _repositoryPersistance.DeleteMainTheme(mainThemeId);
     }
 
     public Project GetProjectWithThemes(int projectId)
@@ -40,23 +54,46 @@ public class ProjectManager : IProjectManager
     }
     
 
-    public void AddFlow(Flow flow)
+    public Flow AddFlow(Flow flow)
     {
-        _repositoryPersistance.CreateFlow(flow);
+      return _repositoryPersistance.CreateFlow(flow);
     }
 
-    public void AddQuestion(Question question)
+    public Question AddQuestion(Question question)
     {
-        _repositoryPersistance.CreateQuestion(question);
+       return _repositoryPersistance.CreateQuestion(question);
     }
 
     public void AddAnswerPossibility(AnswerPossibility answerPossibility)
     {
-        throw new NotImplementedException();
+        _repositoryPersistance.createAnswerPossilility(answerPossibility);
+    }
+
+    public void UpdateProject(Project project)
+    {
+        _repositoryPersistance.UpdateProject(project);
     }
 
     public void DeleteProject(int projectId)
     { 
         _repositoryPersistance.RemoveProject(projectId);
+    }
+
+    public SubTheme GetSubTheme(int subThemeId)
+    {
+        return _repositoryRetrieval.ReadSubTheme(subThemeId);
+    }
+    public MainTheme GetMainTheme(int mainthemeId)
+    {
+        return _repositoryRetrieval.ReadMainTheme(mainthemeId);
+    }
+
+    public void UpdateSubTheme(SubTheme subTheme)
+    {
+        _repositoryRetrieval.UpdateSubTheme(subTheme);
+    }
+    public void UpdateMainTheme(MainTheme mainTheme)
+    {
+        _repositoryRetrieval.UpdateMainTheme(mainTheme);
     }
 }

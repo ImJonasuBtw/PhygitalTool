@@ -7453,6 +7453,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss":
+/*!**************************************************************************!*\
+  !*** ./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/css/site.css":
 /*!**************************!*\
   !*** ./src/css/site.css ***!
@@ -7532,11 +7544,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap_icons_font_bootstrap_icons_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-icons/font/bootstrap-icons.css */ "./node_modules/bootstrap-icons/font/bootstrap-icons.css");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var _css_site_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/site.css */ "./src/css/site.css");
+/* harmony import */ var _css_Backoffice_Projects_overview_projectsOverviewStyles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/Backoffice/Projects overview/projectsOverviewStyles.scss */ "./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss");
 
 
 
 
 // Custom CSS imports
+
 
 console.log('The \'site\' bundle has been loaded!');
 
