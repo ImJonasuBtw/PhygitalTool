@@ -5,6 +5,8 @@ public class AnswerPossibility
     // Prop
     public int AnswerPossibilityId { get; set; }
     public string Description { get; set; }
+    public int QuestionId{ get; set; }
+
 
     // Nav
     public Question Question { get; set; }
@@ -15,14 +17,13 @@ public class AnswerPossibility
     {
     }
 
-    public AnswerPossibility(int answerPossibilityId, string description)
+    public AnswerPossibility( string description)
     {
-        AnswerPossibilityId = answerPossibilityId;
+        
         Description = description;
     }
-    public AnswerPossibility(int answerPossibilityId, string description, int nextQuestionId)
+    public AnswerPossibility( string description, int nextQuestionId)
     {
-        AnswerPossibilityId = answerPossibilityId;
         Description = description;
         NextQuestionId = nextQuestionId;
     }

@@ -51,16 +51,24 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
-    public void CreateFlow(Flow flow)
+    public Flow CreateFlow(Flow flow)
     {
         _context.Flows.Add(flow);
         _context.SaveChanges();
+        var createdFlow =
+            _context.Flows.FirstOrDefault(f =>
+                f.FlowName == flow.FlowName && f.FlowDescription == flow.FlowDescription);
+
+        return createdFlow;
     }
 
-    public void CreateQuestion(Question question)
+    public Question CreateQuestion(Question question)
     {
         _context.Questions.Add(question);
         _context.SaveChanges();
+        var createdQuestion = _context.Questions.FirstOrDefault(q =>
+            q.QuestionText == question.QuestionText && q.QuestionType == question.QuestionType);
+        return createdQuestion;
     }
 
     public void RemoveProject(int projectId) 
@@ -91,6 +99,12 @@ public class PersistanceRepository : IRepositoryPersistance
         existingProject.Status = project.Status;
 
     
+        _context.SaveChanges();
+    }
+
+    public void createAnswerPossilility(AnswerPossibility answerPossibility)
+    {
+        _context.AnswerPossibilities.Add(answerPossibility);
         _context.SaveChanges();
     }
 

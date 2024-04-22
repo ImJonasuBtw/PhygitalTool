@@ -13,6 +13,10 @@ const FlowTypeEnum = {
     Circular: 0,
     Linear: 1
 };
+const Language = {
+    English: 0,
+    Dutch: 1
+};
 class Flow {
     constructor(description, flowName, flowType) {
         this.description = description;
@@ -50,6 +54,13 @@ console.log('The addFLow.ts script bundle has been loaded!');
                          
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Language</label>
+                        <select class="form-select" id="flowLanguage" required>
+                                 <option value="${Language.English}">English</option>
+                                 <option value="${Language.Dutch}">Dutch</option>
+            </select>
+        </div>
+                <div class="mb-3">
                           <div id="questions">
                                      <!-- Here question rows will be added -->
                           </div>
@@ -71,15 +82,28 @@ console.log('The addFLow.ts script bundle has been loaded!');
                 const descriptionInput = document.getElementById('description');
                 const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
                 const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
+                const questions = [];
+                document.querySelectorAll('.question-row').forEach(row => {
+                    const questionInput = row.querySelector('input[type="text"][name$="Question"]');
+                    const answerInputs = row.querySelectorAll('input[type="text"][name$="Answer"]');
+                    const questionText = questionInput.value.trim();
+                    if (questionText) {
+                        const answers = Array.from(answerInputs).map(input => input.value.trim()).filter(answer => answer !== '');
+                        const questionTypeInput = row.querySelector('input[name="questionType"]');
+                        const questionType = parseInt(questionTypeInput.value); // Haal de numerieke waarde van het vraagtype op
+                        questions.push({
+                            QuestionText: questionText,
+                            QuestionType: questionType, // Gebruik de numerieke waarde van het vraagtype
+                            AnswerPossibilities: answers.map(answer => ({ Description: answer }))
+                        });
+                    }
+                });
+                const flowLanguageSelect = document.getElementById('flowLanguage');
+                const flowLanguage = parseInt(flowLanguageSelect.value);
                 if (!flowNameInput || !descriptionInput || !flowTypeRadio)
                     return;
                 const flowName = flowNameInput.value;
                 const description = descriptionInput.value;
-                //EERST ZORGEN DA DE FLOW GEADD WORD, DAN DE VRAGEN MEE GEADD WORD EN DAN DE ANSWERPOS
-                console.log(flowName);
-                console.log(description);
-                console.log(flowType);
-                console.log(subthemeId);
                 // Create a new flow instance
                 const newFlow = new Flow(description, flowName, flowType);
                 const response = yield fetch('/api/FlowCreation/AddFlowToSubtheme', {
@@ -92,7 +116,8 @@ console.log('The addFLow.ts script bundle has been loaded!');
                         FlowDescription: newFlow.description,
                         FlowType: newFlow.FlowType,
                         SubthemeId: subthemeId,
-                        Questions: []
+                        Questions: questions,
+                        Language: flowLanguage
                     })
                 });
                 if (response.ok) {

@@ -2,8 +2,8 @@ namespace PhygitalTool.Domain.Util;
 
 public enum QuestionType
 {
-    SingleChoice,
-    MultipleChoice,
-    Range,
-    Open
+    SingleChoice = 0,
+    MultipleChoice = 1,
+    Range = 2,
+    Open = 3
 }

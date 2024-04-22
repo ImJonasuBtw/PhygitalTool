@@ -16,8 +16,8 @@ public interface IProjectManager
     SubTheme GetSubThemeWithFlows(int subThemeId);
     void DeleteProject(int projectId); 
    
-    void AddFlow(Flow flow);
-    void AddQuestion(Question question);
+    Flow AddFlow(Flow flow);
+    Question AddQuestion(Question question);
 
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
     void AddMainTheme(MainTheme mainTheme);

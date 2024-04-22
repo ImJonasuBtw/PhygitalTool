@@ -16,5 +16,5 @@ public class FlowModel
     public Language Language{ get; set; }
     [Required(ErrorMessage = "SubthemeId is required")]
     public int SubthemeId { get; set; }
-    public ICollection<Question> Questions { get; set; } 
+    public ICollection<QuestionModel> Questions { get; set; } 
 }

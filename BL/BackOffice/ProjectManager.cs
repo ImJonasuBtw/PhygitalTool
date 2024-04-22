@@ -54,19 +54,19 @@ public class ProjectManager : IProjectManager
     }
     
 
-    public void AddFlow(Flow flow)
+    public Flow AddFlow(Flow flow)
     {
-        _repositoryPersistance.CreateFlow(flow);
+      return _repositoryPersistance.CreateFlow(flow);
     }
 
-    public void AddQuestion(Question question)
+    public Question AddQuestion(Question question)
     {
-        _repositoryPersistance.CreateQuestion(question);
+       return _repositoryPersistance.CreateQuestion(question);
     }
 
     public void AddAnswerPossibility(AnswerPossibility answerPossibility)
     {
-        throw new NotImplementedException();
+        _repositoryPersistance.createAnswerPossilility(answerPossibility);
     }
 
     public void UpdateProject(Project project)

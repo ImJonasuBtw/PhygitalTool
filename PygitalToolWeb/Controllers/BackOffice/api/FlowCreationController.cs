@@ -34,40 +34,44 @@ public class FlowCreationController : ControllerBase
             FlowName = flow.FlowName,
             FlowType = flow.FlowType,
             Language = flow.Language,
-            SubThemeId = flow.SubthemeId
+            SubThemeId = flow.SubthemeId,
             
         };
+
+        Flow  newFlow = _projectManager.AddFlow(domainFlow);
         
         if (flow.Questions != null && flow.Questions.Count > 0)
         {
-            foreach (var question in flow.Questions)
+            foreach (var questionModel in flow.Questions)
             {
                 var domainQuestion = new Question()
                 {
-                    QuestionText = question.QuestionText,
-                    QuestionType = question.QuestionType,
-
+                    QuestionText = questionModel.QuestionText,
+                    QuestionType = questionModel.QuestionType,
+                    FlowId = newFlow.FlowId,
+                    
                 };
-                if (question.AnswerPossibilities != null && question.AnswerPossibilities.Any())
+               Question newQuestion = _projectManager.AddQuestion(domainQuestion);
+                newFlow.Questions.Add(domainQuestion);
+                if (questionModel.AnswerPossibilities != null && questionModel.AnswerPossibilities.Any())
                 {
-                    foreach (var answer in question.AnswerPossibilities)
+                    foreach (var answer in questionModel.AnswerPossibilities)
                     {
+                        
                         var domainAnswer = new AnswerPossibility()
                         {
-                            Description = answer.Description
+                            Description = answer.Description,
+                            QuestionId = newQuestion.QuestionId
                         };
                         domainQuestion.AnswerPossibilities.Add(domainAnswer);
                         _projectManager.AddAnswerPossibility(domainAnswer);
                     }
                 }
-
-                domainFlow.Questions.Add(domainQuestion);
-                _projectManager.AddQuestion(domainQuestion);
             }
             
         }
         
-        _projectManager.AddFlow(domainFlow);
+       
         return Ok();
         
     }
