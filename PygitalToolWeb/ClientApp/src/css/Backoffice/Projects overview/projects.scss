@@ -1,16 +1,97 @@
 ﻿#projects-container {
-  transition: margin-left 0.3s ease;
-  padding: 2rem 2rem 2rem 1rem;
-  
-  
+  transition: margin-left $margin-transition-time ease;
+  padding: $default-padding 2rem $default-padding 1rem;
 
-  @media (min-width: 768px) and (max-width: 1800px) {
-    margin-left: 250px;
+  form {
+    background-color: rgba($background-color, 0.4);
+    border: $card-border;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: $card-border-radius;
+    margin-bottom: $default-margin;
+    backdrop-filter: blur(5px);
+    overflow: hidden;
+
+    .form-label {
+      color: $text-color;
+      font-weight: bold;
+    }
+
+    .form-control {
+      background-color: rgba($light-color, 0.5); // Light color with opacity for glassy effect
+      border: $card-border;
+      border-radius: $card-border-radius / 2;
+      box-shadow: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      color: $text-color;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+      }
+    }
+
+    textarea.form-control {
+      height: 150px; // Specific height for textarea
+    }
+
+    .btn-primary {
+      background-color: $primary-color;
+      border-color: darken($primary-color, 5%);
+      transition: background-color $default-transition-time, border-color $default-transition-time;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        border-color: darken($primary-color, 10%);
+      }
+    }
+
+    .btn-secondary {
+      background-color: $btn-delete;
+      border-color: darken($btn-delete, 5%);
+      transition: background-color $default-transition-time, border-color $default-transition-time;
+
+      &:hover {
+        background-color: darken($btn-delete, 10%);
+        border-color: darken($btn-delete, 10%);
+      }
+    }
+
+    button {
+      margin-right: $default-margin;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
 
-  @media (min-width: 1800px) {
+  h2 {
+    font-weight: bold;
+  }
+
+  @media (min-width: $tablet-screen) and (max-width: $large-screen) {
+    margin-left: 250px;
+  }
+
+  @media (min-width: $large-screen) {
     margin-left: 0;
+  }
+
+  .form-check-input:checked {
+    background-color: rgba($primary-color, 0.4);
+    border-color: $transparent-border;
+    box-shadow: none;
+  }
+
+  .form-check-input {
+    background-color: rgba($background-color, 0.4);
+    border-color: $transparent-border;
+    box-shadow: none;
+    transition: background-color $default-transition-time, border-color $default-transition-time;
   }
 
   .row {
@@ -20,10 +101,10 @@
 
   .card {
     background-color: rgba($background-color, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2); 
+    border: $card-border;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin-bottom: 1rem;
+    border-radius: $card-border-radius;
+    margin-bottom: $default-margin;
     backdrop-filter: blur(5px);
     overflow: hidden;
 
@@ -31,34 +112,32 @@
       background-color: rgba($background-color, 0.7);
     }
 
-
     .card-title {
       color: $text-color;
+      font-weight: bold;
     }
-
 
     .card-text {
       color: darken($text-color, 20%);
     }
 
-
     .badge {
-      background-color: $status-active;
+      background-color: $primary-color;
     }
 
- 
     .creationDate {
       background: none;
       color: $text-color;
     }
-    
+
+
   }
-  
 }
+
 
 @keyframes gradientAnimation {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   100% {
     background-position: 100% 50%;
@@ -66,8 +145,7 @@
 }
 
 .animated-background {
-  background: linear-gradient(-45deg, #a044ff, #b266ff, #c488ff, #d6aaff);
+  background: linear-gradient(-45deg, $primary-color, $secondary-gradient-colors);
   background-size: 400% 400%;
-  animation: gradientAnimation 60s ease infinite;
+  animation: gradientAnimation 20s ease infinite;
 }
-
