@@ -1,15 +1,22 @@
 import {addQuestion} from "../js/addQuestion"
+
 const FlowTypeEnum = {
     Circular: 0,
     Linear: 1
 };
-class Flow{
+const Language =
+    {
+        English: 0,
+        Dutch: 1
+    }
+
+class Flow {
     public description: string;
     public FlowName: string;
     public FlowType: number;
-    
 
-    constructor(description: string, flowName: string,flowType: number) {
+
+    constructor(description: string, flowName: string, flowType: number) {
         this.description = description;
         this.FlowName = flowName;
         this.FlowType = flowType;
@@ -48,6 +55,13 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                          
                 </div>
                 <div class="mb-3">
+                    <label class="form-label">Language</label>
+                        <select class="form-select" id="flowLanguage" required>
+                                 <option value="${Language.English}">English</option>
+                                 <option value="${Language.Dutch}">Dutch</option>
+            </select>
+        </div>
+                <div class="mb-3">
                           <div id="questions">
                                      <!-- Here question rows will be added -->
                           </div>
@@ -60,30 +74,49 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
 
         const scriptElement = document.getElementById('Flow-script');
         const subthemeId = scriptElement?.getAttribute('data-subtheme-id');
-        
+
         document.getElementById('add-question-button')?.addEventListener('click', addQuestion);
         document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
-        document.getElementById('new-flow-form')?.addEventListener('submit', async function(event) {
+        document.getElementById('new-flow-form')?.addEventListener('submit', async function (event) {
             event.preventDefault();
             console.log("S button geduwt")
             const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
             const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
             const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
             const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
+
+
+            const questions: {
+                QuestionText: string;
+                QuestionType: number;
+                AnswerPossibilities: { Description: string }[]
+            }[] = [];
+            document.querySelectorAll('.question-row').forEach(row => {
+                const questionInput = row.querySelector('input[type="text"][name$="Question"]') as HTMLInputElement;
+                const answerInputs = row.querySelectorAll('input[type="text"][name$="Answer"]') as NodeListOf<HTMLInputElement>;
+                const questionText = questionInput.value.trim();
+                if (questionText) {
+                    const answers = Array.from(answerInputs).map(input => input.value.trim()).filter(answer => answer !== '');
+                    const questionTypeInput = row.querySelector('input[name="questionType"]') as HTMLInputElement;
+                    const questionType = parseInt(questionTypeInput.value); // Haal de numerieke waarde van het vraagtype op
+                    questions.push({
+                        QuestionText: questionText,
+                        QuestionType: questionType, // Gebruik de numerieke waarde van het vraagtype
+                        AnswerPossibilities: answers.map(answer => ({Description: answer}))
+                    })
+                }
+            });
+            const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
+            const flowLanguage = parseInt(flowLanguageSelect.value); 
+
+
             if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
 
             const flowName = flowNameInput.value;
             const description = descriptionInput.value;
+
             
 
-            //EERST ZORGEN DA DE FLOW GEADD WORD, DAN DE VRAGEN MEE GEADD WORD EN DAN DE ANSWERPOS
-           
-           console.log(flowName);
-           console.log(description);
-           console.log(flowType);
-           console.log(subthemeId);
-           
-          
             // Create a new flow instance
             const newFlow = new Flow(description, flowName, flowType);
 
@@ -97,12 +130,13 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                     FlowDescription: newFlow.description,
                     FlowType: newFlow.FlowType,
                     SubthemeId: subthemeId,
-                    Questions: []
+                    Questions: questions,
+                    Language: flowLanguage
                 })
             });
             if (response.ok) {
-               loadFlows();
-                
+                loadFlows();
+
             } else {
                 let errorMessage = 'Failed to add flow';
                 if (response.status === 400) {
@@ -122,6 +156,6 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
 
 function loadFlows() {
     window.location.reload();
-    
+
 }
 
