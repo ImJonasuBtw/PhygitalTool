@@ -201,6 +201,20 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.SubThemes.FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
     }
+    public MainTheme ReadMainTheme(int mainThemeId)
+    {
+        try
+        {
+            return _context.MainThemes.FirstOrDefault(mainTheme => mainTheme.ThemeId == mainThemeId);
+        }
+        catch (Exception ex)
+        {
+            // Voeg logging toe om de exacte fout te zien
+            Console.WriteLine($"Fout bij het ophalen van hoofdthema: {ex}");
+            throw; // Of retourneer null of een foutindicatie, afhankelijk van de gewenste foutafhandeling
+        }
+    }
+
 
     public void UpdateSubTheme(SubTheme updatedSubTheme)
     {
@@ -223,5 +237,28 @@ public class RetrievalRepository : IRepositoryRetrieval
                 // Bijvoorbeeld:
                 throw new ArgumentException("Het subthema kon niet worden gevonden.");
             }
+    }
+    
+    public void UpdateMainTheme(MainTheme updatedMainTheme)
+    {
+        // Zoek het bestaande subthema op basis van het meegegeven ID
+        var existingMainTheme = _context.MainThemes.FirstOrDefault(theme => theme.ThemeId == updatedMainTheme.ThemeId);
+
+        // Controleer of het subthema bestaat
+        if (existingMainTheme != null)
+        {
+            // Werk de eigenschappen van het bestaande subthema bij met de waarden van het bijgewerkte subthema
+            existingMainTheme.ThemeName = updatedMainTheme.ThemeName;
+            existingMainTheme.MainThemeInformation = updatedMainTheme.MainThemeInformation;
+
+            // Sla de wijzigingen op in de database
+            _context.SaveChanges();
+        }
+        else
+        {
+            // Het subthema werd niet gevonden, dus log een fout of voer andere gewenste acties uit
+            // Bijvoorbeeld:
+            throw new ArgumentException("Het thema kon niet worden gevonden.");
+        }
     }
 }

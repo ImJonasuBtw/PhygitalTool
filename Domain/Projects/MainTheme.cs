@@ -27,4 +27,10 @@ public class MainTheme
         ThemeName = themeName;
         MainThemeInformation = mainThemeInformation;
     }
+    public MainTheme(string themeName, string mainThemeInformation, int projectId)
+    {
+        ThemeName = themeName;
+        MainThemeInformation = mainThemeInformation;
+        ProjectId = projectId;
+    }
 }

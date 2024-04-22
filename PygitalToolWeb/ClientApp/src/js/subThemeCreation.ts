@@ -20,7 +20,7 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
             <h2 class="mt-4">Add New SubTheme</h2>
             <form id="new-project-form">
                 <div class="mb-3">
-                    <label for="subThemeName" class="form-label">Subtheme name</label>
+     -               <label for="subThemeName" class="form-label">Subtheme name</label>
                     <input type="text" class="form-control" id="subThemeName" required>
                 </div>
                 <div class="mb-3">

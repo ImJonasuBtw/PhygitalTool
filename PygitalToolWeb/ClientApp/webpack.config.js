@@ -12,6 +12,7 @@ module.exports = {
         addFlow: './src/js/addFlow.ts',
         addQuestion: './src/js/addQuestion.ts',
         subThemeCreation: './src/js/subThemeCreation.ts',
+        themeCreation: './src/js/themeCreation.ts',
         activeProjects: './src/js/activeProjects.ts',
     },
     output: {
