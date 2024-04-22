@@ -23,5 +23,6 @@ public interface IRepositoryPersistance
     void RemoveProject(int projectId);
     void UpdateProject(Project project);
     void createAnswerPossilility(AnswerPossibility answerPossibility);
+    void RemoveFlow(int FlowId);
 
 }
