@@ -13,9 +13,10 @@
         "jquery-validation-unobtrusive": "^3.2.12"
     },
     "devDependencies": {
-        "css-loader": "^6.7.1",
         "@tsconfig/recommended": "^1.0.3",
         "@types/bootstrap": "^5.2.10",
+        "@types/jquery": "^3.5.29",
+        "css-loader": "^6.7.1",
         "mini-css-extract-plugin": "^2.8.0",
         "sass": "^1.71.1",
         "sass-loader": "^14.1.1",

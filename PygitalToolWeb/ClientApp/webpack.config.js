@@ -14,6 +14,7 @@ module.exports = {
         subThemeCreation: './src/js/subThemeCreation.ts',
         themeCreation: './src/js/themeCreation.ts',
         activeProjects: './src/js/activeProjects.ts',
+        phygitalAnswerButton: './src/js/phygitalAnswerButton.ts'
     },
     output: {
         filename: '[name].entry.js',
