@@ -22,6 +22,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     public DbSet<BackOffice> BackOffices { get; set; }
     public DbSet<Manager> Managers { get; set; }
     public DbSet<MainTheme> MainThemes { get; set; }
+    public DbSet<Supervisor> Supervisors { get; set; }
 
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
@@ -62,7 +63,12 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .HasOne(m => m.BackOffice)
             .WithMany(b => b.Managers)
             .HasForeignKey(m => m.BackOfficeId);
-        
+
+        modelBuilder.Entity<Supervisor>()
+            .HasOne(s => s.BackOffice)
+            .WithMany(b => b.Supervisors)
+            .HasForeignKey(s => s.BackOfficeId);
+            
         modelBuilder.Entity<Project>()
             .HasMany(p => p.MainThemes)
             .WithOne(mt => mt.Project)

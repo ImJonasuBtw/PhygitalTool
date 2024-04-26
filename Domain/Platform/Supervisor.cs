@@ -4,9 +4,12 @@ namespace PhygitalTool.Domain.Platform;
 
 public class Supervisor : IdentityUser
 {
-    // Prop
-    public int SupervisorId { get; set; }
-    public string Username { get; set; }
-    public string Password { get; set; }
-    public string Email { get; set; }
+    //prop
+    public string ImageUrl{ get; set; }
+    
+    // Foreign key for BackOffice
+    public int BackOfficeId { get; set; }
+    
+    //nav
+    public BackOffice BackOffice;
 }
