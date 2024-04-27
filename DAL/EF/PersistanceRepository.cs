@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
@@ -119,6 +120,28 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.Flows.Remove(flow);
         _context.SaveChanges();
     }
+
+    public bool AddSupervisor(Supervisor supervisor)
+    {
+        try
+        {
+            var existingSupervisor = _context.Supervisors.FirstOrDefault(s => s.Id == supervisor.Id);
+            if (existingSupervisor != null)
+            {
+                return false;
+            }
+            
+            _context.Supervisors.Add(supervisor);
+            _context.SaveChanges();
+            
+            return true;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Failed to add supervisor: " + ex.Message);
+        }
+    }
+
 
 
     public void DeleteSubTheme(int subThemeId)

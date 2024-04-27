@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhygitalTool.BL;
+using PhygitalTool.BL.Users;
 using PhygitalTool.DAL;
 using PhygitalTool.DAL.EF;
 using PhygitalTool.Domain.Platform;
@@ -19,6 +20,7 @@ builder.Services.AddScoped<IRepositoryPersistance, PersistanceRepository>();
 builder.Services.AddScoped<IFlowManager, FlowManger>();
 builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
+builder.Services.AddScoped<IUserManager, UserManager>();
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>
@@ -30,9 +32,10 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDefaultIdentity<Manager>() 
-    .AddRoles<IdentityRole>() 
-    .AddEntityFrameworkStores<PhygitalToolDbContext>(); 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<PhygitalToolDbContext>();
+
 
 
 var app = builder.Build();
@@ -47,7 +50,7 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     PhygitalToolDbContext ctx = scope.ServiceProvider.GetRequiredService<PhygitalToolDbContext>();
-    UserManager<Manager> userManager = services.GetRequiredService<UserManager<Manager>>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
     bool isDatabaseCreated = ctx.CreateDataBase(true);
 
     if (isDatabaseCreated)

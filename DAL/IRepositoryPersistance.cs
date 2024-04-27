@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL;
@@ -25,4 +26,5 @@ public interface IRepositoryPersistance
     void createAnswerPossilility(AnswerPossibility answerPossibility);
     void RemoveFlow(int FlowId);
 
+    bool AddSupervisor(Supervisor supervisor);
 }
