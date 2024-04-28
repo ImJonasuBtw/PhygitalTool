@@ -20,8 +20,5 @@ public class UserManager : IUserManager
         return _repositoryRetrieval.ReadSuperVisorsForBackoffice(backofficeId);
     }
 
-    public bool AddSupervisor(Supervisor supervisor)
-    {
-        return _repositoryPersistance.AddSupervisor(supervisor);
-    }
+
 }

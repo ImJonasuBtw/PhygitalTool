@@ -25,6 +25,4 @@ public interface IRepositoryPersistance
     void UpdateProject(Project project);
     void createAnswerPossilility(AnswerPossibility answerPossibility);
     void RemoveFlow(int FlowId);
-
-    bool AddSupervisor(Supervisor supervisor);
 }

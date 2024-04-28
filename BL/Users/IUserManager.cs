@@ -5,6 +5,5 @@ namespace PhygitalTool.BL.Users;
 public interface IUserManager
 {
     IEnumerable<Supervisor> getSuperVisorsForBackoffice(int backofficeId);
-
-    bool AddSupervisor(Supervisor supervisor);
+    
 }
