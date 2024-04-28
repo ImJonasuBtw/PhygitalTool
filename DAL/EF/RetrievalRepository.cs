@@ -261,4 +261,14 @@ public class RetrievalRepository : IRepositoryRetrieval
             throw new ArgumentException("Het thema kon niet worden gevonden.");
         }
     }
+
+    public IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId)
+    {
+        var supervisors = _context.BackOffices
+            .Where(b => b.BackOfficeId == backofficeId) 
+            .SelectMany(b => b.Supervisors)   
+            .ToList();
+
+        return supervisors;
+    }
 }

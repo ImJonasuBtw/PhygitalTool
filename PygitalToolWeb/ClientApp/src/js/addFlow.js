@@ -143,6 +143,6 @@ console.log('The addFLow.ts script bundle has been loaded!');
         });
     }
 });
-function loadFlows() {
-    window.location.reload();
+export function loadFlows() {
+    window.location.href = window.location.href;
 }

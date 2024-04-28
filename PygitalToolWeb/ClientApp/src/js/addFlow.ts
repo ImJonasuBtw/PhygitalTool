@@ -154,8 +154,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
     }
 });
 
-function loadFlows() {
-    window.location.reload();
-
+export function loadFlows() {
+    window.location.href = window.location.href
 }
 

@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF;
@@ -108,6 +109,18 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void RemoveFlow(int FlowId)
+    {
+        var flow = _context.Flows.Find(FlowId);
+        if (flow == null)
+        {
+            throw new ArgumentException("flow not found");
+        }
+        
+        _context.Flows.Remove(flow);
+        _context.SaveChanges();
+    }
+    
 
     public void DeleteSubTheme(int subThemeId)
     {
