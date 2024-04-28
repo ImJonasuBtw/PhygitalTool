@@ -27,7 +27,7 @@
 
             <div class="nav flex-column">
                 <a href="#" onclick="window.location.reload(true);" class="nav-link active">Projecten <span class="badge badge-primary ">@Model.Projects.Count</span></a>
-
+                <a href="#" class="nav-link">Begeleiders</a>
                 <a href="#" class="nav-link">Instellingen</a>
                 <a href="/Identity/Account/Logout" class="nav-link">Logout</a>
             </div>
@@ -104,6 +104,7 @@
 @section Scripts {
     <script id="project-script" src="~/dist/projectCreation.entry.js" defer="defer" data-backoffice-id="@Model.BackOfficeId"></script>
     <script id="active-projects-script" src="~/dist/activeProjects.entry.js" defer="defer"></script>
+     <script id="supervisor-script" src="~/dist/superVisors.entry.js" data-backoffice-id="@Model.BackOfficeId" defer="defer"></script>
 }
 
 </body>
