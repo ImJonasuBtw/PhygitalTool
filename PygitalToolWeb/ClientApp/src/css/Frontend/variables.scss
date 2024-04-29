@@ -1,0 +1,46 @@
+﻿// Color Palette
+
+$background-color: #f4eaef;
+$text-color: #333333;
+$btn-color-1: #f4b611;
+$btn-color-2: #f45845;
+$btn-color-3: #03945a;
+$btn-color-4: #fb7ab8;
+$btn-color-5: #8f49c6;
+$btn-color-6: #0887cf;
+$primary-color: #0887cf;
+$secondary-color: #e5e5e5;
+$btn-edit: #f0f0f7;
+$btn-delete: #cb1b59;
+$light-color: #fff;
+$status-active: #9f00ee;
+$secondary-gradient-colors: #ff85b2, #ffa3c1, #ffc1d0;
+
+// Spacing
+$default-padding: 2rem;
+$default-margin: 1rem;
+$card-border-radius: 10px;
+
+// Transitions
+$default-transition-time: 0.2s;
+$margin-transition-time: 0.3s;
+
+// Media Queries Breakpoints
+$large-screen: 1800px;
+$tablet-screen: 768px;
+$mobile-screen: 375px;
+
+// Border Styles
+$card-border: 1px solid rgba($light-color, 0.2);
+$answer-box-shadow:  0 0 0 8px rgba(0, 0, 0, 0.2);
+$transparent-border: transparent; 
+
+// qr code styling
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+

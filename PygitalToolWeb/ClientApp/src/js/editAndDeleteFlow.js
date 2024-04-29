@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 function deleteFlow(FlowId) {
-    fetch(`/api/FlowCreation/DeleteFlow${FlowId}`, {
+    fetch(`/api/FlowCreation/DeleteFlow/${FlowId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
