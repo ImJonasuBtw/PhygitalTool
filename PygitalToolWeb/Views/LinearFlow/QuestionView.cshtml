@@ -21,6 +21,24 @@
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
         </form>
     }
+    @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
+    {
+        <p>Duid 1 antwoord aan</p>
+        int i = 1;
+        @foreach (var answerPossibility in Model.AnswerPossibilities)
+        {
+            <button class="unselected answerButtonCircular" id="button-@i" value="@answerPossibility.Description">@answerPossibility.Description</button>
+            i++;
+        }
+
+        <form id="answersFormCircular" method="post" action="/Question/SaveAnswerAndUserInput">
+            <button type="button" class="submit-button" id="submitButtonCircular">Klaar</button>
+            <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
+            <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+            <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
+        </form>
+    }
+
     @if (Model.QuestionType == QuestionType.Open)
     {
         <form method="post" action="/Question/SaveAnswerAndUserInput"onsubmit="return validateForm()">
@@ -29,9 +47,9 @@
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
             <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
-
         </form>
     }
+
     @if (Model.QuestionType == QuestionType.Range)
     {
         <p>Kies 1 van de opties</p>
@@ -54,6 +72,7 @@
             </form>
         </div>
     }
+
     @if (Model.QuestionType == QuestionType.MultipleChoice)
     {
         <p>Duid 1 of meerdere antwoorden aan</p>
@@ -66,23 +85,6 @@
 
         <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
             <button type="button" class="submit-button" id="submitButton">Klaar</button>
-            <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
-            <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
-            <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
-        </form>
-    }
-    @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
-    {
-        <p>Duid 1 antwoord aan</p>
-        int i = 1;
-        @foreach (var answerPossibility in Model.AnswerPossibilities)
-        {
-            <button class="unselected answerButtonCircular" id="button-@i" value="@answerPossibility.Description">@answerPossibility.Description</button>
-            i++;
-        }
-
-        <form id="answersFormCircular" method="post" action="/Question/SaveAnswerAndUserInput">
-            <button type="button" class="submit-button" id="submitButtonCircular">Klaar</button>
             <input type="hidden" name="currentFlow" value="@Model.Flow.FlowId"/>
             <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
             <input type="hidden" name="subThemeId" value="@TempData["subThemeId"]"/>
@@ -114,8 +116,7 @@
 
         var fullUrl = $"{scheme}://{host}{actionPath}";
 
-        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
-
+        <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;"/>
     }
 
 </div>
@@ -123,6 +124,7 @@
 @section Scripts
 {
     <script src="~/dist/questionHandling.entry.js"></script>
+    <script src="~/dist/phygitalAnswerButton.entry.js"></script>
 }
 
 
