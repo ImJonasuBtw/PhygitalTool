@@ -20697,6 +20697,7 @@ body {
 #projects-container .list-group .list-group-item:last-child {
   margin-bottom: 0;
 }
+
 #projects-container form {
   background-color: rgba(244, 244, 248, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);

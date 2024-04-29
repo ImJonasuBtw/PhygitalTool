@@ -17,6 +17,10 @@ public static class DataSeeder
         context.BackOffices.Add(backOffice1);
         context.SaveChanges();
 
+        const string manager = "Manager";
+        const string supervisor = "Supervisor";
+        
+        
         // Managers
         if (!context.Users.Any(u => u.Email == "manager1@example.com"))
         {
@@ -31,13 +35,15 @@ public static class DataSeeder
             };
 
             var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            userManager.AddToRoleAsync(manager1, manager).Wait();
             if (!creationResult.Succeeded)
             {
                 // If creation fails, log or handle the error as needed
                 throw new System.Exception("Failed to create dummy manager.");
             }
         }
-
+        
+        
         if (!context.Users.Any(u => u.Email == "supervisor1@example.com"))
         {
             var supervisor1 = new Supervisor
@@ -50,6 +56,7 @@ public static class DataSeeder
             };
 
             var creationResult1 = userManager.CreateAsync(supervisor1, "Test23!").Result;
+            userManager.AddToRoleAsync(supervisor1, supervisor).Wait();
             if (!creationResult1.Succeeded)
             {
                 // If creation fails, log or handle the error as needed

@@ -51,10 +51,12 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     PhygitalToolDbContext ctx = scope.ServiceProvider.GetRequiredService<PhygitalToolDbContext>();
     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     bool isDatabaseCreated = ctx.CreateDataBase(true);
 
     if (isDatabaseCreated)
     {
+        RoleCreation(roleManager);
         DataSeeder.Seed(ctx, userManager);
         Console.Write("Data Seeded");
     }
@@ -85,3 +87,12 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void RoleCreation(RoleManager<IdentityRole> roleManager)
+{
+    const string manager = "Manager";
+    roleManager.CreateAsync(new IdentityRole(manager)).Wait();
+    
+    const string Supervisor = "Supervisor";
+    roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
+}

@@ -17,6 +17,8 @@ public class SupervisorsController : Controller
     private readonly IUserManager _userManager;
 
     private readonly UserManager<IdentityUser> _identityUserManager;
+    
+    private const string Supervisorrole = "Supervisor";
 
     public SupervisorsController(IUserManager userManager, UserManager<IdentityUser> identityUserManager)
     {
@@ -51,22 +53,17 @@ public class SupervisorsController : Controller
             Email = supervisorDto.Email,
             UserName = supervisorDto.Email,
             ImageUrl = supervisorDto.ImageUrl,
-            BackOfficeId = supervisorDto.BackOfficeId
+            BackOfficeId = supervisorDto.BackOfficeId,
+            EmailConfirmed = true
         };
         var result = _identityUserManager.CreateAsync(supervisor, supervisorDto.Password).Result;
-        
+        _identityUserManager.AddToRoleAsync(supervisor, Supervisorrole).Wait();
         if (!result.Succeeded)
         {
             return BadRequest(result.Errors);
         }
 
-        var addResult = _userManager.AddSupervisor(supervisor); 
-        if (!addResult)
-        {
-            return BadRequest("Failed to add supervisor details");
-        }
-
-        return Ok(new { Message = "Supervisor added successfully", SupervisorId = supervisor.Id });
+        return Ok(new { Message = "Supervisor added successfully"});
     }
 
 
