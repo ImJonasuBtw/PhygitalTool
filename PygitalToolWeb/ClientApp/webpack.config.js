@@ -15,6 +15,7 @@ module.exports = {
         themeCreation: './src/js/themeCreation.ts',
         activeProjects: './src/js/activeProjects.ts',
         editAndDeleteFlow: './src/js/editAndDeleteFlow.ts',
+        phygitalAnswerButton: './src/js/phygitalAnswerButton.ts',
         superVisors: './src/js/Supervisors.ts'
     },
     output: {
