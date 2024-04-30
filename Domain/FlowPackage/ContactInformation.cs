@@ -11,6 +11,7 @@ public class ContactInformation
     [Required] [EmailAddress] public string Email { get; set; }
 
     [Required] [StringLength(100)] public string Name { get; set; }
+    [Required] public DateOnly Birthdate { get; set; }
 
     //fk
     public int FlowId { get; set; }
@@ -23,11 +24,12 @@ public class ContactInformation
     {
     }
 
-    public ContactInformation(int contactInformationId, string email, string name)
+    public ContactInformation(int contactInformationId, string email, string name, DateOnly birthdate)
     {
         ContactInformationId = contactInformationId;
         Email = email;
         Name = name;
+        Birthdate = birthdate;
     }
 
     public ContactInformation(Flow flow)
