@@ -37,6 +37,15 @@ export function addQuestion() {
         (_a = questionTypeWindow.document.getElementById('selecteer-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', selectQuestionType);
     }
 }
+function addDeleteButton(row) {
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Verwijder vraag";
+    deleteButton.onclick = function () {
+        row.remove(); // Verwijder de vraagrij wanneer de knop wordt geklikt
+    };
+    row.appendChild(deleteButton);
+}
 function selectQuestionType() {
     if (!questionTypeWindow)
         return;
@@ -72,30 +81,30 @@ function addQuestionRow(questionType) {
     questionTypeInput.name = "questionType";
     questionTypeInput.value = questionType.toString();
     row.appendChild(questionTypeInput);
+    addDeleteButton(row);
     // Voeg extra inputveld toe voor mogelijke antwoorden, indien nodig
-    if (questionType !== 3) {
+    if (questionType !== QuestionType.Open) {
         const answerInput = document.createElement("input");
         answerInput.type = "text";
         answerInput.name = questionType + "Answer";
         answerInput.placeholder = "Voeg een antwoord toe";
         row.appendChild(answerInput);
-        if (answerButtonCount < 4) {
-            const addAnswerButton = document.createElement("button");
-            addAnswerButton.type = "button";
-            addAnswerButton.textContent = "Voeg nog een antwoord toe";
-            addAnswerButton.onclick = function () {
-                if (answerButtonCount >= 3) {
-                    addAnswerButton.disabled = true; // Uitschakelen knop na 5 keer klikken
-                }
-                const additionalAnswerInput = document.createElement("input");
-                additionalAnswerInput.type = "text";
-                additionalAnswerInput.name = questionType + "Answer";
-                additionalAnswerInput.placeholder = "Voeg een antwoord toe";
-                row.insertBefore(additionalAnswerInput, addAnswerButton);
-                answerButtonCount++;
-            };
-            row.appendChild(addAnswerButton);
-        }
+        const addAnswerButton = document.createElement("button");
+        addAnswerButton.type = "button";
+        addAnswerButton.textContent = "Voeg nog een antwoord toe";
+        let answerButtonCount = 1; // Begin met 1, omdat er al één antwoordveld is toegevoegd
+        addAnswerButton.onclick = function () {
+            const additionalAnswerInput = document.createElement("input");
+            additionalAnswerInput.type = "text";
+            additionalAnswerInput.name = questionType + "Answer";
+            additionalAnswerInput.placeholder = "Voeg een antwoord toe";
+            row.appendChild(additionalAnswerInput);
+            answerButtonCount++; // Verhoog de teller voor deze rij
+            if (answerButtonCount >= 5) {
+                addAnswerButton.disabled = true; // Schakel de knop uit na 3 keer klikken
+            }
+        };
+        row.appendChild(addAnswerButton);
     }
     questionsDiv.appendChild(row);
 }

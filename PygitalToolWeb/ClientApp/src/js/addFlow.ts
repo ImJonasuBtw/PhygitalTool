@@ -1,29 +1,38 @@
 import {addQuestion} from "../js/addQuestion"
 
-const FlowTypeEnum = {
+export const FlowTypeEnum = {
     Circular: 0,
     Linear: 1
 };
-const Language =
+export const Language =
     {
         English: 0,
         Dutch: 1
     }
 
-class Flow {
-    public description: string;
-    public FlowName: string;
-    public FlowType: number;
+export class Flow {
+    public flowDescription: string;
+    public flowName: string;
+    public flowType: number;
+    public language: number;
+    public questions: {
+        questionId:number;
+        questionText: string;
+        questionType: number;
+        answerPossibilities: { 
+            description: string;
+            answerPossibilityId: number;
+        }[];
+    }[];
 
-
-    constructor(description: string, flowName: string, flowType: number) {
-        this.description = description;
-        this.FlowName = flowName;
-        this.FlowType = flowType;
-
+    constructor(description: string, flowName: string, flowType: number, language: number, questions: any[]) {
+        this.flowDescription = description;
+        this.flowName = flowName;
+        this.flowType = flowType;
+        this.language = language;
+        this.questions = questions || [];
     }
 }
-
 
 console.log('The addFLow.ts script bundle has been loaded!');
 
@@ -59,8 +68,8 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                         <select class="form-select" id="flowLanguage" required>
                                  <option value="${Language.English}">English</option>
                                  <option value="${Language.Dutch}">Dutch</option>
-            </select>
-        </div>
+                        </select>
+                </div>
                 <div class="mb-3">
                           <div id="questions">
                                      <!-- Here question rows will be added -->
@@ -85,11 +94,10 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
             const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
             const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
 
-
             const questions: {
-                QuestionText: string;
-                QuestionType: number;
-                AnswerPossibilities: { Description: string }[]
+                questionText: string;
+                questionType: number;
+                answerPossibilities: { description: string }[]
             }[] = [];
             document.querySelectorAll('.question-row').forEach(row => {
                 const questionInput = row.querySelector('input[type="text"][name$="Question"]') as HTMLInputElement;
@@ -100,9 +108,9 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                     const questionTypeInput = row.querySelector('input[name="questionType"]') as HTMLInputElement;
                     const questionType = parseInt(questionTypeInput.value); // Haal de numerieke waarde van het vraagtype op
                     questions.push({
-                        QuestionText: questionText,
-                        QuestionType: questionType, // Gebruik de numerieke waarde van het vraagtype
-                        AnswerPossibilities: answers.map(answer => ({Description: answer}))
+                        questionText: questionText,
+                        questionType: questionType, // Gebruik de numerieke waarde van het vraagtype
+                        answerPossibilities: answers.map(answer => ({description: answer}))
                     })
                 }
             });
@@ -118,7 +126,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
             
 
             // Create a new flow instance
-            const newFlow = new Flow(description, flowName, flowType);
+            const newFlow = new Flow(description, flowName, flowType, flowLanguage,questions);
 
             const response = await fetch('/api/FlowCreation/AddFlowToSubtheme', {
                 method: 'POST',
@@ -126,9 +134,9 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    FlowName: newFlow.FlowName,
-                    FlowDescription: newFlow.description,
-                    FlowType: newFlow.FlowType,
+                    FlowName: newFlow.flowName,
+                    FlowDescription: newFlow.flowDescription,
+                    FlowType: newFlow.flowType,
                     SubthemeId: subthemeId,
                     Questions: questions,
                     Language: flowLanguage

@@ -1,6 +1,7 @@
+"use strict";
 function addEventListenerToKeyPress(button, key) {
     if (button) {
-        document.addEventListener('keydown', function (event) {
+        document.addEventListener('keydown', (event) => {
             if (event.key === key) {
                 button.click();
             }
@@ -8,26 +9,26 @@ function addEventListenerToKeyPress(button, key) {
     }
 }
 function addEventListenerToKeyPressSlider(slider, key) {
-    document.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', (event) => {
         if (event.key === key.toString()) {
             slider.value = (key - 1).toString();
-            var event_1 = new Event('input', { bubbles: true });
-            slider.dispatchEvent(event_1);
+            const event = new Event('input', { bubbles: true });
+            slider.dispatchEvent(event);
         }
     });
 }
 function linkKeyPressesToButtons() {
-    var button1 = document.getElementById('button-1');
-    var button2 = document.getElementById('button-2');
-    var button3 = document.getElementById('button-3');
-    var button4 = document.getElementById('button-4');
-    var button5 = document.getElementById('button-5');
-    var submit1 = document.getElementById('Submit');
-    var submit2 = document.getElementById('submitButton');
-    var submit3 = document.getElementById('submitButtonCircular');
-    var slider = document.getElementById('myRange');
-    var buttons = [button1, button2, button3, button4, button5];
-    for (var i = 1; i < 6; i++) {
+    const button1 = document.getElementById('button-1');
+    const button2 = document.getElementById('button-2');
+    const button3 = document.getElementById('button-3');
+    const button4 = document.getElementById('button-4');
+    const button5 = document.getElementById('button-5');
+    const submit1 = document.getElementById('Submit');
+    const submit2 = document.getElementById('submitButton');
+    const submit3 = document.getElementById('submitButtonCircular');
+    const slider = document.getElementById('myRange');
+    const buttons = [button1, button2, button3, button4, button5];
+    for (let i = 1; i < 6; i++) {
         if (slider) {
             addEventListenerToKeyPressSlider(slider, i);
         }
@@ -47,6 +48,6 @@ function linkKeyPressesToButtons() {
         }
     }
 }
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     linkKeyPressesToButtons();
 });

@@ -24,5 +24,12 @@ public interface IProjectManager
     void UpdateSubTheme(SubTheme subTheme);
     void UpdateMainTheme(MainTheme mainTheme);
     void UpdateProject(Project existingProject);
-    void DeleteFlow(int FlowId); 
+    void DeleteFlow(int FlowId);
+    Flow GetFlowWithQuestionAndAnswerPossibilities(int FlowId);
+    void UpdateFlow(Flow flow);
+    void DeleteQuestion(int questionId);
+    void UpdateQuestion(Question question);
+    Question GetQuestion(int QuestionId);
+    void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
+    void DeleteanswerPossibility(int answerPossibilityID);
 }

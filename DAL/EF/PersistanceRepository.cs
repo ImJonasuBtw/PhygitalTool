@@ -120,7 +120,77 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.Flows.Remove(flow);
         _context.SaveChanges();
     }
+
+    public void UpdateFlow(Flow flow)
+    {
+        // Check if the flow exists in the database
+        var existingFlow = _context.Flows.Find(flow.FlowId);
+        if (existingFlow == null)
+        {
+            throw new ArgumentException("Project not found");
+        }
+
+        // Update properties
+        existingFlow.FlowName = flow.FlowName;
+        existingFlow.FlowDescription = flow.FlowDescription;
+
     
+        _context.SaveChanges();
+    }
+
+    public void RemoveQuestion(int questionId)
+    {
+        var question = _context.Questions.Find(questionId);
+        if (question == null)
+        {
+            throw new ArgumentException("question not found");
+        }
+        
+        _context.Questions.Remove(question);
+        _context.SaveChanges();
+    }
+
+    public void UpdateQuestion(Question question)
+    {
+        var existingQ = _context.Questions.Find(question.QuestionId);
+        if (existingQ == null)
+        {
+            throw new ArgumentException("question not found");
+        }
+        
+        existingQ.QuestionText = question.QuestionText;
+        existingQ.QuestionType = question.QuestionType;
+
+    
+        _context.SaveChanges();
+    }
+
+    public void updateAnswerPossibility(AnswerPossibility answerPossibility)
+    {
+        var existingA = _context.AnswerPossibilities.Find(answerPossibility.AnswerPossibilityId);
+        if (existingA == null)
+        {
+            throw new ArgumentException("question not found");
+        }
+
+        existingA.Description = answerPossibility.Description;
+
+    
+        _context.SaveChanges();
+    }
+
+    public void RemoveAnswerPossibilty(int answerPossibilityId)
+    {
+        var answerPossibility = _context.AnswerPossibilities.Find(answerPossibilityId);
+        if ( answerPossibility == null)
+        {
+            throw new ArgumentException(" answerPossibility not found");
+        }
+        
+        _context.AnswerPossibilities.Remove( answerPossibility);
+        _context.SaveChanges();
+    }
+
 
     public void DeleteSubTheme(int subThemeId)
     {

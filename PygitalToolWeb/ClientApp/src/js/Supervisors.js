@@ -27,7 +27,7 @@ function loadSupervisors(backofficeId) {
                     ${supervisors.map(sup => `
                         <div href="#" class="list-group-item list-group-item-action">
                             <img src="${sup.imageUrl}" alt="${sup.email}" class="img-thumbnail">
-                            ${sup.email}
+                            ${sup.email} 
                         </div>
                     `).join('')}
                 </div>
@@ -60,6 +60,7 @@ function addSupervisor() {
                     <label for="imageUrl">Image URL:</label>
                     <input type="text" class="form-control" id="imageUrl" name="imageUrl">
                 </div>
+                
                 <button type="submit" class="btn btn-primary">Add Supervisor</button>
                 <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
             </form>

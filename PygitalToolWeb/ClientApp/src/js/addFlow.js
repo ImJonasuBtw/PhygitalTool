@@ -9,19 +9,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var _a;
 import { addQuestion } from "../js/addQuestion";
-const FlowTypeEnum = {
+export const FlowTypeEnum = {
     Circular: 0,
     Linear: 1
 };
-const Language = {
+export const Language = {
     English: 0,
     Dutch: 1
 };
-class Flow {
-    constructor(description, flowName, flowType) {
-        this.description = description;
-        this.FlowName = flowName;
-        this.FlowType = flowType;
+export class Flow {
+    constructor(description, flowName, flowType, language, questions) {
+        this.flowDescription = description;
+        this.flowName = flowName;
+        this.flowType = flowType;
+        this.language = language;
+        this.questions = questions || [];
     }
 }
 console.log('The addFLow.ts script bundle has been loaded!');
@@ -58,8 +60,8 @@ console.log('The addFLow.ts script bundle has been loaded!');
                         <select class="form-select" id="flowLanguage" required>
                                  <option value="${Language.English}">English</option>
                                  <option value="${Language.Dutch}">Dutch</option>
-            </select>
-        </div>
+                        </select>
+                </div>
                 <div class="mb-3">
                           <div id="questions">
                                      <!-- Here question rows will be added -->
@@ -92,9 +94,9 @@ console.log('The addFLow.ts script bundle has been loaded!');
                         const questionTypeInput = row.querySelector('input[name="questionType"]');
                         const questionType = parseInt(questionTypeInput.value); // Haal de numerieke waarde van het vraagtype op
                         questions.push({
-                            QuestionText: questionText,
-                            QuestionType: questionType, // Gebruik de numerieke waarde van het vraagtype
-                            AnswerPossibilities: answers.map(answer => ({ Description: answer }))
+                            questionText: questionText,
+                            questionType: questionType, // Gebruik de numerieke waarde van het vraagtype
+                            answerPossibilities: answers.map(answer => ({ description: answer }))
                         });
                     }
                 });
@@ -105,16 +107,16 @@ console.log('The addFLow.ts script bundle has been loaded!');
                 const flowName = flowNameInput.value;
                 const description = descriptionInput.value;
                 // Create a new flow instance
-                const newFlow = new Flow(description, flowName, flowType);
+                const newFlow = new Flow(description, flowName, flowType, flowLanguage, questions);
                 const response = yield fetch('/api/FlowCreation/AddFlowToSubtheme', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        FlowName: newFlow.FlowName,
-                        FlowDescription: newFlow.description,
-                        FlowType: newFlow.FlowType,
+                        FlowName: newFlow.flowName,
+                        FlowDescription: newFlow.flowDescription,
+                        FlowType: newFlow.flowType,
                         SubthemeId: subthemeId,
                         Questions: questions,
                         Language: flowLanguage
