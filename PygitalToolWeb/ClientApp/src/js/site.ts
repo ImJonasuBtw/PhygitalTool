@@ -7,6 +7,7 @@ import 'bootstrap';
 import '../css/site.css';
 import "../css/Backoffice/Projects overview/projectsOverviewStyles.scss";
 import "../css/Frontend/Flow/frontendFlowStyles.scss";
+import "../css/Frontend/ContactForm/contactFormStyles.scss";
 
 
 console.log('The \'site\' bundle has been loaded!');
