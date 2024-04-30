@@ -38,6 +38,7 @@ function configureSlider(): void {
     }
 }
 
+
 // Toggles the buttons 'selected' class based on if the user pressed it.
 function configureAnswerButtons(): void {
     const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButton');
@@ -115,6 +116,7 @@ function configureAnswerButtonsSingleChoiceCircular(): void {
     });
 }
 
+
 // Initialize configurations
 document.addEventListener('DOMContentLoaded', () => {
     configureAnswerButtons();
@@ -123,3 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
     configureSubmitButtonSingleChoiceCircular();
     configureSlider();
 });
+
+
