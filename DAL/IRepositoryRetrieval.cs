@@ -41,4 +41,5 @@ public interface IRepositoryRetrieval
     public void UpdateSubTheme(SubTheme subTheme);
     public void UpdateMainTheme(MainTheme mainTheme);
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
+    Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
 }

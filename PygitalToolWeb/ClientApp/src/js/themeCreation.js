@@ -48,6 +48,7 @@ console.log('The themecreation.ts script bundle has been loaded!');
                 const themeInformationInput = document.getElementById('themeInformation');
                 if (!themeNameInput || !themeInformationInput)
                     return;
+                console.log(projectId);
                 const themeName = themeNameInput.value;
                 const themeInformation = themeInformationInput.value;
                 const theme = {
@@ -61,8 +62,8 @@ console.log('The themecreation.ts script bundle has been loaded!');
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        themeName: theme.ThemeName,
-                        themeInformation: theme.MainThemeInformation,
+                        ThemeName: theme.ThemeName,
+                        MainThemeInformation: theme.MainThemeInformation,
                         ProjectId: projectId
                     })
                 });
