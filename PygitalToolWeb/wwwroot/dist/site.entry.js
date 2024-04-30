@@ -7465,6 +7465,30 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/css/Frontend/ContactForm/contactFormStyles.scss":
+/*!*************************************************************!*\
+  !*** ./src/css/Frontend/ContactForm/contactFormStyles.scss ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/css/Frontend/Flow/frontendFlowStyles.scss":
+/*!*******************************************************!*\
+  !*** ./src/css/Frontend/Flow/frontendFlowStyles.scss ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/css/site.css":
 /*!**************************!*\
   !*** ./src/css/site.css ***!
@@ -7545,11 +7569,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var _css_site_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/site.css */ "./src/css/site.css");
 /* harmony import */ var _css_Backoffice_Projects_overview_projectsOverviewStyles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/Backoffice/Projects overview/projectsOverviewStyles.scss */ "./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss");
+/* harmony import */ var _css_Frontend_Flow_frontendFlowStyles_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../css/Frontend/Flow/frontendFlowStyles.scss */ "./src/css/Frontend/Flow/frontendFlowStyles.scss");
+/* harmony import */ var _css_Frontend_ContactForm_contactFormStyles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../css/Frontend/ContactForm/contactFormStyles.scss */ "./src/css/Frontend/ContactForm/contactFormStyles.scss");
 
 
 
 
 // Custom CSS imports
+
+
 
 
 console.log('The \'site\' bundle has been loaded!');

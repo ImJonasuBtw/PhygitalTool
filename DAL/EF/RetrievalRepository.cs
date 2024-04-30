@@ -43,6 +43,7 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.Flows
             .Include(fst => fst.SubTheme)
+            .Include(flow => flow.Questions)
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
@@ -271,4 +272,13 @@ public class RetrievalRepository : IRepositoryRetrieval
 
         return supervisors;
     }
+
+    public Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid)
+    {
+        return _context.Flows
+            .Include(f => f.Questions)
+            .ThenInclude(question =>question.AnswerPossibilities )
+            .FirstOrDefault(flow => flow.FlowId == Flowid);
+    }
+    
 }

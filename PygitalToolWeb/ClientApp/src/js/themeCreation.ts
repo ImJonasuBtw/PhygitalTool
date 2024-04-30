@@ -44,7 +44,7 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
             const themeNameInput = document.getElementById('themeName') as HTMLInputElement;
             const themeInformationInput = document.getElementById('themeInformation') as HTMLTextAreaElement;
             if (!themeNameInput || !themeInformationInput) return;
-
+            console.log(projectId)
             const themeName = themeNameInput.value;
             const themeInformation = themeInformationInput.value;
 
@@ -59,8 +59,8 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    themeName: theme.ThemeName,
-                    themeInformation: theme.MainThemeInformation,
+                    ThemeName: theme.ThemeName,
+                    MainThemeInformation: theme.MainThemeInformation,
                     ProjectId: projectId
                 })
             });
