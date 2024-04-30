@@ -21,7 +21,7 @@ public class BackOfficeController : Controller
     }
 
     // GET
-    [Authorize]
+    [Authorize(Roles = "Manager")]
     public IActionResult Index()
     {
         string managerId = User.FindFirstValue(ClaimTypes.NameIdentifier);

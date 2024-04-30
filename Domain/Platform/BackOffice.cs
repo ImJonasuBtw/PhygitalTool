@@ -10,7 +10,8 @@ public class BackOffice
     
     //Nav
     public ICollection<Manager> Managers = new List<Manager>();
-    public ICollection<Project> Projects = new List<Project>(); 
+    public ICollection<Project> Projects = new List<Project>();
+    public ICollection<Supervisor> Supervisors = new List<Supervisor>();
 
     public BackOffice()
     {
