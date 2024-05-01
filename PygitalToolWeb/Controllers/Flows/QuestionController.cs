@@ -2,19 +2,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
-namespace PhygitalTool.Web.Controllers;
+namespace PhygitalTool.Web.Controllers.Flows;
 
 public class QuestionController : Controller
 {
     private readonly IFlowManager _flowManager;
+    private readonly IProjectManager _projectManager;
     private readonly ILogger<QuestionController> _logger;
 
-    public QuestionController(ILogger<QuestionController> logger, IFlowManager iflowManager)
+    public QuestionController(ILogger<QuestionController> logger, IFlowManager iflowManager, IProjectManager projectManager)
     {
         _logger = logger;
         _flowManager = iflowManager;
+        _projectManager = projectManager;
     }
 
     // Slaat de input van de user op voor single choice, range of 
@@ -22,8 +25,11 @@ public class QuestionController : Controller
     public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion,
         int subThemeId)
     {
-        
-        _flowManager.SaveUserAnswer(selectedAnswer, currentFlow, currentQuestion);
+        SubTheme subTheme = _projectManager.GetSubTheme(subThemeId);
+        int mainThemeId = subTheme.MainThemeId;
+        MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
+        int projectId = mainTheme.ProjectId;
+        _flowManager.SaveUserAnswer(selectedAnswer, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
         
         // Forward to appropriate controller based on type of current
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
@@ -40,13 +46,16 @@ public class QuestionController : Controller
     public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion,
         int subThemeId)
     {
+        SubTheme subTheme = _projectManager.GetSubTheme(subThemeId);
+        int mainThemeId = subTheme.MainThemeId;
+        MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
+        int projectId = mainTheme.ProjectId;
         // Loop through all selected answers and save them to the database
         for (int i = 0; i < selectedAnswers.Length; i++)
         {
         
-            _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow, currentQuestion);
+            _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow, currentQuestion, projectId,mainThemeId, subThemeId);
             
-     
         }
         // Note: You could pass the new answer IDs to the next action, depending on your requirements.
         // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.

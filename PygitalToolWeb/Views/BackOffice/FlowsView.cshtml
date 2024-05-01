@@ -27,7 +27,7 @@
                                         <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal"  data-flow-id="@flow.FlowId" title="Delete Flow">
                                             <i class="bi-trash"></i>
                                         </button>
-
+                                        
                                     </div>
                                 </div>
                                 <p class="card-text">@flow.FlowDescription</p>
@@ -38,33 +38,31 @@
                 }
 
             </div>
-            
-            
+        </div> <!-- Einde van de col-md-9 -->
+    </div> <!-- Einde van de row -->
+</div> <!-- Einde van de container-fluid -->
+
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this flow?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" action="" method="post">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button id="delete-confirm" type="submit" class="btn btn-danger">Yes</button>
+                </form>
+            </div>
         </div>
-         <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalLabel">Confirm Deletion</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Are you sure you want to delete this flow?
-                            </div>
-                            <div class="modal-footer">
-                                <form id="deleteForm" action="" method="post">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                    <button id="delete-confirm" type="submit" class="btn btn-danger">Yes</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             <button type="button" style="position: fixed; bottom: 20px; right: 20px; background-color: purple; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: none;" id="add-Flow-button">+</button>
     </div>
 </div>
 
-
+<button type="button" style="position: fixed; bottom: 20px; right: 20px; background-color: purple; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: none;" id="add-Flow-button">+</button>
 
 @section Scripts {
    <script id="Flow-script" data-subtheme-id="@Model.SubThemeId" src="~/dist/addFlow.entry.js" defer="defer"></script>

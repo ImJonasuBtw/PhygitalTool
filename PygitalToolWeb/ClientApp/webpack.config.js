@@ -16,7 +16,9 @@ module.exports = {
         activeProjects: './src/js/activeProjects.ts',
         editAndDeleteFlow: './src/js/editAndDeleteFlow.ts',
         phygitalAnswerButton: './src/js/phygitalAnswerButton.ts',
-        superVisors: './src/js/Supervisors.ts'
+        superVisors: './src/js/Supervisors.ts',
+        results: './src/js/results.ts'
+        
     },
     output: {
         filename: '[name].entry.js',

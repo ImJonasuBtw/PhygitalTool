@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using PhygitalTool.DAL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
@@ -29,17 +30,17 @@ public class FlowManger : IFlowManager
     }
 
     // Creates a new UserInput and returns it
-    public UserInput AddUserInput( int flowId, int answerId) 
+    public UserInput AddUserInput( int flowId, int answerId,int projectId, int mainThemeId, int subTheme) 
     {
-        UserInput userInput = new UserInput( flowId, answerId);
+        UserInput userInput = new UserInput( answerId, flowId,mainThemeId, subTheme, projectId);
         _repositoryPersistance.CreateUserInput(userInput);
         return userInput;
     }
 
     // Returns all userInputs
-    public IEnumerable<UserInput> GetAllUserInputs()
+    public IEnumerable<UserInput> GetAllUserInputsForProject(int projectId)
     {
-        return _repositoryRetrieval.ReadAllUserInputs();
+        return _repositoryRetrieval.ReadAllUserInputsForProject(projectId);
     }
 
     // Creates a new answer using an answerId, answerDes and the questionId its connected to, and returns it.
@@ -55,6 +56,10 @@ public class FlowManger : IFlowManager
     public IEnumerable<Answer> GetAllAnswers()
     {
         return _repositoryRetrieval.ReadAllAnswers();
+    }
+    
+    public IEnumerable<Answer> GetAllAnswersWithQuestions() {
+        return _repositoryRetrieval.ReadAllAnswersWithQuestions();
     }
 
     // Returns a flow based on its id
@@ -91,11 +96,11 @@ public class FlowManger : IFlowManager
         _repositoryPersistance.SaveContactInformation(contactInformation);
     }
 
-    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
+    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion,int projectId, int mainThemeId, int subthemeId)
     {
         int newAnswerId;
 
-        if (GetAllAnswers().IsNullOrEmpty())
+        if (_repositoryRetrieval.ReadAllAnswers().IsNullOrEmpty())
         {
             newAnswerId = 1;
         }
@@ -110,8 +115,38 @@ public class FlowManger : IFlowManager
             selectedAnswer = "no answer";
         }
         AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
-        AddUserInput(currentFlow,newAnswerId);
+        AddUserInput(currentFlow, newAnswerId,  projectId, mainThemeId, subthemeId);
+    }
+    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
+    {
+        int newAnswerId;
+        _repositoryRetrieval.ReadQuestion(currentQuestion);
+            
+
+        if (_repositoryRetrieval.ReadAllAnswers().IsNullOrEmpty())
+        {
+            newAnswerId = 1;
+        }
+        else
+        {
+            int MaxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
+            newAnswerId = MaxAnswerId + 1;
+        }
+
+        if (selectedAnswer.IsNullOrEmpty())
+        {
+            selectedAnswer = "no answer";
+        }
+        AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
+        Flow flow = _repositoryRetrieval.ReadFlow(currentFlow);
+        SubTheme subTheme = _repositoryRetrieval.ReadSubTheme(flow.SubThemeId);
+        MainTheme mainTheme = _repositoryRetrieval.ReadMainTheme(subTheme.MainThemeId);
+        AddUserInput(currentFlow, newAnswerId,  mainTheme.ProjectId, subTheme.MainThemeId, flow.SubThemeId);
     }
 
-    
+    public ICollection<UserInput> GetUserInputsForProject(int projectId)
+    {
+       return _repositoryRetrieval.ReadAllUserInputsForProject(projectId).ToList();
+    }
 }
+

@@ -13,11 +13,11 @@ public interface IRepositoryRetrieval
     Question ReadQuestionWithAnswerPossibilities(int id);
 
     // Returns all userInputs
-    IEnumerable<UserInput> ReadAllUserInputs();
+    IEnumerable<UserInput> ReadAllUserInputsForProject(int projectId);
 
     // Returns all Answers
     IEnumerable<Answer> ReadAllAnswers();
-
+    IEnumerable<Answer> ReadAllAnswersWithQuestions();
     // Returns a flow with FlowSubTheme and SubTheme
     Flow ReadFlow(int flowId);
 
@@ -38,6 +38,7 @@ public interface IRepositoryRetrieval
     SubTheme ReadSubThemeWithFlows(int subthemeId);
     SubTheme ReadSubTheme(int subTheme);
     MainTheme ReadMainTheme(int mainthemeId);
+    
     public void UpdateSubTheme(SubTheme subTheme);
     public void UpdateMainTheme(MainTheme mainTheme);
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
