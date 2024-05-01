@@ -3,54 +3,60 @@
 
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - PhygitalToolWeb</title>
+    <script src="~/dist/site.entry.js" defer></script>
+    <link rel="stylesheet" href="~/dist/site.css">
+</head>
+<body>
+<div class="login-container row mx-0 h-100">
+    <div class="col-md-6 login-form px-5">
+        <h1 class="fw-bold">@ViewData["Title"]</h1>
         <section>
             <form id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <input asp-for="Input.Email" class="form-control input-text" autocomplete="username" aria-required="true" placeholder="name@example.com"/>
                     <label asp-for="Input.Email" class="form-label">E-mail</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <input asp-for="Input.Password" class="form-control input-text" autocomplete="current-password" aria-required="true" placeholder="password"/>
                     <label asp-for="Input.Password" class="form-label">Wachtwoord</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+                <div>
+                    <p class="login-password-forgot">
+                        <a id="forgot-password" class="login-link" asp-page="./ForgotPassword">Wachtwoord vergeten?</a>
+                    </p>
+                </div>
                 <div class="checkbox mb-3">
                     <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        <input class="form-check-input" asp-for="Input.RememberMe"/>
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
                 </div>
                 <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Wachtwoord vergeten?</a>
-                    </p>
-                </div>
-                <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
                 </div>
                 <div>
                     <p>
-                        Nieuwe gebruiker? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registreer</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">E-mailverificatie opnieuw verzenden</a>
+                        Nieuwe gebruiker? <a asp-page="./Register" class="login-link" asp-route-returnUrl="@Model.ReturnUrl">Registreer</a>
                     </p>
                 </div>
             </form>
         </section>
     </div>
-    <div class="login-img col-md-6 col-md-offset-2">
-        
+    <div class="login-img col-md-6 p-0">
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+</body>
+</html>
