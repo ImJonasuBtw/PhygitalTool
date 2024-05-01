@@ -1,3 +1,10 @@
+const key1: string = "w";
+const key2: string = "a";
+const key3: string = "s";
+const key4: string = "d";
+const key5: string = "f";
+const keySubmit: string = " ";
+
 function addEventListenerToKeyPress(button: HTMLButtonElement, key: string) {
     if (button) {
         document.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -8,10 +15,10 @@ function addEventListenerToKeyPress(button: HTMLButtonElement, key: string) {
     }
 }
 
-function addEventListenerToKeyPressSlider(slider: HTMLInputElement, key: number) {
+function addEventListenerToKeyPressSlider(slider: HTMLInputElement, key: string, value: number) {
     document.addEventListener('keydown', (event: KeyboardEvent) => {
-        if (event.key === key.toString()) {
-            slider.value = (key - 1).toString();
+        if (event.key === key) {
+            slider.value = value.toString();
             const event = new Event('input', {bubbles: true});
             slider.dispatchEvent(event);
         }
@@ -28,24 +35,28 @@ function linkKeyPressesToButtons() {
     const submit2 = document.getElementById('submitButton') as HTMLButtonElement;
     const submit3 = document.getElementById('submitButtonCircular') as HTMLButtonElement;
     const slider = document.getElementById('myRange') as HTMLInputElement;
-
-    const buttons: HTMLButtonElement[] = [button1, button2, button3, button4, button5];
-
-    for (let i = 1; i < 6; i++) {
-        if (slider) {
-            addEventListenerToKeyPressSlider(slider, i)
-        } else {
-            addEventListenerToKeyPress(buttons[i - 1], i.toString());
-        }
+    
+    if(slider) {
+        addEventListenerToKeyPressSlider(slider, key1, 0);
+        addEventListenerToKeyPressSlider(slider, key2, 1);
+        addEventListenerToKeyPressSlider(slider, key3, 2);
+        addEventListenerToKeyPressSlider(slider, key4, 3);
+        addEventListenerToKeyPressSlider(slider, key5, 4);
+    } else {
+        addEventListenerToKeyPress(button1, key1);
+        addEventListenerToKeyPress(button2, key2);
+        addEventListenerToKeyPress(button3, key3);
+        addEventListenerToKeyPress(button4, key4);
+        addEventListenerToKeyPress(button5, key5);
     }
 
     if (!document.getElementById('circular-timer')) {
         if (submit1) {
-            addEventListenerToKeyPress(submit1, "6")
+            addEventListenerToKeyPress(submit1, keySubmit)
         } else if (submit2) {
-            addEventListenerToKeyPress(submit2, "6")
+            addEventListenerToKeyPress(submit2, keySubmit)
         } else if (submit3) {
-            addEventListenerToKeyPress(submit3, "6")
+            addEventListenerToKeyPress(submit3, keySubmit)
         }
     }
 }
