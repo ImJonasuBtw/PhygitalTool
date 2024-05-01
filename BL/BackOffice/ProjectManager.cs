@@ -8,6 +8,7 @@ public class ProjectManager : IProjectManager
 {
     private readonly IRepositoryPersistance _repositoryPersistance;
     private readonly IRepositoryRetrieval _repositoryRetrieval;
+    private IProjectManager _projectManagerImplementation;
 
     public ProjectManager(IRepositoryPersistance repositoryPersistance, IRepositoryRetrieval repositoryRetrieval)
     {
@@ -77,6 +78,41 @@ public class ProjectManager : IProjectManager
     public void DeleteFlow(int FlowId)
     {
         _repositoryPersistance.RemoveFlow(FlowId);
+    }
+
+    public Flow GetFlowWithQuestionAndAnswerPossibilities(int FlowId)
+    {
+        return _repositoryRetrieval.ReadFlowWithQuestionAndAnswerpossibilities(FlowId);
+    }
+
+    public void UpdateFlow(Flow flow)
+    {
+        _repositoryPersistance.UpdateFlow(flow);
+    }
+
+    public void DeleteQuestion(int questionId)
+    {
+        _repositoryPersistance.RemoveQuestion(questionId);
+    }
+
+    public void UpdateQuestion(Question question)
+    {
+        _repositoryPersistance.UpdateQuestion(question);
+    }
+
+    public Question GetQuestion(int QuestionId)
+    {
+       return _repositoryRetrieval.ReadQuestion(QuestionId);
+    }
+
+    public void UpdateAnswerPossibility(AnswerPossibility answerPossibility)
+    {
+        _repositoryPersistance.updateAnswerPossibility(answerPossibility);
+    }
+
+    public void DeleteanswerPossibility(int answerPossibilityID)
+    {
+        _repositoryPersistance.RemoveAnswerPossibilty(answerPossibilityID);
     }
 
     public void DeleteProject(int projectId)

@@ -1,11 +1,12 @@
-﻿@model PhygitalTool.Domain.FlowPackage.ContactInformation
+﻿@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.ContactInformation
 
 @{
     ViewBag.Title = "Contact information";
     Layout = "_Layout";
 }
-
-<h2>Laat hier je contactinformatie achter , zodat we je kunnen bereiken :)</h2>
+<body class="background-contract-form">
+<h2>Laat je contactgegevens achter en blijf op de hoogte over info rond dit thema</h2>
 
 <form asp-controller="ContactInformation" asp-action="Contact" method="post">
     <div class="mb-3">
@@ -19,9 +20,27 @@
         <input asp-for="Name" class="form-control"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    
-    <input asp-for="FlowId" type="hidden" value="@Model.Flow.FlowId"/>
-  
+
+    <div class="mb-3">
+        <label asp-for="Birthdate" class="form-label">Birthdate</label>
+        <input asp-for="Birthdate" class="form-control" type="date"/>
+        <span asp-validation-for="Birthdate" class="text-danger"></span>
+    </div>
+
+    <input asp-for="FlowId" type="hidden"/>
+
+    @foreach (var question in Model.Flow.Questions)
+    {
+        if (question.QuestionType == QuestionType.Open)
+        {
+            <div class="mb-3">
+                <label class="form-label">@question.QuestionText</label>
+                <input type="text" name="answers[@question.QuestionId]" class="form-control"/>
+                <span class="text-danger"></span>
+            </div>
+        }
+    }
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</body>

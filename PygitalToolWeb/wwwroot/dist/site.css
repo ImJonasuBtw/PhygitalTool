@@ -20628,7 +20628,7 @@ body {
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss ***!
   \***********************************************************************************************************************************************************/
 .sidebar {
-  background-color: rgba(244, 244, 248, 0.7);
+  background-color: rgba(248, 244, 244, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -20690,7 +20690,7 @@ body {
   padding: 10px;
   text-decoration: none;
   color: #333333;
-  background-color: rgba(244, 244, 248, 0.4);
+  background-color: rgba(248, 244, 244, 0.4);
 }
 #projects-container .list-group .list-group-item .img-thumbnail {
   width: 100px;
@@ -20701,9 +20701,8 @@ body {
 #projects-container .list-group .list-group-item:last-child {
   margin-bottom: 0;
 }
-
 #projects-container form {
-  background-color: rgba(244, 244, 248, 0.4);
+  background-color: rgba(248, 244, 244, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -20776,7 +20775,7 @@ body {
   box-shadow: none;
 }
 #projects-container .form-check-input {
-  background-color: rgba(244, 244, 248, 0.4);
+  background-color: rgba(248, 244, 244, 0.4);
   border-color: transparent;
   box-shadow: none;
   transition: background-color 0.2s, border-color 0.2s;
@@ -20786,7 +20785,7 @@ body {
   margin-left: 0;
 }
 #projects-container .card {
-  background-color: rgba(244, 244, 248, 0.4);
+  background-color: rgba(248, 244, 244, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -20795,7 +20794,7 @@ body {
   overflow: hidden;
 }
 #projects-container .card:hover {
-  background-color: rgba(244, 244, 248, 0.7);
+  background-color: rgba(248, 244, 244, 0.7);
 }
 #projects-container .card .card-title {
   color: #333333;
@@ -20827,13 +20826,13 @@ body {
 }
 
 #confirmationModal .modal-content {
-  background-color: #f4f4f8;
+  background-color: #f8f4f4;
   border: none;
 }
 #confirmationModal .modal-header,
 #confirmationModal .modal-body,
 #confirmationModal .modal-footer {
-  border-bottom: 1px solid #d5d5e4;
+  border-bottom: 1px solid #e4d5d5;
 }
 #confirmationModal .btn-secondary {
   color: #333333;
@@ -21093,6 +21092,70 @@ body:has(.container-information-view) {
   body:has(.container-information-view) {
     overflow: auto !important;
   }
+}
+/*!**********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/ContactForm/contactFormStyles.scss ***!
+  \**********************************************************************************************************************************************/
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.background-contract-form {
+  background-color: #f4eaef;
+  padding: 20px;
+  margin: 0 auto;
+  font-family: "Outfit", sans-serif;
+}
+.background-contract-form h2 {
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.background-contract-form form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.background-contract-form .form-label {
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.background-contract-form .form-control {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid black;
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 16px;
+  color: #000;
+  background-color: transparent;
+  outline: none;
+}
+.background-contract-form .form-control:focus {
+  border-bottom: 2px solid #000;
+}
+.background-contract-form .btn-primary {
+  background-color: #f4b611;
+  border: 10px #333333;
+  padding: 10px 20px;
+  color: #333333;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.background-contract-form .text-danger {
+  color: red;
 }
 
 /*# sourceMappingURL=site.css.map*/
