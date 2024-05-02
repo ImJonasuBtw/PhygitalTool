@@ -73,7 +73,7 @@
                     <button type="submit" class="btn btn-primary submit-button mt-3" id="Submit">Submit</button>
                     <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                     <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
-                   <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
+                    <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
 
                 </form>
             }
@@ -134,14 +134,12 @@
                         }
                     </div>
                     <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
-                                        <button type="button" class="btn btn-primary submit-button" id="submitButton">Klaar</button>
-                                        <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
-                                        <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
-                                        <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
-                                        </form>
+                        <button type="button" class="btn btn-primary submit-button" id="submitButton">Klaar</button>
+                        <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
+                        <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
+                        <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
+                    </form>
                 </div>
-
-                
             }
             @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
             {
@@ -195,4 +193,5 @@
 @section Scripts
 {
     <script src="~/dist/questionHandling.entry.js"></script>
+    <script src="~/dist/phygitalAnswerButton.entry.js"></script>
 }

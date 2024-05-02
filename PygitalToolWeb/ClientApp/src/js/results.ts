@@ -1,7 +1,9 @@
-﻿document.addEventListener('DOMContentLoaded', function(this: Document) {
+﻿import Chart from 'chart.js/auto';
+
+document.addEventListener('DOMContentLoaded', function (this: Document) {
     var clickableCards = document.querySelectorAll('.clickable');
-    clickableCards.forEach(function(card) {
-        card.addEventListener('click', function(this: HTMLElement) {
+    clickableCards.forEach(function (card) {
+        card.addEventListener('click', function (this: HTMLElement) {
             var url = this.getAttribute('data-href');
             if (url !== null) {
                 window.location.href = url;
@@ -127,22 +129,49 @@ function getAllAnswersWithQuestions() {
                 // HTML-element om vragen en unieke antwoorden weer te geven
                 const resultsContainer = document.getElementById('results-container');
 
+                var counter = 0;
                 // Itereer over de vragen en hun unieke antwoorden
                 for (const questionText in questionAnswers) {
                     if (Object.hasOwnProperty.call(questionAnswers, questionText)) {
                         const uniqueAnswers = Array.from(questionAnswers[questionText]);
+                        const answerData: { answer: string, count: number }[] = [];
 
                         // Voeg de vraag toe aan de HTML
                         // @ts-ignore
-                        resultsContainer.innerHTML += `<p><strong>Question:</strong> ${questionText}</p>`;
+                        resultsContainer.innerHTML += `<p class="results-question"><strong>Question:</strong> ${questionText}</p>`;
 
                         // Voeg de unieke antwoorden en hun aantal keer toe aan de HTML
                         uniqueAnswers.forEach(answer => {
                             const count = answerCounts[answer];
+                            answerData.push({answer: answer, count: count});
                             // @ts-ignore
-                            resultsContainer.innerHTML += `<p><strong>Answer:</strong> ${answer} - Number of times answered: ${count}</p>`;
+                            // resultsContainer.innerHTML += `<p class="results-answer"><strong>Answer:</strong> ${answer} - Number of times answered: ${count}</p>`;
                         });
+
+                        console.log(answerData);
+                        // @ts-ignore
+                        const canvasId = `chart-${counter}`;
+                        const canvasHtml = `<div class="chart-container"><canvas id="${ canvasId}"></canvas></div>`;
+                        
+                        if (resultsContainer) {
+                            resultsContainer.innerHTML += canvasHtml;
+                        }
+                        
+                        setTimeout(() => {
+                            const ctx = document.getElementById(canvasId) as HTMLCanvasElement;
+                            new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: answerData.map(a => a.answer),
+                                    datasets: [{
+                                        label: 'Antwoorden',
+                                        data: answerData.map(a => a.count),
+                                    }]
+                                }
+                            });
+                        }, 0);
                     }
+                    counter++;
                 }
             } else {
                 console.error('Data is niet in het verwachte formaat');
@@ -154,6 +183,7 @@ function getAllAnswersWithQuestions() {
 }
 
 // Roep de functie aan bij het laden van de pagina
-getAllAnswersWithQuestions();
-
-showResultsForProject();
+document.addEventListener('DOMContentLoaded', () => {
+    showResultsForProject();
+    getAllAnswersWithQuestions();
+});
