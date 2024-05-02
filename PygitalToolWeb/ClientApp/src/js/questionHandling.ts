@@ -17,10 +17,12 @@ function configureSlider(): void {
     const output: HTMLElement = document.getElementById("sliderValue") as HTMLElement;
     const labels: string[] = Array.from(document.querySelectorAll('.slider-labels span')).map(span => (span as HTMLElement).textContent || '');
 
-    slider.oninput = function (): void {
-        const index: number = parseInt(slider.value, 10);
-        output.innerHTML = labels[index];
-    };
+    if (slider) {
+        slider.oninput = function (): void {
+            const index: number = parseInt(slider.value, 10);
+            output.innerHTML = labels[index];
+        };
+    }
 
     const submitButton = document.getElementById('submitButton');
     if (submitButton) {
