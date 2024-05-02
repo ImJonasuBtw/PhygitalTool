@@ -228,10 +228,12 @@ public static class DataSeeder
 
         var flow2 = new Flow("Test2C", FlowType.Circular, Language.Dutch, "flow over milieu");
 
+        //Creating Userinputs
+        var userInput1 = new UserInput(1, 2, 1, 1, 1);
 
         // Adding Flows to SubTheme
-        subTheme1.Flows.Add(flow1);
-        subTheme1.Flows.Add(flow2);
+        subTheme2.Flows.Add(flow1);
+        subTheme2.Flows.Add(flow2);
 
         // Adding Questions to Flows
         // Linear Flow

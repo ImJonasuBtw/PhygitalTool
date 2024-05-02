@@ -27,9 +27,9 @@ public class RetrievalRepository : IRepositoryRetrieval
     }
 
     // Returns all userInputs
-    public IEnumerable<UserInput> ReadAllUserInputs()
+    public IEnumerable<UserInput> ReadAllUserInputsForProject(int projectId)
     {
-        return _context.UserInputs;
+        return _context.UserInputs.Where(ui => ui.ProjectId == projectId);
     }
 
     // Returns all Answers
@@ -37,6 +37,19 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.Answers;
     }
+    public IEnumerable<Answer> ReadAllAnswersWithQuestions()
+    {
+        var answersWithQuestions = _context.Answers.Select(answer => new Answer
+        {
+            AnswerId = answer.AnswerId,
+            AnswerText = answer.AnswerText,
+            QuestionId = answer.QuestionId,
+            Question = _context.Questions.FirstOrDefault(question => question.QuestionId == answer.QuestionId)
+        });
+
+        return answersWithQuestions;
+    }
+
 
     // Returns a flow with FlowSubTheme and SubTheme
     public Flow ReadFlow(int flowId)

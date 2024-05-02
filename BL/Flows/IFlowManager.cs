@@ -12,17 +12,17 @@ public interface IFlowManager
     Question GetQuestionWithAnswerPossibilities(int id);
 
     // Creates a new UserInput and returns it
-    UserInput AddUserInput( int flowId, int answerId);
+    //UserInput AddUserInput( int flowId, int answerId);
 
     // Returns all userInputs
-    IEnumerable<UserInput> GetAllUserInputs();
+    IEnumerable<UserInput> GetAllUserInputsForProject(int projectId);
 
     // Creates a new answer using an answerId, answerDes and the questionId its connected to, and returns it.
     Answer AddAnswer(int answerId, string answer, int questionId);
 
     // Returns all Answers
     IEnumerable<Answer> GetAllAnswers(); 
-
+    IEnumerable<Answer> GetAllAnswersWithQuestions(); 
     // Returns a flow based on its id
     Flow GetFlow(int flowId);
 
@@ -39,6 +39,7 @@ public interface IFlowManager
     // Saves contactinformation
     public void SaveContactInformation(ContactInformation contactInformation);
 
+   public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion, int projectId, int mainThemeId, int subthemeId);
    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion);
-   
+   ICollection<UserInput> GetUserInputsForProject(int projectId);
 }

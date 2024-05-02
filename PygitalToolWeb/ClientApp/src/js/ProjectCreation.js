@@ -120,6 +120,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const projectsContainer = document.getElementById('projects-container');
+    if (projectsContainer) {
+        projectsContainer.addEventListener('click', event => {
+            const target = event.target;
+            const isResultsBtn = target.closest('.results-btn');
+            if (isResultsBtn) {
+                var url = isResultsBtn.getAttribute('data-href');
+                if (url !== null) {
+                    window.location.href = url;
+                }
+                else {
+                    console.error("Data-href attribute is null");
+                }
+            }
+        });
+    }
+});
 function showEditProjectForm(projectId) {
     fetch(`/api/ProjectCreation/GetProjectDetails/` + projectId)
         .then(response => response.json())
