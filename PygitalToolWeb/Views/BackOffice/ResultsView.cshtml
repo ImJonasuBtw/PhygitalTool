@@ -1,0 +1,17 @@
+﻿@model PhygitalTool.Domain.Projects.Project
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<h2>Resultaten voor @Model.ProjectName</h2>
+
+<div id="results-container" data-project-id="@Model.ProjectId"></div>
+
+@section Scripts
+{
+    <script id="results" src="~/dist/results.entry.js" defer="defer"></script>
+    <script id="resultCharts" src="~/dist/resultCharts.entry.js" defer="defer"></script>
+}

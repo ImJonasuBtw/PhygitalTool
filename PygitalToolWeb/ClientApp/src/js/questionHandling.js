@@ -12,10 +12,12 @@ function configureSlider() {
     const slider = document.getElementById("myRange");
     const output = document.getElementById("sliderValue");
     const labels = Array.from(document.querySelectorAll('.slider-labels span')).map(span => span.textContent || '');
-    slider.oninput = function () {
-        const index = parseInt(slider.value, 10);
-        output.innerHTML = labels[index];
-    };
+    if (slider) {
+        slider.oninput = function () {
+            const index = parseInt(slider.value, 10);
+            output.innerHTML = labels[index];
+        };
+    }
     const submitButton = document.getElementById('submitButton');
     if (submitButton) {
         submitButton.addEventListener('click', function () {

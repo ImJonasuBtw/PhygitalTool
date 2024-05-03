@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Web.Controllers.Flows;
 
 namespace PhygitalTool.Web.Controllers;
 
@@ -38,12 +39,12 @@ public class CircularFlowController : Controller
     {
         int x = 3;
 
-        // Increment question count stored in session. Initialize if not set.
+     
         int questionCount = HttpContext.Session.GetInt32("QuestionCount") ?? 0;
         questionCount++;
         HttpContext.Session.SetInt32("QuestionCount", questionCount);
 
-        // Get the next question.
+      
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
 
         if (nextQuestion == null)
@@ -53,17 +54,16 @@ public class CircularFlowController : Controller
             return View("~/Views/LinearFlow/QuestionView.cshtml", question);
         }
 
-        // Every "x" questions, show the subtheme information view.
+
         if (questionCount == x)
         {
-            // Reset counter
+         
             HttpContext.Session.SetInt32("QuestionCount", 0);
             var flow = _flowManager.GetFlow(flowId);
             TempData["questionId"] = questionId;
             return View("~/Views/SubTheme/SubThemeInformationCircularView.cshtml", flow);
         }
-
-        // Show the standard question view.
+        
         TempData["subThemeId"] = subThemeId;
         return View("~/Views/LinearFlow/QuestionView.cshtml", nextQuestion);
     }

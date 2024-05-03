@@ -16,7 +16,12 @@ module.exports = {
         activeProjects: './src/js/activeProjects.ts',
         editAndDeleteFlow: './src/js/editAndDeleteFlow.ts',
         phygitalAnswerButton: './src/js/phygitalAnswerButton.ts',
-        superVisors: './src/js/Supervisors.ts'
+        superVisors: './src/js/Supervisors.ts',
+        results: './src/js/results.ts',
+        resultCharts: './src/js/resultCharts.ts',
+        projectEditAndDelete:'./src/js/ProjectEditAndDelete',
+        subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
+        themeEditAndDelete:'./src/js/themeEditAndDelete'
     },
     output: {
         filename: '[name].entry.js',

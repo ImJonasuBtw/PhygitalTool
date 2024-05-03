@@ -2,6 +2,7 @@ import bootstrap from "bootstrap";
 import {loadFlows, Flow, FlowTypeEnum, Language} from "./addFlow";
 import { QuestionType} from "../js/addQuestion"
 
+//To add a screen to remove a flow
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
@@ -22,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
-
 function deleteFlow(FlowId: number) {
     fetch(`/api/FlowCreation/DeleteFlow/${FlowId}`, {
         method: 'DELETE'
@@ -37,6 +37,7 @@ function deleteFlow(FlowId: number) {
     })
 }
 
+//give a click event to display the edit view 
 document.addEventListener('DOMContentLoaded', () => {
     const FlowContainer = document.getElementById('flow-container');
     if (FlowContainer) {
@@ -52,16 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-
-function showEditFlowForm(flowId: number): void {
-    fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
-        .then(response => response.json())
-        .then((flow: Flow) => {
-            console.log(flow)
-            const FlowContainer = document.getElementById('flow-container');
-            if (FlowContainer) {
-                FlowContainer.innerHTML = `
+//HTML From the edit form
+function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void{
+    FlowContainer.innerHTML = `
                     <h2 class="mt-4">Edit Flows</h2>
                     <form id="edit-flow-form">
                         <div class="mb-3">
@@ -103,117 +97,125 @@ function showEditFlowForm(flowId: number): void {
                         <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
                     </form>
                 `;
+}
+function addQuestionButton(questionList: { appendChild: (arg0: HTMLButtonElement) => void; }): void{
+    const addQuestionButton = document.createElement('button');
+    addQuestionButton.textContent = 'Add Question';
+    addQuestionButton.className = 'btn btn-success add-question-button';
+    addQuestionButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        addQuestionForm();
+
+    });
+    questionList?.appendChild(addQuestionButton);
+}
+
+function deleteQuestionButton(questionContainer: { remove: () => void; appendChild: (arg0: HTMLButtonElement) => void; }, question: any): void{
+    const deleteButtonQuestion = document.createElement('button');
+    deleteButtonQuestion.textContent = 'Delete';
+    deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
+    deleteButtonQuestion.addEventListener('click', () => {
+        questionContainer.remove();
+        deleteQuestion(question.questionId)
+    });
+    questionContainer.appendChild(deleteButtonQuestion);
+    
+}function deleteAnswerpossibilitiesButton(answerPossibilityContainer: { remove: () => void; appendChild: (arg0: HTMLButtonElement) => void; }, possibility: any): void{
+    const deleteButtonPossibility = document.createElement('button');
+    deleteButtonPossibility.textContent = 'Delete';
+    deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
+    deleteButtonPossibility.addEventListener('click' , (event) => {
+        event.preventDefault();
+        answerPossibilityContainer.remove();
+        deleteAnswerPossibility(possibility.answerPossibilityId);
+    });
+
+    answerPossibilityContainer.appendChild(deleteButtonPossibility);
+}
+
+function showQuestionAndAnswerPossibilities(question:any, index: any, questionList: { appendChild: (arg0: HTMLDivElement) => void; }): void{
+    const questionContainer = document.createElement('div');
+    questionContainer.className = 'question-container';
+    questionContainer.setAttribute('data-question-id', question.questionId.toString());
+    
+    const questionInput = document.createElement('input');
+    questionInput.type = 'text';
+    questionInput.value = question.questionText;
+    questionInput.name = `question-${index}`;
+    questionInput.className = 'question-input';
+    questionContainer.appendChild(questionInput);
+
+    const questionTypeSelect = document.createElement('select');
+    questionTypeSelect.name = `question-type-${index}`;
+    for (let type in QuestionType) {
+        if (!isNaN(Number(QuestionType[type]))) {
+            const option = document.createElement('option');
+            option.value = QuestionType[type].toString();
+            option.text = type;
+            if (QuestionType[type].toString() === question.questionType.toString()) {
+                option.selected = true;
+            }
+            questionTypeSelect.appendChild(option);
+        }
+    }
+    questionContainer.appendChild(questionTypeSelect);
+    
+    const answerPossibilitiesContainer = document.createElement('div');
+    answerPossibilitiesContainer.className = 'answer-possibilities-container';
+    
+    question.answerPossibilities.forEach((possibility: { answerPossibilityId: number; description: string; }, possibilityIndex: any) => {
+        const answerPossibilityContainer = document.createElement('div');
+        answerPossibilityContainer.className = 'answer-possibility-container'
+        const possibilityInput = document.createElement('input');
+        possibilityInput.setAttribute('data-AnswerPoss-id',possibility.answerPossibilityId.toString());
+        possibilityInput.type = 'text';
+        possibilityInput.value = possibility.description;
+        possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
+        possibilityInput.className = 'answer-possibility-input';
+
+        answerPossibilityContainer.appendChild(possibilityInput);
+        deleteAnswerpossibilitiesButton(answerPossibilityContainer,possibility);
+        
+        answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
+    });
+    const selectedQuestionType = parseInt(questionTypeSelect.value);
+    if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
+        const addAnswerPossibilityButton = document.createElement('button');
+        addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
+        addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
+        addAnswerPossibilityButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            addAnswerPossibility(questionContainer);
+        });
+        answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
+    }
+    questionContainer.appendChild(answerPossibilitiesContainer);
+    deleteQuestionButton(questionContainer,question);
+    questionList.appendChild(questionContainer);
+}
+
+//shows the edit form
+function showEditFlowForm(flowId: number): void {
+    fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
+        .then(response => response.json())
+        .then((flow: Flow) => {
+            console.log(flow)
+            const FlowContainer = document.getElementById('flow-container');
+            if (FlowContainer) {
+                editForm(FlowContainer, flow)
                 // Render questions
                 const questionList = document.getElementById('question-list');
                 if (questionList) {
-                    
-                    const addQuestionButton = document.createElement('button');
-                    addQuestionButton.textContent = 'Add Question';
-                    addQuestionButton.className = 'btn btn-success add-question-button';
-                    addQuestionButton.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        addQuestionForm();
-
-                    });
-                    questionList?.appendChild(addQuestionButton);
+                    addQuestionButton(questionList);
                     flow.questions.forEach((question, index) => {
-                        const questionContainer = document.createElement('div');
-                        questionContainer.className = 'question-container';
-                        questionContainer.setAttribute('data-question-id', question.questionId.toString()); 
-                        
-                        
-                        const questionInput = document.createElement('input');
-                        questionInput.type = 'text';
-                        questionInput.value = question.questionText;
-                        questionInput.name = `question-${index}`; 
-                        questionInput.className = 'question-input'; 
-                        questionContainer.appendChild(questionInput);
-
-                        const questionTypeSelect = document.createElement('select');
-                        questionTypeSelect.name = `question-type-${index}`; 
-
-                        for (let type in QuestionType) {
-                            if (!isNaN(Number(QuestionType[type]))) { 
-                                const option = document.createElement('option');
-                                option.value = QuestionType[type].toString(); 
-                                option.text = type;
-                                if (QuestionType[type].toString() === question.questionType.toString()) {
-                                    option.selected = true; 
-                                }
-                                questionTypeSelect.appendChild(option);
-                            }
-                        }
-                        questionContainer.appendChild(questionTypeSelect);
-                       
-                        
-                        const answerPossibilitiesContainer = document.createElement('div');
-                        answerPossibilitiesContainer.className = 'answer-possibilities-container';
-                       
-                        
-                        question.answerPossibilities.forEach((possibility, possibilityIndex) => {
-                            const answerPossibilityContainer = document.createElement('div');
-                            answerPossibilityContainer.className = 'answer-possibility-container'
-                            const possibilityInput = document.createElement('input');
-                            possibilityInput.setAttribute('data-AnswerPoss-id',possibility.answerPossibilityId.toString());
-                            possibilityInput.type = 'text';
-                            possibilityInput.value = possibility.description;
-                            possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`; 
-                            possibilityInput.className = 'answer-possibility-input'; 
-                            
-                            
-                            const deleteButtonPossibility = document.createElement('button');
-                            deleteButtonPossibility.textContent = 'Delete';
-                            deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
-                            deleteButtonPossibility.addEventListener('click' , (event) => {
-                                event.preventDefault();
-                                answerPossibilityContainer.remove(); 
-                                deleteAnswerPossibility(possibility.answerPossibilityId);
-                            });
-                            answerPossibilityContainer.appendChild(possibilityInput);
-                            answerPossibilityContainer.appendChild(deleteButtonPossibility);
-                            answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
-                        });
-                        const selectedQuestionType = parseInt(questionTypeSelect.value);
-                        if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
-                            const addAnswerPossibilityButton = document.createElement('button');
-                            addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
-                            addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
-                            addAnswerPossibilityButton.addEventListener('click', (event) => {
-                                event.preventDefault();
-                                addAnswerPossibility(questionContainer);
-                            });
-                            answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
-                        }
-                        
-    
-                        const deleteButtonQuestion = document.createElement('button');
-                        deleteButtonQuestion.textContent = 'Delete';
-                        deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
-                        deleteButtonQuestion.addEventListener('click', () => {
-                            questionContainer.remove(); 
-                            deleteQuestion(question.questionId)
-                        });
-                        
-                       
-                        
-                        questionContainer.appendChild(answerPossibilitiesContainer);
-                        questionContainer.appendChild(deleteButtonQuestion);
-
-                        
-                        questionList.appendChild(questionContainer);
-                        
+                        showQuestionAndAnswerPossibilities(question,index,questionList);
                     });
-                   
-                    
                 }
-              
-
                 document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
                 document.getElementById('edit-flow-form')?.addEventListener('submit', function (event) {
                     event.preventDefault();
                     updateFlow(flowId);
                 });
-                
             }
         })
         .catch(error => console.error('Failed to fetch flow details:', error));
@@ -225,7 +227,6 @@ function updateFlow(flowId: number): void {
     const informationInput = document.getElementById('description') as HTMLTextAreaElement;
     const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
     const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
-
     const questionContainers = document.querySelectorAll('.question-container');
     const questions: any[] = Array.from(questionContainers).map((container: Element) => {
         const questionContainer = container as HTMLElement;
@@ -236,7 +237,6 @@ function updateFlow(flowId: number): void {
         if (questionInput.value.trim() === '') {
             return null;
         }
-    
         const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
         const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
         const answerPossibilities: any[] = Array.from(filteredAnswerPossibilities).map(input => {
@@ -246,7 +246,6 @@ function updateFlow(flowId: number): void {
                 description: input.value
             };
         });
-        
         return {
             questionId: questionId,
             questionText: questionInput.value,
@@ -281,6 +280,7 @@ function updateFlow(flowId: number): void {
             alert('Error updating flow: ' + error);
         });
 }
+
 function deleteQuestion(questionId :number) {
     fetch(`/api/FlowCreation/DeleteQuestion/${questionId}`, {
         method: 'DELETE'
@@ -361,8 +361,7 @@ function addQuestionForm() {
 function addAnswerPossibility(questionContainer: HTMLElement): void {
     const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
-
-    // Controleer of er minder dan 5 antwoordmogelijkheden zijn
+    
     if (answerPossibilityInputs.length < 5) {
         const newAnswerPossibilityContainer = document.createElement('div');
         newAnswerPossibilityContainer.className = 'answer-possibility-container';
@@ -386,7 +385,6 @@ function addAnswerPossibility(questionContainer: HTMLElement): void {
         answerPossibilityContainer.appendChild(newAnswerPossibilityContainer);
         answerPossibilityContainer.setAttribute("data-AnswerPoss-id", '0');
     } else {
-        // Bereikte het maximale aantal antwoordmogelijkheden, geef een melding
         alert('Maximum number of answer possibilities reached (5)');
     }
 }

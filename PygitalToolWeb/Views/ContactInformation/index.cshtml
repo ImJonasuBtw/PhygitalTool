@@ -37,6 +37,9 @@
                 <label class="form-label">@question.QuestionText</label>
                 <input type="text" name="answers[@question.QuestionId]" class="form-control"/>
                 <span class="text-danger"></span>
+                <input type="hidden" name="currentFlow" value="@question.FlowId"/>
+                <input type="hidden" name="currentQuestion" value="@question.QuestionId"/>
+                <input type="hidden" name="subThemeId" value="@question.Flow.SubThemeId"/>
             </div>
         }
     }

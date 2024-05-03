@@ -194,7 +194,6 @@ public class PersistanceRepository : IRepositoryPersistance
 
     public void DeleteSubTheme(int subThemeId)
     {
-        // Fetch the project from the database
         var subTheme = _context.SubThemes.Find(subThemeId);
         if (subTheme == null)
         {
@@ -207,7 +206,6 @@ public class PersistanceRepository : IRepositoryPersistance
 
     public void DeleteMainTheme(int mainThemeId)
     {
-        // Fetch the project from the database
         var mainTheme = _context.MainThemes.Find(mainThemeId);
         if (mainTheme == null)
         {

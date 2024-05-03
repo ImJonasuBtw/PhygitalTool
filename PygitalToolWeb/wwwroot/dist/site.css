@@ -2,6 +2,10 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Flow/frontendFlowStyles.scss ***!
   \****************************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
+/*!**********************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Login/loginStyles.scss ***!
+  \**********************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css ***!
   \****************************************************************************************************************************************/
@@ -20669,21 +20673,21 @@ body {
   text-decoration: none;
 }
 .sidebar .nav-link.active {
-  color: #ea63ff;
+  color: #a318e3;
   font-weight: bold;
 }
 .sidebar .nav-link .badge {
-  background-color: #ea63ff;
+  background-color: #a318e3;
 }
 
-#projects-container {
+.main-container {
   transition: margin-left 0.3s ease;
   padding: 2rem 2rem 2rem 1rem;
 }
-#projects-container .list-group {
+.main-container .list-group {
   width: 100%;
 }
-#projects-container .list-group .list-group-item {
+.main-container .list-group .list-group-item {
   display: flex;
   align-items: center;
   width: 100%;
@@ -20692,16 +20696,16 @@ body {
   color: #333333;
   background-color: rgba(248, 244, 244, 0.4);
 }
-#projects-container .list-group .list-group-item .img-thumbnail {
+.main-container .list-group .list-group-item .img-thumbnail {
   width: 100px;
   height: auto;
   border-radius: 50%;
   margin-right: 15px;
 }
-#projects-container .list-group .list-group-item:last-child {
+.main-container .list-group .list-group-item:last-child {
   margin-bottom: 0;
 }
-#projects-container form {
+.main-container form {
   background-color: rgba(248, 244, 244, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 20px;
@@ -20711,11 +20715,11 @@ body {
   backdrop-filter: blur(5px);
   overflow: hidden;
 }
-#projects-container form .form-label {
+.main-container form .form-label {
   color: #333333;
   font-weight: bold;
 }
-#projects-container form .form-control {
+.main-container form .form-control {
   background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
@@ -20724,67 +20728,67 @@ body {
   font-size: 1rem;
   color: #333333;
 }
-#projects-container form .form-control:focus {
-  border-color: #ea63ff;
+.main-container form .form-control:focus {
+  border-color: #a318e3;
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(234, 99, 255, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(163, 24, 227, 0.25);
 }
-#projects-container form textarea.form-control {
+.main-container form textarea.form-control {
   height: 150px;
 }
-#projects-container form .btn-primary {
-  background-color: #ea63ff;
-  border-color: #e74aff;
+.main-container form .btn-primary {
+  background-color: #a318e3;
+  border-color: #9216cc;
   transition: background-color 0.2s, border-color 0.2s;
 }
-#projects-container form .btn-primary:hover {
-  background-color: #e330ff;
-  border-color: #e330ff;
+.main-container form .btn-primary:hover {
+  background-color: #8213b5;
+  border-color: #8213b5;
 }
-#projects-container form .btn-secondary {
+.main-container form .btn-secondary {
   background-color: #cb1b59;
   border-color: #b4184f;
   transition: background-color 0.2s, border-color 0.2s;
 }
-#projects-container form .btn-secondary:hover {
+.main-container form .btn-secondary:hover {
   background-color: #9e1545;
   border-color: #9e1545;
 }
-#projects-container form button {
+.main-container form button {
   margin-right: 1rem;
 }
-#projects-container form button:last-child {
+.main-container form button:last-child {
   margin-right: 0;
 }
-#projects-container h2 {
+.main-container h2 {
   font-weight: bold;
 }
 @media (min-width: 768px) and (max-width: 1800px) {
-  #projects-container {
+  .main-container {
     margin-left: 250px;
   }
 }
 @media (min-width: 1800px) {
-  #projects-container {
+  .main-container {
     margin-left: 0;
   }
 }
-#projects-container .form-check-input:checked {
-  background-color: rgba(234, 99, 255, 0.4);
+.main-container .form-check-input:checked {
+  background-color: rgba(163, 24, 227, 0.4);
   border-color: transparent;
   box-shadow: none;
 }
-#projects-container .form-check-input {
+.main-container .form-check-input {
   background-color: rgba(248, 244, 244, 0.4);
   border-color: transparent;
   box-shadow: none;
   transition: background-color 0.2s, border-color 0.2s;
 }
-#projects-container .row {
+.main-container .row {
   margin-right: 0;
   margin-left: 0;
 }
-#projects-container .card {
+.main-container .card {
   background-color: rgba(248, 244, 244, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -20793,20 +20797,20 @@ body {
   backdrop-filter: blur(5px);
   overflow: hidden;
 }
-#projects-container .card:hover {
+.main-container .card:hover {
   background-color: rgba(248, 244, 244, 0.7);
 }
-#projects-container .card .card-title {
+.main-container .card .card-title {
   color: #333333;
   font-weight: bold;
 }
-#projects-container .card .card-text {
+.main-container .card .card-text {
   color: black;
 }
-#projects-container .card .badge {
-  background-color: #ea63ff;
+.main-container .card .badge {
+  background-color: #a318e3;
 }
-#projects-container .card .creationDate {
+.main-container .card .creationDate {
   background: none;
   color: #333333;
 }
@@ -20820,7 +20824,7 @@ body {
   }
 }
 .animated-background {
-  background: linear-gradient(-45deg, #ea63ff, #ff85b2, #ffa3c1, #ffc1d0);
+  background: linear-gradient(-45deg, #a318e3, #600bc7, #a318e3, #600bc7);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
 }
@@ -20847,7 +20851,7 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: rgba(234, 99, 255, 0.5);
+  background-color: rgba(163, 24, 227, 0.5);
   color: white;
   border-radius: 50%;
   width: 50px;
@@ -20859,7 +20863,21 @@ body {
   backdrop-filter: blur(10px);
 }
 #add-project-button:hover {
-  background-color: #e330ff;
+  background-color: #8213b5;
+}
+/*!****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Results/resultsStyles.scss ***!
+  \****************************************************************************************************************************************/
+.chart-container {
+  width: 500px;
+  height: auto;
+}
+/*!****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Results/resultsStyles.scss ***!
+  \****************************************************************************************************************************************/
+.chart-container {
+  width: 500px;
+  height: auto;
 }
 /*!********************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Flow/frontendFlowStyles.scss (1) ***!
@@ -21091,6 +21109,81 @@ body:has(.container-information-view) {
   }
   body:has(.container-information-view) {
     overflow: auto !important;
+  }
+}
+/*!**************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Login/loginStyles.scss (1) ***!
+  \**************************************************************************************************************************************/
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.login-img {
+  background-color: #e5d2ff;
+}
+
+#login-submit {
+  background-color: #8657d8;
+  font-family: "Outfit", sans-serif;
+  border: none;
+  border-radius: 15px;
+  height: 4rem;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+#login-submit:hover {
+  background-color: #9d66fe;
+}
+
+.login-container {
+  font-family: "Outfit", sans-serif;
+}
+.login-container h1 {
+  margin-bottom: 30px;
+}
+
+.input-text {
+  border-radius: 15px;
+}
+
+.login-link {
+  text-decoration: none;
+}
+
+.login-password-forgot {
+  display: flex;
+  justify-content: end;
+}
+
+body:has(.login-container) {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.login-form {
+  align-self: center;
+}
+.login-form section {
+  width: 75%;
+}
+
+@media (max-width: 768px) {
+  .login-img {
+    display: none;
+  }
+  .login-form {
+    align-self: start;
+    margin-top: 3rem;
+  }
+}
+@media (max-width: 1200px) {
+  .login-form section {
+    width: 100%;
   }
 }
 /*!**********************************************************************************************************************************************!*\

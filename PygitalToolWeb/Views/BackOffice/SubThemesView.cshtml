@@ -5,11 +5,30 @@
     Layout = "_Layout";
 }
 
+<body class="animated-background">
 <div class="container-fluid">
     <div class="row">
 
+        <div class="col-md-3 sidebar">
+
+            <div class="text-center mt-4">
+                @foreach (var manager in Model.Project.BackOffice.Managers)
+                {
+                    if (manager.UserName == User.Identity?.Name)
+                    {
+                        <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <h5>@manager.UserName</h5>
+                        <p>mycompany</p>
+                    }
+                }
+            </div>
+            <div class="nav flex-column">
+                <a href="#" onclick="window.history.back(); return false;" class="nav-link active">Terug naar Hoofd Thema's</a>
+            </div>
+        </div>
+
         <!-- Projects -->
-        <div class="col-md-9" id="subthemes-container">
+        <div class="col-md-9 main-container" id="subthemes-container">
             <h2 class="mt-4">SubThema's</h2>
             <div class="row">
                 @foreach (var subTheme in Model.SubThemes)
@@ -33,14 +52,14 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <a class="btn btn-primary me-2" asp-area="" asp-controller="FlowCreation" asp-action="Index" asp-route-subThemeId="@subTheme.SubThemeId">Bekijk Flows</a>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
-   
-         
+
+
         <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -69,6 +88,8 @@
 
     @section Scripts {
         <script id="subTheme-script" src="~/dist/subthemeCreation.entry.js" defer="defer" data-maintheme-id="@Model.ThemeId"></script>
+        <script id="subTheme-edit-delete-script" src="~/dist/subThemeEditAndDelete.entry.js" defer="defer" ></script>
     }
 
 </div>
+</body>

@@ -42,8 +42,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Existing configurations
+        
         modelBuilder.Entity<Flow>().Property(f => f.FlowId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Project>().Property(p => p.ProjectId).ValueGeneratedOnAdd();
         modelBuilder.Entity<SubTheme>().Property(s => s.SubThemeId).ValueGeneratedOnAdd();
