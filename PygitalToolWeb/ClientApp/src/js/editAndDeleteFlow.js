@@ -1,6 +1,7 @@
 import bootstrap from "bootstrap";
 import { loadFlows, FlowTypeEnum, Language } from "./addFlow";
 import { QuestionType } from "../js/addQuestion";
+//To add a screen to remove a flow
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
@@ -33,6 +34,7 @@ function deleteFlow(FlowId) {
         }
     });
 }
+//give a click event to display the edit view 
 document.addEventListener('DOMContentLoaded', () => {
     const FlowContainer = document.getElementById('flow-container');
     if (FlowContainer) {
@@ -48,15 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-function showEditFlowForm(flowId) {
-    fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
-        .then(response => response.json())
-        .then((flow) => {
-        var _a, _b;
-        console.log(flow);
-        const FlowContainer = document.getElementById('flow-container');
-        if (FlowContainer) {
-            FlowContainer.innerHTML = `
+//HTML From the edit form
+function editForm(FlowContainer, flow) {
+    FlowContainer.innerHTML = `
                     <h2 class="mt-4">Edit Flows</h2>
                     <form id="edit-flow-form">
                         <div class="mb-3">
@@ -98,85 +94,108 @@ function showEditFlowForm(flowId) {
                         <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
                     </form>
                 `;
+}
+function addQuestionButton(questionList) {
+    const addQuestionButton = document.createElement('button');
+    addQuestionButton.textContent = 'Add Question';
+    addQuestionButton.className = 'btn btn-success add-question-button';
+    addQuestionButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        addQuestionForm();
+    });
+    questionList === null || questionList === void 0 ? void 0 : questionList.appendChild(addQuestionButton);
+}
+function deleteQuestionButton(questionContainer, question) {
+    const deleteButtonQuestion = document.createElement('button');
+    deleteButtonQuestion.textContent = 'Delete';
+    deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
+    deleteButtonQuestion.addEventListener('click', () => {
+        questionContainer.remove();
+        deleteQuestion(question.questionId);
+    });
+    questionContainer.appendChild(deleteButtonQuestion);
+}
+function deleteAnswerpossibilitiesButton(answerPossibilityContainer, possibility) {
+    const deleteButtonPossibility = document.createElement('button');
+    deleteButtonPossibility.textContent = 'Delete';
+    deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
+    deleteButtonPossibility.addEventListener('click', (event) => {
+        event.preventDefault();
+        answerPossibilityContainer.remove();
+        deleteAnswerPossibility(possibility.answerPossibilityId);
+    });
+    answerPossibilityContainer.appendChild(deleteButtonPossibility);
+}
+function showQuestionAndAnswerPossibilities(question, index, questionList) {
+    const questionContainer = document.createElement('div');
+    questionContainer.className = 'question-container';
+    questionContainer.setAttribute('data-question-id', question.questionId.toString());
+    const questionInput = document.createElement('input');
+    questionInput.type = 'text';
+    questionInput.value = question.questionText;
+    questionInput.name = `question-${index}`;
+    questionInput.className = 'question-input';
+    questionContainer.appendChild(questionInput);
+    const questionTypeSelect = document.createElement('select');
+    questionTypeSelect.name = `question-type-${index}`;
+    for (let type in QuestionType) {
+        if (!isNaN(Number(QuestionType[type]))) {
+            const option = document.createElement('option');
+            option.value = QuestionType[type].toString();
+            option.text = type;
+            if (QuestionType[type].toString() === question.questionType.toString()) {
+                option.selected = true;
+            }
+            questionTypeSelect.appendChild(option);
+        }
+    }
+    questionContainer.appendChild(questionTypeSelect);
+    const answerPossibilitiesContainer = document.createElement('div');
+    answerPossibilitiesContainer.className = 'answer-possibilities-container';
+    question.answerPossibilities.forEach((possibility, possibilityIndex) => {
+        const answerPossibilityContainer = document.createElement('div');
+        answerPossibilityContainer.className = 'answer-possibility-container';
+        const possibilityInput = document.createElement('input');
+        possibilityInput.setAttribute('data-AnswerPoss-id', possibility.answerPossibilityId.toString());
+        possibilityInput.type = 'text';
+        possibilityInput.value = possibility.description;
+        possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
+        possibilityInput.className = 'answer-possibility-input';
+        answerPossibilityContainer.appendChild(possibilityInput);
+        deleteAnswerpossibilitiesButton(answerPossibilityContainer, possibility);
+        answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
+    });
+    const selectedQuestionType = parseInt(questionTypeSelect.value);
+    if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
+        const addAnswerPossibilityButton = document.createElement('button');
+        addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
+        addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
+        addAnswerPossibilityButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            addAnswerPossibility(questionContainer);
+        });
+        answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
+    }
+    questionContainer.appendChild(answerPossibilitiesContainer);
+    deleteQuestionButton(questionContainer, question);
+    questionList.appendChild(questionContainer);
+}
+//shows the edit form
+function showEditFlowForm(flowId) {
+    fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
+        .then(response => response.json())
+        .then((flow) => {
+        var _a, _b;
+        console.log(flow);
+        const FlowContainer = document.getElementById('flow-container');
+        if (FlowContainer) {
+            editForm(FlowContainer, flow);
             // Render questions
             const questionList = document.getElementById('question-list');
             if (questionList) {
-                const addQuestionButton = document.createElement('button');
-                addQuestionButton.textContent = 'Add Question';
-                addQuestionButton.className = 'btn btn-success add-question-button';
-                addQuestionButton.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    addQuestionForm();
-                });
-                questionList === null || questionList === void 0 ? void 0 : questionList.appendChild(addQuestionButton);
+                addQuestionButton(questionList);
                 flow.questions.forEach((question, index) => {
-                    const questionContainer = document.createElement('div');
-                    questionContainer.className = 'question-container';
-                    questionContainer.setAttribute('data-question-id', question.questionId.toString());
-                    const questionInput = document.createElement('input');
-                    questionInput.type = 'text';
-                    questionInput.value = question.questionText;
-                    questionInput.name = `question-${index}`;
-                    questionInput.className = 'question-input';
-                    questionContainer.appendChild(questionInput);
-                    const questionTypeSelect = document.createElement('select');
-                    questionTypeSelect.name = `question-type-${index}`;
-                    for (let type in QuestionType) {
-                        if (!isNaN(Number(QuestionType[type]))) {
-                            const option = document.createElement('option');
-                            option.value = QuestionType[type].toString();
-                            option.text = type;
-                            if (QuestionType[type].toString() === question.questionType.toString()) {
-                                option.selected = true;
-                            }
-                            questionTypeSelect.appendChild(option);
-                        }
-                    }
-                    questionContainer.appendChild(questionTypeSelect);
-                    const answerPossibilitiesContainer = document.createElement('div');
-                    answerPossibilitiesContainer.className = 'answer-possibilities-container';
-                    question.answerPossibilities.forEach((possibility, possibilityIndex) => {
-                        const answerPossibilityContainer = document.createElement('div');
-                        answerPossibilityContainer.className = 'answer-possibility-container';
-                        const possibilityInput = document.createElement('input');
-                        possibilityInput.setAttribute('data-AnswerPoss-id', possibility.answerPossibilityId.toString());
-                        possibilityInput.type = 'text';
-                        possibilityInput.value = possibility.description;
-                        possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
-                        possibilityInput.className = 'answer-possibility-input';
-                        const deleteButtonPossibility = document.createElement('button');
-                        deleteButtonPossibility.textContent = 'Delete';
-                        deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
-                        deleteButtonPossibility.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            answerPossibilityContainer.remove();
-                            deleteAnswerPossibility(possibility.answerPossibilityId);
-                        });
-                        answerPossibilityContainer.appendChild(possibilityInput);
-                        answerPossibilityContainer.appendChild(deleteButtonPossibility);
-                        answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
-                    });
-                    const selectedQuestionType = parseInt(questionTypeSelect.value);
-                    if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
-                        const addAnswerPossibilityButton = document.createElement('button');
-                        addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
-                        addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
-                        addAnswerPossibilityButton.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            addAnswerPossibility(questionContainer);
-                        });
-                        answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
-                    }
-                    const deleteButtonQuestion = document.createElement('button');
-                    deleteButtonQuestion.textContent = 'Delete';
-                    deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
-                    deleteButtonQuestion.addEventListener('click', () => {
-                        questionContainer.remove();
-                        deleteQuestion(question.questionId);
-                    });
-                    questionContainer.appendChild(answerPossibilitiesContainer);
-                    questionContainer.appendChild(deleteButtonQuestion);
-                    questionList.appendChild(questionContainer);
+                    showQuestionAndAnswerPossibilities(question, index, questionList);
                 });
             }
             (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadFlows);
@@ -318,7 +337,6 @@ function addQuestionForm() {
 function addAnswerPossibility(questionContainer) {
     const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container');
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
-    // Controleer of er minder dan 5 antwoordmogelijkheden zijn
     if (answerPossibilityInputs.length < 5) {
         const newAnswerPossibilityContainer = document.createElement('div');
         newAnswerPossibilityContainer.className = 'answer-possibility-container';
@@ -339,7 +357,6 @@ function addAnswerPossibility(questionContainer) {
         answerPossibilityContainer.setAttribute("data-AnswerPoss-id", '0');
     }
     else {
-        // Bereikte het maximale aantal antwoordmogelijkheden, geef een melding
         alert('Maximum number of answer possibilities reached (5)');
     }
 }
