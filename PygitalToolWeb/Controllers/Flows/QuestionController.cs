@@ -13,14 +13,15 @@ public class QuestionController : Controller
     private readonly IProjectManager _projectManager;
     private readonly ILogger<QuestionController> _logger;
 
-    public QuestionController(ILogger<QuestionController> logger, IFlowManager iflowManager, IProjectManager projectManager)
+    public QuestionController(ILogger<QuestionController> logger, IFlowManager iflowManager,
+        IProjectManager projectManager)
     {
         _logger = logger;
         _flowManager = iflowManager;
         _projectManager = projectManager;
     }
 
-    // Slaat de input van de user op voor single choice, range of 
+
     [HttpPost]
     public IActionResult SaveAnswerAndUserInput(string selectedAnswer, int currentFlow, int currentQuestion,
         int subThemeId)
@@ -30,15 +31,16 @@ public class QuestionController : Controller
         MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
         int projectId = mainTheme.ProjectId;
         _flowManager.SaveUserAnswer(selectedAnswer, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
-        
-        // Forward to appropriate controller based on type of current
+
+
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",
                 new { flowId = currentFlow, questionId = currentQuestion, subThemeId = subThemeId });
         }
+
         return RedirectToAction("GetNextQuestion", "LinearFlow",
-            new { flowId = currentFlow, questionId = currentQuestion, answer = selectedAnswer});
+            new { flowId = currentFlow, questionId = currentQuestion, answer = selectedAnswer });
     }
 
     // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.
@@ -50,15 +52,13 @@ public class QuestionController : Controller
         int mainThemeId = subTheme.MainThemeId;
         MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
         int projectId = mainTheme.ProjectId;
-        // Loop through all selected answers and save them to the database
+
         for (int i = 0; i < selectedAnswers.Length; i++)
         {
-        
-            _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow, currentQuestion, projectId,mainThemeId, subThemeId);
-            
+            _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow,
+                currentQuestion, projectId, mainThemeId, subThemeId);
         }
-        // Note: You could pass the new answer IDs to the next action, depending on your requirements.
-        // If flow is circular, go to next question using CircularFlowController, else use LinearFlowController.
+
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
         {
             return RedirectToAction("GetNextQuestion", "CircularFlow",

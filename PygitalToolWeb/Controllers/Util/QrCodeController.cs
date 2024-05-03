@@ -6,7 +6,7 @@ namespace PhygitalTool.Web.Controllers;
 public class QrCodeController : Controller
 {
     // Generates a QR code for the given link.
-    [HttpGet] // Change to Get if you want to call it directly from an <img> tag
+    [HttpGet] 
     public IActionResult Generate(string data)
     {
         using (QRCodeGenerator qrGenerator = new QRCodeGenerator())
@@ -15,7 +15,7 @@ public class QrCodeController : Controller
             using (BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData))
             {
                 byte[] qrCodeImage = qrCode.GetGraphic(20);
-                // Return the image file
+               
                 return File(qrCodeImage, "image/png");
             }
         }

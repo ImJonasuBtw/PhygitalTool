@@ -5,14 +5,34 @@
     Layout = "_Layout";
 }
 
+<body class="animated-background">
 <h2>Flows</h2>
 <div class="container-fluid">
     <div class="row">
+
+
+        <div class="col-md-3 sidebar">
+
+            <div class="text-center mt-4">
+                @foreach (var manager in Model.MainTheme.Project.BackOffice.Managers)
+                {
+                    if (manager.UserName == User.Identity?.Name)
+                    {
+                        <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <h5>@manager.UserName</h5>
+                        <p>mycompany</p>
+                    }
+                }
+            </div>
+            <div class="nav flex-column">
+                <a href="#" onclick="window.history.back(); return false;" class="nav-link active">Terug naar SubThema's</a>
+            </div>
+        </div>
         <!-- Flows-->
-        <div class="col-md-9" id="flow-container">
+        <div class="col-md-9 main-container" id="flow-container">
             <h2 class="mt-4">Flows</h2>
             <div class="d-flex justify-content-start">
-                  
+
                 @foreach (var flow in Model.Flows)
                 {
                     <div class="col-md-4 mb-4">
@@ -24,17 +44,16 @@
                                         <button class="btn btn-outline-secondary edit-flow-button" data-flow-id="@flow.FlowId" title="Edit Flow">
                                             <i class="bi-pencil"></i>
                                         </button>
-                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal"  data-flow-id="@flow.FlowId" title="Delete Flow">
+                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-flow-id="@flow.FlowId" title="Delete Flow">
                                             <i class="bi-trash"></i>
                                         </button>
-                                        
+
                                     </div>
                                 </div>
                                 <p class="card-text">@flow.FlowDescription</p>
                             </div>
                         </div>
                     </div>
-                    
                 }
 
             </div>
@@ -65,8 +84,8 @@
 <button type="button" style="position: fixed; bottom: 20px; right: 20px; background-color: purple; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: none;" id="add-Flow-button">+</button>
 
 @section Scripts {
-   <script id="Flow-script" data-subtheme-id="@Model.SubThemeId" src="~/dist/addFlow.entry.js" defer="defer"></script>
-   <script id="Question-script" src="~/dist/addQuestion.entry.js" defer="defer" ></script>
-   <script id="editAndDelete-script" src="~/dist/editAndDeleteFlow.entry.js" defer="defer" ></script>
+    <script id="Flow-script" data-subtheme-id="@Model.SubThemeId" src="~/dist/addFlow.entry.js" defer="defer"></script>
+    <script id="Question-script" src="~/dist/addQuestion.entry.js" defer="defer"></script>
+    <script id="editAndDelete-script" src="~/dist/editAndDeleteFlow.entry.js" defer="defer"></script>
 }
-
+</body>

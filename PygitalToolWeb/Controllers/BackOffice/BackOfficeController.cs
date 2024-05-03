@@ -8,15 +8,13 @@ namespace PhygitalTool.Web.Controllers.BackOffice;
 public class BackOfficeController : Controller
 {
     private readonly IBackOfficeManager _backOfficeManager;
-    private readonly IProjectManager _projectManager;
 
     private readonly ILogger<BackOfficeController> _logger;
 
-    public BackOfficeController(IBackOfficeManager backOfficeManager, IProjectManager projectManager,
+    public BackOfficeController(IBackOfficeManager backOfficeManager,
         ILogger<BackOfficeController> logger)
     {
         _backOfficeManager = backOfficeManager;
-        _projectManager = projectManager;
         _logger = logger;
     }
 
