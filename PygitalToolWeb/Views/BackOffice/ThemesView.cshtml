@@ -5,9 +5,30 @@
     Layout = "_Layout";
 }
 
+
+<body class="animated-background">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-9" id="themes-container">
+
+        <div class="col-md-3 sidebar">
+
+            <div class="text-center mt-4">
+                @foreach (var manager in Model.BackOffice.Managers)
+                {
+                    if (manager.UserName == User.Identity?.Name)
+                    {
+                        <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <h5>@manager.UserName</h5>
+                        <p>mycompany</p>
+                    }
+                }
+            </div>
+            <div class="nav flex-column">
+                <a href="#" onclick="window.history.back(); return false;" class="nav-link active">Terug naar Projecten</a>
+            </div>
+        </div>
+
+        <div class="col-md-9 main-container" id="themes-container">
             <h2 class="mt-4">Thema's</h2>
             <div class="row">
                 @foreach (var theme in Model.MainThemes)
@@ -31,14 +52,14 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <a class="btn btn-primary me-2" asp-area="" asp-controller="Themes" asp-action="Index" asp-route-themeid="@theme.ThemeId">Bekijk Subthema's</a>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 }
             </div>
         </div>
-   
-        
+
+
         <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -70,3 +91,4 @@
     }
 
 </div>
+</body>

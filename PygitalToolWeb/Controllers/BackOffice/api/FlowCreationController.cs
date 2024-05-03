@@ -105,13 +105,13 @@ public class FlowCreationController : ControllerBase
                 return NotFound($"Flow with ID {FlowId} not found.");
             }
             
-            // Map domain questions to view model questions
+
             var questions = flow.Questions.Select(q => new QuestionModel
             {
                 QuestionId = q.QuestionId,
                 QuestionText = q.QuestionText,
                 QuestionType = q.QuestionType,
-                // Map AnswerPossibilities
+            
                 AnswerPossibilities = q.AnswerPossibilities.Select(ap => new AnswerPossibilityModel
                 {
                     Description = ap.Description,
@@ -158,24 +158,23 @@ public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
             return NotFound($"Flow with ID {FlowId} not found.");
         }
 
-        // Update algemene eigenschappen van de stroom
+     
         existingFlow.FlowName = flowModel.FlowName;
         existingFlow.FlowDescription = flowModel.FlowDescription;
         existingFlow.FlowType = flowModel.FlowType;
         existingFlow.Language = flowModel.Language;
 
-        // Verzamel nieuwe vragen en antwoordmogelijkheden
         var newQuestions = flowModel.Questions.Where(q => !existingFlow.Questions.Any(eq => eq.QuestionId == q.QuestionId));
         var newAnswerPossibilities = newQuestions.SelectMany(q => q.AnswerPossibilities);
 
-        // Voeg nieuwe vragen toe aan de stroom en database
+    
         foreach (var newQuestion in newQuestions)
         {
             var domainQuestion = new Question()
             {
                 QuestionText = newQuestion.QuestionText,
                 QuestionType = newQuestion.QuestionType,
-                FlowId = FlowId // Gebruik de ID van de bestaande stroom
+                FlowId = FlowId 
             };
             _projectManager.AddQuestion(domainQuestion);
             existingFlow.Questions.Add(domainQuestion);
@@ -184,7 +183,7 @@ public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
                 var domainAnswer = new AnswerPossibility()
                 {
                     Description = newAnswerPossibility.Description,
-                    QuestionId = domainQuestion.QuestionId // Gebruik de ID van de nieuwe vraag
+                    QuestionId = domainQuestion.QuestionId 
                 };
                 _projectManager.AddAnswerPossibility(domainAnswer);
                 domainQuestion.AnswerPossibilities.Add(domainAnswer);
@@ -202,7 +201,7 @@ public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
                 existingQuestion.QuestionType = updatedQuestion.QuestionType;
                 _projectManager.UpdateQuestion(existingQuestion);
 
-                // Update antwoordmogelijkheden voor deze vraag
+              
                 foreach (var updatedAnswer in updatedQuestion.AnswerPossibilities)
                 {
                     var existingAnswer = existingQuestion.AnswerPossibilities.FirstOrDefault(a => a.AnswerPossibilityId == updatedAnswer.AnswerPossibilityId);
@@ -213,11 +212,11 @@ public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
                     }
                     else
                     {
-                        // Voeg nieuwe antwoordmogelijkheden toe aan de bestaande vraag
+                      
                         var domainAnswer = new AnswerPossibility()
                         {
                             Description = updatedAnswer.Description,
-                            QuestionId = existingQuestion.QuestionId // Gebruik de ID van de bestaande vraag
+                            QuestionId = existingQuestion.QuestionId 
                         };
                         _projectManager.AddAnswerPossibility(domainAnswer);
                         existingQuestion.AnswerPossibilities.Add(domainAnswer);
@@ -225,8 +224,7 @@ public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
                 }
             }
         }
-
-        // Update de stroom in de database
+        
         _projectManager.UpdateFlow(existingFlow);
 
         return Ok();

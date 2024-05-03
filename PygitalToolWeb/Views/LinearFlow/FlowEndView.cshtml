@@ -15,5 +15,13 @@
     var fullUrl = $"{scheme}://{host}{actionPath}";
 }
 
+<a class="btn btn-outline-secondary btn-block" asp-area=""
+   asp-controller="Home"
+   asp-action="Index">
+    Terug naar de home pagina
+</a>
+
+<p>Scan de QR code om je contactgegevens achter te laten</p>
+
 <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
 

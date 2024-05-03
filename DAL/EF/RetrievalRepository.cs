@@ -64,32 +64,32 @@ public class RetrievalRepository : IRepositoryRetrieval
     public ICollection<Question> ReadFlowQuestions(int flowId)
     {
         var flow = _context.Flows
-            .Include(f => f.Questions) // Eager loading questions
+            .Include(f => f.Questions) 
             .ThenInclude(q => q.AnswerPossibilities)
-            .FirstOrDefault(f => f.FlowId == flowId); // Retrieve the flow by ID
+            .FirstOrDefault(f => f.FlowId == flowId); 
 
         return flow?.Questions
-            .OrderBy(q => q.QuestionId) // Order the questions
-            .ToList(); // Convert to List
+            .OrderBy(q => q.QuestionId) 
+            .ToList(); 
     }
 
     // Returns the first question of a flow
     public Question ReadFirstFlowQuestion(int flowId)
     {
         var flow = _context.Flows
-            .Include(f => f.Questions) // Eager loading questions
+            .Include(f => f.Questions) 
             .ThenInclude(q => q.AnswerPossibilities)
-            .FirstOrDefault(f => f.FlowId == flowId); // Retrieve the flow by ID
+            .FirstOrDefault(f => f.FlowId == flowId); 
 
         return flow?.Questions
-            .OrderBy(q => q.QuestionId) // Order the questions
-            .FirstOrDefault(); // Get the first question
+            .OrderBy(q => q.QuestionId) 
+            .FirstOrDefault(); 
     }
 
     // Returns the next question in a flow after given currentQuestionId
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
     {
-        // Retrieve all questions in the flow, ordered by QuestionId
+        
         var questionsInFlow = ReadFlowQuestions(flowId);
         Question currentQuestion = ReadQuestion(currentQuestionId);
 
@@ -99,19 +99,19 @@ public class RetrievalRepository : IRepositoryRetrieval
             {
                 if (answer == answerPossibility.Description)
                 {
-                    // If there is a NextQuestionId specified, return the corresponding question
+                    
                     if (answerPossibility.NextQuestionId != 0)
                     {
                         return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
                     }
 
-                    // If NextQuestionId is not specified, return the next question in the flow
+               
                     var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
 
-                    // Check if there's a next question
+          
                     if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
                     {
-                        // If there is a next question, return it
+                       
                         return questionsInFlow.ElementAt(currentQuestionIndex + 1);
                     }
                 }
@@ -142,26 +142,26 @@ public class RetrievalRepository : IRepositoryRetrieval
     // Returns the next question in a flow after given currentQuestionId
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
-        // Retrieve all questions in the flow, ordered by QuestionId
+     
         var questionsInFlow = ReadFlowQuestions(flowId);
 
         if (questionsInFlow == null || !questionsInFlow.Any())
         {
-            // If there are no questions in the flow, return null
+           
             return null;
         }
 
-        // Find the index of the current question
+
         var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
 
-        // Check if there's a next question
+  
         if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
         {
-            // If there is a next question, return it
+          
             return questionsInFlow.ElementAt(currentQuestionIndex + 1);
         }
 
-        // If the current question is the last one or not found, return null
+        
         return null;
     }
 
@@ -194,6 +194,8 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.Projects
             .Include(p => p.MainThemes)
+            .Include(project => project.BackOffice)
+            .ThenInclude(office => office.Managers)
             .FirstOrDefault(p => p.ProjectId == projectId);
     }
 
@@ -201,6 +203,10 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.MainThemes
             .Include(t => t.SubThemes)
+            .ThenInclude(theme => theme.Flows)
+            .Include(mt => mt.Project )
+            .ThenInclude(project => project.BackOffice)
+            .ThenInclude(office => office.Managers)
             .FirstOrDefault(theme => theme.ThemeId == themeId);
     }
 
@@ -208,6 +214,10 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.SubThemes
             .Include(s => s.Flows)
+            .Include(theme => theme.MainTheme)
+            .ThenInclude(theme => theme.Project)
+            .ThenInclude(project => project.BackOffice)
+            .ThenInclude(office => office.Managers)
             .FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
     }
 

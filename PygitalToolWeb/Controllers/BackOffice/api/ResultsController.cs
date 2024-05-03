@@ -40,7 +40,7 @@ public class ResultsController : Controller
 
         return Ok(response);
     }
-    // Voeg een nieuwe endpoint toe om alle antwoorden met hun bijbehorende vragen op te halen
+   
     [HttpGet("GetAllAnswersWithQuestions")]
     public IActionResult GetAllAnswersWithQuestions()
     {
@@ -62,7 +62,7 @@ public class ResultsController : Controller
 
 
 
-    // Returns the information view after a user/supervisor selects a subtheme
+
     public IActionResult Index(int projectId)
     {
         Project project = _projectManager.GetProjectWithThemes(projectId);
