@@ -36,11 +36,8 @@ export class Flow {
 
 console.log('The addFLow.ts script bundle has been loaded!');
 
-document.getElementById('add-Flow-button')?.addEventListener('click', () => {
-    console.log('Add button has been pressed!');
-    const FlowContainer = document.getElementById('flow-container');
-    if (FlowContainer) {
-        FlowContainer.innerHTML = `
+function ShowForm(FlowContainer: { innerHTML: string; }):void{
+    FlowContainer.innerHTML = `
             <h2 class="mt-4">Add New Flow</h2>
             <form id="new-flow-form">
                 <div class="mb-3">
@@ -80,6 +77,12 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
+}
+document.getElementById('add-Flow-button')?.addEventListener('click', () => {
+    console.log('Add button has been pressed!');
+    const FlowContainer = document.getElementById('flow-container');
+    if (FlowContainer) {
+        ShowForm(FlowContainer);
 
         const scriptElement = document.getElementById('Flow-script');
         const subthemeId = scriptElement?.getAttribute('data-subtheme-id');
@@ -88,7 +91,6 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
         document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
         document.getElementById('new-flow-form')?.addEventListener('submit', async function (event) {
             event.preventDefault();
-            console.log("S button geduwt")
             const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
             const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
             const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
@@ -115,16 +117,11 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                 }
             });
             const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
-            const flowLanguage = parseInt(flowLanguageSelect.value); 
-
-
+            const flowLanguage = parseInt(flowLanguageSelect.value);
             if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
-
             const flowName = flowNameInput.value;
             const description = descriptionInput.value;
-
             
-
             // Create a new flow instance
             const newFlow = new Flow(description, flowName, flowType, flowLanguage,questions);
 

@@ -1,24 +1,24 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var auto_1 = require("chart.js/auto");
-var ctx = document.getElementById('myChart');
+import Chart from 'chart.js/auto';
+const ctx = document.getElementById('myChart');
+const datasets = {
+    datasets: [{
+            data: [{ key: 'Sales', value: 20 }, { key: 'Revenue', value: 10 }],
+            parsing: {
+                xAxisKey: 'key',
+                yAxisKey: 'value'
+            }
+        }],
+};
 if (ctx) {
-    new auto_1.default(ctx, {
-        type: 'bar',
+    new Chart(ctx, {
+        type: 'pie',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: ['answer1', 'answer2', 'answer3', 'answer4', 'answer5'],
             datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: 'times answered',
+                    data: [12, 19, 3, 5, 2],
                     borderWidth: 1
                 }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
         }
     });
 }

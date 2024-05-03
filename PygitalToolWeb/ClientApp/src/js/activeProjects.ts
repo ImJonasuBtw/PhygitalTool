@@ -1,4 +1,4 @@
-﻿// activeProjects.ts
+﻿
 document.addEventListener("DOMContentLoaded", () => {
     console.log('The activeProjects.ts script bundle has been loaded!');
 

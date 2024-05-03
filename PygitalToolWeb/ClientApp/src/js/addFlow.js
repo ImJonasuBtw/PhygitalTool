@@ -27,12 +27,8 @@ export class Flow {
     }
 }
 console.log('The addFLow.ts script bundle has been loaded!');
-(_a = document.getElementById('add-Flow-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
-    var _a, _b, _c;
-    console.log('Add button has been pressed!');
-    const FlowContainer = document.getElementById('flow-container');
-    if (FlowContainer) {
-        FlowContainer.innerHTML = `
+function ShowForm(FlowContainer) {
+    FlowContainer.innerHTML = `
             <h2 class="mt-4">Add New Flow</h2>
             <form id="new-flow-form">
                 <div class="mb-3">
@@ -72,6 +68,13 @@ console.log('The addFLow.ts script bundle has been loaded!');
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
+}
+(_a = document.getElementById('add-Flow-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+    var _a, _b, _c;
+    console.log('Add button has been pressed!');
+    const FlowContainer = document.getElementById('flow-container');
+    if (FlowContainer) {
+        ShowForm(FlowContainer);
         const scriptElement = document.getElementById('Flow-script');
         const subthemeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-subtheme-id');
         (_a = document.getElementById('add-question-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', addQuestion);
@@ -79,7 +82,6 @@ console.log('The addFLow.ts script bundle has been loaded!');
         (_c = document.getElementById('new-flow-form')) === null || _c === void 0 ? void 0 : _c.addEventListener('submit', function (event) {
             return __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
-                console.log("S button geduwt");
                 const flowNameInput = document.getElementById('flowName');
                 const descriptionInput = document.getElementById('description');
                 const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
