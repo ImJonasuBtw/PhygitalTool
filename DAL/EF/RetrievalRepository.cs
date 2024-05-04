@@ -60,6 +60,37 @@ public class RetrievalRepository : IRepositoryRetrieval
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
+    public ProjectDTO readProjectFromFlowId(int flowId)
+    {
+        var flow = _context.Flows
+            .Include(f => f.SubTheme)
+            .SingleOrDefault(f => f.FlowId == flowId);
+
+        var subtheme = _context.SubThemes
+            .SingleOrDefault(s => s.SubThemeId == flow.SubThemeId);
+
+        var maintheme = _context.MainThemes
+            .SingleOrDefault(m => m.ThemeId == subtheme.MainThemeId);
+
+        var project = _context.Projects
+            .SingleOrDefault(p => p.ProjectId == maintheme.ProjectId);
+        // Controleer of de flow gevonden is
+        if (flow != null)
+        {
+            var projectDTO = new ProjectDTO()
+            {
+                ProjectId = project.ProjectId
+            };
+            // Retourneer het project gekoppeld aan de flow
+            return projectDTO;
+        }
+        else
+        {
+            // Als de flow niet gevonden is, retourneer null of verhoog een fout indien nodig
+            return null;
+        }
+    }
+
     // Returns a collection of questions from a certain flow
     public ICollection<Question> ReadFlowQuestions(int flowId)
     {

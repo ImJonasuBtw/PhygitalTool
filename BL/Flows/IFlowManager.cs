@@ -1,4 +1,5 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL;
@@ -25,7 +26,7 @@ public interface IFlowManager
     IEnumerable<Answer> GetAllAnswersWithQuestions(); 
     // Returns a flow based on its id
     Flow GetFlow(int flowId);
-
+    ProjectDTO GetProjectFromFlow(int flowId);
     // Returns a collection of question from a certain flow
     ICollection<Question> GetFlowQuestions(int flowId);
     public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer);

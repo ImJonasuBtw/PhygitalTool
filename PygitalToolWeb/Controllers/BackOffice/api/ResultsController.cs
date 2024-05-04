@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 using PhygitalTool.Web.Models;
 using Project = PhygitalTool.Domain.Projects.Project;
 
@@ -47,12 +48,33 @@ public class ResultsController : Controller
         try
         {
             var answersWithQuestions = _flowManager.GetAllAnswersWithQuestions();
+            
             if (answersWithQuestions == null)
             {
                 return NotFound("No answers with questions found.");
             }
 
             return Ok(answersWithQuestions);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+    
+    [HttpGet("GetProjectFromFlowId/{flowId}")]
+    public IActionResult GetProjectFromFlowId(int flowId)
+    {
+        try
+        {
+            ProjectDTO projectFromFlow = _flowManager.GetProjectFromFlow(flowId);
+            
+            if (projectFromFlow == null)
+            {
+                return NotFound("No answers with questions found.");
+            }
+
+            return Ok(projectFromFlow);
         }
         catch (Exception ex)
         {

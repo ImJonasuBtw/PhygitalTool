@@ -27,7 +27,7 @@ public static class DataSeeder
             var manager1 = new Manager
             {
                 UserName =
-                    "manager1@example.com", // Use the email as the username if you're not using separate usernames
+                    "manager1@example.com",
                 Email = "manager1@example.com",
                 EmailConfirmed = true,
                 ImageUrl = "https://i.pinimg.com/564x/8b/1f/db/8b1fdb4efdaa1e593cbbe814a35a0f00.jpg",
@@ -38,7 +38,25 @@ public static class DataSeeder
             userManager.AddToRoleAsync(manager1, manager).Wait();
             if (!creationResult.Succeeded)
             {
-                // If creation fails, log or handle the error as needed
+                throw new System.Exception("Failed to create dummy manager.");
+            }
+        }
+        if (!context.Users.Any(u => u.Email == "manager.phygital@example.com"))
+        {
+            var manager1 = new Manager
+            {
+                UserName =
+                    "manager.phygital@example.com",
+                Email = "manager.phygital@example.com",
+                EmailConfirmed = true,
+                ImageUrl = "https://i.pinimg.com/564x/ee/cd/be/eecdbe232b5e579a9c62791f200e8a74.jpg",
+                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+            };
+
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            userManager.AddToRoleAsync(manager1, manager).Wait();
+            if (!creationResult.Succeeded)
+            {
                 throw new System.Exception("Failed to create dummy manager.");
             }
         }
@@ -59,7 +77,6 @@ public static class DataSeeder
             userManager.AddToRoleAsync(supervisor1, supervisor).Wait();
             if (!creationResult1.Succeeded)
             {
-                // If creation fails, log or handle the error as needed
                 throw new System.Exception("Failed to create dummy supervisor.");
             }
         }
@@ -67,15 +84,15 @@ public static class DataSeeder
         //creating projects 
         var project1 = new Project
         {
-            Description = "test",
-            ProjectName = "proj1",
+            Description = "Verzameling van bevragingen voor jongeren 12-18",
+            ProjectName = "Bevragingen jongeren",
             CreationDate = default,
             Status = ProjectStatus.Active
         };
         var project2 = new Project
         {
-            Description = "test",
-            ProjectName = "proj2",
+            Description = "Verzameling van bevragingen voor jongeren 16-21",
+            ProjectName = "Bevragingen jongvolwassenen",
             CreationDate = default,
             Status = ProjectStatus.NonActive
         };
@@ -85,20 +102,25 @@ public static class DataSeeder
         context.Projects.Add(project1);
         context.Projects.Add(project2);
 
-        var mainTheme1 = new MainTheme("TestThema1", "blablabla");
-        var mainTheme2 = new MainTheme("TestThema2", "blablabla");
-        var mainTheme3 = new MainTheme("TestThema3", "blablabla");
-
+        var mainTheme1 = new MainTheme("Verkiezingen stad of gemeente", "De verschillende beleidsdomeinen binnen een stad of gemeente");
+        var mainTheme2 = new MainTheme("Educatief samenwerkingsplatform", "Een platform voor het delen van educatieve content en samenwerking tussen leraren en studenten");
+        var mainTheme3 = new MainTheme("Gezondheidsbewustzijn bij tieners", "Het bevorderen van gezonde levensstijlkeuzes en het aanmoedigen van actieve deelname aan lichaamsbeweging en voedingsvoorlichting onder tieners.");
+        var mainTheme4 = new MainTheme("Milieubewustzijn en duurzaamheid",
+            "Onderzoek naar jongeren hun bewustzijn en betrokkenheid bij milieukwesties, het peilen van hun interesse in duurzaamheidsinitiatieven en het verzamelen van feedback over mogelijke acties en projecten die kunnen bijdragen aan een groenere toekomst.");
+        
         context.MainThemes.Add(mainTheme1);
         context.MainThemes.Add(mainTheme2);
         context.MainThemes.Add(mainTheme3);
-
+        context.MainThemes.Add(mainTheme3);
+        
         project1.MainThemes.Add(mainTheme1);
-        project1.MainThemes.Add(mainTheme2);
-        project1.MainThemes.Add(mainTheme3);
+        project1.MainThemes.Add(mainTheme4);
+        project2.MainThemes.Add(mainTheme2);
+        project2.MainThemes.Add(mainTheme3);
 
         // Creating Questions
         // Linear Flow
+        // Gemeenteraadsverkiezingen
         //  Single choice
         var singleChoice1 = new Question(
             "Als jij de begroting van je stad of gemeente zou opmaken, waar zou je dan in de komende jaren vooral op inzetten?",
@@ -115,6 +137,7 @@ public static class DataSeeder
             QuestionType.Open);
 
         // Circular Flow
+        // Gemeenteraadsverkiezingen
         //  Single choice
         var singleChoice2 = new Question(
             "Wat is volgens u de grootste uitdaging waar de gemeenteraad de komende termijn voor staat?",
@@ -132,6 +155,46 @@ public static class DataSeeder
             "Welke thema's of kwesties ziet u het liefst aangepakt worden door de nieuwe gemeenteraad en waarom zijn deze belangrijk voor u?",
             QuestionType.Open);
 
+        
+        //Educatief samenwerkingsplatform
+        var singleChoice3 = new Question(
+            "Wat is de belangrijkste reden waarom je een educatief samenwerkingsplatform zou gebruiken?",
+            QuestionType.SingleChoice, true);
+        var answerPossibility33 = new AnswerPossibility("Samenwerken aan projecten met klasgenoten");
+        var answerPossibility34 = new AnswerPossibility("Toegang krijgen tot extra leermiddelen en studiemateriaal");
+        var answerPossibility35 = new AnswerPossibility("Communiceren en interactie hebben met leraren buiten de lesuren");
+        var answerPossibility36 = new AnswerPossibility("Vragen stellen");
+        singleChoice3.AnswerPossibilities.Add(answerPossibility33);
+        singleChoice3.AnswerPossibilities.Add(answerPossibility34);
+        singleChoice3.AnswerPossibilities.Add(answerPossibility35);
+        singleChoice3.AnswerPossibilities.Add(answerPossibility36);
+        var multipleChoice3 = new Question(
+            "Welke functies van het educatieve samenwerkingsplatform gebruik je regelmatig? (Selecteer alle toepasselijke antwoorden)",
+            QuestionType.SingleChoice, true);
+        var answerPossibility37 = new AnswerPossibility("Het delen van documenten en presentaties");
+        var answerPossibility38 = new AnswerPossibility("Het stellen en beantwoorden van vragen in discussieforums");
+        var answerPossibility39 = new AnswerPossibility("Het deelnemen aan virtuele klassen of live streaming van lessen");
+        var answerPossibility40 = new AnswerPossibility(" Het ontvangen van feedback van leraren op opdrachten");
+        multipleChoice3.AnswerPossibilities.Add(answerPossibility37);
+        multipleChoice3.AnswerPossibilities.Add(answerPossibility38);
+        multipleChoice3.AnswerPossibilities.Add(answerPossibility39);
+        multipleChoice3.AnswerPossibilities.Add(answerPossibility40);
+        var range3 = new Question(
+            "Geef aan hoe vaak je het educatieve samenwerkingsplatform gebruikt",
+            QuestionType.Range);
+        var answerPossibility41 = new AnswerPossibility("Zelden of nooit gebruikt");
+        var answerPossibility42 = new AnswerPossibility("Af en toe gebruikt");
+        var answerPossibility43 = new AnswerPossibility("Gemiddeld gebruikt");
+        var answerPossibility44 = new AnswerPossibility("Vaak gebruikt");
+        var answerPossibility45 = new AnswerPossibility("Heel vaak gebruikt");
+        range3.AnswerPossibilities.Add(answerPossibility41);
+        range3.AnswerPossibilities.Add(answerPossibility42);
+        range3.AnswerPossibilities.Add(answerPossibility43);
+        range3.AnswerPossibilities.Add(answerPossibility44);
+        range3.AnswerPossibilities.Add(answerPossibility45);
+        var open3 = new Question(
+            "Wat vind je het meest waardevolle aspect van het educatieve samenwerkingsplatform en waarom?",
+            QuestionType.Open);
         // Creating Answer Possibilities
         // Linear Flow
         var answerPossibility1 = new AnswerPossibility("natuur & ecologie", 4);
@@ -171,6 +234,8 @@ public static class DataSeeder
         var answerPossibility30 = new AnswerPossibility("Ik weet het nog niet");
         var answerPossibility31 = new AnswerPossibility("Eerder wel");
         var answerPossibility32 = new AnswerPossibility("Zeker wel");
+        
+        
 
         // Creating SubThemes
         var subTheme1 = new SubTheme("KiesIntenties",
@@ -179,6 +244,8 @@ public static class DataSeeder
             "Stemmen is een belangrijk onderdeel van onze democratie, maar soms kunnen er redenen zijn waarom mensen ervoor kiezen om niet te stemmen. Of het nu gaat om twijfels over het nut van hun stem, ontevredenheid over het politieke systeem, of praktische obstakels zoals tijdgebrek, het is essentieel om deze redenen te begrijpen en manieren te vinden om de betrokkenheid van alle burgers bij het democratische proces te vergroten.");
         var subTheme3 = new SubTheme("Gevoel van betrokkenheid bij lokaal beleid",
             "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
+        var subTheme4 = new SubTheme("bevraging peer-feedback",
+            "Het subthema \"Verbetering van peer-feedback\" in de bevragingen focust op het verkrijgen van feedback van gebruikers over hoe het platform peer-to-peer samenwerking en feedback kan verbeteren. Dit helpt om inzicht te krijgen in de huidige ervaringen van studenten en om potentiële verbeteringen te identificeren");
 
         // Linking Answer Possibilities to Questions (except for open)
         // Linear Flow
@@ -222,19 +289,20 @@ public static class DataSeeder
         mainTheme1.SubThemes.Add(subTheme1);
         mainTheme1.SubThemes.Add(subTheme2);
         mainTheme1.SubThemes.Add(subTheme3);
+        mainTheme2.SubThemes.Add(subTheme4);
 
         // Creating Flows
-        var flow1 = new Flow("Test1L", FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
-
-        var flow2 = new Flow("Test2C", FlowType.Circular, Language.Dutch, "flow over milieu");
-
+        var flow1 = new Flow("Bevraging gemeentebeleid", FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
+        var flow2 = new Flow("Bevraging milieu", FlowType.Circular, Language.Dutch, "flow over milieu");
+        var flow3 = new Flow("Bevraging platform studenten", FlowType.Circular, Language.Dutch,
+            "Bevraging over samenwerkingsplatform voor middelbare studenten");
         //Creating Userinputs
         var userInput1 = new UserInput(1, 2, 1, 1, 1);
 
         // Adding Flows to SubTheme
         subTheme2.Flows.Add(flow1);
         subTheme2.Flows.Add(flow2);
-
+        subTheme4.Flows.Add(flow3);
         // Adding Questions to Flows
         // Linear Flow
         flow1.Questions.Add(singleChoice1);
@@ -247,7 +315,12 @@ public static class DataSeeder
         flow2.Questions.Add(range2);
         flow2.Questions.Add(multipleChoice2);
         flow2.Questions.Add(open2);
-
+        
+        flow3.Questions.Add(singleChoice3);
+        flow3.Questions.Add(range3);
+        flow3.Questions.Add(multipleChoice3);
+        flow3.Questions.Add(open3);
+        
         // Adding objects to the context
         context.SubThemes.Add(subTheme1);
         context.SubThemes.Add(subTheme2);
@@ -255,7 +328,8 @@ public static class DataSeeder
 
         context.Flows.Add(flow1);
         context.Flows.Add(flow2);
-
+        context.Flows.Add(flow3);
+        
         context.Questions.Add(singleChoice1);
         context.Questions.Add(multipleChoice1);
         context.Questions.Add(range1);
@@ -265,6 +339,11 @@ public static class DataSeeder
         context.Questions.Add(multipleChoice2);
         context.Questions.Add(range2);
         context.Questions.Add(open2);
+        
+        context.Questions.Add(singleChoice3);
+        context.Questions.Add(multipleChoice3);
+        context.Questions.Add(range3);
+        context.Questions.Add(open3);
 
         context.AnswerPossibilities.Add(answerPossibility1);
         context.AnswerPossibilities.Add(answerPossibility2);
@@ -300,7 +379,22 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility31);
         context.AnswerPossibilities.Add(answerPossibility32);
 
+        context.AnswerPossibilities.Add(answerPossibility33);
+        context.AnswerPossibilities.Add(answerPossibility34);
+        context.AnswerPossibilities.Add(answerPossibility35);
+        context.AnswerPossibilities.Add(answerPossibility36);
+        context.AnswerPossibilities.Add(answerPossibility37);
+        context.AnswerPossibilities.Add(answerPossibility38);
+        context.AnswerPossibilities.Add(answerPossibility39);
+        context.AnswerPossibilities.Add(answerPossibility40);
+        context.AnswerPossibilities.Add(answerPossibility41);
+        context.AnswerPossibilities.Add(answerPossibility42);
+        context.AnswerPossibilities.Add(answerPossibility43);
+        context.AnswerPossibilities.Add(answerPossibility44);
+        context.AnswerPossibilities.Add(answerPossibility45);
+        
         context.SaveChanges();
         context.ChangeTracker.Clear();
     }
 }
+
