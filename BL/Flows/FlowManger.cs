@@ -57,7 +57,11 @@ public class FlowManger : IFlowManager
     {
         return _repositoryRetrieval.ReadAllAnswers();
     }
-    
+
+    public ProjectDTO GetProjectFromFlow(int flowId)
+    {
+        return _repositoryRetrieval.readProjectFromFlowId(flowId);
+    }
     public IEnumerable<Answer> GetAllAnswersWithQuestions() {
         return _repositoryRetrieval.ReadAllAnswersWithQuestions();
     }
