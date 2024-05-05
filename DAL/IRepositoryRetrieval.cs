@@ -38,6 +38,7 @@ public interface IRepositoryRetrieval
     SubTheme ReadSubThemeWithFlows(int subthemeId);
     SubTheme ReadSubTheme(int subTheme);
     MainTheme ReadMainTheme(int mainthemeId);
+    ProjectDTO readProjectFromFlowId(int flowId);
     
     public void UpdateSubTheme(SubTheme subTheme);
     public void UpdateMainTheme(MainTheme mainTheme);
