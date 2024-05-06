@@ -56,7 +56,9 @@ public class RetrievalRepository : IRepositoryRetrieval
     {
         return _context.Flows
             .Include(fst => fst.SubTheme)
+            .ThenInclude(m => m.MainTheme)
             .Include(flow => flow.Questions)
+            .ThenInclude(q => q.AnswerPossibilities)
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 

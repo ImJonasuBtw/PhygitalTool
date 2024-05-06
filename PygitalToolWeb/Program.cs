@@ -4,6 +4,7 @@ using PhygitalTool.BL;
 using PhygitalTool.BL.Users;
 using PhygitalTool.DAL;
 using PhygitalTool.DAL.EF;
+using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -59,6 +60,20 @@ using (var scope = app.Services.CreateScope())
         RoleCreation(roleManager);
         DataSeeder.Seed(ctx, userManager);
         Console.Write("Data Seeded");
+
+        // Generating User Input
+        IRepositoryRetrieval retrieval = new RetrievalRepository(ctx);
+        IRepositoryPersistance persistence = new PersistanceRepository(ctx);
+        
+        var userInputFactory = new UserInputFactory(retrieval, persistence);
+        for (var i = 1; i <= 50; i++)
+        {
+            for (var flowId = 1; flowId <= ctx.Flows.Count(); flowId++)
+            {
+                userInputFactory.GenerateRandomUserInput(flowId);
+            }
+        }
+        Console.WriteLine("UserInputs Generated");
     }
 }
 
