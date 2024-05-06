@@ -22,23 +22,39 @@ public class UserInputFactory
             var rnd = new Random();
 
             var maxAnswerPossibilities = question.AnswerPossibilities.Count;
-            var randomAnswerPossibility = rnd.Next(0, maxAnswerPossibilities);
+            var randomAnswerPossibility = rnd.Next(maxAnswerPossibilities);
 
-            string answerText = question.AnswerPossibilities(randomAnswerPossibility);
-            var answerId = 0;
-            
-            var answer = new Answer(answerId, answerText, question.QuestionId);
-            
+            if (question.AnswerPossibilities.Count != 0)
+            {
+                var answerText = question.AnswerPossibilities.ElementAt(randomAnswerPossibility).Description;
+                
+                var answerId = AddAnswer(answerText, question.QuestionId);
+                AddUserInput(
+                    answerId,
+                    flow.FlowId,
+                    flow.SubThemeId,
+                    flow.SubTheme.MainThemeId,
+                    flow.SubTheme.MainTheme.ProjectId
+                );
+            }
         }
     }
     
-    private void addUserInput(int answerId, int flowId, int mainThemeId, int subThemeId, int projectId)
+    private void AddUserInput(int answerId, int flowId, int subThemeId, int mainThemeId, int projectId)
     {
-        var userInput = new UserInput(answerId, flowId, mainThemeId, subThemeId, projectId);
+        var userInput = new UserInput()
+        {
+            AnswerId = answerId,
+            FlowId = flowId,
+            SubThemeId = subThemeId,
+            MainThemeId = mainThemeId,
+            ProjectId = projectId
+        };
+
         _persistence.CreateUserInput(userInput);
     }
 
-    private void addAnswer(string answerText, int questionId)
+    private int AddAnswer(string answerText, int questionId)
     {
         var domainAnswer = new Answer()
         {
@@ -46,8 +62,9 @@ public class UserInputFactory
             QuestionId = questionId
         };
 
-        Answer newAnswer = domainAnswer;
-        
-        //domainFlow.FlowId = newFlow.FlowId;
+        var newAnswer = _persistence.CreateAndReturnAnswer(domainAnswer);
+        domainAnswer.AnswerId = newAnswer.AnswerId;
+
+        return domainAnswer.AnswerId;
     }
 }

@@ -29,6 +29,13 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public Answer CreateAndReturnAnswer(Answer answer)
+    {
+        _context.Answers.Add(answer);
+        _context.SaveChanges();
+        return answer;
+    }
+
     // Saves Contact Information when user submits form.
     public void SaveContactInformation(ContactInformation contactInformation)
     {
