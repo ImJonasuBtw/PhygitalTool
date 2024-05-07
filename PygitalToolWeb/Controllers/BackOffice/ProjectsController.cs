@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.Projects;
 
@@ -15,6 +16,7 @@ public class ProjectsController : Controller
         _projectManager = projectManager;
     }
 
+    [Authorize(Roles = "Manager")]
     public IActionResult Index(int projectId)
     {
         Project project = _projectManager.GetProjectWithThemes(projectId);

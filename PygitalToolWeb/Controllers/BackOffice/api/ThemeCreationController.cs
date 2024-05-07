@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
+
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
 
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,7 @@ public class ThemeCreationController : Controller
         _logger = logger;
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpPost("AddThemeToBackoffice")]
     public IActionResult AddThemeToBackoffice([FromBody] ThemeModel theme)
     {
@@ -38,7 +41,7 @@ public class ThemeCreationController : Controller
         _projectManager.AddMainTheme(domainTheme);
         return Ok();
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteMainTheme/{mainThemeId}")]
     public IActionResult DeleteMainTheme(int mainThemeId)
     {
@@ -52,7 +55,7 @@ public class ThemeCreationController : Controller
             return BadRequest($"Error deleting subTheme: {ex.Message}");
         }
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetMainThemeDetails/{mainthemeId}")]
     public IActionResult GetMainThemeDetails(int mainthemeId)
     {
@@ -79,7 +82,7 @@ public class ThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpPut("UpdateMainTheme/{mainThemeId}")]
     public IActionResult UpdateMainTheme(int mainThemeId, [FromBody] ThemeModel themeModel)
     {

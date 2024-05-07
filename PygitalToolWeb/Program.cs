@@ -57,7 +57,7 @@ using (var scope = app.Services.CreateScope())
 
     if (isDatabaseCreated)
     {
-        RoleCreation(roleManager);
+        DataSeeder.RoleCreation(roleManager);
         DataSeeder.Seed(ctx, userManager);
         Console.Write("Data Seeded");
 
@@ -102,15 +102,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-void RoleCreation(RoleManager<IdentityRole> roleManager)
-{
-    const string manager = "Manager";
-    roleManager.CreateAsync(new IdentityRole(manager)).Wait();
-    
-    const string Supervisor = "Supervisor";
-    roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
-    
-    const string admin = "Admin";
-    roleManager.CreateAsync(new IdentityRole(admin)).Wait();
-}

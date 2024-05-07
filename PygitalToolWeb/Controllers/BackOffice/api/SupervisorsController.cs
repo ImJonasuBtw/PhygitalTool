@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using PhygitalTool.BL.Users;
@@ -26,6 +27,7 @@ public class SupervisorsController : Controller
         _identityUserManager = identityUserManager;
     }
 
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetSupervisors/{backofficeId}")]
     public IActionResult GetSupervisors(int backofficeId)
     {
@@ -39,7 +41,7 @@ public class SupervisorsController : Controller
         return Ok(supervisors);
     }
     
-    
+    [Authorize(Roles = "Manager")]
     [HttpPost]
     public IActionResult CreateSupervisor([FromBody] SupervisorDto supervisorDto)
     {

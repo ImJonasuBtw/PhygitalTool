@@ -31,11 +31,11 @@ public static class DataSeeder
                     "manager1@example.com",
                 Email = "manager1@example.com",
                 EmailConfirmed = true,
-                ImageUrl = "https://i.pinimg.com/564x/8b/1f/db/8b1fdb4efdaa1e593cbbe814a35a0f00.jpg",
-                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+                ImageUrl = "https://mandaraperera.dev/media/beheerder.jpg",
+                BackOfficeId = backOffice1.BackOfficeId 
             };
 
-            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; 
             userManager.AddToRoleAsync(manager1, manager).Wait();
             if (!creationResult.Succeeded)
             {
@@ -50,7 +50,7 @@ public static class DataSeeder
                     "manager.phygital@example.com",
                 Email = "manager.phygital@example.com",
                 EmailConfirmed = true,
-                ImageUrl = "https://i.pinimg.com/564x/ee/cd/be/eecdbe232b5e579a9c62791f200e8a74.jpg",
+                ImageUrl = "https://mandaraperera.dev/media/beheerder.jpg",
                 BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
             };
 
@@ -70,7 +70,7 @@ public static class DataSeeder
                 UserName = "supervisor1@example.com",
                 Email = "supervisor1@example.com",
                 EmailConfirmed = true,
-                ImageUrl = "https://i.pinimg.com/564x/07/5a/0b/075a0b72ec99b7fca017a0c93ae564ff.jpg",
+                ImageUrl = "https://mandaraperera.dev/media/begeleider.jpg",
                 BackOfficeId = backOffice1.BackOfficeId
             };
 
@@ -414,6 +414,18 @@ public static class DataSeeder
         
         context.SaveChanges();
         context.ChangeTracker.Clear();
+    }
+    
+    public static void RoleCreation(RoleManager<IdentityRole> roleManager)
+    {
+        const string manager = "Manager";
+        roleManager.CreateAsync(new IdentityRole(manager)).Wait();
+    
+        const string Supervisor = "Supervisor";
+        roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
+    
+        const string admin = "Admin";
+        roleManager.CreateAsync(new IdentityRole(admin)).Wait();
     }
 }
 
