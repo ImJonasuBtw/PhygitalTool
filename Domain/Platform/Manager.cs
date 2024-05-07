@@ -13,6 +13,4 @@ public class Manager : IdentityUser
     
     //nav
     public BackOffice BackOffice;
-
-    
 }
