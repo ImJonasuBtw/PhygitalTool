@@ -336,5 +336,12 @@ public class RetrievalRepository : IRepositoryRetrieval
             .ThenInclude(question =>question.AnswerPossibilities )
             .FirstOrDefault(flow => flow.FlowId == Flowid);
     }
-    
+
+    public AdminPlatform ReadAdminPlatform()
+    {
+        return _context.AdminPlatforms
+            .Include(a => a.BackOffices)
+            .Include(a => a.Admins)
+            .FirstOrDefault();
+    }
 }

@@ -7,7 +7,7 @@ public class Admin : IdentityUser
     // Prop
     public string ImageUrl{ get; set; }
     
-    // Foreign key for BackOffice
+    // Foreign key for AdminPlatform
     public int AdminPlatformId { get; set; }
     
     // Nav

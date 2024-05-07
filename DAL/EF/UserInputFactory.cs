@@ -13,6 +13,17 @@ public class UserInputFactory
         _persistence = persistence;
     }
 
+    public void GenerateRandomUserInputForAllFlows(int amountOfFlows, int amountOfGenerationsPerFlow)
+    {
+        for (int i = 1; i <= amountOfGenerationsPerFlow; i++)
+        {
+            for (int flowId = 1; flowId <= amountOfFlows; flowId++)
+            {
+                GenerateRandomUserInput(flowId);
+            }
+        }
+    }
+
     public void GenerateRandomUserInput(int flowId)
     {
         var flow = _retrieval.ReadFlow(flowId);

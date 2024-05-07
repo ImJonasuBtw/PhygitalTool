@@ -44,4 +44,5 @@ public interface IRepositoryRetrieval
     public void UpdateMainTheme(MainTheme mainTheme);
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
+    public AdminPlatform ReadAdminPlatform();
 }

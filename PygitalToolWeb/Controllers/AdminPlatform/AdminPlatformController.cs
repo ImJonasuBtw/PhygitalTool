@@ -2,7 +2,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
-using PhygitalTool.BL.AdminPlatform;
 
 namespace PhygitalTool.Web.Controllers.AdminPlatform;
 
@@ -12,10 +11,10 @@ public class AdminPlatformController : Controller
 
     private readonly ILogger<AdminPlatformController> _logger;
 
-    public AdminPlatformController(IBackOfficeManager backOfficeManager,
+    public AdminPlatformController(IAdminPlatformManager adminPlatformManager,
         ILogger<AdminPlatformController> logger)
     {
-        _adminPlatformManager = AdminPlatformManager;
+        _adminPlatformManager = adminPlatformManager;
         _logger = logger;
     }
 
@@ -23,8 +22,7 @@ public class AdminPlatformController : Controller
     [Authorize(Roles = "Admin")]
     public IActionResult Index()
     {
-        string adminId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        Domain.Platform.AdminPlatform adminPlatform = _adminPlatformManager.GetBackOfficeForManager(adminId);
+        Domain.Platform.AdminPlatform adminPlatform = _adminPlatformManager.GetAdminPlatform();
         return View("AdminPlatformView", adminPlatform);
     }
     

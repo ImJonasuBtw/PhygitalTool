@@ -11,9 +11,13 @@ public static class DataSeeder
 {
     public static void Seed(PhygitalToolDbContext context, UserManager<IdentityUser> userManager)
     {
+        var adminPlatform1 = new AdminPlatform(1);
+        context.AdminPlatforms.Add(adminPlatform1);
+        context.SaveChanges();
+        
         //creating dummy users
         //creating backoffice env 
-        var backOffice1 = new BackOffice(1, "TestOffice");
+        var backOffice1 = new BackOffice(1, "TestOffice", adminPlatform1.AdminPlatformId);
         context.BackOffices.Add(backOffice1);
         context.SaveChanges();
 
@@ -86,11 +90,11 @@ public static class DataSeeder
         {
             var admin1 = new Admin
             {
-                UserName = "Admin1@example.com",
-                Email = "Admin1@example.com",
+                UserName = "admin1@example.com",
+                Email = "admin1@example.com",
                 EmailConfirmed = true,
                 ImageUrl = "https://mandaraperera.dev/media/admin.jpg",
-                
+                AdminPlatformId = adminPlatform1.AdminPlatformId
             };
 
             var creationResult2 = userManager.CreateAsync(admin1, "Test23!").Result;
@@ -421,8 +425,8 @@ public static class DataSeeder
         const string manager = "Manager";
         roleManager.CreateAsync(new IdentityRole(manager)).Wait();
     
-        const string Supervisor = "Supervisor";
-        roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
+        const string supervisor = "Supervisor";
+        roleManager.CreateAsync(new IdentityRole(supervisor)).Wait();
     
         const string admin = "Admin";
         roleManager.CreateAsync(new IdentityRole(admin)).Wait();

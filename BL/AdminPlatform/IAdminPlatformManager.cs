@@ -1,6 +1,8 @@
-namespace PhygitalTool.BL.AdminPlatform;
+using PhygitalTool.Domain.Platform;
+
+namespace PhygitalTool.BL;
 
 public interface IAdminPlatformManager
 {
-    
+    AdminPlatform GetAdminPlatform();
 }
