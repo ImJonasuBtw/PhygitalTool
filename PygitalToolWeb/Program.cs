@@ -110,4 +110,7 @@ void RoleCreation(RoleManager<IdentityRole> roleManager)
     
     const string Supervisor = "Supervisor";
     roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
+    
+    const string admin = "Admin";
+    roleManager.CreateAsync(new IdentityRole(admin)).Wait();
 }
