@@ -19,6 +19,7 @@ public static class DataSeeder
 
         const string manager = "Manager";
         const string supervisor = "Supervisor";
+        const string admin = "Admin";
         
         
         // Managers
@@ -80,7 +81,25 @@ public static class DataSeeder
                 throw new System.Exception("Failed to create dummy supervisor.");
             }
         }
+        
+        if (!context.Users.Any(u => u.Email == "Admin1@example.com"))
+        {
+            var admin1 = new Admin
+            {
+                UserName = "Admin1@example.com",
+                Email = "Admin1@example.com",
+                EmailConfirmed = true,
+                ImageUrl = "https://mandaraperera.dev/media/admin.jpg",
+                
+            };
 
+            var creationResult2 = userManager.CreateAsync(admin1, "Test23!").Result;
+            userManager.AddToRoleAsync(admin1, admin).Wait();
+            if (!creationResult2.Succeeded)
+            {
+                throw new System.Exception("Failed to create dummy supervisor.");
+            }
+        }
         //creating projects 
         var project1 = new Project
         {

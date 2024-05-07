@@ -1,15 +1,13 @@
-import {Modal} from "bootstrap";
-import {loadMainThemes,mainTheme} from "./themeCreation";
+import { Modal } from "bootstrap";
+import { loadMainThemes } from "./themeCreation";
 console.log('The themeEdit.ts script bundle has been loaded!');
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
-    confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
-        const button = event.relatedTarget as HTMLElement;
+    confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
+        const button = event.relatedTarget;
         const themeId = button.getAttribute('data-theme-id');
-        const confirmDeleteButton = document.getElementById('theme-delete-confirm') as HTMLButtonElement;
-
+        const confirmDeleteButton = document.getElementById('theme-delete-confirm');
         console.log("Modal shown, theme ID:", themeId);
-
         confirmDeleteButton.onclick = () => {
             if (themeId) {
                 deleteMainTheme(parseInt(themeId));
@@ -21,26 +19,25 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
-
-function deleteMainTheme(mainthemeId: number) {
+function deleteMainTheme(mainthemeId) {
     fetch(`/api/ThemeCreation/DeleteMainTheme/` + mainthemeId, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
             console.log('maintheme deleted successfully');
             loadMainThemes();
-        } else {
+        }
+        else {
             console.error('Failed to delete maintheme');
             return response.text().then(text => Promise.reject(text));
         }
-    })
+    });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     const mainThemesContainer = document.getElementById('themes-container');
     if (mainThemesContainer) {
         mainThemesContainer.addEventListener('click', event => {
-            const target = event.target as HTMLElement;
+            const target = event.target;
             const isEditButton = target.closest('.edit-theme-button');
             if (isEditButton) {
                 console.log("edit button clicked");
@@ -52,18 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-
-function showEditMainThemeForm(mainthemeId: number): void {
+function showEditMainThemeForm(mainthemeId) {
     console.log(mainthemeId);
     fetch(`/api/ThemeCreation/GetMainThemeDetails/` + mainthemeId)
         .then(response => response.json())
-        .then((mainTheme: mainTheme) => {
-            console.log(mainTheme)
-            const mainthemesContainer = document.getElementById('themes-container');
-            if (mainthemesContainer) {
-                
-                const formHtml = `
+        .then((mainTheme) => {
+        var _a, _b;
+        console.log(mainTheme);
+        const mainthemesContainer = document.getElementById('themes-container');
+        if (mainthemesContainer) {
+            const formHtml = `
             <h2 class="mt-4">Edit Maintheme</h2>
             <form id="edit-maintheme-form">
                 <div class="mb-3">
@@ -79,21 +74,20 @@ function showEditMainThemeForm(mainthemeId: number): void {
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
-                    mainthemesContainer.innerHTML = formHtml;}
-                document.getElementById('cancel-button')?.addEventListener('click', loadMainThemes);
-                document.getElementById('edit-maintheme-form')?.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    updateMaintheme(mainthemeId);
-                });
-            
-        })
-       
+            mainthemesContainer.innerHTML = formHtml;
+        }
+        (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadMainThemes);
+        (_b = document.getElementById('edit-maintheme-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
+            event.preventDefault();
+            updateMaintheme(mainthemeId);
+        });
+    });
 }
-function updateMaintheme(mainthemeId: number): void {
-    const mainthemeNameInput = document.getElementById('theme-name') as HTMLInputElement;
-    const informationInput = document.getElementById('theme-information') as HTMLTextAreaElement;
-   console.log(mainthemeNameInput.value);
-   console.log(informationInput.value);
+function updateMaintheme(mainthemeId) {
+    const mainthemeNameInput = document.getElementById('theme-name');
+    const informationInput = document.getElementById('theme-information');
+    console.log(mainthemeNameInput.value);
+    console.log(informationInput.value);
     fetch(`/api/ThemeCreation/UpdateMainTheme/` + mainthemeId, {
         method: 'PUT',
         headers: {
@@ -107,14 +101,13 @@ function updateMaintheme(mainthemeId: number): void {
         if (response.ok) {
             console.log('theme updated successfully');
             loadMainThemes();
-        } else {
+        }
+        else {
             response.json().then(errorResponse => {
-                
                 const errorMessages = Object.values(errorResponse.errors).join(', ');
                 console.error('Failed to update theme because of response: ' + errorMessages);
                 alert('Failed to update theme because: ' + errorMessages);
             });
         }
-    })
-
+    });
 }

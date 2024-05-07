@@ -1,14 +1,12 @@
-import {Modal} from "bootstrap";
-import {loadSubThemes,subTheme} from "./subThemeCreation";
+import { Modal } from "bootstrap";
+import { loadSubThemes } from "./subThemeCreation";
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
-    confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
-        const button = event.relatedTarget as HTMLElement;
+    confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
+        const button = event.relatedTarget;
         const subthemeId = button.getAttribute('data-subtheme-id');
-        const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
-
+        const confirmDeleteButton = document.getElementById('delete-confirm');
         console.log("Modal shown, subtheme ID:", subthemeId);
-
         confirmDeleteButton.onclick = () => {
             if (subthemeId) {
                 deleteSubTheme(parseInt(subthemeId));
@@ -20,26 +18,25 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     });
 });
-
-function deleteSubTheme(subthemeId: number) {
+function deleteSubTheme(subthemeId) {
     fetch(`/api/SubThemeCreation/DeleteSubTheme/` + subthemeId, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
             console.log('Subtheme deleted successfully');
             loadSubThemes();
-        } else {
+        }
+        else {
             console.error('Failed to delete subtheme');
             return response.text().then(text => Promise.reject(text));
         }
-    })
+    });
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     const projectsContainer = document.getElementById('subthemes-container');
     if (projectsContainer) {
         projectsContainer.addEventListener('click', event => {
-            const target = event.target as HTMLElement;
+            const target = event.target;
             const isEditButton = target.closest('.edit-subtheme-button');
             if (isEditButton) {
                 const subthemeId = isEditButton.getAttribute('data-subtheme-id');
@@ -50,15 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-
-function showEditSubThemeForm(subthemeId: number): void {
+function showEditSubThemeForm(subthemeId) {
     fetch(`/api/SubThemeCreation/GetSubThemeDetails/` + subthemeId)
         .then(response => response.json())
-        .then((subTheme: subTheme) => {
-            const subthemesContainer = document.getElementById('subthemes-container');
-            if (subthemesContainer) {
-                subthemesContainer.innerHTML = `
+        .then((subTheme) => {
+        var _a, _b;
+        const subthemesContainer = document.getElementById('subthemes-container');
+        if (subthemesContainer) {
+            subthemesContainer.innerHTML = `
                     <h2 class="mt-4">Edit Subtheme</h2>
                     <form id="edit-subtheme-form">
                         <div class="mb-3">
@@ -73,20 +69,18 @@ function showEditSubThemeForm(subthemeId: number): void {
                         <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
                     </form>
                 `;
-                document.getElementById('cancel-button')?.addEventListener('click', loadSubThemes);
-                document.getElementById('edit-subtheme-form')?.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    updateSubtheme(subthemeId);
-                });
-            }
-        })
+            (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadSubThemes);
+            (_b = document.getElementById('edit-subtheme-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
+                event.preventDefault();
+                updateSubtheme(subthemeId);
+            });
+        }
+    })
         .catch(error => console.error('Failed to fetch project details:', error));
 }
-
-
-function updateSubtheme(subthemeId: number): void {
-    const subthemeNameInput = document.getElementById('subtheme-name') as HTMLInputElement;
-    const informationInput = document.getElementById('information') as HTMLTextAreaElement;
+function updateSubtheme(subthemeId) {
+    const subthemeNameInput = document.getElementById('subtheme-name');
+    const informationInput = document.getElementById('information');
     fetch(`/api/SubThemeCreation/UpdateSubTheme/` + subthemeId, {
         method: 'PUT',
         headers: {
@@ -98,16 +92,17 @@ function updateSubtheme(subthemeId: number): void {
         })
     })
         .then(response => {
-            if (response.ok) {
-                console.log('subtheme updated successfully');
-                loadSubThemes();
-            } else {
-                console.error('Failed to update subtheme');
-                response.text().then(text => alert('Failed to update subtheme: ' + text));
-            }
-        })
+        if (response.ok) {
+            console.log('subtheme updated successfully');
+            loadSubThemes();
+        }
+        else {
+            console.error('Failed to update subtheme');
+            response.text().then(text => alert('Failed to update subtheme: ' + text));
+        }
+    })
         .catch(error => {
-            console.error('Error updating subtheme:', error);
-            alert('Error updating subtheme: ' + error);
-        });
+        console.error('Error updating subtheme:', error);
+        alert('Error updating subtheme: ' + error);
+    });
 }
