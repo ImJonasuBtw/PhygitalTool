@@ -1,5 +1,4 @@
 "use strict";
-// activeProjects.ts
 document.addEventListener("DOMContentLoaded", () => {
     console.log('The activeProjects.ts script bundle has been loaded!');
     // Handle showing and hiding projects based on toggle switch

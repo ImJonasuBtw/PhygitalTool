@@ -1,4 +1,4 @@
-import bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 import { loadSubThemes } from "./subThemeCreation";
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmDeleteButton.onclick = () => {
             if (subthemeId) {
                 deleteSubTheme(parseInt(subthemeId));
-                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                const modalInstance = Modal.getInstance(confirmationModal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }

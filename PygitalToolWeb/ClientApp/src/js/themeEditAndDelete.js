@@ -1,5 +1,6 @@
-import bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 import { loadMainThemes } from "./themeCreation";
+console.log('The themeEdit.ts script bundle has been loaded!');
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmDeleteButton.onclick = () => {
             if (themeId) {
                 deleteMainTheme(parseInt(themeId));
-                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                const modalInstance = Modal.getInstance(confirmationModal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }
@@ -67,7 +68,7 @@ function showEditMainThemeForm(mainthemeId) {
                 </div>
                 <div class="mb-3">
                     <label for="theme-information" class="form-label">Information</label>
-                    <textarea class="form-control" id="new-theme-information" required>${mainTheme.mainThemeInformation}</textarea>
+                    <textarea class="form-control" id="theme-information" required>${mainTheme.mainThemeInformation}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Update maintheme</button>
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
@@ -83,9 +84,10 @@ function showEditMainThemeForm(mainthemeId) {
     });
 }
 function updateMaintheme(mainthemeId) {
-    const mainthemeNameInput = document.getElementById('heme-name');
+    const mainthemeNameInput = document.getElementById('theme-name');
     const informationInput = document.getElementById('theme-information');
-    console.log(mainthemeNameInput.textContent);
+    console.log(mainthemeNameInput.value);
+    console.log(informationInput.value);
     fetch(`/api/ThemeCreation/UpdateMainTheme/` + mainthemeId, {
         method: 'PUT',
         headers: {

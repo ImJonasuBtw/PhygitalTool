@@ -1,4 +1,4 @@
-import bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 import { loadFlows, FlowTypeEnum, Language } from "./addFlow";
 import { QuestionType } from "../js/addQuestion";
 //To add a screen to remove a flow
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         confirmDeleteButton.onclick = () => {
             if (FlowId) {
                 deleteFlow(parseInt(FlowId));
-                const modalInstance = bootstrap.Modal.getInstance(confirmationModal);
+                const modalInstance = Modal.getInstance(confirmationModal);
                 if (modalInstance) {
                     modalInstance.hide();
                 }
