@@ -20673,11 +20673,11 @@ body {
   text-decoration: none;
 }
 .sidebar .nav-link.active {
-  color: #a318e3;
+  color: #b254e7;
   font-weight: bold;
 }
 .sidebar .nav-link .badge {
-  background-color: #a318e3;
+  background-color: #b254e7;
 }
 
 .main-container {
@@ -20729,21 +20729,21 @@ body {
   color: #333333;
 }
 .main-container form .form-control:focus {
-  border-color: #a318e3;
+  border-color: #b254e7;
   outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(163, 24, 227, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(178, 84, 231, 0.25);
 }
 .main-container form textarea.form-control {
   height: 150px;
 }
 .main-container form .btn-primary {
-  background-color: #a318e3;
-  border-color: #9216cc;
+  background-color: #b254e7;
+  border-color: #a83ee4;
   transition: background-color 0.2s, border-color 0.2s;
 }
 .main-container form .btn-primary:hover {
-  background-color: #8213b5;
-  border-color: #8213b5;
+  background-color: #9e27e1;
+  border-color: #9e27e1;
 }
 .main-container form .btn-secondary {
   background-color: #cb1b59;
@@ -20774,7 +20774,7 @@ body {
   }
 }
 .main-container .form-check-input:checked {
-  background-color: rgba(163, 24, 227, 0.4);
+  background-color: rgba(178, 84, 231, 0.4);
   border-color: transparent;
   box-shadow: none;
 }
@@ -20808,7 +20808,10 @@ body {
   color: black;
 }
 .main-container .card .badge {
-  background-color: #a318e3;
+  background-color: #b254e7;
+}
+.main-container .card button {
+  margin: 1px;
 }
 .main-container .card .creationDate {
   background: none;
@@ -20824,7 +20827,7 @@ body {
   }
 }
 .animated-background {
-  background: linear-gradient(-45deg, #a318e3, #600bc7, #a318e3, #600bc7);
+  background: linear-gradient(-45deg, #b254e7, #c9b2e5, #d7b2e5, #c9b2e5);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
 }
@@ -20851,7 +20854,7 @@ body {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: rgba(163, 24, 227, 0.5);
+  background-color: rgba(178, 84, 231, 0.5);
   color: white;
   border-radius: 50%;
   width: 50px;
@@ -20863,7 +20866,7 @@ body {
   backdrop-filter: blur(10px);
 }
 #add-project-button:hover {
-  background-color: #8213b5;
+  background-color: #9e27e1;
 }
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Results/resultsStyles.scss ***!

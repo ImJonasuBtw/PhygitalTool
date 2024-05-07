@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
@@ -17,6 +18,7 @@ public class ProjectCreationController : Controller
         _projectManager = projectManager;
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpPost("AddProjectToBackoffice")]
     public IActionResult AddProjectToBackoffice([FromBody] ProjectModel project)
     {
@@ -39,6 +41,7 @@ public class ProjectCreationController : Controller
         return Ok();
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteProject/{projectId}")]
     public IActionResult DeleteProject(int projectId)
     {
@@ -53,6 +56,7 @@ public class ProjectCreationController : Controller
         }
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectDetails/{projectId}")]
     public IActionResult GetProjectDetails(int projectId)
     {
@@ -81,6 +85,7 @@ public class ProjectCreationController : Controller
         }
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpPut("UpdateProject/{projectId}")]
     public IActionResult UpdateProject(int projectId, [FromBody] ProjectModel projectModel)
     {

@@ -25,6 +25,7 @@ public class ResultsController : Controller
         _logger = logger;
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectWithData/{projectId}")]
     public IActionResult GetProjectWithData(int projectId)
     {
@@ -42,6 +43,7 @@ public class ResultsController : Controller
         return Ok(response);
     }
    
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetAllAnswersWithQuestions")]
     public IActionResult GetAllAnswersWithQuestions()
     {
@@ -62,6 +64,7 @@ public class ResultsController : Controller
         }
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectFromFlowId/{flowId}")]
     public IActionResult GetProjectFromFlowId(int flowId)
     {

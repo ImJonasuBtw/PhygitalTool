@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.Projects;
 
@@ -14,6 +15,7 @@ public class ThemesController : Controller
     }
 
     // GET
+    [Authorize(Roles = "Manager")]
     public IActionResult Index(int themeId)
     {
         MainTheme mainTheme = _projectManager.GetThemeWithSubthemes(themeId);
