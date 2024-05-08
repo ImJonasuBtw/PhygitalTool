@@ -15,6 +15,7 @@ public interface IRepositoryPersistance
 
     // Saves Contact Information when user submits form.
     void SaveContactInformation(ContactInformation contactInformation);
+    void CreateBackOffice(BackOffice backOffice);
     void CreateProject(Project project); 
     Flow CreateFlow(Flow flow);
     Question CreateQuestion(Question question);

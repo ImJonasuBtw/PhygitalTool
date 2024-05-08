@@ -43,6 +43,12 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void CreateBackOffice(BackOffice backOffice)
+    {
+        _context.BackOffices.Add(backOffice);
+        _context.SaveChanges();
+    }
+
     public void CreateProject(Project project)
     {
         _context.Projects.Add(project);

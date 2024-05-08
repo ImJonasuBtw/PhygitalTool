@@ -19,10 +19,10 @@ module.exports = {
         superVisors: './src/js/Supervisors.ts',
         results: './src/js/results.ts',
         resultsInformation: './src/js/resultsInformation.ts',
-        resultCharts: './src/js/resultCharts.ts',
         projectEditAndDelete:'./src/js/ProjectEditAndDelete',
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
-        themeEditAndDelete:'./src/js/themeEditAndDelete'
+        themeEditAndDelete:'./src/js/themeEditAndDelete',
+        backOfficeCreation:'./src/js/backOfficeCreation'
     },
     output: {
         filename: '[name].entry.js',
