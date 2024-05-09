@@ -15,7 +15,7 @@
 
       .img-thumbnail {
         width: 100px;
-        height: auto;
+        height: 100px;
         border-radius: 50%;
         margin-right: 15px; 
       }
@@ -25,6 +25,8 @@
       }
     }
   }
+  
+
 
 
   form {
@@ -123,6 +125,7 @@
     margin-right: 0;
     margin-left: 0;
   }
+  
 
   .card {
     background-color: rgba($background-color, 0.4);
