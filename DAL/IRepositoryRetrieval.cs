@@ -1,4 +1,5 @@
-﻿using PhygitalTool.Domain.FlowPackage;
+﻿using Microsoft.AspNetCore.Identity;
+using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 
@@ -44,4 +45,6 @@ public interface IRepositoryRetrieval
     public void UpdateMainTheme(MainTheme mainTheme);
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
+    IEnumerable<Idea> readAllIdeas();
+    IdentityUser getUser(string userId);
 }

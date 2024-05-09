@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -336,5 +337,17 @@ public class RetrievalRepository : IRepositoryRetrieval
             .ThenInclude(question =>question.AnswerPossibilities )
             .FirstOrDefault(flow => flow.FlowId == Flowid);
     }
-    
+
+    public IEnumerable<Idea> readAllIdeas()
+    {
+        return _context.Ideas
+            .Include(i =>i.User);
+    }
+
+    public IdentityUser getUser(string userId)
+    {
+            return _context.Users
+                .FirstOrDefault(u => u.Id == userId);
+        
+    }
 }

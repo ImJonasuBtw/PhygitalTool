@@ -22,7 +22,8 @@ module.exports = {
         resultCharts: './src/js/resultCharts.ts',
         projectEditAndDelete:'./src/js/ProjectEditAndDelete',
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
-        themeEditAndDelete:'./src/js/themeEditAndDelete'
+        themeEditAndDelete:'./src/js/themeEditAndDelete',
+        Userform: './src/js/UserForm'
     },
     output: {
         filename: '[name].entry.js',

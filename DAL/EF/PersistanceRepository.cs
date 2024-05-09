@@ -198,6 +198,12 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public void createIdea(Idea idea)
+    {
+        _context.Ideas.Add(idea);
+        _context.SaveChanges();
+    }
+
 
     public void DeleteSubTheme(int subThemeId)
     {
