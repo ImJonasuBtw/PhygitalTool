@@ -1,0 +1,36 @@
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@model  IEnumerable<PhygitalTool.Domain.FlowPackage.Idea>
+@{
+    ViewBag.Title = "UserPlatform";
+    Layout = "_Layout";
+}
+<h1>User Ideas</h1>
+@foreach (var idea in Model)
+{
+    <div>
+        <h8>@idea.Title</h8>
+        <p>@idea.Description</p>
+        <p>@idea.User.UserName</p>
+        <button onclick="toggleCommentForm('@idea.IdeaId')">Comment</button>
+        <div id="commentForm-@idea.IdeaId" style="display:none;">
+            <input type="text" id="commentText-@idea.IdeaId" />
+            <button >Add Comment</button>
+        </div>
+    </div>
+   
+}
+@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    <div>
+        <h2>Create New Idea</h2>
+        <form id="createIdeaForm">
+            <input type="text" id="newIdeaTitle" placeholder="Title" />
+            <input type="text" id="newIdeaDescription" placeholder="Description" />
+            <button type="button" id="addIdeaButton">Add Idea</button>
+        </form>
+    </div>
+}
+@section Scripts {
+ <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value"></script>
+}

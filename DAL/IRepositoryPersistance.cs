@@ -31,4 +31,6 @@ public interface IRepositoryPersistance
     void UpdateQuestion(Question question);
     void updateAnswerPossibility(AnswerPossibility answerPossibility);
     void RemoveAnswerPossibilty(int answerPossibilityId);
+
+    void createIdea(Idea idea);
 }
