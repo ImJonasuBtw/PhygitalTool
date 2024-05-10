@@ -20719,6 +20719,20 @@ body {
   color: #333333;
   font-weight: bold;
 }
+.main-container form .input-styling {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #333333;
+}
+.main-container form .input-styling:focus {
+  border-color: #b254e7;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(178, 84, 231, 0.25);
+}
 .main-container form .form-control {
   background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -20759,6 +20773,10 @@ body {
 }
 .main-container form button:last-child {
   margin-right: 0;
+}
+.main-container .btn-outline-danger {
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 .main-container h2 {
   font-weight: bold;
