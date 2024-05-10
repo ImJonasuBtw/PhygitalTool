@@ -47,4 +47,6 @@ public interface IRepositoryRetrieval
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
     IEnumerable<Idea> readAllIdeas();
     IdentityUser getUser(string userId);
+    void updateLikeIdea(Idea idea);
+    Idea getIdea(int id);
 }

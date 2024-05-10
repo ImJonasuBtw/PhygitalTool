@@ -12,6 +12,8 @@
         <h8>@idea.Title</h8>
         <p>@idea.Description</p>
         <p>@idea.User.UserName</p>
+        <p>Likes: <span id="likesCount-@idea.IdeaId">@idea.Likes</span></p>
+        <button class="likeButton" data-ideaId="@idea.IdeaId">Like</button>
         <div>
             @foreach (var comment in idea.Comments)
             {

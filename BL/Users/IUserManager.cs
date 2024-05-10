@@ -15,7 +15,8 @@ public interface IUserManager
     IdentityUser getUser(string userId);
 
     void AddCommentToIdea(int IdeaId,Comment comment);
-    
 
+    void updateLikeIdea(Idea idea);
+    Idea getIdea(int id);
 
 }

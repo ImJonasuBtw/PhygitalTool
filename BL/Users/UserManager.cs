@@ -41,4 +41,14 @@ public class UserManager : IUserManager
     {
         _repositoryPersistance.createCommentToIdea(IdeaId, comment);
     }
+
+    public void updateLikeIdea(Idea idea)
+    {
+        _repositoryRetrieval.updateLikeIdea(idea);
+    }
+
+    public Idea getIdea(int id)
+    {
+        return _repositoryRetrieval.getIdea(id);
+    }
 }
