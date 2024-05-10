@@ -12,11 +12,20 @@
         <h8>@idea.Title</h8>
         <p>@idea.Description</p>
         <p>@idea.User.UserName</p>
-        <button onclick="toggleCommentForm('@idea.IdeaId')">Comment</button>
-        <div id="commentForm-@idea.IdeaId" style="display:none;">
-            <input type="text" id="commentText-@idea.IdeaId" />
-            <button >Add Comment</button>
+        <div>
+            @foreach (var comment in idea.Comments)
+            {
+                <p>@comment.Description</p>
+                <p>@comment.User</p>
+            }
         </div>
+    </div>
+    <div>
+            <button class="commentButton" data-ideaId="@idea.IdeaId">Comment</button>
+    <div id="commentForm-@idea.IdeaId" style="display:none;">
+        <input type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" />
+        <button class="addCommentButton" data-ideaId="@idea.IdeaId">Add Comment</button>
+    </div>
     </div>
    
 }
@@ -32,5 +41,5 @@
     </div>
 }
 @section Scripts {
- <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value"></script>
+    <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
 }

@@ -340,8 +340,9 @@ public class RetrievalRepository : IRepositoryRetrieval
 
     public IEnumerable<Idea> readAllIdeas()
     {
-        return _context.Ideas
+        return _context.Ideas.Include(u =>u.Comments).ThenInclude(c =>c.User)
             .Include(i =>i.User);
+            
     }
 
     public IdentityUser getUser(string userId)
