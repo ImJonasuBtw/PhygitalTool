@@ -4,36 +4,33 @@ using PhygitalTool.BL.Users;
 using PhygitalTool.Domain.FlowPackage;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
-
 [ApiController]
 [Route("api/[controller]")]
-public class IdeasController : ControllerBase
+public class CommentController: ControllerBase
 {
     private readonly IUserManager _userManager;
 
-    public IdeasController(IUserManager userManager)
+    public CommentController(IUserManager userManager)
     {
         _userManager = userManager;
     }
 
-    // POST: api/Ideas
     [HttpPost]
-    public IActionResult  PostIdea([FromBody] Idea idea)
+    [Authorize]
+    public IActionResult PostComment( [FromBody] Comment comment)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        
-        var domainIdea = new Idea()
+        var domainComment = new Comment()
         {
-            Title = idea.Title,
-            Description = idea.Description,
-            UserId = idea.UserId
+            Description =comment.Description,
+            UserId = comment.UserId,
+            IdeaId = comment.IdeaId
         };
-
-      _userManager.addIdeas(domainIdea);
+        
+        _userManager.AddCommentToIdea(comment.IdeaId,domainComment);
         return Ok();
     }
-    
 }

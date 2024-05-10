@@ -36,4 +36,9 @@ public class UserManager : IUserManager
     {
         return _repositoryRetrieval.getUser(userId);
     }
+
+    public void AddCommentToIdea(int IdeaId, Comment comment)
+    {
+        _repositoryPersistance.createCommentToIdea(IdeaId, comment);
+    }
 }

@@ -20,6 +20,7 @@ public static class DataSeeder
         var comment1 = new Comment("Dat vind ik ook");
         context.Ideas.Add(idea1);
         context.Ideas.Add(idea2);
+        comment1.Idea = idea1;
         context.Comments.Add(comment1);
         idea1.Comments.Add(comment1);
         context.SaveChanges();

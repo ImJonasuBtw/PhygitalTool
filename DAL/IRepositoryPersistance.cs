@@ -33,4 +33,5 @@ public interface IRepositoryPersistance
     void RemoveAnswerPossibilty(int answerPossibilityId);
 
     void createIdea(Idea idea);
+    void createCommentToIdea(int ideaId, Comment comment);
 }
