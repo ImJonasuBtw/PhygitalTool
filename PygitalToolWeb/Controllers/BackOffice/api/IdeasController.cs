@@ -35,5 +35,24 @@ public class IdeasController : ControllerBase
       _userManager.addIdeas(domainIdea);
         return Ok();
     }
-    
+    [HttpPost("Like/{ideaId}")]
+    public IActionResult LikeIdea(int ideaId)
+    {
+        try
+        {
+            var idea = _userManager.getIdea(ideaId);
+            if (idea == null)
+            {
+                return NotFound();
+            }
+
+            idea.Likes++;
+            _userManager.updateLikeIdea(idea);
+            return Ok(new { likes = idea.Likes });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 }

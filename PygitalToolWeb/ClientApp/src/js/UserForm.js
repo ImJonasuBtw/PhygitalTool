@@ -43,6 +43,72 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }));
     }
+    function hasCurrentUserLikedIdea(ideaId) {
+        var _a, _b, _c;
+        const likedIdeas = localStorage.getItem('likedIdeas');
+        const currentUserId = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-User-id');
+        if (likedIdeas && currentUserId) {
+            const likedIdeasObj = JSON.parse(likedIdeas);
+            return (_c = (_b = likedIdeasObj[currentUserId]) === null || _b === void 0 ? void 0 : _b.includes(ideaId)) !== null && _c !== void 0 ? _c : false;
+        }
+        return false;
+    }
+    function markIdeaAsLikedByCurrentUser(ideaId) {
+        var _a;
+        const currentUserId = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-User-id');
+        if (currentUserId) {
+            let likedIdeas = localStorage.getItem('likedIdeas');
+            if (likedIdeas) {
+                const likedIdeasObj = JSON.parse(likedIdeas);
+                if (likedIdeasObj[currentUserId]) {
+                    likedIdeasObj[currentUserId].push(ideaId);
+                }
+                else {
+                    likedIdeasObj[currentUserId] = [ideaId];
+                }
+                localStorage.setItem('likedIdeas', JSON.stringify(likedIdeasObj));
+            }
+            else {
+                const newLikedIdeasObj = { [currentUserId]: [ideaId] };
+                localStorage.setItem('likedIdeas', JSON.stringify(newLikedIdeasObj));
+            }
+        }
+    }
+    const likeButtons = document.querySelectorAll('.likeButton');
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                var _a;
+                const isAuthenticated = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-is-authenticated');
+                if (isAuthenticated === 'false') {
+                    window.location.href = '/Identity/Account/Login';
+                    return;
+                }
+                const ideaId = this.getAttribute('data-ideaId');
+                if (ideaId && !hasCurrentUserLikedIdea(ideaId)) { // Check if the current user has not already liked the idea
+                    try {
+                        const response = yield fetch(`/api/Ideas/Like/${ideaId}`, {
+                            method: 'POST',
+                        });
+                        if (response.ok) {
+                            const likesCountElement = document.getElementById(`likesCount-${ideaId}`);
+                            if (likesCountElement) {
+                                const currentLikes = parseInt(likesCountElement.textContent || '0');
+                                likesCountElement.textContent = (currentLikes + 1).toString();
+                            }
+                            markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
+                        }
+                        else {
+                            console.error('Failed to like idea');
+                        }
+                    }
+                    catch (error) {
+                        console.error('Error:', error);
+                    }
+                }
+            });
+        });
+    });
     const commentButtons = document.querySelectorAll('.commentButton');
     commentButtons.forEach(button => {
         button.addEventListener('click', function () {

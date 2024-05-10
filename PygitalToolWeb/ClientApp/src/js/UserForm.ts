@@ -39,6 +39,69 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    
+    function hasCurrentUserLikedIdea(ideaId: string): boolean {
+        const likedIdeas = localStorage.getItem('likedIdeas');
+        const currentUserId = document.getElementById('Form-script')?.getAttribute('data-User-id');
+        if (likedIdeas && currentUserId) {
+            const likedIdeasObj = JSON.parse(likedIdeas) as { [userId: string]: string[] };
+            return likedIdeasObj[currentUserId]?.includes(ideaId) ?? false;
+        }
+        return false;
+    }
+
+    function markIdeaAsLikedByCurrentUser(ideaId: string): void {
+        const currentUserId = document.getElementById('Form-script')?.getAttribute('data-User-id');
+        if (currentUserId) {
+            let likedIdeas = localStorage.getItem('likedIdeas');
+            if (likedIdeas) {
+                const likedIdeasObj = JSON.parse(likedIdeas) as { [userId: string]: string[] };
+                if (likedIdeasObj[currentUserId]) {
+                    likedIdeasObj[currentUserId].push(ideaId);
+                } else {
+                    likedIdeasObj[currentUserId] = [ideaId];
+                }
+                localStorage.setItem('likedIdeas', JSON.stringify(likedIdeasObj));
+            } else {
+                const newLikedIdeasObj = { [currentUserId]: [ideaId] };
+                localStorage.setItem('likedIdeas', JSON.stringify(newLikedIdeasObj));
+            }
+        }
+    }
+
+    const likeButtons = document.querySelectorAll('.likeButton');
+    likeButtons.forEach(button => {
+        button.addEventListener('click', async function (this: HTMLElement) {
+            const isAuthenticated = document.getElementById('Form-script')?.getAttribute('data-is-authenticated');
+
+            if (isAuthenticated === 'false') {
+                window.location.href = '/Identity/Account/Login';
+                return;
+            }
+
+            const ideaId = this.getAttribute('data-ideaId');
+            if (ideaId && !hasCurrentUserLikedIdea(ideaId)) { // Check if the current user has not already liked the idea
+                try {
+                    const response = await fetch(`/api/Ideas/Like/${ideaId}`, {
+                        method: 'POST',
+                    });
+
+                    if (response.ok) {
+                        const likesCountElement = document.getElementById(`likesCount-${ideaId}`);
+                        if (likesCountElement) {
+                            const currentLikes = parseInt(likesCountElement.textContent || '0');
+                            likesCountElement.textContent = (currentLikes + 1).toString();
+                        }
+                        markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
+                    } else {
+                        console.error('Failed to like idea');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+        });
+    });
 
     const commentButtons = document.querySelectorAll('.commentButton');
     commentButtons.forEach(button => {
