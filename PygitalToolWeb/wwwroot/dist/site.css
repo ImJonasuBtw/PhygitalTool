@@ -20893,6 +20893,40 @@ body {
   width: 500px;
   height: auto;
 }
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.2);
+  border-left: 4px solid #b254e7;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #b254e7;
+  border-color: #a83ee4;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.btn-primary:hover {
+  background-color: #9e27e1;
+  border-color: #9e27e1;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /*!********************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Flow/frontendFlowStyles.scss (1) ***!
   \********************************************************************************************************************************************/

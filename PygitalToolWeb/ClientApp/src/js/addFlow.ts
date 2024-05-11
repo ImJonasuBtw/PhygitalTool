@@ -1,4 +1,4 @@
-import {addQuestion} from "../js/addQuestion"
+import {addQuestion, QuestionType} from "../js/addQuestion"
 
 export const FlowTypeEnum = {
     Circular: 0,
@@ -62,16 +62,16 @@ function ShowForm(FlowContainer: { innerHTML: string; }):void{
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Language</label>
-                        <select class="form-select" id="flowLanguage" required>
+                        <select class="form-select form-control" id="flowLanguage" required>
                                  <option value="${Language.English}">English</option>
                                  <option value="${Language.Dutch}">Dutch</option>
                         </select>
                 </div>
                 <div class="mb-3">
-                          <div id="questions">
+                          <div id="questions-container">
                                      <!-- Here question rows will be added -->
                           </div>
-                          <button type="button" id="add-question-button" >Add Question</button>
+                          <button type="button" id="add-question-button" class="add-question-button btn btn-primary me-2 mt-3">Add Question</button>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Flow</button>
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
@@ -87,7 +87,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
         const scriptElement = document.getElementById('Flow-script');
         const subthemeId = scriptElement?.getAttribute('data-subtheme-id');
 
-        document.getElementById('add-question-button')?.addEventListener('click', addQuestion);
+        document.getElementById('add-question-button')?.addEventListener('click', addQuestionForm);
         document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
         document.getElementById('new-flow-form')?.addEventListener('submit', async function (event) {
             event.preventDefault();
@@ -158,6 +158,92 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
         });
     }
 });
+
+function addQuestionForm() {
+    const questionList = document.getElementById('questions-container');
+    if (questionList) {
+        const newQuestionContainer = document.createElement('div');
+        newQuestionContainer.className = 'question-container';
+
+        const newQuestionInput = document.createElement('input');
+        newQuestionInput.type = 'text';
+        newQuestionInput.placeholder = 'Enter your question here';
+        newQuestionInput.className = 'question-input mb-3 mt-3 input-styling col-md-10';
+
+        const newQuestionTypeSelect = document.createElement('select');
+        newQuestionTypeSelect.name = 'new-question-type';
+        newQuestionTypeSelect.className = 'form-select form-control';
+        for (let type in QuestionType) {
+            if (!isNaN(Number(QuestionType[type]))) {
+                const option = document.createElement('option');
+                option.value = QuestionType[type].toString();
+                option.text = type;
+                option.className = ' ';
+                newQuestionTypeSelect.appendChild(option);
+            }
+        }
+
+        const newAnswerPossibilityContainer = document.createElement('div');
+        newAnswerPossibilityContainer.className = 'answer-possibilities-container';
+
+        const addAnswerPossibilityButton = document.createElement('button');
+        addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
+        addAnswerPossibilityButton.className = 'btn btn-primary add-answerposs-button col-md-4 mt-3';
+        addAnswerPossibilityButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            addAnswerPossibility(newQuestionContainer);
+        });
+
+
+        const deleteButtonQuestion = document.createElement('button');
+        deleteButtonQuestion.className = 'btn btn-outline-danger delete-question-button col-md-1';
+        const iconElement = document.createElement('i');
+        iconElement.className = 'bi-trash';
+        deleteButtonQuestion.appendChild(iconElement);
+        deleteButtonQuestion.addEventListener('click', () => {
+            newQuestionContainer.remove();
+        });
+
+        newQuestionContainer.appendChild(newQuestionInput);
+        newQuestionContainer.appendChild(deleteButtonQuestion);
+        newQuestionContainer.appendChild(newQuestionTypeSelect);
+        newQuestionContainer.appendChild(newAnswerPossibilityContainer);
+        newQuestionContainer.appendChild(addAnswerPossibilityButton);
+        newQuestionContainer.setAttribute('data-question-id', '0');
+        questionList.appendChild(newQuestionContainer);
+    }
+}
+function addAnswerPossibility(questionContainer: HTMLElement): void {
+    const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
+    const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
+    if (answerPossibilityInputs.length < 5) {
+        const newAnswerPossibilityContainer = document.createElement('div');
+        newAnswerPossibilityContainer.className = 'answer-possibility-container mt-3';
+
+        const newPossibilityInput = document.createElement('input');
+        newPossibilityInput.type = 'text';
+        newPossibilityInput.placeholder = 'Enter answer possibility';
+        newPossibilityInput.className = 'answer-possibility-input input-styling mb-2 col-md-10';
+        newPossibilityInput.setAttribute('data-AnswerPoss-id', '0');
+
+        const deleteButtonPossibility = document.createElement('button');
+        deleteButtonPossibility.className = 'btn btn-outline-danger delete-answerposs-button col-md-1';
+        const iconElement = document.createElement('i');
+        iconElement.className = 'bi-trash';
+        deleteButtonPossibility.appendChild(iconElement);
+        deleteButtonPossibility.addEventListener('click', () => {
+            newAnswerPossibilityContainer.remove();
+        });
+
+        newAnswerPossibilityContainer.appendChild(newPossibilityInput);
+        newAnswerPossibilityContainer.appendChild(deleteButtonPossibility);
+
+        answerPossibilityContainer.appendChild(newAnswerPossibilityContainer);
+        answerPossibilityContainer.setAttribute("data-AnswerPoss-id", '0');
+    } else {
+        alert('Maximum number of answer possibilities reached (5)');
+    }
+}
 
 export function loadFlows() {
     window.location.href = window.location.href
