@@ -144,13 +144,40 @@
             @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Circular)
             {
                 <p>Duid 1 antwoord aan</p>
-                @foreach (var answerPossibility in Model.AnswerPossibilities)
-                {
-                    <button class="unselected answerButtonCircular" value="@answerPossibility.Description">@answerPossibility.Description</button>
-                }
-
-                <form id="answersFormCircular" method="post" action="/Question/SaveAnswerAndUserInput">
-                    <button type="button" class="submit-button" id="submitButtonCircular">Klaar</button>
+               
+                <form method="post" action="/Question/SaveAnswerAndUserInput">
+                    <div class="row">
+                        <div class="col-md-6 left-column p-3">
+                            @{
+                                int counter = 0;
+                                int buttonId = 1;
+                                foreach (var answerPossibility in Model.AnswerPossibilities.Skip(Model.AnswerPossibilities.Count() / 2))
+                                {
+                                    <button class="btn-answer col-12 m-2 p-4" type="submit" id="button-@buttonId" name="selectedAnswer" value="@answerPossibility.Description">
+                                        <i class="@(counter % 3 == 0 ? "bi bi-circle-fill" : counter % 3 == 1 ? "bi bi-square-fill" : "bi bi-triangle-fill")"></i>
+                                        @answerPossibility.Description
+                                    </button>
+                                    counter++;
+                                    buttonId += 2;
+                                }
+                            }
+                        </div>
+                        <div class="col-md-6 right-column p-3">
+                            @{
+                                int counter2 = 0;
+                                int buttonId2 = 2;
+                                foreach (var answerPossibility in Model.AnswerPossibilities.Take(Model.AnswerPossibilities.Count() / 2))
+                                {
+                                    <button class="btn-answer col-12 m-2 p-4" type="submit" id="button-@buttonId2" name="selectedAnswer" value="@answerPossibility.Description">
+                                        <i class="@(counter2 % 3 == 0 ? "bi bi-star-fill" : counter2 % 3 == 1 ? "bi bi-heart-fill" : "bi bi-diamond-fill")"></i>
+                                        @answerPossibility.Description
+                                    </button>
+                                    counter2++;
+                                    buttonId2 += 2;
+                                }
+                            }
+                        </div>
+                    </div>
                     <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                     <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
                     <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>

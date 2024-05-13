@@ -86,22 +86,32 @@ function ShowForm(FlowContainer) {
                 const descriptionInput = document.getElementById('description');
                 const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
                 const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
-                const questions = [];
-                document.querySelectorAll('.question-row').forEach(row => {
-                    const questionInput = row.querySelector('input[type="text"][name$="Question"]');
-                    const answerInputs = row.querySelectorAll('input[type="text"][name$="Answer"]');
-                    const questionText = questionInput.value.trim();
-                    if (questionText) {
-                        const answers = Array.from(answerInputs).map(input => input.value.trim()).filter(answer => answer !== '');
-                        const questionTypeInput = row.querySelector('input[name="questionType"]');
-                        const questionType = parseInt(questionTypeInput.value); // Haal de numerieke waarde van het vraagtype op
-                        questions.push({
-                            questionText: questionText,
-                            questionType: questionType, // Gebruik de numerieke waarde van het vraagtype
-                            answerPossibilities: answers.map(answer => ({ description: answer }))
-                        });
+                const questionContainers = document.querySelectorAll('.question-container');
+                const questions = Array.from(questionContainers).map((container) => {
+                    const questionContainer = container;
+                    const questionInput = questionContainer.querySelector('.question-input');
+                    const questionId = questionContainer.getAttribute('data-question-id');
+                    const questionTypeSelect = questionContainer.querySelector('select');
+                    const selectedQuestionType = parseInt(questionTypeSelect.value);
+                    if (questionInput.value.trim() === '') {
+                        return null;
                     }
-                });
+                    const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input');
+                    const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
+                    const answerPossibilities = Array.from(filteredAnswerPossibilities).map(input => {
+                        const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
+                        return {
+                            answerPossibilityId: answerPossibilityId,
+                            description: input.value
+                        };
+                    });
+                    return {
+                        questionId: questionId,
+                        questionText: questionInput.value,
+                        questionType: selectedQuestionType,
+                        answerPossibilities: answerPossibilities
+                    };
+                }).filter(question => question !== null);
                 const flowLanguageSelect = document.getElementById('flowLanguage');
                 const flowLanguage = parseInt(flowLanguageSelect.value);
                 if (!flowNameInput || !descriptionInput || !flowTypeRadio)
