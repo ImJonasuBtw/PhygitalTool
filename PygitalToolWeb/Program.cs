@@ -6,6 +6,7 @@ using PhygitalTool.DAL;
 using PhygitalTool.DAL.EF;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
+using PhygitalTool.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
+builder.Services.AddScoped<CloudStorageService>();
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>

@@ -19,11 +19,20 @@ public static class DataSeeder
         //creating backoffice env 
         var backOffice1 = new BackOffice(1, "TestOffice", adminPlatform1.AdminPlatformId);
         context.BackOffices.Add(backOffice1);
+        var idea1 = new Idea("Cool", "Wat een leuke flows",0 );
+        var idea2 = new Idea("Meh", "Sommige dingen werken nog niet helemaal goed",0 );
+        var comment1 = new Comment("Dat vind ik ook");
+        context.Ideas.Add(idea1);
+        context.Ideas.Add(idea2);
+        comment1.Idea = idea1;
+        context.Comments.Add(comment1);
+        idea1.Comments.Add(comment1);
         context.SaveChanges();
 
         const string manager = "Manager";
         const string supervisor = "Supervisor";
         const string admin = "Admin";
+        const string user = "user";
         
         
         // Managers
@@ -101,9 +110,58 @@ public static class DataSeeder
             userManager.AddToRoleAsync(admin1, admin).Wait();
             if (!creationResult2.Succeeded)
             {
-                throw new System.Exception("Failed to create dummy supervisor.");
+                throw new System.Exception("Failed to create dummy admin1.");
             }
         }
+      
+        
+        if (!context.Users.Any(u => u.Email == "user1@example.com"))
+        {
+            var user1 = new User
+            {
+                UserName = "user1@example.com",
+                Email = "user1@example.com",
+                EmailConfirmed = true,
+                Ideas = new List<Idea> { idea1 },
+                Comments = new List<Comment>()
+            };
+           
+            var creationResult3 = userManager.CreateAsync(user1, "Test23!").Result;
+            userManager.AddToRoleAsync(user1, user).Wait();
+            if (!creationResult3.Succeeded)
+            {
+                throw new System.Exception("Failed to create dummy user1.");
+            }
+           
+
+            idea1.User = user1;
+            context.SaveChanges();
+        }
+        
+        if (!context.Users.Any(u => u.Email == "user2@example.com"))
+        {
+            var user2 = new User
+            {
+                UserName = "user2@example.com",
+                Email = "user2@example.com",
+                EmailConfirmed = true,
+                Ideas = new List<Idea>(),
+                Comments = new List<Comment>() {comment1}
+            };
+            
+            var creationResult4 = userManager.CreateAsync(user2, "Test23!").Result;
+            userManager.AddToRoleAsync(user2, user).Wait();
+            if (!creationResult4.Succeeded)
+            {
+                throw new System.Exception("Failed to create dummy user.");
+            }
+           
+            comment1.User = user2;
+            idea2.User = user2;
+            context.SaveChanges();
+        }
+        
+        
         //creating projects 
         var project1 = new Project
         {
@@ -416,6 +474,7 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility44);
         context.AnswerPossibilities.Add(answerPossibility45);
         
+        
         context.SaveChanges();
         context.ChangeTracker.Clear();
     }
@@ -430,6 +489,9 @@ public static class DataSeeder
     
         const string admin = "Admin";
         roleManager.CreateAsync(new IdentityRole(admin)).Wait();
+
+        const string user = "User";
+        roleManager.CreateAsync(new IdentityRole(user)).Wait();
     }
 }
 

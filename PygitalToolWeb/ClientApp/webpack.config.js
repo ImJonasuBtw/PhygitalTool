@@ -21,8 +21,9 @@ module.exports = {
         resultsInformation: './src/js/resultsInformation.ts',
         projectEditAndDelete:'./src/js/ProjectEditAndDelete',
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
+        backOfficeCreation:'./src/js/backOfficeCreation',
         themeEditAndDelete:'./src/js/themeEditAndDelete',
-        backOfficeCreation:'./src/js/backOfficeCreation'
+        Userform: './src/js/UserForm'
     },
     output: {
         filename: '[name].entry.js',

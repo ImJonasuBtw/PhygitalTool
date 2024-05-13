@@ -1,4 +1,5 @@
-﻿using PhygitalTool.Domain.FlowPackage;
+﻿using Microsoft.AspNetCore.Identity;
+using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 
@@ -45,4 +46,8 @@ public interface IRepositoryRetrieval
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
     public AdminPlatform ReadAdminPlatform();
+    IEnumerable<Idea> readAllIdeas();
+    IdentityUser getUser(string userId);
+    void updateLikeIdea(Idea idea);
+    Idea getIdea(int id);
 }

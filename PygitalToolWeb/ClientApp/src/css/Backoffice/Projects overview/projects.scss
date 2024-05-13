@@ -15,7 +15,7 @@
 
       .img-thumbnail {
         width: 100px;
-        height: auto;
+        height: 100px;
         border-radius: 50%;
         margin-right: 15px; 
       }
@@ -25,6 +25,8 @@
       }
     }
   }
+  
+
 
 
   form {
@@ -40,6 +42,21 @@
     .form-label {
       color: $text-color;
       font-weight: bold;
+    }
+    .input-styling{
+      background-color: rgba($light-color, 0.5);
+      border: $card-border;
+      border-radius: $card-border-radius;
+      box-shadow: none;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      color: $text-color;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+      }
     }
 
     .form-control {
@@ -92,7 +109,10 @@
       }
     }
   }
-
+  .btn-outline-danger{
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
 
   h2 {
     font-weight: bold;
@@ -123,6 +143,7 @@
     margin-right: 0;
     margin-left: 0;
   }
+  
 
   .card {
     background-color: rgba($background-color, 0.4);

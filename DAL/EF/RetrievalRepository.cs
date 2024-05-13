@@ -344,4 +344,40 @@ public class RetrievalRepository : IRepositoryRetrieval
             .Include(a => a.Admins)
             .FirstOrDefault();
     }
+
+    public IEnumerable<Idea> readAllIdeas()
+    {
+        return _context.Ideas.Include(u =>u.Comments).ThenInclude(c =>c.User)
+            .Include(i =>i.User);
+            
+    }
+
+    public IdentityUser getUser(string userId)
+    {
+            return _context.Users
+                .FirstOrDefault(u => u.Id == userId);
+        
+    }
+
+    public void updateLikeIdea(Idea idea)
+    {
+        var existingIdea = _context.Ideas.FirstOrDefault(i => i.IdeaId == idea.IdeaId);
+
+        
+        if (existingIdea != null)
+        {
+            existingIdea.Likes = idea.Likes;
+                
+            _context.SaveChanges();
+        }
+        else
+        {
+            throw new ArgumentException("Het idea kon niet worden gevonden.");
+        }
+    }
+
+    public Idea getIdea(int id)
+    {
+       return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
+    }
 }

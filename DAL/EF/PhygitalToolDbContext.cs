@@ -25,6 +25,8 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     public DbSet<AdminPlatform> AdminPlatforms { get; set; }
     public DbSet<MainTheme> MainThemes { get; set; }
     public DbSet<Supervisor> Supervisors { get; set; }
+    public DbSet<Idea> Ideas { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     public PhygitalToolDbContext(DbContextOptions options) : base(options)
     {
