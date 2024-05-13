@@ -24,7 +24,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function getAllAnswersWithQuestions() {
     return __awaiter(this, void 0, void 0, function* () {
+        const resultsContainer = document.getElementById('results-container');
+        const loader = document.createElement('div');
+        // @ts-ignore
+        resultsContainer.appendChild(loader);
+        loader.classList.add('loader');
+        document.body.appendChild(loader);
         try {
+            loader.style.display = 'block';
             // @ts-ignore
             const projectIdPage = parseInt(document.querySelector('#results-information-container').getAttribute('data-project-id'));
             const response = yield fetch(`/api/Results/GetAllAnswersWithQuestions`);
@@ -35,6 +42,7 @@ function getAllAnswersWithQuestions() {
             if (Array.isArray(data)) {
                 const questionAnswers = {};
                 const answerCounts = {};
+                console.log(data);
                 for (const answer of data) {
                     const flowId = answer.question.flowId;
                     let projectId;
@@ -70,7 +78,8 @@ function getAllAnswersWithQuestions() {
                             answerData.push({ answer: answer, count: count });
                         });
                         const canvasId = `chart-${counter}`;
-                        const canvasHtml = `<div class="chart-container"><canvas id="${canvasId}"></canvas></div>`;
+                        const canvasHtml = `<div class="chart-container"><canvas id="${canvasId}"></canvas>
+                    <button class="export-chart btn btn-primary mt-3 mb-3" data-canvas-id="${canvasId}">Exporteer als PNG</button></div>`;
                         if (resultsContainer) {
                             resultsContainer.innerHTML += canvasHtml;
                         }
@@ -93,15 +102,119 @@ function getAllAnswersWithQuestions() {
                         counter++;
                     }
                 }
+                const projectExportBtn = document.createElement('button');
+                projectExportBtn.className = 'export-project btn btn-primary mb-3 mt-3 mr-3';
+                projectExportBtn.textContent = 'Exporteer gegevens als XLS';
+                projectExportBtn.addEventListener('click', () => {
+                    exportDataAsXLS(data, 'answers_export'); // 'data' moet de array van antwoordobjecten zijn
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(projectExportBtn);
+                const exportChartsButton = document.createElement('button');
+                exportChartsButton.textContent = 'Exporteer grafieken als PNG';
+                exportChartsButton.className = 'export-project btn btn-primary mt-3 m-3 mb-3';
+                exportChartsButton.addEventListener('click', () => {
+                    const chartContainers = document.querySelectorAll('.chart-container canvas');
+                    chartContainers.forEach((canvas, index) => {
+                        exportChartAsPNG(canvas, `chart_${index}`);
+                    });
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(exportChartsButton);
+                const exportAsCsv = document.createElement('button');
+                exportAsCsv.textContent = 'Exporteer grafieken als CSV';
+                exportAsCsv.className = 'export-as-csv btn btn-primary mt-3 mb-3';
+                exportAsCsv.addEventListener('click', () => {
+                    exportDataAsCSV(data, 'answers_export'); // 'data' moet de array van objecten met de gegevens zijn
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(exportAsCsv);
+                // Verberg de loader wanneer de gegevens zijn geladen
+                loader.style.display = 'none';
             }
             else {
                 console.error('Data is not in the expected format');
+                // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
+                loader.style.display = 'none';
             }
         }
         catch (error) {
             console.error('Error fetching answers with questions:', error);
+            // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
+            loader.style.display = 'none';
         }
     });
+}
+document.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('export-chart')) {
+        const canvasId = target.getAttribute('data-canvas-id');
+        // @ts-ignore
+        const canvas = document.getElementById(canvasId); // Typecasting naar HTMLCanvasElement
+        if (canvas) {
+            exportChartAsPNG(canvas, 'chart_export');
+        }
+        else {
+            console.error('Canvas not found');
+        }
+    }
+});
+function exportChartAsPNG(canvas, filename) {
+    // Genereer een dataURL voor het canvas
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = filename + '.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function exportDataAsXLS(data, filename) {
+    let html = '<table>';
+    html += '<tr>';
+    html += '<th>Answer ID</th><th>Answer Text</th><th>Question ID</th><th>Question Text</th><th>Question Type</th>'; // Koppen toevoegen
+    html += '</tr>';
+    data.forEach((row) => {
+        html += '<tr>';
+        html += `<td>${row.answerId}</td><td>${row.answerText}</td><td>${row.questionId}</td>`; // Voeg antwoordgegevens toe
+        html += `<td>${row.question.questionText}</td><td>${getQuestionTypeName(row.question.questionType)}</td>`; // Voeg vraaggegevens toe
+        html += '</tr>';
+    });
+    html += '</table>';
+    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `${filename}.xls`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function exportDataAsCSV(data, filename) {
+    let csv = 'Answer ID,Answer Text,Question ID,Question,Question Text,Question Type\n';
+    data.forEach((row) => {
+        csv += `${row.answerId},${row.answerText},${row.question.questionId},${row.question.questionText},${getQuestionTypeName(row.question.questionType)}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `${filename}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function getQuestionTypeName(questionType) {
+    switch (questionType) {
+        case 0:
+            return 'SingleChoice';
+        case 1:
+            return 'MultipleChoice';
+        case 2:
+            return 'Range';
+        case 3:
+            return 'Open';
+        default:
+            return 'Unknown';
+    }
 }
 window.addEventListener('load', () => {
     getAllAnswersWithQuestions();
