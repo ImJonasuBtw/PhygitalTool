@@ -11,6 +11,7 @@ public interface IRepositoryPersistance
 
     // Creates a new answer
     void CreateAnswer(Answer answer);
+    Answer CreateAndReturnAnswer(Answer answer);
 
     // Saves Contact Information when user submits form.
     void SaveContactInformation(ContactInformation contactInformation);
@@ -30,4 +31,7 @@ public interface IRepositoryPersistance
     void UpdateQuestion(Question question);
     void updateAnswerPossibility(AnswerPossibility answerPossibility);
     void RemoveAnswerPossibilty(int answerPossibilityId);
+
+    void createIdea(Idea idea);
+    void createCommentToIdea(int ideaId, Comment comment);
 }

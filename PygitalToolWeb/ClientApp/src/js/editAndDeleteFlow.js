@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //HTML From the edit form
 function editForm(FlowContainer, flow) {
     FlowContainer.innerHTML = `
-                    <h2 class="mt-4">Edit Flows</h2>
+                    <h2 class="mt-4">Edit Flow</h2>
                     <form id="edit-flow-form">
                         <div class="mb-3">
                             <label for="flowName" class="form-label">Flow name</label>
@@ -77,7 +77,7 @@ function editForm(FlowContainer, flow) {
                         </div>
                           <div class="mb-3">
                             <label class="form-label">Language</label>
-                            <select class="form-select" id="flowLanguage" required>
+                            <select class="form-select form-control" id="flowLanguage" required>
                                 <option value="${Language.English}" ${flow.language === Language.English ? 'selected' : ''}>English</option>
                                 <option value="${Language.Dutch}" ${flow.language === Language.Dutch ? 'selected' : ''}>Dutch</option>
                             </select>
@@ -98,7 +98,7 @@ function editForm(FlowContainer, flow) {
 function addQuestionButton(questionList) {
     const addQuestionButton = document.createElement('button');
     addQuestionButton.textContent = 'Add Question';
-    addQuestionButton.className = 'btn btn-success add-question-button';
+    addQuestionButton.className = 'add-question-button btn btn-primary me-2 mt-3';
     addQuestionButton.addEventListener('click', (event) => {
         event.preventDefault();
         addQuestionForm();
@@ -107,24 +107,29 @@ function addQuestionButton(questionList) {
 }
 function deleteQuestionButton(questionContainer, question) {
     const deleteButtonQuestion = document.createElement('button');
-    deleteButtonQuestion.textContent = 'Delete';
-    deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
+    deleteButtonQuestion.textContent = '';
+    deleteButtonQuestion.className = 'btn btn-outline-danger delete-question-button col-md-1';
+    const iconElement = document.createElement('i');
+    iconElement.className = 'bi-trash';
+    deleteButtonQuestion.appendChild(iconElement);
     deleteButtonQuestion.addEventListener('click', () => {
         questionContainer.remove();
         deleteQuestion(question.questionId);
     });
     questionContainer.appendChild(deleteButtonQuestion);
 }
-function deleteAnswerpossibilitiesButton(answerPossibilityContainer, possibility) {
+function deleteAnswerpossibilitiesButton(answerPossibilityAndButton, possibility) {
     const deleteButtonPossibility = document.createElement('button');
-    deleteButtonPossibility.textContent = 'Delete';
-    deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
+    deleteButtonPossibility.className = 'btn  btn-outline-danger delete-answerposs-button col-md-2';
+    const iconElement = document.createElement('i');
+    iconElement.className = 'bi-trash';
+    deleteButtonPossibility.appendChild(iconElement);
     deleteButtonPossibility.addEventListener('click', (event) => {
         event.preventDefault();
-        answerPossibilityContainer.remove();
+        answerPossibilityAndButton.remove();
         deleteAnswerPossibility(possibility.answerPossibilityId);
     });
-    answerPossibilityContainer.appendChild(deleteButtonPossibility);
+    answerPossibilityAndButton.appendChild(deleteButtonPossibility);
 }
 function showQuestionAndAnswerPossibilities(question, index, questionList) {
     const questionContainer = document.createElement('div');
@@ -134,10 +139,12 @@ function showQuestionAndAnswerPossibilities(question, index, questionList) {
     questionInput.type = 'text';
     questionInput.value = question.questionText;
     questionInput.name = `question-${index}`;
-    questionInput.className = 'question-input';
+    questionInput.className = 'question-input input-styling mb-3 col-md-10  mt-3 bold';
     questionContainer.appendChild(questionInput);
+    deleteQuestionButton(questionContainer, question);
     const questionTypeSelect = document.createElement('select');
     questionTypeSelect.name = `question-type-${index}`;
+    questionTypeSelect.className = 'form-select form-control mt-3';
     for (let type in QuestionType) {
         if (!isNaN(Number(QuestionType[type]))) {
             const option = document.createElement('option');
@@ -151,25 +158,28 @@ function showQuestionAndAnswerPossibilities(question, index, questionList) {
     }
     questionContainer.appendChild(questionTypeSelect);
     const answerPossibilitiesContainer = document.createElement('div');
-    answerPossibilitiesContainer.className = 'answer-possibilities-container';
+    answerPossibilitiesContainer.className = 'answer-possibilities-container row';
     question.answerPossibilities.forEach((possibility, possibilityIndex) => {
         const answerPossibilityContainer = document.createElement('div');
-        answerPossibilityContainer.className = 'answer-possibility-container';
+        answerPossibilityContainer.className = 'answer-possibility-container col-md-4 pt-3';
+        const answerPossibilityAndButton = document.createElement('div');
+        answerPossibilityAndButton.className = 'buttonAndPossibility row';
         const possibilityInput = document.createElement('input');
         possibilityInput.setAttribute('data-AnswerPoss-id', possibility.answerPossibilityId.toString());
         possibilityInput.type = 'text';
         possibilityInput.value = possibility.description;
         possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
-        possibilityInput.className = 'answer-possibility-input';
-        answerPossibilityContainer.appendChild(possibilityInput);
-        deleteAnswerpossibilitiesButton(answerPossibilityContainer, possibility);
+        possibilityInput.className = 'answer-possibility-input  input-styling col-md-9 ml-3';
+        answerPossibilityContainer.appendChild(answerPossibilityAndButton);
+        answerPossibilityAndButton.appendChild(possibilityInput);
+        deleteAnswerpossibilitiesButton(answerPossibilityAndButton, possibility);
         answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
     });
     const selectedQuestionType = parseInt(questionTypeSelect.value);
     if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
         const addAnswerPossibilityButton = document.createElement('button');
         addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
-        addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
+        addAnswerPossibilityButton.className = 'add-answerposs-button mt-3 btn btn-primary me-2';
         addAnswerPossibilityButton.addEventListener('click', (event) => {
             event.preventDefault();
             addAnswerPossibility(questionContainer);
@@ -177,7 +187,6 @@ function showQuestionAndAnswerPossibilities(question, index, questionList) {
         answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
     }
     questionContainer.appendChild(answerPossibilitiesContainer);
-    deleteQuestionButton(questionContainer, question);
     questionList.appendChild(questionContainer);
 }
 //shows the edit form
@@ -193,10 +202,10 @@ function showEditFlowForm(flowId) {
             // Render questions
             const questionList = document.getElementById('question-list');
             if (questionList) {
-                addQuestionButton(questionList);
                 flow.questions.forEach((question, index) => {
                     showQuestionAndAnswerPossibilities(question, index, questionList);
                 });
+                addQuestionButton(questionList);
             }
             (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadFlows);
             (_b = document.getElementById('edit-flow-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
@@ -299,14 +308,16 @@ function addQuestionForm() {
         const newQuestionInput = document.createElement('input');
         newQuestionInput.type = 'text';
         newQuestionInput.placeholder = 'Enter your question here';
-        newQuestionInput.className = 'question-input';
+        newQuestionInput.className = 'question-input mb-3 mt-3 input-styling col-md-10';
         const newQuestionTypeSelect = document.createElement('select');
         newQuestionTypeSelect.name = 'new-question-type';
+        newQuestionTypeSelect.className = 'form-select form-control';
         for (let type in QuestionType) {
             if (!isNaN(Number(QuestionType[type]))) {
                 const option = document.createElement('option');
                 option.value = QuestionType[type].toString();
                 option.text = type;
+                option.className = ' ';
                 newQuestionTypeSelect.appendChild(option);
             }
         }
@@ -314,22 +325,24 @@ function addQuestionForm() {
         newAnswerPossibilityContainer.className = 'answer-possibilities-container';
         const addAnswerPossibilityButton = document.createElement('button');
         addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
-        addAnswerPossibilityButton.className = 'btn btn-success add-answerposs-button';
+        addAnswerPossibilityButton.className = 'btn btn-primary add-answerposs-button col-md-4 mt-3';
         addAnswerPossibilityButton.addEventListener('click', (event) => {
             event.preventDefault();
             addAnswerPossibility(newQuestionContainer);
         });
         const deleteButtonQuestion = document.createElement('button');
-        deleteButtonQuestion.textContent = 'Delete';
-        deleteButtonQuestion.className = 'btn btn-danger delete-question-button';
+        deleteButtonQuestion.className = 'btn btn-outline-danger delete-question-button col-md-1';
+        const iconElement = document.createElement('i');
+        iconElement.className = 'bi-trash';
+        deleteButtonQuestion.appendChild(iconElement);
         deleteButtonQuestion.addEventListener('click', () => {
             newQuestionContainer.remove();
         });
         newQuestionContainer.appendChild(newQuestionInput);
+        newQuestionContainer.appendChild(deleteButtonQuestion);
         newQuestionContainer.appendChild(newQuestionTypeSelect);
         newQuestionContainer.appendChild(newAnswerPossibilityContainer);
         newQuestionContainer.appendChild(addAnswerPossibilityButton);
-        newQuestionContainer.appendChild(deleteButtonQuestion);
         newQuestionContainer.setAttribute('data-question-id', '0');
         questionList.appendChild(newQuestionContainer);
     }
@@ -339,15 +352,17 @@ function addAnswerPossibility(questionContainer) {
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
     if (answerPossibilityInputs.length < 5) {
         const newAnswerPossibilityContainer = document.createElement('div');
-        newAnswerPossibilityContainer.className = 'answer-possibility-container';
+        newAnswerPossibilityContainer.className = 'answer-possibility-container mt-3';
         const newPossibilityInput = document.createElement('input');
         newPossibilityInput.type = 'text';
         newPossibilityInput.placeholder = 'Enter answer possibility';
-        newPossibilityInput.className = 'answer-possibility-input';
+        newPossibilityInput.className = 'answer-possibility-input input-styling mb-2 col-md-10';
         newPossibilityInput.setAttribute('data-AnswerPoss-id', '0');
         const deleteButtonPossibility = document.createElement('button');
-        deleteButtonPossibility.textContent = 'Delete';
-        deleteButtonPossibility.className = 'btn btn-danger delete-answerposs-button';
+        deleteButtonPossibility.className = 'btn btn-outline-danger delete-answerposs-button col-md-1';
+        const iconElement = document.createElement('i');
+        iconElement.className = 'bi-trash';
+        deleteButtonPossibility.appendChild(iconElement);
         deleteButtonPossibility.addEventListener('click', () => {
             newAnswerPossibilityContainer.remove();
         });

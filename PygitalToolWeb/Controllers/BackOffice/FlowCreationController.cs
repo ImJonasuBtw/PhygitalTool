@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
@@ -15,6 +16,7 @@ public class FlowCreationController : Controller
     }
 
     // GET
+    [Authorize(Roles = "Manager")]
     public IActionResult Index(int subThemeId)
     {
         SubTheme subTheme = _projectManager.GetSubThemeWithFlows(subThemeId);

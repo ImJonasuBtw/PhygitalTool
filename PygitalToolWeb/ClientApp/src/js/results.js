@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import Chart from 'chart.js/auto';
 document.addEventListener('DOMContentLoaded', function () {
     var clickableCards = document.querySelectorAll('.clickable');
@@ -13,157 +22,200 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-function showResultsForProject() {
-    // @ts-ignore
-    var projectId = parseInt(document.querySelector('#results-container').getAttribute('data-project-id'));
-    console.log(projectId);
-    // Controleren of projectId niet NaN is
-    if (!isNaN(projectId)) {
-        fetch(`/api/Results/GetProjectWithData/${projectId}`)
-            .then(response => {
+function getAllAnswersWithQuestions() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const resultsContainer = document.getElementById('results-container');
+        const loader = document.createElement('div');
+        // @ts-ignore
+        resultsContainer.appendChild(loader);
+        loader.classList.add('loader');
+        document.body.appendChild(loader);
+        try {
+            loader.style.display = 'block';
+            // @ts-ignore
+            const projectIdPage = parseInt(document.querySelector('#results-information-container').getAttribute('data-project-id'));
+            const response = yield fetch(`/api/Results/GetAllAnswersWithQuestions`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            return response.json();
-        }).then((data) => {
-            // Controleer of data een object is en of het de verwachte eigenschap bevat
-            if (typeof data === 'object' && Array.isArray(data.userInputs)) {
-                // Maak variabelen om het aantal antwoorden per hoofdthema, subthema en flow ID bij te houden
-                const mainThemeCounts = {};
-                const subThemeCounts = {};
-                const flowCounts = {};
-                // Itereer over de array van UserInput-objecten
-                data.userInputs.forEach((userInput) => {
-                    // Toegang krijgen tot de eigenschappen van elk UserInput-object
-                    const mainThemeId = userInput.mainThemeId;
-                    const subThemeId = userInput.subThemeId;
-                    const flowId = userInput.flowId;
-                    // Incrementeer het aantal antwoorden voor het hoofdthema
-                    mainThemeCounts[mainThemeId] = (mainThemeCounts[mainThemeId] || 0) + 1;
-                    // Incrementeer het aantal antwoorden voor het subthema
-                    subThemeCounts[subThemeId] = (subThemeCounts[subThemeId] || 0) + 1;
-                    // Incrementeer het aantal antwoorden voor het flow ID
-                    flowCounts[flowId] = (flowCounts[flowId] || 0) + 1;
-                });
-                // Zoek de container
+            const data = yield response.json();
+            if (Array.isArray(data)) {
+                const questionAnswers = {};
+                const answerCounts = {};
+                console.log(data);
+                for (const answer of data) {
+                    const flowId = answer.question.flowId;
+                    let projectId;
+                    const projectResponse = yield fetch(`/api/Results/GetProjectFromFlowId/` + flowId);
+                    if (!projectResponse.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    const project = yield projectResponse.json();
+                    projectId = project.projectId;
+                    if (projectId == projectIdPage) {
+                        console.log("gelijk");
+                        const questionText = answer.question.questionText;
+                        const answerText = answer.answerText;
+                        if (!questionAnswers[questionText]) {
+                            questionAnswers[questionText] = new Set();
+                        }
+                        questionAnswers[questionText].add(answerText);
+                        answerCounts[answerText] = (answerCounts[answerText] || 0) + 1;
+                    }
+                }
                 const resultsContainer = document.getElementById('results-container');
-                if (resultsContainer) {
-                    // Toon het aantal antwoorden per hoofdthema
-                    Object.keys(mainThemeCounts).forEach(mainThemeId => {
-                        const count = mainThemeCounts[parseInt(mainThemeId)];
-                        // Voeg het aantal antwoorden per hoofdthema toe aan de HTML
-                        resultsContainer.innerHTML += `<p>Aantal inputs voor hoofdthema ${mainThemeId}: ${count}</p>`;
-                    });
-                    // Toon het aantal antwoorden per subthema
-                    Object.keys(subThemeCounts).forEach(subThemeId => {
-                        const count = subThemeCounts[parseInt(subThemeId)];
-                        // Voeg het aantal antwoorden per subthema toe aan de HTML
-                        resultsContainer.innerHTML += `<p>Aantal inputs voor subthema ${subThemeId}: ${count}</p>`;
-                    });
-                    // Toon het aantal antwoorden per flow ID
-                    Object.keys(flowCounts).forEach(flowId => {
-                        const count = flowCounts[parseInt(flowId)];
-                        // Voeg het aantal antwoorden per flow ID toe aan de HTML
-                        resultsContainer.innerHTML += `<p>Aantal antwoorden voor flow ID ${flowId}: ${count}</p>`;
-                    });
+                const existingCharts = document.querySelectorAll('.chart-container');
+                existingCharts.forEach(chart => chart.remove());
+                let counter = 0;
+                for (const questionText in questionAnswers) {
+                    if (Object.hasOwnProperty.call(questionAnswers, questionText)) {
+                        const uniqueAnswers = Array.from(questionAnswers[questionText]);
+                        const answerData = [];
+                        // @ts-ignore
+                        resultsContainer.innerHTML += `<p class="results-question"><strong>Question:</strong> ${questionText}</p>`;
+                        uniqueAnswers.forEach(answer => {
+                            const count = answerCounts[answer];
+                            answerData.push({ answer: answer, count: count });
+                        });
+                        const canvasId = `chart-${counter}`;
+                        const canvasHtml = `<div class="chart-container"><canvas id="${canvasId}"></canvas>
+                    <button class="export-chart btn btn-primary mt-3 mb-3" data-canvas-id="${canvasId}">Exporteer als PNG</button></div>`;
+                        if (resultsContainer) {
+                            resultsContainer.innerHTML += canvasHtml;
+                        }
+                        setTimeout(() => {
+                            const ctx = document.getElementById(canvasId);
+                            if (ctx) {
+                                // @ts-ignore
+                                new Chart(ctx, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: answerData.map(a => a.answer),
+                                        datasets: [{
+                                                label: 'Answers',
+                                                data: answerData.map(a => a.count),
+                                            }]
+                                    }
+                                });
+                            }
+                        }, 0);
+                        counter++;
+                    }
                 }
-                else {
-                    console.error('Results container niet gevonden');
-                }
+                const projectExportBtn = document.createElement('button');
+                projectExportBtn.className = 'export-project btn btn-primary mb-3 mt-3 mr-3';
+                projectExportBtn.textContent = 'Exporteer gegevens als XLS';
+                projectExportBtn.addEventListener('click', () => {
+                    exportDataAsXLS(data, 'answers_export'); // 'data' moet de array van antwoordobjecten zijn
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(projectExportBtn);
+                const exportChartsButton = document.createElement('button');
+                exportChartsButton.textContent = 'Exporteer grafieken als PNG';
+                exportChartsButton.className = 'export-project btn btn-primary mt-3 m-3 mb-3';
+                exportChartsButton.addEventListener('click', () => {
+                    const chartContainers = document.querySelectorAll('.chart-container canvas');
+                    chartContainers.forEach((canvas, index) => {
+                        exportChartAsPNG(canvas, `chart_${index}`);
+                    });
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(exportChartsButton);
+                const exportAsCsv = document.createElement('button');
+                exportAsCsv.textContent = 'Exporteer grafieken als CSV';
+                exportAsCsv.className = 'export-as-csv btn btn-primary mt-3 mb-3';
+                exportAsCsv.addEventListener('click', () => {
+                    exportDataAsCSV(data, 'answers_export'); // 'data' moet de array van objecten met de gegevens zijn
+                });
+                // @ts-ignore
+                resultsContainer.appendChild(exportAsCsv);
+                // Verberg de loader wanneer de gegevens zijn geladen
+                loader.style.display = 'none';
             }
             else {
-                console.error('Data is niet in het verwachte formaat');
-            }
-        })
-            .catch(error => {
-            // Handel eventuele fouten af
-            console.error('Fout bij het ophalen van gegevens:', error);
-        });
-    }
-    else {
-        console.error('Project ID is NaN');
-    }
-}
-function getAllAnswersWithQuestions() {
-    fetch(`/api/Results/GetAllAnswersWithQuestions`)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-        .then((data) => {
-        // Controleer of de ontvangen gegevens een array zijn
-        if (Array.isArray(data)) {
-            // Object om vragen en hun unieke antwoorden bij te houden
-            const questionAnswers = {};
-            // Object om het aantal keer dat elk antwoord voorkomt bij te houden
-            const answerCounts = {};
-            // Itereer over de array van antwoorden met vragen
-            data.forEach(answerWithQuestion => {
-                const questionText = answerWithQuestion.question.questionText;
-                const answerText = answerWithQuestion.answerText;
-                // Voeg de vraag toe aan het object als het nog niet bestaat
-                if (!questionAnswers[questionText]) {
-                    questionAnswers[questionText] = new Set();
-                }
-                // Voeg het antwoord toe aan de set van unieke antwoorden voor deze vraag
-                questionAnswers[questionText].add(answerText);
-                // Tel het aantal keren dat elk antwoord voorkomt
-                answerCounts[answerText] = (answerCounts[answerText] || 0) + 1;
-            });
-            // HTML-element om vragen en unieke antwoorden weer te geven
-            const resultsContainer = document.getElementById('results-container');
-            var counter = 0;
-            // Itereer over de vragen en hun unieke antwoorden
-            for (const questionText in questionAnswers) {
-                if (Object.hasOwnProperty.call(questionAnswers, questionText)) {
-                    const uniqueAnswers = Array.from(questionAnswers[questionText]);
-                    const answerData = [];
-                    // Voeg de vraag toe aan de HTML
-                    // @ts-ignore
-                    resultsContainer.innerHTML += `<p class="results-question"><strong>Question:</strong> ${questionText}</p>`;
-                    // Voeg de unieke antwoorden en hun aantal keer toe aan de HTML
-                    uniqueAnswers.forEach(answer => {
-                        const count = answerCounts[answer];
-                        answerData.push({ answer: answer, count: count });
-                        // @ts-ignore
-                        // resultsContainer.innerHTML += `<p class="results-answer"><strong>Answer:</strong> ${answer} - Number of times answered: ${count}</p>`;
-                    });
-                    console.log(answerData);
-                    // @ts-ignore
-                    const canvasId = `chart-${counter}`;
-                    const canvasHtml = `<div class="chart-container"><canvas id="${canvasId}"></canvas></div>`;
-                    if (resultsContainer) {
-                        resultsContainer.innerHTML += canvasHtml;
-                    }
-                    setTimeout(() => {
-                        const ctx = document.getElementById(canvasId);
-                        new Chart(ctx, {
-                            type: 'pie',
-                            data: {
-                                labels: answerData.map(a => a.answer),
-                                datasets: [{
-                                        label: 'Antwoorden',
-                                        data: answerData.map(a => a.count),
-                                    }]
-                            }
-                        });
-                    }, 0);
-                }
-                counter++;
+                console.error('Data is not in the expected format');
+                // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
+                loader.style.display = 'none';
             }
         }
-        else {
-            console.error('Data is niet in het verwachte formaat');
+        catch (error) {
+            console.error('Error fetching answers with questions:', error);
+            // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
+            loader.style.display = 'none';
         }
-    })
-        .catch(error => {
-        console.error('Fout bij het ophalen van antwoorden met vragen:', error);
     });
 }
-// Roep de functie aan bij het laden van de pagina
-document.addEventListener('DOMContentLoaded', () => {
-    showResultsForProject();
+document.addEventListener('click', function (event) {
+    const target = event.target;
+    if (target.classList.contains('export-chart')) {
+        const canvasId = target.getAttribute('data-canvas-id');
+        // @ts-ignore
+        const canvas = document.getElementById(canvasId); // Typecasting naar HTMLCanvasElement
+        if (canvas) {
+            exportChartAsPNG(canvas, 'chart_export');
+        }
+        else {
+            console.error('Canvas not found');
+        }
+    }
+});
+function exportChartAsPNG(canvas, filename) {
+    // Genereer een dataURL voor het canvas
+    const dataURL = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = filename + '.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function exportDataAsXLS(data, filename) {
+    let html = '<table>';
+    html += '<tr>';
+    html += '<th>Answer ID</th><th>Answer Text</th><th>Question ID</th><th>Question Text</th><th>Question Type</th>'; // Koppen toevoegen
+    html += '</tr>';
+    data.forEach((row) => {
+        html += '<tr>';
+        html += `<td>${row.answerId}</td><td>${row.answerText}</td><td>${row.questionId}</td>`; // Voeg antwoordgegevens toe
+        html += `<td>${row.question.questionText}</td><td>${getQuestionTypeName(row.question.questionType)}</td>`; // Voeg vraaggegevens toe
+        html += '</tr>';
+    });
+    html += '</table>';
+    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `${filename}.xls`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function exportDataAsCSV(data, filename) {
+    let csv = 'Answer ID,Answer Text,Question ID,Question,Question Text,Question Type\n';
+    data.forEach((row) => {
+        csv += `${row.answerId},${row.answerText},${row.question.questionId},${row.question.questionText},${getQuestionTypeName(row.question.questionType)}\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `${filename}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+function getQuestionTypeName(questionType) {
+    switch (questionType) {
+        case 0:
+            return 'SingleChoice';
+        case 1:
+            return 'MultipleChoice';
+        case 2:
+            return 'Range';
+        case 3:
+            return 'Open';
+        default:
+            return 'Unknown';
+    }
+}
+window.addEventListener('load', () => {
     getAllAnswersWithQuestions();
 });

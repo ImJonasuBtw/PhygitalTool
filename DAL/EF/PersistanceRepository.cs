@@ -29,6 +29,13 @@ public class PersistanceRepository : IRepositoryPersistance
         _context.SaveChanges();
     }
 
+    public Answer CreateAndReturnAnswer(Answer answer)
+    {
+        _context.Answers.Add(answer);
+        _context.SaveChanges();
+        return answer;
+    }
+
     // Saves Contact Information when user submits form.
     public void SaveContactInformation(ContactInformation contactInformation)
     {
@@ -189,6 +196,20 @@ public class PersistanceRepository : IRepositoryPersistance
         
         _context.AnswerPossibilities.Remove( answerPossibility);
         _context.SaveChanges();
+    }
+
+    public void createIdea(Idea idea)
+    {
+        _context.Ideas.Add(idea);
+        _context.SaveChanges();
+    }
+
+    public void createCommentToIdea(int ideaId, Comment comment)
+    {
+        _context.Comments.Add(comment);
+       Idea idea =  _context.Ideas.FirstOrDefault(i => i.IdeaId == ideaId);
+       idea?.Comments.Add(comment);
+       _context.SaveChanges();
     }
 
 

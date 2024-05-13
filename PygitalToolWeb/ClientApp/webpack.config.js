@@ -18,10 +18,12 @@ module.exports = {
         phygitalAnswerButton: './src/js/phygitalAnswerButton.ts',
         superVisors: './src/js/Supervisors.ts',
         results: './src/js/results.ts',
+        resultsInformation: './src/js/resultsInformation.ts',
         resultCharts: './src/js/resultCharts.ts',
         projectEditAndDelete:'./src/js/ProjectEditAndDelete',
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
-        themeEditAndDelete:'./src/js/themeEditAndDelete'
+        themeEditAndDelete:'./src/js/themeEditAndDelete',
+        Userform: './src/js/UserForm'
     },
     output: {
         filename: '[name].entry.js',

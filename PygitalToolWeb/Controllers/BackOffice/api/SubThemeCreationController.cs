@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.Web.Models;
 
@@ -17,6 +18,7 @@ public class SubThemeCreationController : Controller
         _logger = logger;
     }
     
+    [Authorize(Roles = "Manager")]
     [HttpPost("AddSubThemeToBackoffice")]
     public IActionResult AddSubThemeToBackoffice([FromBody] SubThemeModel subTheme)
     {
@@ -36,7 +38,7 @@ public class SubThemeCreationController : Controller
         _projectManager.AddSubTheme(domainSubTheme);
         return Ok();
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteSubTheme/{subThemeId}")]
     public IActionResult DeleteSubTheme(int subThemeId)
     {
@@ -50,7 +52,7 @@ public class SubThemeCreationController : Controller
             return BadRequest($"Error deleting subTheme: {ex.Message}");
         }
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpGet("GetSubThemeDetails/{subThemeId}")]
     public IActionResult GetSubThemeDetails(int subThemeId)
     {
@@ -76,7 +78,7 @@ public class SubThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+    [Authorize(Roles = "Manager")]
     [HttpPut("UpdateSubTheme/{subThemeId}")]
     public IActionResult UpdateSubTheme(int subThemeId, [FromBody] SubThemeModel subThemeModel)
     {
