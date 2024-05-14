@@ -5,4 +5,6 @@ namespace PhygitalTool.BL;
 public interface IAdminPlatformManager
 {
     AdminPlatform GetAdminPlatform();
+    
+    IEnumerable<BackOffice> getBackoffices();
 }
