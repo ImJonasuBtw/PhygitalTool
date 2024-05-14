@@ -3,6 +3,12 @@
    font-family: "Outfit", sans-serif;
    text-align: center;
   height: 100%;
+
+  .img-responsive {
+    width: 720px;
+    height: 405px;
+    object-fit: cover;
+  }
   
    form {
      border-radius: $card-border-radius;

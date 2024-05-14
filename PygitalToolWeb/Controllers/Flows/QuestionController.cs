@@ -69,31 +69,5 @@ public class QuestionController : Controller
             new { flowId = currentFlow, questionId = currentQuestion });
     }
 
-    // Returns view of a single choice question
-    public IActionResult SingleChoice(int id)
-    {
-        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
-        return View(question);
-    }
-
-    // Returns an open question view using its id
-    public IActionResult Open(int id)
-    {
-        Question question = _flowManager.GetQuestion(id);
-        return View(question);
-    }
-
-    // Returns a multiple choice question view using its id
-    public IActionResult MultipleChoice(int id)
-    {
-        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
-        return View(question);
-    }
-
-    // Returns a range question view using its id
-    public IActionResult Range(int id)
-    {
-        Question question = _flowManager.GetQuestionWithAnswerPossibilities(id);
-        return View(question);
-    }
+ 
 }

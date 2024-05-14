@@ -1,4 +1,9 @@
-import {addQuestion, QuestionType} from "../js/addQuestion"
+export enum QuestionType {
+    SingleChoice,
+    MultipleChoice,
+    Range,
+    Open
+}
 
 export const FlowTypeEnum = {
     Circular: 0,
@@ -16,13 +21,14 @@ export class Flow {
     public flowType: number;
     public language: number;
     public questions: {
-        questionId:number;
+        questionId: number;
         questionText: string;
         questionType: number;
-        answerPossibilities: { 
+        answerPossibilities: {
             description: string;
             answerPossibilityId: number;
         }[];
+        questionImage: string | null;
     }[];
 
     constructor(description: string, flowName: string, flowType: number, language: number, questions: any[]) {
@@ -36,7 +42,7 @@ export class Flow {
 
 console.log('The addFLow.ts script bundle has been loaded!');
 
-function ShowForm(FlowContainer: { innerHTML: string; }):void{
+function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `
             <h2 class="mt-4">Add New Flow</h2>
             <form id="new-flow-form">
@@ -78,6 +84,7 @@ function ShowForm(FlowContainer: { innerHTML: string; }):void{
             </form>
         `;
 }
+
 document.getElementById('add-Flow-button')?.addEventListener('click', () => {
     console.log('Add button has been pressed!');
     const FlowContainer = document.getElementById('flow-container');
@@ -96,7 +103,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
             const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
             const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
             const questionContainers = document.querySelectorAll('.question-container');
-            const questions: any[] = Array.from(questionContainers).map((container: Element) => {
+            const questions: any[] = Array.from(questionContainers).map(async (container: Element) => {
                 const questionContainer = container as HTMLElement;
                 const questionInput = questionContainer.querySelector('.question-input') as HTMLInputElement;
                 const questionId = questionContainer.getAttribute('data-question-id');
@@ -114,22 +121,44 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                         description: input.value
                     };
                 });
+
+                const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
+                const formData = new FormData();
+
+                if (fileInput.files && fileInput.files.length > 0) {
+                    formData.append('file', fileInput.files[0]);
+                }
+
+                const response = await fetch('/api/files/uploadFile', {
+                    method: 'POST',
+                    body: formData
+
+                });
+
+                const fileResult = await response.json();
+                let questionImage = null;
+                if (fileResult && fileResult.url) {
+                    questionImage = fileResult.url;
+                }
                 return {
                     questionId: questionId,
                     questionText: questionInput.value,
-                    questionType:selectedQuestionType ,
-                    answerPossibilities: answerPossibilities
+                    questionType: selectedQuestionType,
+                    answerPossibilities: answerPossibilities,
+                    questionImage: questionImage
                 };
             }).filter(question => question !== null);
+
+            const resolvedQuestions = await Promise.all(questions);
 
             const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
             const flowLanguage = parseInt(flowLanguageSelect.value);
             if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
             const flowName = flowNameInput.value;
             const description = descriptionInput.value;
-            
+
             // Create a new flow instance
-            const newFlow = new Flow(description, flowName, flowType, flowLanguage,questions);
+            const newFlow = new Flow(description, flowName, flowType, flowLanguage, resolvedQuestions);
 
             const response = await fetch('/api/FlowCreation/AddFlowToSubtheme', {
                 method: 'POST',
@@ -141,7 +170,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                     FlowDescription: newFlow.flowDescription,
                     FlowType: newFlow.flowType,
                     SubthemeId: subthemeId,
-                    Questions: questions,
+                    Questions: resolvedQuestions,
                     Language: flowLanguage
                 })
             });
@@ -170,6 +199,22 @@ function addQuestionForm() {
     if (questionList) {
         const newQuestionContainer = document.createElement('div');
         newQuestionContainer.className = 'question-container';
+
+        const questionIndex = questionList.getElementsByClassName('question-container').length;
+
+        const imageInputLabel = document.createElement("label");
+        imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
+        imageInputLabel.textContent = "Flow image:";
+
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.className = "form-control";
+        imageInput.id = QuestionType + "File" + questionIndex;
+        imageInput.name = "file" + questionIndex;
+        imageInput.accept = ".jpg,.jpeg,.png";
+        imageInputLabel.appendChild(imageInput);
+
+        newQuestionContainer.appendChild(imageInputLabel);
 
         const newQuestionInput = document.createElement('input');
         newQuestionInput.type = 'text';
@@ -219,6 +264,7 @@ function addQuestionForm() {
         questionList.appendChild(newQuestionContainer);
     }
 }
+
 function addAnswerPossibility(questionContainer: HTMLElement): void {
     const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
