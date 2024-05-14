@@ -1,9 +1,16 @@
-const key1: string = "w";
-const key2: string = "a";
-const key3: string = "s";
-const key4: string = "d";
-const key5: string = "f";
-const keySubmit: string = " ";
+const key1U1: string = "w";
+const key2U1: string = "a";
+const key3U1: string = "s";
+const key4U1: string = "d";
+const key5U1: string = "f";
+const keySubmitU1: string = " ";
+
+const key1U2: string = "w";
+const key2U2: string = "a";
+const key3U2: string = "s";
+const key4U2: string = "d";
+const key5U2: string = "f";
+const keySubmitU2: string = " ";
 
 function addEventListenerToKeyPress(button: HTMLButtonElement, key: string) {
     if (button) {
@@ -37,26 +44,26 @@ function linkKeyPressesToButtons() {
     const slider = document.getElementById('myRange') as HTMLInputElement;
     
     if(slider) {
-        addEventListenerToKeyPressSlider(slider, key1, 0);
-        addEventListenerToKeyPressSlider(slider, key2, 1);
-        addEventListenerToKeyPressSlider(slider, key3, 2);
-        addEventListenerToKeyPressSlider(slider, key4, 3);
-        addEventListenerToKeyPressSlider(slider, key5, 4);
+        addEventListenerToKeyPressSlider(slider, key1U1, 0);
+        addEventListenerToKeyPressSlider(slider, key2U1, 1);
+        addEventListenerToKeyPressSlider(slider, key3U1, 2);
+        addEventListenerToKeyPressSlider(slider, key4U1, 3);
+        addEventListenerToKeyPressSlider(slider, key5U1, 4);
     } else {
-        addEventListenerToKeyPress(button1, key1);
-        addEventListenerToKeyPress(button2, key2);
-        addEventListenerToKeyPress(button3, key3);
-        addEventListenerToKeyPress(button4, key4);
-        addEventListenerToKeyPress(button5, key5);
+        addEventListenerToKeyPress(button1, key1U1);
+        addEventListenerToKeyPress(button2, key2U1);
+        addEventListenerToKeyPress(button3, key3U1);
+        addEventListenerToKeyPress(button4, key4U1);
+        addEventListenerToKeyPress(button5, key5U1);
     }
 
     if (!document.getElementById('circular-timer')) {
         if (submit1) {
-            addEventListenerToKeyPress(submit1, keySubmit)
+            addEventListenerToKeyPress(submit1, keySubmitU1)
         } else if (submit2) {
-            addEventListenerToKeyPress(submit2, keySubmit)
+            addEventListenerToKeyPress(submit2, keySubmitU1)
         } else if (submit3) {
-            addEventListenerToKeyPress(submit3, keySubmit)
+            addEventListenerToKeyPress(submit3, keySubmitU1)
         }
     }
 }
