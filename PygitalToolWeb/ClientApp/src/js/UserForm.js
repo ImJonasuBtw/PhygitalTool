@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const scriptElement = document.getElementById('Form-script');
             const UserId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-User-id');
             const newIdea = new Idea(description, title);
-            console.log(UserId);
+            if (!title || !description) {
+                alert('Vul beide velden titel en beschrijving in.');
+                return;
+            }
             const response = yield fetch('/api/ideas', {
                 method: 'POST',
                 headers: {
@@ -41,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else {
                 alert('Failed to add idea.');
             }
+            window.location.reload();
         }));
     }
     function hasCurrentUserLikedIdea(ideaId) {
@@ -96,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const currentLikes = parseInt(likesCountElement.textContent || '0');
                                 likesCountElement.textContent = (currentLikes + 1).toString();
                             }
-                            markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
+                            markIdeaAsLikedByCurrentUser(ideaId);
                         }
                         else {
                             console.error('Failed to like idea');
@@ -120,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             const ideaId = this.getAttribute('data-ideaId');
             const commentForm = document.getElementById('commentForm-' + ideaId);
-            if (commentForm) {
+            if (commentForm instanceof HTMLElement) {
                 commentForm.style.display = 'block';
             }
         });
@@ -136,6 +140,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const commentText = commentTextElement === null || commentTextElement === void 0 ? void 0 : commentTextElement.value;
                     const scriptElement = document.getElementById('Form-script');
                     const UserId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-User-id');
+                    if (!commentText) {
+                        alert('Vul een commentaar in.');
+                        return;
+                    }
                     try {
                         const response = yield fetch('/api/Comment', {
                             method: 'POST',

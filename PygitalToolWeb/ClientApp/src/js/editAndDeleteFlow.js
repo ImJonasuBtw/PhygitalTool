@@ -1,7 +1,14 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import bootstrap from "bootstrap";
-import { loadFlows, FlowTypeEnum, Language } from "./addFlow";
-import { QuestionType } from "../js/addQuestion";
-//To add a screen to remove a flow
+import { loadFlows, FlowTypeEnum, Language, QuestionType } from "./addFlow";
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal === null || confirmationModal === void 0 ? void 0 : confirmationModal.addEventListener('show.bs.modal', (event) => {
@@ -141,6 +148,26 @@ function showQuestionAndAnswerPossibilities(question, index, questionList) {
     questionInput.name = `question-${index}`;
     questionInput.className = 'question-input input-styling mb-3 col-md-10  mt-3 bold';
     questionContainer.appendChild(questionInput);
+    const imageInputLabel = document.createElement("label");
+    imageInputLabel.setAttribute("for", question.questionType + "File");
+    imageInputLabel.textContent = "Flow image:";
+    const imageInput = document.createElement("input");
+    imageInput.type = "file";
+    imageInput.className = "form-control";
+    imageInput.id = question.questionType + "File";
+    imageInput.name = "file";
+    imageInput.accept = ".jpg,.jpeg,.png";
+    imageInputLabel.appendChild(imageInput);
+    const existingImage = document.createElement("img");
+    existingImage.id = "existingImage";
+    existingImage.style.maxWidth = "200px";
+    existingImage.style.display = "none";
+    if (question.questionImage) {
+        existingImage.src = question.questionImage;
+        existingImage.style.display = "block";
+    }
+    questionContainer.appendChild(existingImage);
+    questionContainer.appendChild(imageInputLabel);
     deleteQuestionButton(questionContainer, question);
     const questionTypeSelect = document.createElement('select');
     questionTypeSelect.name = `question-type-${index}`;
@@ -217,61 +244,85 @@ function showEditFlowForm(flowId) {
         .catch(error => console.error('Failed to fetch flow details:', error));
 }
 function updateFlow(flowId) {
-    const flowNameInput = document.getElementById('flowName');
-    const informationInput = document.getElementById('description');
-    const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
-    const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
-    const questionContainers = document.querySelectorAll('.question-container');
-    const questions = Array.from(questionContainers).map((container) => {
-        const questionContainer = container;
-        const questionInput = questionContainer.querySelector('.question-input');
-        const questionId = questionContainer.getAttribute('data-question-id');
-        const questionTypeSelect = questionContainer.querySelector('select');
-        const selectedQuestionType = parseInt(questionTypeSelect.value);
-        if (questionInput.value.trim() === '') {
-            return null;
-        }
-        const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input');
-        const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
-        const answerPossibilities = Array.from(filteredAnswerPossibilities).map(input => {
-            const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
+    return __awaiter(this, void 0, void 0, function* () {
+        const flowNameInput = document.getElementById('flowName');
+        const informationInput = document.getElementById('description');
+        const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
+        const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
+        const questionContainers = document.querySelectorAll('.question-container');
+        const questions = yield Promise.all(Array.from(questionContainers).map((container) => __awaiter(this, void 0, void 0, function* () {
+            const questionContainer = container;
+            const questionInput = questionContainer.querySelector('.question-input');
+            const questionId = questionContainer.getAttribute('data-question-id');
+            const questionTypeSelect = questionContainer.querySelector('select');
+            const selectedQuestionType = parseInt(questionTypeSelect.value);
+            if (questionInput.value.trim() === '') {
+                return null;
+            }
+            const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input');
+            const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
+            const answerPossibilities = Array.from(filteredAnswerPossibilities).map(input => {
+                const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
+                return {
+                    answerPossibilityId: answerPossibilityId,
+                    description: input.value
+                };
+            });
+            const fileInput = questionContainer.querySelector('input[type="file"]');
+            let questionImage = null;
+            if (fileInput.files && fileInput.files.length > 0) {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                const fileResponse = yield fetch('/api/files/uploadFile', {
+                    method: 'POST',
+                    body: formData
+                });
+                const fileResult = yield fileResponse.json();
+                if (fileResult && fileResult.url) {
+                    questionImage = fileResult.url;
+                }
+            }
+            else {
+                const existingImage = questionContainer.querySelector('#existingImage');
+                if (existingImage) {
+                    questionImage = existingImage.src;
+                }
+            }
+            console.log('questionImage:', questionImage);
             return {
-                answerPossibilityId: answerPossibilityId,
-                description: input.value
+                questionId: questionId,
+                questionText: questionInput.value,
+                questionType: selectedQuestionType,
+                answerPossibilities: answerPossibilities,
+                questionImage: questionImage
             };
-        });
-        return {
-            questionId: questionId,
-            questionText: questionInput.value,
-            questionType: selectedQuestionType,
-            answerPossibilities: answerPossibilities
-        };
-    }).filter(question => question !== null);
-    fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            FlowName: flowNameInput.value,
-            FlowDescription: informationInput.value,
-            FlowType: flowType,
-            Questions: questions
+        })).filter(question => question !== null));
+        fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                FlowName: flowNameInput.value,
+                FlowDescription: informationInput.value,
+                FlowType: flowType,
+                Questions: questions
+            })
         })
-    })
-        .then(response => {
-        if (response.ok) {
-            console.log('Flow updated successfully');
-            loadFlows();
-        }
-        else {
-            console.error('Failed to update flow');
-            response.text().then(text => alert('Failed to update flow: ' + text));
-        }
-    })
-        .catch(error => {
-        console.error('Error updating flow:', error);
-        alert('Error updating flow: ' + error);
+            .then(response => {
+            if (response.ok) {
+                console.log('Flow updated successfully');
+                loadFlows();
+            }
+            else {
+                console.error('Failed to update flow');
+                response.text().then(text => alert('Failed to update flow: ' + text));
+            }
+        })
+            .catch(error => {
+            console.error('Error updating flow:', error);
+            alert('Error updating flow: ' + error);
+        });
     });
 }
 function deleteQuestion(questionId) {
@@ -305,6 +356,18 @@ function addQuestionForm() {
     if (questionList) {
         const newQuestionContainer = document.createElement('div');
         newQuestionContainer.className = 'question-container';
+        const questionIndex = questionList.getElementsByClassName('question-container').length;
+        const imageInputLabel = document.createElement("label");
+        imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
+        imageInputLabel.textContent = "Flow image:";
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.className = "form-control";
+        imageInput.id = QuestionType + "File" + questionIndex;
+        imageInput.name = "file" + questionIndex;
+        imageInput.accept = ".jpg,.jpeg,.png";
+        imageInputLabel.appendChild(imageInput);
+        newQuestionContainer.appendChild(imageInputLabel);
         const newQuestionInput = document.createElement('input');
         newQuestionInput.type = 'text';
         newQuestionInput.placeholder = 'Enter your question here';

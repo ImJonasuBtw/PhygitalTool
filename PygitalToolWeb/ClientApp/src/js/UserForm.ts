@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const UserId = scriptElement?.getAttribute('data-User-id');
 
             const newIdea = new Idea(description, title);
-            console.log(UserId)
+
+            if (!title || !description) {
+                alert('Vul beide velden titel en beschrijving in.');
+                return;
+            }
             const response = await fetch('/api/ideas', {
                 method: 'POST',
                 headers: {
@@ -37,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert('Failed to add idea.');
             }
+            window.location.reload();
         });
     }
     
@@ -92,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const currentLikes = parseInt(likesCountElement.textContent || '0');
                             likesCountElement.textContent = (currentLikes + 1).toString();
                         }
-                        markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
+                        markIdeaAsLikedByCurrentUser(ideaId);
                     } else {
                         console.error('Failed to like idea');
                     }
@@ -104,8 +109,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const commentButtons = document.querySelectorAll('.commentButton');
+
     commentButtons.forEach(button => {
-        button.addEventListener('click', function (this: HTMLElement) {
+        button.addEventListener('click', function (this: HTMLElement) { // Type-annotatie toegevoegd voor 'this'
             const isAuthenticated = document.getElementById('Form-script')?.getAttribute('data-is-authenticated');
 
             if (isAuthenticated === 'false') {
@@ -114,17 +120,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             const ideaId = this.getAttribute('data-ideaId');
             const commentForm = document.getElementById('commentForm-' + ideaId);
-            if (commentForm) {
+
+            if (commentForm instanceof HTMLElement) {
                 commentForm.style.display = 'block';
             }
         });
     });
 
+
     const addCommentButtons = document.querySelectorAll('.addCommentButton');
     addCommentButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
-          
-          
             const ideaIdString = this.getAttribute('data-ideaId');
             if (ideaIdString) {
                 const ideaId = parseInt(ideaIdString);
@@ -132,7 +138,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const commentText = commentTextElement?.value;
                 const scriptElement = document.getElementById('Form-script');
                 const UserId = scriptElement?.getAttribute('data-User-id');
-
+                if(!commentText){
+                    alert('Vul een commentaar in.');
+                    return;
+                }
                 try {
                     const response = await fetch('/api/Comment', {
                         method: 'POST',
@@ -148,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     if (response.ok) {
                         window.location.reload();
-                        
                     } else {
                         console.error('Failed to add comment');
                     }

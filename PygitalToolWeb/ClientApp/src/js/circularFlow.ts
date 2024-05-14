@@ -1,6 +1,6 @@
 // Length of the timer for each question in a circular flow
 const timerLength: number = 5;
-
+const progressBar = document.querySelector('.progress-bar') as HTMLElement;
 // Timer that clicks the submit button when time runs out
 function timer(): void {
     let button: HTMLElement | null;
@@ -38,6 +38,12 @@ function setTimerText(): void {
         const countdown = setInterval(() => {
             timeLeft--;
             timerElement.textContent = timeLeft.toString();
+
+            // Update progress bar width based on time left
+            const progressWidth = (timerLength - timeLeft) / timerLength * 100;
+            if (progressBar) {
+                progressBar.style.width = progressWidth + "%";
+            }
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);

@@ -6,6 +6,10 @@
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Login/loginStyles.scss ***!
   \**********************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
+/*!************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss ***!
+  \************************************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./node_modules/bootstrap/dist/css/bootstrap.css ***!
   \****************************************************************************************************************************************/
@@ -20943,11 +20947,6 @@ body {
   text-align: center;
   height: 100%;
 }
-.questionContainer .img-responsive {
-  width: 720px;
-  height: 405px;
-  object-fit: cover;
-}
 .questionContainer form {
   border-radius: 10px;
   margin-bottom: 1rem;
@@ -21090,6 +21089,10 @@ body {
   .questionContainer {
     margin-left: 0;
   }
+}
+
+.timer-container {
+  display: none;
 }
 
 body:has(.container-question-view) {
@@ -21302,6 +21305,81 @@ body:has(.login-container) {
 }
 .background-contract-form .text-danger {
   color: red;
+}
+/*!****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss (1) ***!
+  \****************************************************************************************************************************************************/
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.idea_card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.ideas_title {
+  text-align: center;
+}
+
+.first_letter_name {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  display: inline-block;
+  margin-right: 10px;
+  background-color: #fb7ab8;
+}
+
+.row {
+  margin-left: 0;
+}
+
+.row > * {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.username {
+  color: #5C5C5C;
+}
+
+.idea_card {
+  position: relative;
+}
+
+.like-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.bi {
+  margin-left: 5px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+div[class^=comments-container-] {
+  background-color: #e5e5e5;
+  border-radius: 10px;
+}
+
+.center {
+  text-align: center;
 }
 
 /*# sourceMappingURL=site.css.map*/
