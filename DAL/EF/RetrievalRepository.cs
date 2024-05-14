@@ -374,6 +374,16 @@ public class RetrievalRepository : IRepositoryRetrieval
        return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
     }
 
+    public IEnumerable<Manager> ReadManagers()
+    {
+        return _context.Managers.ToList();
+    }
+
+    public IEnumerable<BackOffice> readBackoffices()
+    {
+        return _context.BackOffices.ToList();
+    }
+
     public AdminPlatform ReadAdminPlatform()
     {
         return _context.AdminPlatforms

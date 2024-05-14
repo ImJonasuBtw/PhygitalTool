@@ -18,4 +18,9 @@ public class AdminPlatformManager: IAdminPlatformManager
     {
         return _retrieval.ReadAdminPlatform();
     }
+
+    public IEnumerable<BackOffice> getBackoffices()
+    {
+        return _retrieval.readBackoffices();
+    }
 }
