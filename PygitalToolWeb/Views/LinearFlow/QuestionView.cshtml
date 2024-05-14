@@ -17,10 +17,15 @@
             }
 
             <img class="qr-code pt-3" src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code" style="width:500px; height:500px;"/>
+
+
         </div>
         <div class="questionContainer col-md-10 p-4">
 
             <h1>@Model.QuestionText</h1>
+
+            <img src="@Model.QuestionImage" alt="flowImage.png" class="img-responsive">
+
 
             @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Linear)
             {

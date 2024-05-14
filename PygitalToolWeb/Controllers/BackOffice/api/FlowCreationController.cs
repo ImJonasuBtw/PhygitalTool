@@ -50,6 +50,7 @@ public class FlowCreationController : ControllerBase
                 {
                     QuestionText = questionModel.QuestionText,
                     QuestionType = questionModel.QuestionType,
+                    QuestionImage = questionModel.QuestionImage,
                     FlowId = newFlow.FlowId,
                 };
                 Question newQuestion = _projectManager.AddQuestion(domainQuestion);
@@ -111,6 +112,7 @@ public class FlowCreationController : ControllerBase
                 QuestionId = q.QuestionId,
                 QuestionText = q.QuestionText,
                 QuestionType = q.QuestionType,
+                QuestionImage = q.QuestionImage,
 
                 AnswerPossibilities = q.AnswerPossibilities.Select(ap => new AnswerPossibilityModel
                 {
@@ -162,6 +164,7 @@ public class FlowCreationController : ControllerBase
             existingFlow.FlowDescription = flowModel.FlowDescription;
             existingFlow.FlowType = flowModel.FlowType;
             existingFlow.Language = flowModel.Language;
+            
 
             var newQuestions =
                 flowModel.Questions.Where(q => !existingFlow.Questions.Any(eq => eq.QuestionId == q.QuestionId));
@@ -174,6 +177,7 @@ public class FlowCreationController : ControllerBase
                 {
                     QuestionText = newQuestion.QuestionText,
                     QuestionType = newQuestion.QuestionType,
+                    QuestionImage = newQuestion.QuestionImage,
                     FlowId = FlowId
                 };
                 _projectManager.AddQuestion(domainQuestion);
@@ -199,6 +203,7 @@ public class FlowCreationController : ControllerBase
                 if (updatedQuestion != null)
                 {
                     existingQuestion.QuestionText = updatedQuestion.QuestionText;
+                    existingQuestion.QuestionImage = updatedQuestion.QuestionImage;
                     existingQuestion.QuestionType = updatedQuestion.QuestionType;
                     _projectManager.UpdateQuestion(existingQuestion);
 

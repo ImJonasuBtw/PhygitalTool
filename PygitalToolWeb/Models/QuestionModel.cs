@@ -6,6 +6,7 @@ public class QuestionModel
 {
     public int QuestionId { get; set; }
     public string QuestionText { get; set; }
+    public string QuestionImage { get; set; }
     public QuestionType QuestionType { get; set; } 
     public ICollection<AnswerPossibilityModel> AnswerPossibilities { get; set; }
     public int FlowId { get; set; }

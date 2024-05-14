@@ -9,6 +9,8 @@ public class Question
     // Prop
     public int QuestionId { get; set; }
     public string QuestionText { get; set; }
+    
+    public string QuestionImage { get; set; }
     public QuestionType QuestionType { get; set; }
     //foreing key for flow
     public int FlowId { get; set; }
