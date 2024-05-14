@@ -7501,6 +7501,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss":
+/*!***************************************************************!*\
+  !*** ./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/css/Frontend/Login/loginStyles.scss":
 /*!*************************************************!*\
   !*** ./src/css/Frontend/Login/loginStyles.scss ***!
@@ -7541,11 +7553,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _css_Frontend_Flow_frontendFlowStyles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../css/Frontend/Flow/frontendFlowStyles.scss */ "./src/css/Frontend/Flow/frontendFlowStyles.scss");
 /* harmony import */ var _css_Frontend_Login_loginStyles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../css/Frontend/Login/loginStyles.scss */ "./src/css/Frontend/Login/loginStyles.scss");
 /* harmony import */ var _css_Frontend_ContactForm_contactFormStyles_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../css/Frontend/ContactForm/contactFormStyles.scss */ "./src/css/Frontend/ContactForm/contactFormStyles.scss");
+/* harmony import */ var _css_Frontend_IdeaPlatform_ideaPlatformStyles_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../css/Frontend/IdeaPlatform/ideaPlatformStyles.scss */ "./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss");
 
 
 
 
 // Custom CSS imports
+
 
 
 
