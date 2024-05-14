@@ -1,16 +1,15 @@
-"use strict";
-const key1U1 = "w";
-const key2U1 = "a";
-const key3U1 = "s";
-const key4U1 = "d";
-const key5U1 = "f";
-const keySubmitU1 = " ";
-const key1U2 = "w";
-const key2U2 = "a";
-const key3U2 = "s";
-const key4U2 = "d";
-const key5U2 = "f";
-const keySubmitU2 = " ";
+var key1U1 = "w";
+var key2U1 = "a";
+var key3U1 = "s";
+var key4U1 = "d";
+var key5U1 = "f";
+var keySubmitU1 = " ";
+var key1U2 = "w";
+var key2U2 = "a";
+var key3U2 = "s";
+var key4U2 = "d";
+var key5U2 = "f";
+var keySubmitU2 = " ";
 function addEventListenerToKeyPress(button, key) {
     if (button) {
         document.addEventListener('keydown', (event) => {
@@ -40,28 +39,28 @@ function linkKeyPressesToButtons() {
     const submit3 = document.getElementById('submitButtonCircular');
     const slider = document.getElementById('myRange');
     if (slider) {
-        addEventListenerToKeyPressSlider(slider, key1U1, 0);
-        addEventListenerToKeyPressSlider(slider, key2U1, 1);
-        addEventListenerToKeyPressSlider(slider, key3U1, 2);
-        addEventListenerToKeyPressSlider(slider, key4U1, 3);
-        addEventListenerToKeyPressSlider(slider, key5U1, 4);
+        addEventListenerToKeyPressSlider(slider, key1, 0);
+        addEventListenerToKeyPressSlider(slider, key2, 1);
+        addEventListenerToKeyPressSlider(slider, key3, 2);
+        addEventListenerToKeyPressSlider(slider, key4, 3);
+        addEventListenerToKeyPressSlider(slider, key5, 4);
     }
     else {
-        addEventListenerToKeyPress(button1, key1U1);
-        addEventListenerToKeyPress(button2, key2U1);
-        addEventListenerToKeyPress(button3, key3U1);
-        addEventListenerToKeyPress(button4, key4U1);
-        addEventListenerToKeyPress(button5, key5U1);
+        addEventListenerToKeyPress(button1, key1);
+        addEventListenerToKeyPress(button2, key2);
+        addEventListenerToKeyPress(button3, key3);
+        addEventListenerToKeyPress(button4, key4);
+        addEventListenerToKeyPress(button5, key5);
     }
     if (!document.getElementById('circular-timer')) {
         if (submit1) {
-            addEventListenerToKeyPress(submit1, keySubmitU1);
+            addEventListenerToKeyPress(submit1, keySubmit);
         }
         else if (submit2) {
-            addEventListenerToKeyPress(submit2, keySubmitU1);
+            addEventListenerToKeyPress(submit2, keySubmit);
         }
         else if (submit3) {
-            addEventListenerToKeyPress(submit3, keySubmitU1);
+            addEventListenerToKeyPress(submit3, keySubmit);
         }
     }
 }

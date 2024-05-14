@@ -1,8 +1,7 @@
 import bootstrap from "bootstrap";
-import {loadFlows, Flow, FlowTypeEnum, Language} from "./addFlow";
-import { QuestionType} from "../js/addQuestion"
+import {loadFlows, Flow, FlowTypeEnum, Language, QuestionType} from "./addFlow";
 
-//To add a screen to remove a flow
+
 document.addEventListener('DOMContentLoaded', () => {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
@@ -149,6 +148,34 @@ function showQuestionAndAnswerPossibilities(question:any, index: any, questionLi
     questionInput.name = `question-${index}`;
     questionInput.className = 'question-input input-styling mb-3 col-md-10  mt-3 bold';
     questionContainer.appendChild(questionInput);
+
+    const imageInputLabel = document.createElement("label");
+    imageInputLabel.setAttribute("for", question.questionType + "File");
+    imageInputLabel.textContent = "Flow image:";
+
+    const imageInput = document.createElement("input");
+    imageInput.type = "file";
+    imageInput.className = "form-control";
+    imageInput.id = question.questionType + "File";
+    imageInput.name = "file";
+    imageInput.accept = ".jpg,.jpeg,.png";
+    imageInputLabel.appendChild(imageInput);
+
+
+    const existingImage = document.createElement("img");
+    existingImage.id = "existingImage";
+    existingImage.style.maxWidth = "200px";
+    existingImage.style.display = "none"; 
+
+
+    if (question.questionImage) {
+        existingImage.src = question.questionImage;
+        existingImage.style.display = "block";
+    }
+    questionContainer.appendChild(existingImage);
+    questionContainer.appendChild(imageInputLabel);
+ 
+    
     deleteQuestionButton(questionContainer,question);
 
     const questionTypeSelect = document.createElement('select');
@@ -233,13 +260,14 @@ function showEditFlowForm(flowId: number): void {
 }
 
 
-function updateFlow(flowId: number): void {
+async function updateFlow(flowId: number): Promise<void> {
     const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
     const informationInput = document.getElementById('description') as HTMLTextAreaElement;
     const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
     const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
     const questionContainers = document.querySelectorAll('.question-container');
-    const questions: any[] = Array.from(questionContainers).map((container: Element) => {
+
+    const questions: any[] = await Promise.all(Array.from(questionContainers).map(async (container: Element) => {
         const questionContainer = container as HTMLElement;
         const questionInput = questionContainer.querySelector('.question-input') as HTMLInputElement;
         const questionId = questionContainer.getAttribute('data-question-id');
@@ -257,13 +285,38 @@ function updateFlow(flowId: number): void {
                 description: input.value
             };
         });
+        
+        const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
+        let questionImage = null;
+
+        if (fileInput.files && fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            const fileResponse = await fetch('/api/files/uploadFile', {
+                method: 'POST',
+                body: formData
+            });
+            const fileResult = await fileResponse.json();
+            if (fileResult && fileResult.url) {
+                questionImage = fileResult.url;
+            }
+        } else {
+            const existingImage = questionContainer.querySelector('#existingImage') as HTMLImageElement;
+            if (existingImage) {
+                questionImage = existingImage.src;
+            }
+        }
+        console.log('questionImage:', questionImage);
+
         return {
             questionId: questionId,
             questionText: questionInput.value,
-            questionType:selectedQuestionType ,
-            answerPossibilities: answerPossibilities
+            questionType: selectedQuestionType,
+            answerPossibilities: answerPossibilities,
+            questionImage: questionImage
         };
-    }).filter(question => question !== null);
+    }).filter(question => question !== null));
 
     fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
         method: 'PUT',
@@ -322,6 +375,22 @@ function addQuestionForm() {
     if (questionList) {
         const newQuestionContainer = document.createElement('div');
         newQuestionContainer.className = 'question-container';
+
+        const questionIndex = questionList.getElementsByClassName('question-container').length;
+
+        const imageInputLabel = document.createElement("label");
+        imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
+        imageInputLabel.textContent = "Flow image:";
+
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.className = "form-control";
+        imageInput.id = QuestionType + "File" + questionIndex;
+        imageInput.name = "file" + questionIndex;
+        imageInput.accept = ".jpg,.jpeg,.png";
+        imageInputLabel.appendChild(imageInput);
+
+        newQuestionContainer.appendChild(imageInputLabel);
 
         const newQuestionInput = document.createElement('input');
         newQuestionInput.type = 'text';

@@ -283,7 +283,7 @@ public static class DataSeeder
         var answerPossibility3 = new AnswerPossibility("onderwijs & kinderopvang", 3);
         var answerPossibility4 = new AnswerPossibility("huisvesting");
         var answerPossibility5 = new AnswerPossibility("gezondheidszorg & welzijn");
-        var answerPossibility6 = new AnswerPossibility("Ondersteunen van lokale handel");
+        //var answerPossibility6 = new AnswerPossibility("Ondersteunen van lokale handel");
         var answerPossibility7 = new AnswerPossibility("Meer lessen op school rond de partijprogramma’s");
         var answerPossibility8 =
             new AnswerPossibility("Activiteiten in mijn jeugdclub, sportclub… rond de verkiezingen");
@@ -304,7 +304,7 @@ public static class DataSeeder
         var answerPossibility19 = new AnswerPossibility("Werkgelegenheid");
         var answerPossibility20 = new AnswerPossibility("Sociale Voorzieningen");
         var answerPossibility21 = new AnswerPossibility("Economische Ontwikkeling");
-        var answerPossibility22 = new AnswerPossibility("Ondersteuning van Kwetsbare Groepen");
+        //var answerPossibility22 = new AnswerPossibility("Ondersteuning van Kwetsbare Groepen");
         var answerPossibility23 = new AnswerPossibility("Duurzaamheid en Milieu");
         var answerPossibility24 = new AnswerPossibility("Onderwijs en Kinderopvang");
         var answerPossibility25 = new AnswerPossibility("Veiligheid en Openbare Orde");
@@ -335,7 +335,7 @@ public static class DataSeeder
         singleChoice1.AnswerPossibilities.Add(answerPossibility3);
         singleChoice1.AnswerPossibilities.Add(answerPossibility4);
         singleChoice1.AnswerPossibilities.Add(answerPossibility5);
-        singleChoice1.AnswerPossibilities.Add(answerPossibility6);
+        //singleChoice1.AnswerPossibilities.Add(answerPossibility6);
         multipleChoice1.AnswerPossibilities.Add(answerPossibility7);
         multipleChoice1.AnswerPossibilities.Add(answerPossibility8);
         multipleChoice1.AnswerPossibilities.Add(answerPossibility9);
@@ -353,7 +353,7 @@ public static class DataSeeder
         singleChoice2.AnswerPossibilities.Add(answerPossibility19);
         singleChoice2.AnswerPossibilities.Add(answerPossibility20);
         singleChoice2.AnswerPossibilities.Add(answerPossibility21);
-        singleChoice2.AnswerPossibilities.Add(answerPossibility22);
+        //singleChoice2.AnswerPossibilities.Add(answerPossibility22);
         multipleChoice2.AnswerPossibilities.Add(answerPossibility23);
         multipleChoice2.AnswerPossibilities.Add(answerPossibility24);
         multipleChoice2.AnswerPossibilities.Add(answerPossibility25);
@@ -431,7 +431,7 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility3);
         context.AnswerPossibilities.Add(answerPossibility4);
         context.AnswerPossibilities.Add(answerPossibility5);
-        context.AnswerPossibilities.Add(answerPossibility6);
+        //context.AnswerPossibilities.Add(answerPossibility6);
         context.AnswerPossibilities.Add(answerPossibility7);
         context.AnswerPossibilities.Add(answerPossibility8);
         context.AnswerPossibilities.Add(answerPossibility9);
@@ -448,7 +448,7 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility19);
         context.AnswerPossibilities.Add(answerPossibility20);
         context.AnswerPossibilities.Add(answerPossibility21);
-        context.AnswerPossibilities.Add(answerPossibility22);
+        //context.AnswerPossibilities.Add(answerPossibility22);
         context.AnswerPossibilities.Add(answerPossibility23);
         context.AnswerPossibilities.Add(answerPossibility24);
         context.AnswerPossibilities.Add(answerPossibility25);
