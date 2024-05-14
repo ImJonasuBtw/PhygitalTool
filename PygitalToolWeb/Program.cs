@@ -24,6 +24,8 @@ builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<CloudStorageService>();
+builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
+
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>

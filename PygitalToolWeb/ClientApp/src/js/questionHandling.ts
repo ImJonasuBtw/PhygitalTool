@@ -79,12 +79,15 @@ function configureSubmitButton(): void {
 
 // Since the circular flow works with a timer, it's answer possibilities can't make it go to the next question immediately.
 // Uses the logic of the muliple choice question, but slightly altered so that it can only select one.
-function configureSubmitButtonSingleChoiceCircular(): void {
-    const submitButton: HTMLElement | null = document.getElementById('submitButtonCircular');
+function configureSubmitButtonSingleChoice(): void {
+    const submitButton: HTMLElement | null = document.getElementById('submitButtonSingleChoice');
+    if(submitButton) {
+        console.log("woop woop")
+    }
     submitButton?.addEventListener('click', function (): void {
         let selectedAnswer: string = "no answer";
 
-        const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonCircular')
+        const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonSingleChoice')
         answerButtons.forEach(button => {
             if (button.classList.contains('selected')) {
                 const value = button.getAttribute('value');
@@ -98,14 +101,14 @@ function configureSubmitButtonSingleChoiceCircular(): void {
         hiddenInput.type = 'hidden';
         hiddenInput.name = 'selectedAnswer';
         hiddenInput.value = selectedAnswer;
-        document.getElementById('answersFormCircular')?.appendChild(hiddenInput);
-        (document.getElementById('answersFormCircular') as HTMLFormElement)?.submit();
+        document.querySelector('.answersFormSingleChoice')?.appendChild(hiddenInput);
+        (document.querySelector('.answersFormSingleChoice') as HTMLFormElement)?.submit();
     });
 }
 
 // Configures the answer buttons for a single choice question in a circular flow to deselect when another is pressed.
-function configureAnswerButtonsSingleChoiceCircular(): void {
-    const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonCircular');
+function configureAnswerButtonsSingleChoice(): void {
+    const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonSingleChoice');
     answerButtons.forEach(button => {
         button.addEventListener('click', function (): void {
             answerButtons.forEach(button => {
@@ -122,9 +125,9 @@ function configureAnswerButtonsSingleChoiceCircular(): void {
 // Initialize configurations
 document.addEventListener('DOMContentLoaded', () => {
     configureAnswerButtons();
-    configureAnswerButtonsSingleChoiceCircular();
+    configureAnswerButtonsSingleChoice();
     configureSubmitButton();
-    configureSubmitButtonSingleChoiceCircular();
+    configureSubmitButtonSingleChoice();
     configureSlider();
 });
 
