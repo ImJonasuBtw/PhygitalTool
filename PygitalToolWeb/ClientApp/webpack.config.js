@@ -22,7 +22,8 @@ module.exports = {
         projectEditAndDelete:'./src/js/ProjectEditAndDelete',
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
         themeEditAndDelete:'./src/js/themeEditAndDelete',
-        Userform: './src/js/UserForm'
+        Userform: './src/js/UserForm',
+        managers: './src/js/Managers'
     },
     output: {
         filename: '[name].entry.js',

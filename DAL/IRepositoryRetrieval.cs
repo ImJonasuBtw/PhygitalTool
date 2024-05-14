@@ -50,4 +50,7 @@ public interface IRepositoryRetrieval
     IdentityUser getUser(string userId);
     void updateLikeIdea(Idea idea);
     Idea getIdea(int id);
+    IEnumerable<Manager> ReadManagers();
+    IEnumerable<BackOffice> readBackoffices();
+    
 }

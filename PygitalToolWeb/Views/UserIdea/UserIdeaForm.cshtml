@@ -1,39 +1,40 @@
 @using System.Security.Claims
-@using Microsoft.AspNetCore.Identity
+
 @model  IEnumerable<PhygitalTool.Domain.FlowPackage.Idea>
 @{
     ViewBag.Title = "UserPlatform";
     Layout = "_Layout";
 }
-<h1>User Ideas</h1>
+
+<h1 >User Ideas</h1>
 @foreach (var idea in Model)
 {
-    <div>
+    <div >
         <h8>@idea.Title</h8>
         <p>@idea.Description</p>
-        <p>@idea.User.UserName</p>
+        <p>Posted by: @idea.User.UserName</p>
         <p>Likes: <span id="likesCount-@idea.IdeaId">@idea.Likes</span></p>
         <button class="likeButton" data-ideaId="@idea.IdeaId">Like</button>
-        <div>
+
+        <div class="comment-section">
             @foreach (var comment in idea.Comments)
             {
                 <p>@comment.Description</p>
-                <p>@comment.User</p>
+                <p> by : @comment.User</p>
             }
         </div>
+
+        <button class="commentButton" data-ideaId="@idea.IdeaId">Comment</button>
+        <div id="commentForm-@idea.IdeaId" style="display:none;">
+            <input type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" />
+            <button class="addCommentButton" data-ideaId="@idea.IdeaId">Add Comment</button>
+        </div>
     </div>
-    <div>
-            <button class="commentButton" data-ideaId="@idea.IdeaId">Comment</button>
-    <div id="commentForm-@idea.IdeaId" style="display:none;">
-        <input type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" />
-        <button class="addCommentButton" data-ideaId="@idea.IdeaId">Add Comment</button>
-    </div>
-    </div>
-   
 }
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 {
-    <div>
+    <div class="idea-card">
         <h2>Create New Idea</h2>
         <form id="createIdeaForm">
             <input type="text" id="newIdeaTitle" placeholder="Title" />
@@ -42,6 +43,7 @@
         </form>
     </div>
 }
+
 @section Scripts {
     <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
 }

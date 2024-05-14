@@ -51,4 +51,9 @@ public class UserManager : IUserManager
     {
         return _repositoryRetrieval.getIdea(id);
     }
+
+    public IEnumerable<Manager> getManagers()
+    {
+        return _repositoryRetrieval.ReadManagers();
+    }
 }
