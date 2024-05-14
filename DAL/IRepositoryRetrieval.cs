@@ -45,6 +45,7 @@ public interface IRepositoryRetrieval
     public void UpdateMainTheme(MainTheme mainTheme);
     IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId);
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int Flowid);
+    public AdminPlatform ReadAdminPlatform();
     IEnumerable<Idea> readAllIdeas();
     IdentityUser getUser(string userId);
     void updateLikeIdea(Idea idea);
