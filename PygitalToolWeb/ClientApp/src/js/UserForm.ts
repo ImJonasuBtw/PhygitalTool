@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', async () => {
             const title = (document.getElementById('newIdeaTitle') as HTMLInputElement).value;
             const description = (document.getElementById('newIdeaDescription') as HTMLInputElement).value;
-            const scriptElement = document.getElementById('Form-script');
-            const UserId = scriptElement?.getAttribute('data-User-id');
+            
+            const scriptElement = document.getElementById('UserPlatform-script');
+            const UserId = scriptElement?.dataset.userId;
+
 
             const newIdea = new Idea(description, title);
             console.log(UserId)
@@ -130,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const ideaId = parseInt(ideaIdString);
                 const commentTextElement = document.getElementById('commentText-' + ideaId) as HTMLInputElement | null;
                 const commentText = commentTextElement?.value;
-                const scriptElement = document.getElementById('Form-script');
-                const UserId = scriptElement?.getAttribute('data-User-id');
+                const scriptElement = document.getElementById('UserPlatform-script');
+                const UserId = scriptElement?.dataset.userId;
 
                 try {
                     const response = await fetch('/api/Comment', {

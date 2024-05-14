@@ -32,8 +32,8 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
             </form>
         `;
 
-        const scriptElement = document.getElementById('project-script');
-        const backOfficeId = scriptElement?.getAttribute('data-backoffice-id');
+        const scriptElement = document.getElementById('backOfficeHomePage-script');
+        const backOfficeId = scriptElement?.dataset.backofficeId;
 
         document.getElementById('cancel-button')?.addEventListener('click', loadProjects);
         document.getElementById('new-project-form')?.addEventListener('submit', async function (event) {

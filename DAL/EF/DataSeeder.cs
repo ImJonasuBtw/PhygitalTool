@@ -9,6 +9,12 @@ namespace PhygitalTool.DAL.EF;
 
 public static class DataSeeder
 {
+    
+    const string Manager = "Manager";
+    const string Supervisor = "Supervisor";
+    const string Admin = "Admin";
+    const string User = "user";
+    
     public static void Seed(PhygitalToolDbContext context, UserManager<IdentityUser> userManager)
     {
         var adminPlatform1 = new AdminPlatform(1);
@@ -28,11 +34,7 @@ public static class DataSeeder
         context.Comments.Add(comment1);
         idea1.Comments.Add(comment1);
         context.SaveChanges();
-
-        const string manager = "Manager";
-        const string supervisor = "Supervisor";
-        const string admin = "Admin";
-        const string user = "user";
+        
         
         
         // Managers
@@ -49,7 +51,7 @@ public static class DataSeeder
             };
 
             var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; 
-            userManager.AddToRoleAsync(manager1, manager).Wait();
+            userManager.AddToRoleAsync(manager1, Manager).Wait();
             if (!creationResult.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy manager.");
@@ -68,7 +70,7 @@ public static class DataSeeder
             };
 
             var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
-            userManager.AddToRoleAsync(manager1, manager).Wait();
+            userManager.AddToRoleAsync(manager1, Manager).Wait();
             if (!creationResult.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy manager.");
@@ -88,7 +90,7 @@ public static class DataSeeder
             };
 
             var creationResult1 = userManager.CreateAsync(supervisor1, "Test23!").Result;
-            userManager.AddToRoleAsync(supervisor1, supervisor).Wait();
+            userManager.AddToRoleAsync(supervisor1, Supervisor).Wait();
             if (!creationResult1.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy supervisor.");
@@ -107,7 +109,7 @@ public static class DataSeeder
             };
 
             var creationResult2 = userManager.CreateAsync(admin1, "Test23!").Result;
-            userManager.AddToRoleAsync(admin1, admin).Wait();
+            userManager.AddToRoleAsync(admin1, Admin).Wait();
             if (!creationResult2.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy admin1.");
@@ -127,7 +129,7 @@ public static class DataSeeder
             };
            
             var creationResult3 = userManager.CreateAsync(user1, "Test23!").Result;
-            userManager.AddToRoleAsync(user1, user).Wait();
+            userManager.AddToRoleAsync(user1, User).Wait();
             if (!creationResult3.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy user1.");
@@ -150,7 +152,7 @@ public static class DataSeeder
             };
             
             var creationResult4 = userManager.CreateAsync(user2, "Test23!").Result;
-            userManager.AddToRoleAsync(user2, user).Wait();
+            userManager.AddToRoleAsync(user2, User).Wait();
             if (!creationResult4.Succeeded)
             {
                 throw new System.Exception("Failed to create dummy user.");
@@ -481,17 +483,13 @@ public static class DataSeeder
     
     public static void RoleCreation(RoleManager<IdentityRole> roleManager)
     {
-        const string manager = "Manager";
-        roleManager.CreateAsync(new IdentityRole(manager)).Wait();
-    
-        const string supervisor = "Supervisor";
-        roleManager.CreateAsync(new IdentityRole(supervisor)).Wait();
-    
-        const string admin = "Admin";
-        roleManager.CreateAsync(new IdentityRole(admin)).Wait();
-
-        const string user = "User";
-        roleManager.CreateAsync(new IdentityRole(user)).Wait();
+        roleManager.CreateAsync(new IdentityRole(Manager)).Wait();
+        
+        roleManager.CreateAsync(new IdentityRole(Supervisor)).Wait();
+        
+        roleManager.CreateAsync(new IdentityRole(Admin)).Wait();
+        
+        roleManager.CreateAsync(new IdentityRole(User)).Wait();
     }
 }
 

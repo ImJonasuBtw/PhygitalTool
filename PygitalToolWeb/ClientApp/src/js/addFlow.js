@@ -8,7 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var _a;
-import { QuestionType } from "../js/addQuestion";
+export var QuestionType;
+(function (QuestionType) {
+    QuestionType[QuestionType["SingleChoice"] = 0] = "SingleChoice";
+    QuestionType[QuestionType["MultipleChoice"] = 1] = "MultipleChoice";
+    QuestionType[QuestionType["Range"] = 2] = "Range";
+    QuestionType[QuestionType["Open"] = 3] = "Open";
+})(QuestionType || (QuestionType = {}));
 export const FlowTypeEnum = {
     Circular: 0,
     Linear: 1
@@ -87,7 +93,7 @@ function ShowForm(FlowContainer) {
                 const flowTypeRadio = document.querySelector('input[name="flowType"]:checked');
                 const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
                 const questionContainers = document.querySelectorAll('.question-container');
-                const questions = Array.from(questionContainers).map((container) => {
+                const questions = Array.from(questionContainers).map((container) => __awaiter(this, void 0, void 0, function* () {
                     const questionContainer = container;
                     const questionInput = questionContainer.querySelector('.question-input');
                     const questionId = questionContainer.getAttribute('data-question-id');
@@ -105,13 +111,29 @@ function ShowForm(FlowContainer) {
                             description: input.value
                         };
                     });
+                    const fileInput = questionContainer.querySelector('input[type="file"]');
+                    const formData = new FormData();
+                    if (fileInput.files && fileInput.files.length > 0) {
+                        formData.append('file', fileInput.files[0]);
+                    }
+                    const response = yield fetch('/api/files/uploadFile', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const fileResult = yield response.json();
+                    let questionImage = null;
+                    if (fileResult && fileResult.url) {
+                        questionImage = fileResult.url;
+                    }
                     return {
                         questionId: questionId,
                         questionText: questionInput.value,
                         questionType: selectedQuestionType,
-                        answerPossibilities: answerPossibilities
+                        answerPossibilities: answerPossibilities,
+                        questionImage: questionImage
                     };
-                }).filter(question => question !== null);
+                })).filter(question => question !== null);
+                const resolvedQuestions = yield Promise.all(questions);
                 const flowLanguageSelect = document.getElementById('flowLanguage');
                 const flowLanguage = parseInt(flowLanguageSelect.value);
                 if (!flowNameInput || !descriptionInput || !flowTypeRadio)
@@ -119,7 +141,7 @@ function ShowForm(FlowContainer) {
                 const flowName = flowNameInput.value;
                 const description = descriptionInput.value;
                 // Create a new flow instance
-                const newFlow = new Flow(description, flowName, flowType, flowLanguage, questions);
+                const newFlow = new Flow(description, flowName, flowType, flowLanguage, resolvedQuestions);
                 const response = yield fetch('/api/FlowCreation/AddFlowToSubtheme', {
                     method: 'POST',
                     headers: {
@@ -130,7 +152,7 @@ function ShowForm(FlowContainer) {
                         FlowDescription: newFlow.flowDescription,
                         FlowType: newFlow.flowType,
                         SubthemeId: subthemeId,
-                        Questions: questions,
+                        Questions: resolvedQuestions,
                         Language: flowLanguage
                     })
                 });
@@ -162,6 +184,18 @@ function addQuestionForm() {
     if (questionList) {
         const newQuestionContainer = document.createElement('div');
         newQuestionContainer.className = 'question-container';
+        const questionIndex = questionList.getElementsByClassName('question-container').length;
+        const imageInputLabel = document.createElement("label");
+        imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
+        imageInputLabel.textContent = "Flow image:";
+        const imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.className = "form-control";
+        imageInput.id = QuestionType + "File" + questionIndex;
+        imageInput.name = "file" + questionIndex;
+        imageInput.accept = ".jpg,.jpeg,.png";
+        imageInputLabel.appendChild(imageInput);
+        newQuestionContainer.appendChild(imageInputLabel);
         const newQuestionInput = document.createElement('input');
         newQuestionInput.type = 'text';
         newQuestionInput.placeholder = 'Enter your question here';

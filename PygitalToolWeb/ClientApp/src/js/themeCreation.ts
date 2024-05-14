@@ -31,8 +31,8 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
             </form>
         `;
 
-        const scriptElement = document.getElementById('theme-script');
-        const projectId = scriptElement?.getAttribute('data-project-id');
+        const scriptElement = document.getElementById('mainThemePage-script');
+        const projectId = scriptElement?.dataset.projectId;
 
         document.getElementById('cancel-button')?.addEventListener('click', loadMainThemes);
         document.getElementById('new-theme-form')?.addEventListener('submit', async function(event) {

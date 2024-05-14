@@ -1,6 +1,6 @@
 "use strict";
 // Length of the timer for each question in a circular flow
-const timerLength = 5;
+const timerLength = 15;
 // Timer that clicks the submit button when time runs out
 function timer() {
     let button;
