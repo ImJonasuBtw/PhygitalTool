@@ -21,6 +21,8 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Project> Projects { get; set; }
     public DbSet<BackOffice> BackOffices { get; set; }
     public DbSet<Manager> Managers { get; set; }
+    public DbSet<Admin> Admins { get; set; }
+    public DbSet<AdminPlatform> AdminPlatforms { get; set; }
     public DbSet<MainTheme> MainThemes { get; set; }
     public DbSet<Supervisor> Supervisors { get; set; }
     public DbSet<Idea> Ideas { get; set; }
@@ -55,6 +57,16 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
 
+        modelBuilder.Entity<AdminPlatform>()
+            .HasMany(a => a.BackOffices)
+            .WithOne(b => b.AdminPlatform)
+            .HasForeignKey(b => b.AdminPlatformId);
+
+        modelBuilder.Entity<Admin>()
+            .HasOne(a => a.AdminPlatform)
+            .WithMany(a => a.Admins)
+            .HasForeignKey(a => a.AdminPlatformId);
+        
         modelBuilder.Entity<BackOffice>()
             .HasMany(b => b.Projects)
             .WithOne(p => p.BackOffice)

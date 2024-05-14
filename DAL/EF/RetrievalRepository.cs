@@ -267,52 +267,55 @@ public class RetrievalRepository : IRepositoryRetrieval
         }
         catch (Exception ex)
         {
-      
+            // Voeg logging toe om de exacte fout te zien
             Console.WriteLine($"Fout bij het ophalen van hoofdthema: {ex}");
-            throw; 
+            throw; // Of retourneer null of een foutindicatie, afhankelijk van de gewenste foutafhandeling
         }
     }
 
 
     public void UpdateSubTheme(SubTheme updatedSubTheme)
     {
-          
+            // Zoek het bestaande subthema op basis van het meegegeven ID
             var existingSubTheme = _context.SubThemes.FirstOrDefault(subTheme => subTheme.SubThemeId == updatedSubTheme.SubThemeId);
 
-           
+            // Controleer of het subthema bestaat
             if (existingSubTheme != null)
             {
-          
+                // Werk de eigenschappen van het bestaande subthema bij met de waarden van het bijgewerkte subthema
                 existingSubTheme.SubThemeName = updatedSubTheme.SubThemeName;
                 existingSubTheme.SubThemeInformation = updatedSubTheme.SubThemeInformation;
 
-               
+                // Sla de wijzigingen op in de database
                 _context.SaveChanges();
             }
             else
             {
-                
+                // Het subthema werd niet gevonden, dus log een fout of voer andere gewenste acties uit
+                // Bijvoorbeeld:
                 throw new ArgumentException("Het subthema kon niet worden gevonden.");
             }
     }
     
     public void UpdateMainTheme(MainTheme updatedMainTheme)
     {
-       
+        // Zoek het bestaande subthema op basis van het meegegeven ID
         var existingMainTheme = _context.MainThemes.FirstOrDefault(theme => theme.ThemeId == updatedMainTheme.ThemeId);
 
-       
+        // Controleer of het subthema bestaat
         if (existingMainTheme != null)
         {
-          
+            // Werk de eigenschappen van het bestaande subthema bij met de waarden van het bijgewerkte subthema
             existingMainTheme.ThemeName = updatedMainTheme.ThemeName;
             existingMainTheme.MainThemeInformation = updatedMainTheme.MainThemeInformation;
 
+            // Sla de wijzigingen op in de database
             _context.SaveChanges();
         }
         else
         {
-           
+            // Het subthema werd niet gevonden, dus log een fout of voer andere gewenste acties uit
+            // Bijvoorbeeld:
             throw new ArgumentException("Het thema kon niet worden gevonden.");
         }
     }
@@ -369,5 +372,13 @@ public class RetrievalRepository : IRepositoryRetrieval
     public Idea getIdea(int id)
     {
        return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
+    }
+
+    public AdminPlatform ReadAdminPlatform()
+    {
+        return _context.AdminPlatforms
+            .Include(a => a.BackOffices)
+            .Include(a => a.Admins)
+            .FirstOrDefault();
     }
 }

@@ -1,0 +1,47 @@
+@model PhygitalTool.Domain.Platform.AdminPlatform
+
+@{
+    ViewBag.Title = "Admin Platform";
+}
+<body class="animated-background">
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+            <!-- User Info -->
+            <div class="text-center mt-4">
+                @foreach (var admin in Model.Admins)
+                {
+                    if (admin.UserName == User.Identity?.Name)
+                    {
+                        <img src="@admin.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <h5>@admin.UserName</h5>
+                        <p>QFlow</p>
+                    }
+                }
+            </div>
+
+            <div class="nav flex-column">
+                <a href="#" onclick="window.location.reload(true);" class="nav-link active">Deelplatformen <span class="badge badge-primary ">@Model.BackOffices.Count</span></a>
+                <a href="#" class="nav-link">Beheerders</a>
+                <a href="#" class="nav-link">Instellingen</a>
+                <a href="/Identity/Account/Logout" class="nav-link">Logout</a>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="col-md-9 main-container" id="projects-container">
+            <h2 class="mt-4">Deelplatformen</h2>
+
+            <div class="row">
+                @foreach (var backOffice in Model.BackOffices)
+                {
+                    
+                }
+            </div>
+        </div>
+    </div>
+</div>
+</body>

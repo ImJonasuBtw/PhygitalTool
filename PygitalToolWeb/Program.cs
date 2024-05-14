@@ -66,15 +66,11 @@ using (var scope = app.Services.CreateScope())
         // Generating User Input
         IRepositoryRetrieval retrieval = new RetrievalRepository(ctx);
         IRepositoryPersistance persistence = new PersistanceRepository(ctx);
-        
+
         var userInputFactory = new UserInputFactory(retrieval, persistence);
-        for (var i = 1; i <= 50; i++)
-        {
-            for (var flowId = 1; flowId <= ctx.Flows.Count(); flowId++)
-            {
-                userInputFactory.GenerateRandomUserInput(flowId);
-            }
-        }
+        var amountOfFlows = ctx.Flows.Count();
+        
+        userInputFactory.GenerateRandomUserInputForAllFlows(amountOfFlows, 50);
         Console.WriteLine("UserInputs Generated");
     }
 }
