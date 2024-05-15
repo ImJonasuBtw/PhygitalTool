@@ -202,7 +202,6 @@
         <div>
             @if (Model.Flow.FlowType == FlowType.Circular)
             {
-                <script src="~/dist/circularFlow.entry.js"></script>
                 <style>
                     .submit-button {
                         display: none;
@@ -226,6 +225,5 @@
 
 @section Scripts
 {
-    <script src="~/dist/questionHandling.entry.js"></script>
-    <script src="~/dist/phygitalAnswerButton.entry.js"></script>
+     <script id="questionPage-script" src="~/dist/questionsPage.entry.js" defer="defer" ></script>
 }

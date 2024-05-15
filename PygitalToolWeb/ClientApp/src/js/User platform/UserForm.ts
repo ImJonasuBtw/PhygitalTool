@@ -15,11 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', async () => {
             const title = (document.getElementById('newIdeaTitle') as HTMLInputElement).value;
             const description = (document.getElementById('newIdeaDescription') as HTMLInputElement).value;
-            const scriptElement = document.getElementById('Form-script');
-            const UserId = scriptElement?.getAttribute('data-User-id');
-
+            const scriptElement = document.getElementById('UserPlatform-script');
+            const userId = scriptElement?.dataset.userId;
             const newIdea = new Idea(description, title);
-
             if (!title || !description) {
                 alert('Vul beide velden titel en beschrijving in.');
                 return;
@@ -32,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({
                     title: newIdea.title,
                     description: newIdea.description,
-                    userId : UserId
+                    userId : userId
                 })
             });
 
@@ -44,10 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.reload();
         });
     }
-    
+
+
     function hasCurrentUserLikedIdea(ideaId: string): boolean {
         const likedIdeas = localStorage.getItem('likedIdeas');
-        const currentUserId = document.getElementById('Form-script')?.getAttribute('data-User-id');
+        const currentUserId = document.getElementById('UserPlatform-script')?.dataset.userId;
         if (likedIdeas && currentUserId) {
             const likedIdeasObj = JSON.parse(likedIdeas) as { [userId: string]: string[] };
             return likedIdeasObj[currentUserId]?.includes(ideaId) ?? false;
@@ -56,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function markIdeaAsLikedByCurrentUser(ideaId: string): void {
-        const currentUserId = document.getElementById('Form-script')?.getAttribute('data-User-id');
+        const currentUserId = document.getElementById('UserPlatform-script')?.dataset.userId;
         if (currentUserId) {
             let likedIdeas = localStorage.getItem('likedIdeas');
             if (likedIdeas) {
@@ -77,9 +76,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const likeButtons = document.querySelectorAll('.likeButton');
     likeButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
-            const isAuthenticated = document.getElementById('Form-script')?.getAttribute('data-is-authenticated');
+            const isAuthenticated = document.getElementById('UserPlatform-script')?.dataset.isAuthenticated === 'true';
 
-            if (isAuthenticated === 'false') {
+            if (!isAuthenticated) {
                 window.location.href = '/Identity/Account/Login';
                 return;
             }
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const currentLikes = parseInt(likesCountElement.textContent || '0');
                             likesCountElement.textContent = (currentLikes + 1).toString();
                         }
-                        markIdeaAsLikedByCurrentUser(ideaId);
+                        markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
                     } else {
                         console.error('Failed to like idea');
                     }
@@ -109,39 +108,35 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     const commentButtons = document.querySelectorAll('.commentButton');
-
     commentButtons.forEach(button => {
-        button.addEventListener('click', function (this: HTMLElement) { // Type-annotatie toegevoegd voor 'this'
-            const isAuthenticated = document.getElementById('Form-script')?.getAttribute('data-is-authenticated');
+        button.addEventListener('click', function (this: HTMLElement) {
+            const isAuthenticated = document.getElementById('UserPlatform-script')?.dataset.isAuthenticated === 'true';
 
-            if (isAuthenticated === 'false') {
+            if (!isAuthenticated) {
                 window.location.href = '/Identity/Account/Login';
                 return;
             }
             const ideaId = this.getAttribute('data-ideaId');
             const commentForm = document.getElementById('commentForm-' + ideaId);
-
-            if (commentForm instanceof HTMLElement) {
+            if (commentForm) {
                 commentForm.style.display = 'block';
             }
         });
     });
 
-
     const addCommentButtons = document.querySelectorAll('.addCommentButton');
     addCommentButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
+
+
             const ideaIdString = this.getAttribute('data-ideaId');
             if (ideaIdString) {
                 const ideaId = parseInt(ideaIdString);
                 const commentTextElement = document.getElementById('commentText-' + ideaId) as HTMLInputElement | null;
                 const commentText = commentTextElement?.value;
-                const scriptElement = document.getElementById('Form-script');
-                const UserId = scriptElement?.getAttribute('data-User-id');
-                if(!commentText){
-                    alert('Vul een commentaar in.');
-                    return;
-                }
+                const scriptElement = document.getElementById('UserPlatform-script');
+                const userId = scriptElement?.dataset.userId;
+
                 try {
                     const response = await fetch('/api/Comment', {
                         method: 'POST',
@@ -151,12 +146,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         body: JSON.stringify({
                             ideaId: ideaId,
                             description: commentText,
-                            userId: UserId
+                            userId: userId
                         })
                     });
 
                     if (response.ok) {
                         window.location.reload();
+
                     } else {
                         console.error('Failed to add comment');
                     }
@@ -167,4 +163,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-

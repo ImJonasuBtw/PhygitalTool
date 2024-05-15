@@ -1,6 +1,6 @@
 ﻿console.log("Supervisor script loaded");
-const scriptElement = document.getElementById('supervisor-script');
-const backOfficeId = scriptElement?.getAttribute('data-backoffice-id');
+const scriptElement = document.getElementById('backOfficeHomePage-script');
+const backOfficeId = scriptElement?.dataset.backofficeId;
 
 interface Supervisor {
     id: number;

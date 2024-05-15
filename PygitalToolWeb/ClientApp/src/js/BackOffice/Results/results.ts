@@ -1,5 +1,5 @@
 ﻿import Chart from 'chart.js/auto';
-import {Flow} from "./addFlow";
+import {Flow} from "../Flows/addFlow";
 
 document.addEventListener('DOMContentLoaded', function (this: Document) {
     var clickableCards = document.querySelectorAll('.clickable');

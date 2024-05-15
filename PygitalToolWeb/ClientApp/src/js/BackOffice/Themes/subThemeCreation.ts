@@ -34,8 +34,8 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
             </form>
         `;
 
-        const scriptElement = document.getElementById('subTheme-script');
-        const mainThemeId = scriptElement?.getAttribute('data-maintheme-id');
+        const scriptElement = document.getElementById('subThemePage-script');
+        const mainThemeId = scriptElement?.dataset.mainthemeId;
 
         document.getElementById('cancel-button')?.addEventListener('click', loadSubThemes);
         document.getElementById('new-project-form')?.addEventListener('submit', async function(event) {

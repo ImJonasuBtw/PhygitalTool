@@ -56,5 +56,5 @@
 
 </body>
 @section Scripts {
-    <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
+    <script id="UserPlatform-script" src="~/dist/UserPlatform.entry.js" defer="defer" data-user-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
 }

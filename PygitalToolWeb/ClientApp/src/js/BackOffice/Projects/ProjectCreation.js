@@ -35,8 +35,8 @@ console.log('The project.ts script bundle has been loaded!');
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
-        const scriptElement = document.getElementById('project-script');
-        const backOfficeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-backoffice-id');
+        const scriptElement = document.getElementById('backOfficeHomePage-script');
+        const backOfficeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.dataset.backofficeId;
         (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadProjects);
         (_b = document.getElementById('new-project-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
             return __awaiter(this, void 0, void 0, function* () {

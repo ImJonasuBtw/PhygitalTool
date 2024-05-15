@@ -8,51 +8,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-console.log("Supervisor script loaded");
-const scriptElement = document.getElementById('supervisor-script');
-const backOfficeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-backoffice-id');
+console.log("Managers script loaded");
 document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
-        if (link.textContent && link.textContent.trim() === "Begeleiders") {
+        if (link.textContent && link.textContent.trim() === "Beheerders") {
             link.addEventListener('click', (event) => {
                 event.preventDefault();
-                loadSupervisors(Number(backOfficeId));
+                loadManagers();
             });
         }
     });
 });
-function loadSupervisors(backofficeId) {
-    console.log(backofficeId);
-    fetch('/api/supervisors/Getsupervisors/' + backofficeId)
+function loadManagers() {
+    fetch('/api/Managers/GetManagers/')
         .then(response => response.json())
-        .then((supervisors) => {
+        .then((managers) => {
         var _a;
-        const projectsContainer = document.getElementById('projects-container');
-        if (projectsContainer) {
-            projectsContainer.innerHTML = `
-                <h2>Begeleiders</h2>
+        const backOfficeContainer = document.getElementById('backoffice-container');
+        if (backOfficeContainer) {
+            backOfficeContainer.innerHTML = `
+                <h2>Beheerders</h2>
                 <div class="list-group">
-                    ${supervisors.map(sup => `
+                    ${managers.map(sup => `
                         <div href="#" class="list-group-item list-group-item-action">
                             <img src="${sup.imageUrl}" alt="${sup.email}" class="img-thumbnail">
                             ${sup.email} 
                         </div>
                     `).join('')}
                 </div>
-                <button id="add-supervisor-button" class="btn btn-primary">Add Begeleider</button>
+                <button id="add-Manager-button" class="btn btn-primary">Beheerder Toevoegen</button>
                 `;
-            (_a = document.getElementById('add-supervisor-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', addSupervisor);
+            (_a = document.getElementById('add-Manager-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', addManager);
         }
     })
-        .catch(error => console.error('Error loading supervisors:', error));
+        .catch(error => console.error('Error loading managers:', error));
 }
-function addSupervisor() {
-    const projectsContainer = document.getElementById('projects-container');
-    if (projectsContainer) {
-        projectsContainer.innerHTML = `
-            <h3>Add New Supervisor</h3>
-            <form id="supervisorForm" enctype="multipart/form-data">
+function addManager() {
+    const backOfficeContainer = document.getElementById('backoffice-container');
+    if (backOfficeContainer) {
+        backOfficeContainer.innerHTML = `
+            <h3>Voeg nieuwe begeleider toe</h3>
+            <form id="managersForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="userName">Name:</label>
                     <input type="text" class="form-control" id="userName" name="userName" required>
@@ -65,22 +62,29 @@ function addSupervisor() {
                     <label for="password">Password:</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <div class="form-group">
+                    <label for="backoffice">Backoffice:</label>
+                     <select class="form-control" id="backoffice" name="backoffice" required>
+                       
+                    </select>
+                </div>
             <div class="form-group">
                   <label for="file">Profile Image:</label>
                   <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg,.png">
             </div>
 
                 
-                <button type="submit" class="btn btn-primary">Add Supervisor</button>
-                <button type="button" class="btn btn-secondary" id="cancelButton">Cancel</button>
+                <button type="submit" class="btn btn-primary">Beheerder toevoegen</button>
+                <button type="button" class="btn btn-secondary" id="cancelButton">Annuleer</button>
             </form>
         `;
-        const form = document.getElementById("supervisorForm");
+        fetchBackOffices();
+        const form = document.getElementById("managersForm");
         if (form) {
             form.onsubmit = function (event) {
                 return __awaiter(this, void 0, void 0, function* () {
                     event.preventDefault();
-                    yield submitSupervisorForm();
+                    yield submitManagersForm();
                 });
             };
         }
@@ -91,10 +95,10 @@ function addSupervisor() {
         if (cancelButton) {
             cancelButton.onclick = function () {
                 if (backOfficeId) {
-                    loadSupervisors(Number(backOfficeId));
+                    loadManagers();
                 }
                 else {
-                    console.error('backOfficeId is not found or is invalid.');
+                    console.error('managers is not found or is invalid.');
                 }
             };
         }
@@ -103,12 +107,12 @@ function addSupervisor() {
         }
     }
     else {
-        console.error('The projects container was not found in the DOM.');
+        console.error('The Backoffice container was not found in the DOM.');
     }
 }
-function submitSupervisorForm() {
+function submitManagersForm() {
     return __awaiter(this, void 0, void 0, function* () {
-        const form = document.getElementById('supervisorForm');
+        const form = document.getElementById('managersForm');
         const formData = new FormData(form);
         try {
             const fileResponse = yield fetch('/api/files/uploadFile', {
@@ -120,23 +124,43 @@ function submitSupervisorForm() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const userName = document.getElementById('userName').value;
-            const supervisorResponse = yield fetch('/api/supervisors', {
+            const backofficeId = Number(document.getElementById('backoffice').value);
+            const Response = yield fetch('/api/Managers', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     email, password, imageUrl, userName,
-                    BackOfficeId: Number(backOfficeId)
+                    backofficeId
                 })
             });
-            const data = yield supervisorResponse.json();
+            const data = yield Response.json();
             console.log('Success:', data);
-            alert('Supervisor added successfully!');
-            loadSupervisors(Number(backOfficeId));
+            alert('Managers added successfully!');
+            loadManagers();
         }
         catch (error) {
             console.error('Error:', error);
         }
     });
+}
+function fetchBackOffices() {
+    fetch('api/Backoffice/GetBackoffices')
+        .then(response => response.json())
+        .then(data => {
+        const backOfficeSelect = document.getElementById('backoffice');
+        if (backOfficeSelect) {
+            data.forEach((backOffice) => {
+                const option = document.createElement('option');
+                option.value = String(backOffice.backOfficeId);
+                option.textContent = backOffice.name;
+                backOfficeSelect.appendChild(option);
+            });
+        }
+        else {
+            console.error('The backoffice select element was not found in the DOM.');
+        }
+    })
+        .catch(error => console.error('Error fetching backoffices:', error));
 }
