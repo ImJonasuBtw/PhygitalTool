@@ -338,14 +338,6 @@ public class RetrievalRepository : IRepositoryRetrieval
             .FirstOrDefault(flow => flow.FlowId == Flowid);
     }
 
-    public AdminPlatform ReadAdminPlatform()
-    {
-        return _context.AdminPlatforms
-            .Include(a => a.BackOffices)
-            .Include(a => a.Admins)
-            .FirstOrDefault();
-    }
-
     public IEnumerable<Idea> readAllIdeas()
     {
         return _context.Ideas.Include(u =>u.Comments).ThenInclude(c =>c.User)
