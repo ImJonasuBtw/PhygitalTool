@@ -13,7 +13,7 @@ public static class DataSeeder
     const string Manager = "Manager";
     const string Supervisor = "Supervisor";
     const string Admin = "Admin";
-    const string User = "user";
+    const string User = "User";
     
     public static void Seed(PhygitalToolDbContext context, UserManager<IdentityUser> userManager)
     {

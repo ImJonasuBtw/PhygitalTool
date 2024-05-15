@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
         addButton.addEventListener('click', () => __awaiter(this, void 0, void 0, function* () {
             const title = document.getElementById('newIdeaTitle').value;
             const description = document.getElementById('newIdeaDescription').value;
-            const scriptElement = document.getElementById('Form-script');
-            const UserId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-User-id');
+            const scriptElement = document.getElementById('UserPlatform-script');
+            const userId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.dataset.userId;
             const newIdea = new Idea(description, title);
             if (!title || !description) {
                 alert('Vul beide velden titel en beschrijving in.');
@@ -35,22 +35,22 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({
                     title: newIdea.title,
                     description: newIdea.description,
-                    userId: UserId
+                    userId: userId
                 })
             });
             if (response.ok) {
-                window.location.reload();
+                window.location.href = window.location.href;
             }
             else {
                 alert('Failed to add idea.');
             }
-            window.location.reload();
+            window.location.href = window.location.href;
         }));
     }
     function hasCurrentUserLikedIdea(ideaId) {
         var _a, _b, _c;
         const likedIdeas = localStorage.getItem('likedIdeas');
-        const currentUserId = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-User-id');
+        const currentUserId = (_a = document.getElementById('UserPlatform-script')) === null || _a === void 0 ? void 0 : _a.dataset.userId;
         if (likedIdeas && currentUserId) {
             const likedIdeasObj = JSON.parse(likedIdeas);
             return (_c = (_b = likedIdeasObj[currentUserId]) === null || _b === void 0 ? void 0 : _b.includes(ideaId)) !== null && _c !== void 0 ? _c : false;
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function markIdeaAsLikedByCurrentUser(ideaId) {
         var _a;
-        const currentUserId = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-User-id');
+        const currentUserId = (_a = document.getElementById('UserPlatform-script')) === null || _a === void 0 ? void 0 : _a.dataset.userId;
         if (currentUserId) {
             let likedIdeas = localStorage.getItem('likedIdeas');
             if (likedIdeas) {
@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             return __awaiter(this, void 0, void 0, function* () {
                 var _a;
-                const isAuthenticated = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-is-authenticated');
-                if (isAuthenticated === 'false') {
+                const isAuthenticated = ((_a = document.getElementById('UserPlatform-script')) === null || _a === void 0 ? void 0 : _a.dataset.isAuthenticated) === 'true';
+                if (!isAuthenticated) {
                     window.location.href = '/Identity/Account/Login';
                     return;
                 }
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const currentLikes = parseInt(likesCountElement.textContent || '0');
                                 likesCountElement.textContent = (currentLikes + 1).toString();
                             }
-                            markIdeaAsLikedByCurrentUser(ideaId);
+                            markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
                         }
                         else {
                             console.error('Failed to like idea');
@@ -117,14 +117,14 @@ document.addEventListener('DOMContentLoaded', function () {
     commentButtons.forEach(button => {
         button.addEventListener('click', function () {
             var _a;
-            const isAuthenticated = (_a = document.getElementById('Form-script')) === null || _a === void 0 ? void 0 : _a.getAttribute('data-is-authenticated');
-            if (isAuthenticated === 'false') {
+            const isAuthenticated = ((_a = document.getElementById('UserPlatform-script')) === null || _a === void 0 ? void 0 : _a.dataset.isAuthenticated) === 'true';
+            if (!isAuthenticated) {
                 window.location.href = '/Identity/Account/Login';
                 return;
             }
             const ideaId = this.getAttribute('data-ideaId');
             const commentForm = document.getElementById('commentForm-' + ideaId);
-            if (commentForm instanceof HTMLElement) {
+            if (commentForm) {
                 commentForm.style.display = 'block';
             }
         });
@@ -138,12 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     const ideaId = parseInt(ideaIdString);
                     const commentTextElement = document.getElementById('commentText-' + ideaId);
                     const commentText = commentTextElement === null || commentTextElement === void 0 ? void 0 : commentTextElement.value;
-                    const scriptElement = document.getElementById('Form-script');
-                    const UserId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-User-id');
-                    if (!commentText) {
-                        alert('Vul een commentaar in.');
-                        return;
-                    }
+                    const scriptElement = document.getElementById('UserPlatform-script');
+                    const userId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.dataset.userId;
                     try {
                         const response = yield fetch('/api/Comment', {
                             method: 'POST',
@@ -153,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             body: JSON.stringify({
                                 ideaId: ideaId,
                                 description: commentText,
-                                userId: UserId
+                                userId: userId
                             })
                         });
                         if (response.ok) {

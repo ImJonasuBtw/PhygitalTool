@@ -1,2 +1,2 @@
-﻿import "../subThemeCreation.ts";
-import "../subThemeEditAndDelete.ts";
+﻿import "../BackOffice/Themes/subThemeCreation.ts";
+import "../BackOffice/Themes/subThemeEditAndDelete.ts";

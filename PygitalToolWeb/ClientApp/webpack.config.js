@@ -13,6 +13,7 @@ module.exports = {
         questionsPage: './src/js/EntryPoints/questionsPage.ts',
         subThemeInformation: './src/js/EntryPoints/subThemeInformation.ts',
         userPlatform: './src/js/EntryPoints/userPlatform.ts',
+        managers: './src/js/EntryPoints/managers.ts',
     },
     output: {
         filename: '[name].entry.js',

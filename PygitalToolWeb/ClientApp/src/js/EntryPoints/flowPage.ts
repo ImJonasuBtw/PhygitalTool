@@ -1,2 +1,2 @@
-﻿import "../addFlow.ts";
-import "../editAndDeleteFlow";
+﻿import "../BackOffice/Flows/addFlow.ts";
+import "../BackOffice/Flows/editAndDeleteFlow.ts";

@@ -17,9 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const description = (document.getElementById('newIdeaDescription') as HTMLInputElement).value;
             const scriptElement = document.getElementById('UserPlatform-script');
             const userId = scriptElement?.dataset.userId;
-
             const newIdea = new Idea(description, title);
-            console.log(userId)
+            if (!title || !description) {
+                alert('Vul beide velden titel en beschrijving in.');
+                return;
+            }
             const response = await fetch('/api/ideas', {
                 method: 'POST',
                 headers: {
@@ -37,8 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert('Failed to add idea.');
             }
+            window.location.reload();
         });
     }
+
 
     function hasCurrentUserLikedIdea(ideaId: string): boolean {
         const likedIdeas = localStorage.getItem('likedIdeas');

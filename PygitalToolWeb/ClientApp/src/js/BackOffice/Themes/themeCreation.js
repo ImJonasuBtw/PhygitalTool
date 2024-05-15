@@ -36,8 +36,8 @@ console.log('The themecreation.ts script bundle has been loaded!');
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
-        const scriptElement = document.getElementById('theme-script');
-        const projectId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-project-id');
+        const scriptElement = document.getElementById('mainThemePage-script');
+        const projectId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.dataset.projectId;
         (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadMainThemes);
         (_b = document.getElementById('new-theme-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
             return __awaiter(this, void 0, void 0, function* () {

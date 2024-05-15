@@ -1,5 +1,5 @@
 ﻿import "../site.ts";
-import "../Supervisors.ts";
-import "../activeProjects.ts";
-import "../ProjectCreation.ts";
-import "../ProjectEditAndDelete.ts";
+import "../BackOffice/Supervisors/Supervisors.ts";
+import "../BackOffice/Projects/activeProjects.ts";
+import "../BackOffice/Projects/ProjectCreation.ts";
+import "../BackOffice/Projects/ProjectEditAndDelete.ts";

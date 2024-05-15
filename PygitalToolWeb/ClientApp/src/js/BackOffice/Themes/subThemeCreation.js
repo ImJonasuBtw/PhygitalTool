@@ -36,8 +36,8 @@ console.log('The subthemeCreation.ts script bundle has been loaded!');
                 <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
             </form>
         `;
-        const scriptElement = document.getElementById('subTheme-script');
-        const mainThemeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.getAttribute('data-maintheme-id');
+        const scriptElement = document.getElementById('subThemePage-script');
+        const mainThemeId = scriptElement === null || scriptElement === void 0 ? void 0 : scriptElement.dataset.mainthemeId;
         (_a = document.getElementById('cancel-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', loadSubThemes);
         (_b = document.getElementById('new-project-form')) === null || _b === void 0 ? void 0 : _b.addEventListener('submit', function (event) {
             return __awaiter(this, void 0, void 0, function* () {
