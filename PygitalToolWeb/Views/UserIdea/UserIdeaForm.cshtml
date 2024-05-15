@@ -5,43 +5,56 @@
     ViewBag.Title = "UserPlatform";
     Layout = "_Layout";
 }
-<h1>User Ideas</h1>
-@foreach (var idea in Model)
-{
-    <div>
-        <h8>@idea.Title</h8>
-        <p>@idea.Description</p>
-        <p>@idea.User.UserName</p>
-        <p>Likes: <span id="likesCount-@idea.IdeaId">@idea.Likes</span></p>
-        <button class="likeButton" data-ideaId="@idea.IdeaId">Like</button>
-        <div>
-            @foreach (var comment in idea.Comments)
-            {
-                <p>@comment.Description</p>
-                <p>@comment.User</p>
-            }
-        </div>
-    </div>
-    <div>
-            <button class="commentButton" data-ideaId="@idea.IdeaId">Comment</button>
-    <div id="commentForm-@idea.IdeaId" style="display:none;">
-        <input type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" />
-        <button class="addCommentButton" data-ideaId="@idea.IdeaId">Add Comment</button>
-    </div>
-    </div>
-   
-}
+<body class="background-contract-form">   
+<h1 class="center">User Ideas</h1>
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 {
     <div>
         <h2>Create New Idea</h2>
         <form id="createIdeaForm">
-            <input type="text" id="newIdeaTitle" placeholder="Title" />
-            <input type="text" id="newIdeaDescription" placeholder="Description" />
-            <button type="button" id="addIdeaButton">Add Idea</button>
+            <input class="form-control" type="text" id="newIdeaTitle" placeholder="Title" required>
+            <input class="form-control" type="text" id="newIdeaDescription" placeholder="Description" required>
+            <button class=" btn btn-primary mt-3" type="submit" id="addIdeaButton">Add Idea</button>
         </form>
     </div>
 }
+
+@foreach (var idea in Model)
+{
+    <div class="idea_card mt-3">
+       <div class="row">
+              <div class="first_letter_name col-md-4">
+                  <p>@char.ToUpper(idea.User.UserName[0])</p>
+              </div>
+              <div class="col-md-8">
+                  <h4>@idea.Title</h4>
+              </div>
+          </div>
+          <p class="username">@idea.User.UserName</p>
+          <p>@idea.Description</p>
+          <p class="form-label like-section">
+              Likes: 
+              <span id="likesCount-@idea.IdeaId">@idea.Likes</span>
+              <i class="bi bi-hand-thumbs-up likeButton pointer" data-ideaId="@idea.IdeaId"></i>
+          </p>
+        <div class="comments-container-@idea.IdeaId p-3">
+            @foreach (var comment in idea.Comments)
+            {
+                <p class="form-label">@comment.Description</p>
+                <p>@comment.User</p>
+            }
+                <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
+                <div class=""id="commentForm-@idea.IdeaId" style="display:none;">
+                    <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" required>
+                    <button class="btn btn-primary mt-3 addCommentButton"  data-ideaId="@idea.IdeaId">Submit</button>
+                </div>
+            </div>
+        </div>
+   
+}
+
+</body>
 @section Scripts {
-    <script id="Form-script" src="~/dist/Userform.entry.js" defer="defer" data-User-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
+    <script id="UserPlatform-script" src="~/dist/UserPlatform.entry.js" defer="defer" data-user-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
 }

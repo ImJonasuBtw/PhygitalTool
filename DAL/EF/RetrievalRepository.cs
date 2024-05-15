@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
@@ -379,5 +380,23 @@ public class RetrievalRepository : IRepositoryRetrieval
     public Idea getIdea(int id)
     {
        return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
+    }
+
+    public IEnumerable<Manager> ReadManagers()
+    {
+        return _context.Managers.ToList();
+    }
+
+    public IEnumerable<BackOffice> readBackoffices()
+    {
+        return _context.BackOffices.ToList();
+    }
+
+    public AdminPlatform ReadAdminPlatform()
+    {
+        return _context.AdminPlatforms
+            .Include(a => a.BackOffices)
+            .Include(a => a.Admins)
+            .FirstOrDefault();
     }
 }

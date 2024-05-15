@@ -7501,6 +7501,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss":
+/*!***************************************************************!*\
+  !*** ./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./src/css/Frontend/Login/loginStyles.scss":
 /*!*************************************************!*\
   !*** ./src/css/Frontend/Login/loginStyles.scss ***!
@@ -7521,6 +7533,40 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/js/site.ts":
+/*!************************!*\
+  !*** ./src/js/site.ts ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.css */ "./node_modules/bootstrap/dist/css/bootstrap.css");
+/* harmony import */ var bootstrap_icons_font_bootstrap_icons_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-icons/font/bootstrap-icons.css */ "./node_modules/bootstrap-icons/font/bootstrap-icons.css");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _css_site_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/site.css */ "./src/css/site.css");
+/* harmony import */ var _css_Backoffice_Projects_overview_projectsOverviewStyles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/Backoffice/Projects overview/projectsOverviewStyles.scss */ "./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss");
+/* harmony import */ var _css_Backoffice_Results_resultsStyles_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../css/Backoffice/Results/resultsStyles.scss */ "./src/css/Backoffice/Results/resultsStyles.scss");
+/* harmony import */ var _css_Frontend_Flow_frontendFlowStyles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../css/Frontend/Flow/frontendFlowStyles.scss */ "./src/css/Frontend/Flow/frontendFlowStyles.scss");
+/* harmony import */ var _css_Frontend_Login_loginStyles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../css/Frontend/Login/loginStyles.scss */ "./src/css/Frontend/Login/loginStyles.scss");
+/* harmony import */ var _css_Frontend_ContactForm_contactFormStyles_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../css/Frontend/ContactForm/contactFormStyles.scss */ "./src/css/Frontend/ContactForm/contactFormStyles.scss");
+/* harmony import */ var _css_Frontend_IdeaPlatform_ideaPlatformStyles_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../css/Frontend/IdeaPlatform/ideaPlatformStyles.scss */ "./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss");
+
+
+
+
+// Custom CSS imports
+
+
+
+
+
+
+
+console.log('The \'site\' bundle has been loaded!');
 
 
 /***/ })
@@ -7584,31 +7630,12 @@ __webpack_require__.r(__webpack_exports__);
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!************************!*\
-  !*** ./src/js/site.ts ***!
-  \************************/
+/*!************************************!*\
+  !*** ./src/js/EntryPoints/site.ts ***!
+  \************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var bootstrap_dist_css_bootstrap_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.css */ "./node_modules/bootstrap/dist/css/bootstrap.css");
-/* harmony import */ var bootstrap_icons_font_bootstrap_icons_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-icons/font/bootstrap-icons.css */ "./node_modules/bootstrap-icons/font/bootstrap-icons.css");
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var _css_site_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../css/site.css */ "./src/css/site.css");
-/* harmony import */ var _css_Backoffice_Projects_overview_projectsOverviewStyles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/Backoffice/Projects overview/projectsOverviewStyles.scss */ "./src/css/Backoffice/Projects overview/projectsOverviewStyles.scss");
-/* harmony import */ var _css_Backoffice_Results_resultsStyles_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../css/Backoffice/Results/resultsStyles.scss */ "./src/css/Backoffice/Results/resultsStyles.scss");
-/* harmony import */ var _css_Frontend_Flow_frontendFlowStyles_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../css/Frontend/Flow/frontendFlowStyles.scss */ "./src/css/Frontend/Flow/frontendFlowStyles.scss");
-/* harmony import */ var _css_Frontend_Login_loginStyles_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../css/Frontend/Login/loginStyles.scss */ "./src/css/Frontend/Login/loginStyles.scss");
-/* harmony import */ var _css_Frontend_ContactForm_contactFormStyles_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../css/Frontend/ContactForm/contactFormStyles.scss */ "./src/css/Frontend/ContactForm/contactFormStyles.scss");
+/* harmony import */ var _site_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../site.ts */ "./src/js/site.ts");
 
-
-
-
-// Custom CSS imports
-
-
-
-
-
-
-console.log('The \'site\' bundle has been loaded!');
 
 })();
 

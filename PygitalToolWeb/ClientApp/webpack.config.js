@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        site: './src/js/site.ts',
+        site: './src/js/EntryPoints/site.ts',
         validation: './src/js/validation.ts',
         index: './src/js/index.ts',
         questionHandling: './src/js/questionHandling.ts',
@@ -23,7 +23,16 @@ module.exports = {
         subThemeEditAndDelete:'./src/js/subThemeEditAndDelete',
         backOfficeCreation:'./src/js/backOfficeCreation',
         themeEditAndDelete:'./src/js/themeEditAndDelete',
-        Userform: './src/js/UserForm'
+        Userform: './src/js/UserForm',
+        backOfficeHome: './src/js/EntryPoints/backOfficeHome.ts',
+        mainThemePage: './src/js/EntryPoints/mainThemePage.ts',
+        subThemePage: './src/js/EntryPoints/subThemePage.ts',
+        flowPage: './src/js/EntryPoints/flowPage.ts',
+        results: './src/js/EntryPoints/results.ts',
+        questionsPage: './src/js/EntryPoints/questionsPage.ts',
+        subThemeInformation: './src/js/EntryPoints/subThemeInformation.ts',
+        userPlatform: './src/js/EntryPoints/userPlatform.ts',
+        managers: './src/js/EntryPoints/managers.ts'
     },
     output: {
         filename: '[name].entry.js',
