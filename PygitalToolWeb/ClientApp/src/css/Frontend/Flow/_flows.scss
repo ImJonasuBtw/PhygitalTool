@@ -1,4 +1,5 @@
-﻿.questionContainer {
+﻿@import '../variables';
+.questionContainer {
   background-color: rgba($background-color, 0.4);
    font-family: "Outfit", sans-serif;
    text-align: center;

@@ -1,4 +1,5 @@
-﻿#confirmationModal {
+﻿@import '../variables';
+#confirmationModal {
   .modal-content {
     background-color: $background-color;
     border: none;
