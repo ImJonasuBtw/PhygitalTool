@@ -20941,6 +20941,13 @@ body {
   object-fit: cover;
 }
 
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 .questionContainer {
   background-color: rgba(244, 234, 239, 0.4);
   font-family: "Outfit", sans-serif;
@@ -21095,6 +21102,13 @@ body {
   display: none;
 }
 
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 body:has(.container-question-view) {
   padding-top: 0;
   overflow: hidden;
@@ -21177,6 +21191,13 @@ body:has(.container-information-view) {
   object-fit: cover;
 }
 
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 .login-img {
   background-color: #e5d2ff;
 }
@@ -21252,6 +21273,13 @@ body:has(.login-container) {
   object-fit: cover;
 }
 
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 .background-contract-form {
   background-color: #f4eaef;
   padding: 20px;
@@ -21309,6 +21337,13 @@ body:has(.login-container) {
 /*!****************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss (1) ***!
   \****************************************************************************************************************************************************/
+.qr-code {
+  height: auto !important;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
 .qr-code {
   height: auto !important;
   max-width: 100%;
