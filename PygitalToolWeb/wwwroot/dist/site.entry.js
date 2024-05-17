@@ -7537,9 +7537,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/site.ts":
+/***/ "./src/js/Site.ts":
 /*!************************!*\
-  !*** ./src/js/site.ts ***!
+  !*** ./src/js/Site.ts ***!
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -7634,7 +7634,7 @@ var __webpack_exports__ = {};
   !*** ./src/js/EntryPoints/site.ts ***!
   \************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _site_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../site.ts */ "./src/js/site.ts");
+/* harmony import */ var _Site_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Site.ts */ "./src/js/Site.ts");
 
 
 })();

@@ -32,7 +32,7 @@ function addEventListenerToKeyPressSlider(slider: HTMLInputElement, key: string,
     });
 }
 
-function linkKeyPressesToButtons() {
+export function linkKeyPressesToButtons() {
     const button1 = document.getElementById('button-1') as HTMLButtonElement;
     const button2 = document.getElementById('button-2') as HTMLButtonElement;
     const button3 = document.getElementById('button-3') as HTMLButtonElement;
@@ -67,7 +67,3 @@ function linkKeyPressesToButtons() {
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    linkKeyPressesToButtons();
-});
