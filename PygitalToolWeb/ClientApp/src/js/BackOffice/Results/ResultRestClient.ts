@@ -1,21 +1,7 @@
-﻿import Chart from 'chart.js/auto';
+﻿import Chart from "chart.js/auto";
+import {exportChartAsPNG, exportDataAsCSV, exportDataAsXLS} from "./Results";
 
-
-document.addEventListener('DOMContentLoaded', function (this: Document) {
-    var clickableCards = document.querySelectorAll('.clickable');
-    clickableCards.forEach(function (card) {
-        card.addEventListener('click', function (this: HTMLElement) {
-            var url = this.getAttribute('data-href');
-            if (url !== null) {
-                window.location.href = url;
-            } else {
-                console.error("Data-href attribute is null");
-            }
-        });
-    });
-});
-
-async function getAllAnswersWithQuestions() {
+export async function getAllAnswersWithQuestions() {
     const resultsContainer = document.getElementById('results-container');
     const loader = document.createElement('div');
     // @ts-ignore
@@ -137,7 +123,7 @@ async function getAllAnswersWithQuestions() {
             exportAsCsv.addEventListener('click', () => {
                 exportDataAsCSV(data, 'answers_export'); // 'data' moet de array van objecten met de gegevens zijn
             });
-            
+
             // @ts-ignore
             resultsContainer.appendChild(exportAsCsv);
 
@@ -155,86 +141,137 @@ async function getAllAnswersWithQuestions() {
     }
 }
 
-
-document.addEventListener('click', function (event) {
-    const target = event.target as HTMLElement;
-    if (target.classList.contains('export-chart')) {
-        const canvasId = target.getAttribute('data-canvas-id');
-        // @ts-ignore
-        const canvas = document.getElementById(canvasId) as HTMLCanvasElement; // Typecasting naar HTMLCanvasElement
-        if (canvas) {
-            exportChartAsPNG(canvas, 'chart_export');
-        } else {
-            console.error('Canvas not found');
+async function getMainThemeDetails(mainThemeId: number): Promise<any> {
+    try {
+        const response = await fetch(`/api/ThemeCreation/GetMainThemeDetails/${mainThemeId}`);
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Network response was not ok');
         }
-    } 
-});
-
-function exportChartAsPNG(canvas: HTMLCanvasElement, filename: string) {
-    // Genereer een dataURL voor het canvas
-    const dataURL = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = filename + '.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function exportDataAsXLS(data: any[], filename: string) {
-    let html = '<table>';
-    html += '<tr>';
-    html += '<th>Answer ID</th><th>Answer Text</th><th>Question ID</th><th>Question Text</th><th>Question Type</th>'; // Koppen toevoegen
-    html += '</tr>';
-    data.forEach((row) => {
-        html += '<tr>';
-        html += `<td>${row.answerId}</td><td>${row.answerText}</td><td>${row.questionId}</td>`; // Voeg antwoordgegevens toe
-        html += `<td>${row.question.questionText}</td><td>${getQuestionTypeName(row.question.questionType)}</td>`; // Voeg vraaggegevens toe
-        html += '</tr>';
-    });
-    html += '</table>';
-    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `${filename}.xls`);document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function exportDataAsCSV(data: any[], filename: string) {
-    let csv = 'Answer ID,Answer Text,Question ID,Question,Question Text,Question Type\n';
-    data.forEach((row) => {
-        csv += `${row.answerId},${row.answerText},${row.question.questionId},${row.question.questionText},${getQuestionTypeName(row.question.questionType)}\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `${filename}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-
-function getQuestionTypeName(questionType: number): string {
-    switch (questionType) {
-        case 0:
-            return 'SingleChoice';
-        case 1:
-            return 'MultipleChoice';
-        case 2:
-            return 'Range';
-        case 3:
-            return 'Open';
-        default:
-            return 'Unknown';
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching main theme details:', error);
+        throw error;
     }
 }
 
+async function getSubThemeDetails(subThemeId: number): Promise<any> {
+    try {
+        const response = await fetch(`/api/SubThemeCreation/GetSubThemeDetails/` + subThemeId);
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching subtheme details:', error);
+        throw error;
+    }
+}
+
+async function getFlowDetails(flowId: number): Promise<any> {
+    try {
+        const response = await fetch(`/api/FlowCreation/GetFlowDetails/` + flowId);
+        if (!response.ok) {
+            console.log(response);
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching flow details:', error);
+        throw error;
+    }
+}
+
+export function showResultsForProject(): void {
+    // @ts-ignore
+    var projectId = parseInt(document.querySelector('#results-information-container').getAttribute('data-project-id'));
+    console.log(projectId);
+    // Controleren of projectId niet NaN is
+    if (!isNaN(projectId)) {
+        fetch(`/api/Results/GetProjectWithData/${projectId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(async (data: any) => {
+            // Controleer of data een object is en of het de verwachte eigenschap bevat
+            if (typeof data === 'object' && Array.isArray(data.userInputs)) {
+                // Maak variabelen om het aantal antwoorden per hoofdthema, subthema en flow ID bij te houden
+                const mainThemeCounts: { [key: number]: number } = {};
+                const subThemeCounts: { [key: number]: number } = {};
+                const flowCounts: { [key: number]: number } = {};
+
+                // Itereer over de array van UserInput-objecten
+                data.userInputs.forEach((userInput: any) => {
+                    // Toegang krijgen tot de eigenschappen van elk UserInput-object
+                    const mainThemeId = userInput.mainThemeId;
+                    const subThemeId = userInput.subThemeId;
+                    const flowId = userInput.flowId;
+
+                    // Incrementeer het aantal antwoorden voor het hoofdthema
+                    mainThemeCounts[mainThemeId] = (mainThemeCounts[mainThemeId] || 0) + 1;
+
+                    // Incrementeer het aantal antwoorden voor het subthema
+                    subThemeCounts[subThemeId] = (subThemeCounts[subThemeId] || 0) + 1;
+
+                    // Incrementeer het aantal antwoorden voor het flow ID
+                    flowCounts[flowId] = (flowCounts[flowId] || 0) + 1;
+                });
+
+                // Zoek de container
+                const resultsContainer = document.getElementById('results-information-container');
+                if (resultsContainer) {
+                    // Toon het aantal antwoorden per hoofdthema
+                    for (const mainThemeIdStr in mainThemeCounts) {
+                        try {
+                            const mainThemeId = parseInt(mainThemeIdStr);
+                            const count = mainThemeCounts[mainThemeId];
+                            const mainThemeDetails = await getMainThemeDetails(mainThemeId);
+                            console.log(mainThemeDetails);
+                            resultsContainer.innerHTML += `<p> <strong> Details voor hoodfd thema</strong> ${mainThemeDetails.themeName}: ${count}</p>`;
+                        } catch (error) {
+                            console.error('Error getting main theme details:', error);
+                        }
+                    }
 
 
+                    for (const subThemeIdStr in subThemeCounts) {
+                        try {
+                            const subThemeId = parseInt(subThemeIdStr);
+                            const count = subThemeCounts[subThemeId];
+                            const subThemeDetails = await getSubThemeDetails(subThemeId);
+                            console.log(subThemeDetails);
+                            resultsContainer.innerHTML += `<p> <strong> Details voor subthema</strong> ${subThemeDetails.subThemeName}: ${count}</p>`;
+                        } catch (error) {
+                            console.error('Error getting main theme details:', error);
+                        }
+                    }
+                    for (const flowIdStr in flowCounts) {
+                        try {
+                            const flowId = parseInt(flowIdStr);
+                            const count = flowCounts[flowId];
+                            const flowDetails = await getFlowDetails(flowId);
+                            console.log(flowDetails);
+                            resultsContainer.innerHTML += `<p> <strong> Details voor flow</strong> ${flowDetails.flowName}: ${count}</p>`;
+                        } catch (error) {
+                            console.error('Error getting main theme details:', error);
+                        }
+                    }
+                } else {
+                    console.error('Results container niet gevonden');
+                }
+            } else {
+                console.error('Data is niet in het verwachte formaat');
+            }
+        })
 
-window.addEventListener('load', () => {
-    getAllAnswersWithQuestions();
-});
-
+            .catch(error => {
+                // Handel eventuele fouten af
+                console.error('Fout bij het ophalen van gegevens:', error);
+            });
+    } else {
+        console.error('Project ID is NaN');
+    }
+}

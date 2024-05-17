@@ -1,6 +1,60 @@
-﻿// Checks if form input is empty
+﻿const timerLength: number = 5;
+const progressBar = document.querySelector('.progress-bar') as HTMLElement;
 
-function validateForm(): boolean {
+
+// Timer that clicks the submit button when time runs out
+export function timer(): void {
+    let button: HTMLElement | null;
+    button = document.getElementById('submitButton');
+    if (button == null) {
+        button = document.getElementById('submitButtonCircular')
+    }
+    if (button == null) {
+        button = document.getElementById('Submit');
+    }
+
+    if (button) {
+        function clickButton() {
+            if (button) {
+                button.click();
+            }
+        }
+
+        const timer = setTimeout(clickButton, timerLength * 1000);
+
+        button.addEventListener('click', function () {
+            clearTimeout(timer);
+        });
+    }
+}
+
+// HTML text updater to display the timer to the user
+export function setTimerText(): void {
+    const timerElement: HTMLElement | null = document.getElementById('circular-timer');
+    let timeLeft = timerLength;
+
+    if (timerElement) {
+        timerElement.textContent = timeLeft.toString();
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            timerElement.textContent = timeLeft.toString();
+
+            // Update progress bar width based on time left
+            const progressWidth = (timerLength - timeLeft) / timerLength * 100;
+            if (progressBar) {
+                progressBar.style.width = progressWidth + "%";
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "0";
+            }
+        }, 1000);
+    }
+}
+
+export function validateForm(): boolean {
     const answer: string = (document.getElementById("selectedAnswer") as HTMLInputElement).value;
     if (answer.trim() === "") {
         alert("Please enter your answer.");
@@ -11,7 +65,7 @@ function validateForm(): boolean {
 }
 
 // Logic for the slider in the range question. Makes sure the right value is returned.
-function configureSlider(): void {
+export function configureSlider(): void {
     const slider: HTMLInputElement = document.getElementById("myRange") as HTMLInputElement;
     const output: HTMLElement = document.getElementById("sliderValue") as HTMLElement;
     const labels: string[] = Array.from(document.querySelectorAll('.slider-labels span')).map(span => (span as HTMLElement).textContent || '');
@@ -41,7 +95,7 @@ function configureSlider(): void {
 
 
 // Toggles the buttons 'selected' class based on if the user pressed it.
-function configureAnswerButtons(): void {
+export function configureAnswerButtons(): void {
     const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButton');
     answerButtons.forEach(button => {
         button.addEventListener('click', function (): void {
@@ -51,7 +105,7 @@ function configureAnswerButtons(): void {
 }
 
 // Configures the submit button to return the correct selected value(s) when being pressed.
-function configureSubmitButton(): void {
+export function configureSubmitButton(): void {
     const submitButton: HTMLElement | null = document.getElementById('submitButton');
     submitButton?.addEventListener('click', function (): void {
         const selectedAnswers: string[] = [];
@@ -78,7 +132,7 @@ function configureSubmitButton(): void {
 
 // Since the circular flow works with a timer, it's answer possibilities can't make it go to the next question immediately.
 // Uses the logic of the muliple choice question, but slightly altered so that it can only select one.
-function configureSubmitButtonSingleChoice(): void {
+export function configureSubmitButtonSingleChoice(): void {
     const submitButton: HTMLElement | null = document.getElementById('submitButtonSingleChoice');
     if(submitButton) {
         console.log("woop woop")
@@ -106,7 +160,7 @@ function configureSubmitButtonSingleChoice(): void {
 }
 
 // Configures the answer buttons for a single choice question in a circular flow to deselect when another is pressed.
-function configureAnswerButtonsSingleChoice(): void {
+export function configureAnswerButtonsSingleChoice(): void {
     const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answerButtonSingleChoice');
     answerButtons.forEach(button => {
         button.addEventListener('click', function (): void {
@@ -119,15 +173,3 @@ function configureAnswerButtonsSingleChoice(): void {
         });
     });
 }
-
-
-// Initialize configurations
-document.addEventListener('DOMContentLoaded', () => {
-    configureAnswerButtons();
-    configureAnswerButtonsSingleChoice();
-    configureSubmitButton();
-    configureSubmitButtonSingleChoice();
-    configureSlider();
-});
-
-
