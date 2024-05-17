@@ -5,6 +5,11 @@
    text-align: center;
   height: 100%;
   
+  .img-responsive{
+    width: 720px;
+    height : 405px; 
+    }
+  
    form {
      border-radius: $card-border-radius;
      margin-bottom: $default-margin;
