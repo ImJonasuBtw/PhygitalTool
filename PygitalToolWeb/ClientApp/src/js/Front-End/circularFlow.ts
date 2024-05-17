@@ -54,6 +54,14 @@ function setTimerText(): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    timer();
-    setTimerText();
+    const scriptElement = document.getElementById('questionPage-script');
+    console.log('Script Element:', scriptElement);
+    const flowType = scriptElement?.dataset.flowtype;
+    console.log('Flow type:', flowType);
+    
+    
+    if (flowType === 'circular') {
+        timer();
+        setTimerText();
+    }
 });

@@ -11,7 +11,6 @@ module.exports = {
         flowPage: './src/js/EntryPoints/flowPage.ts',
         results: './src/js/EntryPoints/results.ts',
         questionsPage: './src/js/EntryPoints/questionsPage.ts',
-        subThemeInformation: './src/js/EntryPoints/subThemeInformation.ts',
         userPlatform: './src/js/EntryPoints/userPlatform.ts',
         managers: './src/js/EntryPoints/managers.ts',
     },

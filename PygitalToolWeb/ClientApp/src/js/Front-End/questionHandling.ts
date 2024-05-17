@@ -1,6 +1,5 @@
-﻿import {Value} from "sass";
+﻿// Checks if form input is empty
 
-// Checks if form input is empty
 function validateForm(): boolean {
     const answer: string = (document.getElementById("selectedAnswer") as HTMLInputElement).value;
     if (answer.trim() === "") {

@@ -20954,6 +20954,10 @@ body {
   text-align: center;
   height: 100%;
 }
+.questionContainer .img-responsive {
+  width: 720px;
+  height: 405px;
+}
 .questionContainer form {
   border-radius: 10px;
   margin-bottom: 1rem;
