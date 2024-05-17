@@ -1,5 +1,5 @@
-﻿import {Flow, FlowTypeEnum, Language, QuestionType} from "./flow";
-import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./flowRestClient";
+﻿import {Flow, FlowTypeEnum, Language, QuestionType} from "./Flow";
+import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestClient";
 
  export function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `

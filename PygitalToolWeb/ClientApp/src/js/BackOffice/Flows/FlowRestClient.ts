@@ -1,5 +1,5 @@
-﻿import {loadFlows} from "./flowUI";
-import {FlowTypeEnum} from "./flow";
+﻿import {loadFlows} from "./FlowUI";
+import {FlowTypeEnum} from "./Flow";
 
 export function deleteFlow(FlowId: number) {
     fetch(`/api/FlowCreation/DeleteFlow/${FlowId}`, {

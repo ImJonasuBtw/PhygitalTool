@@ -1,6 +1,6 @@
-﻿import {addQuestionForm, loadFlows, showEditFlowForm, ShowForm} from "./flowUI";
+﻿import {addQuestionForm, loadFlows, showEditFlowForm, ShowForm} from "./FlowUI";
 import bootstrap from "bootstrap";
-import {deleteFlow} from "./flowRestClient";
+import {deleteFlow} from "./FlowRestClient";
 
 export enum QuestionType {
     SingleChoice,
