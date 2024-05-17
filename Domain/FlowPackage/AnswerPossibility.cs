@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PhygitalTool.Domain.FlowPackage;
 
 public class AnswerPossibility
@@ -6,7 +8,6 @@ public class AnswerPossibility
     public int AnswerPossibilityId { get; set; }
     public string Description { get; set; }
     public int QuestionId{ get; set; }
-
 
     // Nav
     public Question Question { get; set; }

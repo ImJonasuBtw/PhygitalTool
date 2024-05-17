@@ -4,7 +4,7 @@ namespace PhygitalTool.Web.Models;
 
 public class SubThemeModel
 {
-    [Required(ErrorMessage = "Project Name is required")]
+    [Required(ErrorMessage = "SubTheme Name is required")]
     public string SubThemeName { get; set; }
     [Required(ErrorMessage = "Information is required")]
     public string SubThemeInformation { get; set; }

@@ -8,6 +8,6 @@ public class ThemeModel
     public string ThemeName { get; set; }
     [Required(ErrorMessage = "Information is required")]
     public string MainThemeInformation { get; set; }
-    [Required(ErrorMessage = "MainThemeId is required")]
+    [Required(ErrorMessage = "ProjectId is required")]
     public int ProjectId { get; set; }
 }
