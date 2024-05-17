@@ -1,4 +1,6 @@
-﻿import bootstrap from "bootstrap";
+﻿import bootstrap, {Modal} from "bootstrap";
+import {loadMainThemes, showEditMainThemeForm} from "./ThemeUI";
+import {deleteMainTheme} from "./ThemeRestClient";
 export class mainTheme {
     public themeName: string;
     public mainThemeInformation: string;
@@ -9,7 +11,7 @@ export class mainTheme {
     }
 }
 
-console.log('The themecreation.ts script bundle has been loaded!');
+
 document.getElementById('add-theme-button')?.addEventListener('click', () => {
     console.log('Add button has been pressed!');
     const themesContainer = document.getElementById('themes-container');
@@ -71,12 +73,47 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
+        const button = event.relatedTarget as HTMLElement;
+        const themeId = button.getAttribute('data-theme-id');
+        const confirmDeleteButton = document.getElementById('theme-delete-confirm') as HTMLButtonElement;
+
+        console.log("Modal shown, theme ID:", themeId);
+
+        confirmDeleteButton.onclick = () => {
+            if (themeId) {
+                deleteMainTheme(parseInt(themeId));
+                const modalInstance = Modal.getInstance(confirmationModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        };
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const mainThemesContainer = document.getElementById('themes-container');
+    if (mainThemesContainer) {
+        mainThemesContainer.addEventListener('click', event => {
+            const target = event.target as HTMLElement;
+            const isEditButton = target.closest('.edit-theme-button');
+            if (isEditButton) {
+                console.log("edit button clicked");
+                const mainthemeId = isEditButton.getAttribute('data-theme-id');
+                if (mainthemeId) {
+                    showEditMainThemeForm(parseInt(mainthemeId));
+                }
+            }
+        });
+    }
+});
 
 
 
 
 
 
-export function loadMainThemes() {
-    window.location.href = window.location.href;
-}
+

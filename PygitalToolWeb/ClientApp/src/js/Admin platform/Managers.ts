@@ -93,11 +93,7 @@ function addManager() {
         const cancelButton = document.getElementById("cancelButton");
         if (cancelButton) {
             cancelButton.onclick = function () {
-                if (backOfficeId) {
                     loadManagers();
-                } else {
-                    console.error('managers is not found or is invalid.');
-                }
             };
         } else {
             console.error('The cancel button was not found in the DOM.');

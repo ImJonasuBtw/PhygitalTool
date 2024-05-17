@@ -1,5 +1,7 @@
 ﻿// Define a class to structure the subtheme data
-import bootstrap from "bootstrap";
+import bootstrap, {Modal} from "bootstrap";
+import {loadSubThemes, showEditSubThemeForm} from "./SubThemeUI";
+import {deleteSubTheme} from "./SubThemeRestClient";
 
 export class subTheme {
     public subThemeName: string;
@@ -11,7 +13,7 @@ export class subTheme {
     }
 }
 
-console.log('The subthemeCreation.ts script bundle has been loaded!');
+
 
 document.getElementById('add-subtheme-button')?.addEventListener('click', () => {
     console.log('Add button has been pressed!');
@@ -73,7 +75,42 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
     }
 });
 
-export function loadSubThemes() {
-    window.location.href = window.location.href;
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const confirmationModal = document.getElementById('confirmationModal');
+    confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
+        const button = event.relatedTarget as HTMLElement;
+        const subthemeId = button.getAttribute('data-subtheme-id');
+        const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
+
+        console.log("Modal shown, subtheme ID:", subthemeId);
+
+        confirmDeleteButton.onclick = () => {
+            if (subthemeId) {
+                deleteSubTheme(parseInt(subthemeId));
+                const modalInstance = Modal.getInstance(confirmationModal);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+        };
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const projectsContainer = document.getElementById('subthemes-container');
+    if (projectsContainer) {
+        projectsContainer.addEventListener('click', event => {
+            const target = event.target as HTMLElement;
+            const isEditButton = target.closest('.edit-subtheme-button');
+            if (isEditButton) {
+                const subthemeId = isEditButton.getAttribute('data-subtheme-id');
+                if (subthemeId) {
+                    showEditSubThemeForm(parseInt(subthemeId));
+                }
+            }
+        });
+    }
+});
+
+
 
