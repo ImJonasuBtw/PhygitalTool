@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 alert('Failed to add idea.');
             }
-            window.location.reload();
+            
         });
     }
 
