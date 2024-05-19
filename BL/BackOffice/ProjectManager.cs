@@ -1,140 +1,143 @@
-﻿using PhygitalTool.DAL;
+﻿using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.BackOffice;
 
 public class ProjectManager : IProjectManager
 {
-    private readonly IRepositoryPersistance _repositoryPersistance;
-    private readonly IRepositoryRetrieval _repositoryRetrieval;
-    private IProjectManager _projectManagerImplementation;
+    private readonly IRepositoryProject _repositoryProject;
+    private readonly IRepositoryFlow _repositoryFlow;
+    private readonly IRepositoryQuestion _repositoryQuestion;
+    private readonly IRepositoryAnswerPossibility _answerPossibilityRepository;
 
-    public ProjectManager(IRepositoryPersistance repositoryPersistance, IRepositoryRetrieval repositoryRetrieval)
+    public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow, IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository)
     {
-        _repositoryPersistance = repositoryPersistance;
-        _repositoryRetrieval = repositoryRetrieval;
+        _repositoryProject = repositoryProject;
+        _repositoryFlow = repositoryFlow;
+        _repositoryQuestion = repositoryQuestion;
+        _answerPossibilityRepository = answerPossibilityRepository;
     }
-
+    
     public void AddProject(Project project) 
     {
-        _repositoryPersistance.CreateProject(project);
+        _repositoryProject.CreateProject(project);
     }
     public void AddSubTheme(SubTheme subTheme)
     {
-        _repositoryPersistance.CreateSubTheme(subTheme);
+        _repositoryProject.CreateSubTheme(subTheme);
     }
     public void AddMainTheme(MainTheme mainTheme)
     {
-        _repositoryPersistance.CreateMainTheme(mainTheme);
+        _repositoryProject.CreateMainTheme(mainTheme);
     }
 
     public void DeleteSubTheme(int subThemeId)
     {
-        _repositoryPersistance.DeleteSubTheme(subThemeId);
+        _repositoryProject.DeleteSubTheme(subThemeId);
     }
     
     public void DeleteMainTheme(int mainThemeId)
     {
-        _repositoryPersistance.DeleteMainTheme(mainThemeId);
+        _repositoryProject.DeleteMainTheme(mainThemeId);
     }
 
     public Project GetProjectWithThemes(int projectId)
     {
-        return _repositoryRetrieval.ReadProjectWithThemes(projectId);
+        return _repositoryProject.ReadProjectWithThemes(projectId);
     }
 
     public MainTheme GetThemeWithSubthemes(int themeId)
     {
-        return _repositoryRetrieval.ReadThemeWithSubthemes(themeId);
+        return _repositoryProject.ReadThemeWithSubthemes(themeId);
     }
 
     public SubTheme GetSubThemeWithFlows(int subThemeId)
     {
-        return _repositoryRetrieval.ReadSubThemeWithFlows(subThemeId);
+        return _repositoryProject.ReadSubThemeWithFlows(subThemeId);
     }
     
 
     public Flow AddFlow(Flow flow)
     {
-      return _repositoryPersistance.CreateFlow(flow);
+      return _repositoryFlow.CreateFlow(flow);
     }
 
     public Question AddQuestion(Question question)
     {
-       return _repositoryPersistance.CreateQuestion(question);
+       return _repositoryQuestion.CreateQuestion(question);
     }
 
     public void AddAnswerPossibility(AnswerPossibility answerPossibility)
     {
-        _repositoryPersistance.createAnswerPossilility(answerPossibility);
+        _answerPossibilityRepository.CreateAnswerPossibility(answerPossibility);
     }
 
     public void UpdateProject(Project project)
     {
-        _repositoryPersistance.UpdateProject(project);
+        _repositoryProject.UpdateProject(project);
     }
 
-    public void DeleteFlow(int FlowId)
+    public void DeleteFlow(int flowId)
     {
-        _repositoryPersistance.RemoveFlow(FlowId);
+        _repositoryFlow.RemoveFlow(flowId);
     }
 
-    public Flow GetFlowWithQuestionAndAnswerPossibilities(int FlowId)
+    public Flow GetFlowWithQuestionAndAnswerPossibilities(int flowId)
     {
-        return _repositoryRetrieval.ReadFlowWithQuestionAndAnswerpossibilities(FlowId);
+        return _repositoryFlow.ReadFlowWithQuestionAndAnswerpossibilities(flowId);
     }
 
     public void UpdateFlow(Flow flow)
     {
-        _repositoryPersistance.UpdateFlow(flow);
+        _repositoryFlow.UpdateFlow(flow);
     }
 
     public void DeleteQuestion(int questionId)
     {
-        _repositoryPersistance.RemoveQuestion(questionId);
+        _repositoryQuestion.RemoveQuestion(questionId);
     }
 
     public void UpdateQuestion(Question question)
     {
-        _repositoryPersistance.UpdateQuestion(question);
+        _repositoryQuestion.UpdateQuestion(question);
     }
 
-    public Question GetQuestion(int QuestionId)
+    public Question GetQuestion(int questionId)
     {
-       return _repositoryRetrieval.ReadQuestion(QuestionId);
+       return _repositoryQuestion.ReadQuestion(questionId);
     }
 
     public void UpdateAnswerPossibility(AnswerPossibility answerPossibility)
     {
-        _repositoryPersistance.updateAnswerPossibility(answerPossibility);
+        _answerPossibilityRepository.UpdateAnswerPossibility(answerPossibility);
     }
 
-    public void DeleteanswerPossibility(int answerPossibilityID)
+    public void DeleteAnswerPossibility(int answerPossibilityId)
     {
-        _repositoryPersistance.RemoveAnswerPossibilty(answerPossibilityID);
+        _answerPossibilityRepository.RemoveAnswerPossibility(answerPossibilityId);
     }
 
     public void DeleteProject(int projectId)
     { 
-        _repositoryPersistance.RemoveProject(projectId);
+        _repositoryProject.RemoveProject(projectId);
     }
 
     public SubTheme GetSubTheme(int subThemeId)
     {
-        return _repositoryRetrieval.ReadSubTheme(subThemeId);
+        return _repositoryProject.ReadSubTheme(subThemeId);
     }
     public MainTheme GetMainTheme(int mainthemeId)
     {
-        return _repositoryRetrieval.ReadMainTheme(mainthemeId);
+        return _repositoryProject.ReadMainTheme(mainthemeId);
     }
 
     public void UpdateSubTheme(SubTheme subTheme)
     {
-        _repositoryRetrieval.UpdateSubTheme(subTheme);
+        _repositoryProject.UpdateSubTheme(subTheme);
     }
     public void UpdateMainTheme(MainTheme mainTheme)
     {
-        _repositoryRetrieval.UpdateMainTheme(mainTheme);
+        _repositoryProject.UpdateMainTheme(mainTheme);
     }
 }

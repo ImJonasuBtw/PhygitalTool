@@ -1,16 +1,19 @@
+using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
 namespace PhygitalTool.DAL.EF;
 
 public class UserInputFactory
 {
-    private readonly IRepositoryRetrieval _retrieval;
-    private readonly IRepositoryPersistance _persistence;
+    private readonly IRepositoryAnswer _answerRepository;
+    private readonly IRepositoryUserInput _repositoryUserInput;
+    private readonly IRepositoryFlow _repositoryFlow;
 
-    public UserInputFactory(IRepositoryRetrieval retrieval, IRepositoryPersistance persistence)
+    public UserInputFactory(IRepositoryAnswer answerRepository, IRepositoryUserInput repositoryUserInput, IRepositoryFlow repositoryFlow)
     {
-        _retrieval = retrieval;
-        _persistence = persistence;
+        _answerRepository = answerRepository;
+        _repositoryUserInput = repositoryUserInput;
+        _repositoryFlow = repositoryFlow;
     }
 
     public void GenerateRandomUserInputForAllFlows(int amountOfFlows, int amountOfGenerationsPerFlow)
@@ -26,7 +29,7 @@ public class UserInputFactory
 
     public void GenerateRandomUserInput(int flowId)
     {
-        var flow = _retrieval.ReadFlow(flowId);
+        var flow = _repositoryFlow.ReadFlow(flowId);
         
         foreach (var question in flow.Questions)
         {
@@ -62,7 +65,7 @@ public class UserInputFactory
             ProjectId = projectId
         };
 
-        _persistence.CreateUserInput(userInput);
+        _repositoryUserInput.CreateUserInput(userInput);
     }
 
     private int AddAnswer(string answerText, int questionId)
@@ -73,7 +76,7 @@ public class UserInputFactory
             QuestionId = questionId
         };
 
-        var newAnswer = _persistence.CreateAndReturnAnswer(domainAnswer);
+        var newAnswer = _answerRepository.CreateAndReturnAnswer(domainAnswer);
         domainAnswer.AnswerId = newAnswer.AnswerId;
 
         return domainAnswer.AnswerId;
