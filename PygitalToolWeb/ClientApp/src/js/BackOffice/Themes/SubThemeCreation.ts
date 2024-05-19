@@ -69,7 +69,21 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
             if (response.ok) {
                 loadSubThemes();
             } else {
-                alert('Failed to add subtheme');
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to add subtheme: ' + text));
+                }
             }
         });
     }

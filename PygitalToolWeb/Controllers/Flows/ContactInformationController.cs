@@ -24,7 +24,7 @@ public class ContactInformationController : Controller
         return View("index", contactInfoStart);
     }
     
-    // Returns to home after user fills in contact form
+ 
     [HttpPost]
     public IActionResult Contact(ContactInformation contactInformation, Dictionary<int, string> answers)
     {
@@ -39,8 +39,11 @@ public class ContactInformationController : Controller
             _flowManager.SaveContactInformation(contactInformation);
             return RedirectToAction("Index", "Home"); 
         }
+  
+        contactInformation.Flow = _flowManager.GetFlow(contactInformation.FlowId);
+
+        return View("Index", contactInformation);
         
         
-        return RedirectToAction("Index", new { id = contactInformation.FlowId });
     }
 }

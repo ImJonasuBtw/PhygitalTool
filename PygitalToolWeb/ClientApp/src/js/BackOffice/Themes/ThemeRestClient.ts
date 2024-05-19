@@ -28,17 +28,26 @@ export function updateMaintheme(mainthemeId: number): void {
             ThemeName: mainthemeNameInput.value,
             MainThemeInformation: informationInput.value
         })
-    }).then(response => {
+    }).then(async response => {
         if (response.ok) {
             console.log('theme updated successfully');
             loadMainThemes();
         } else {
-            response.json().then(errorResponse => {
-
-                const errorMessages = Object.values(errorResponse.errors).join(', ');
-                console.error('Failed to update theme because of response: ' + errorMessages);
-                alert('Failed to update theme because: ' + errorMessages);
-            });
+            if (response.status === 400) {
+                const errorData = await response.json();
+                if (errorData && errorData.errors) {
+                    for (const key in errorData.errors) {
+                        if (errorData.errors.hasOwnProperty(key)) {
+                            const errorMessage = errorData.errors[key];
+                            alert(errorMessage);
+                        }
+                    }
+                } else {
+                    alert('Validation error occurred.');
+                }
+            } else {
+                response.text().then(text => alert('Failed to update Main theme: ' + text));
+            }
         }
     })
 

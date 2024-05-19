@@ -1,4 +1,4 @@
-﻿import bootstrap, {Modal} from "bootstrap";
+﻿import  {Modal} from "bootstrap";
 import {loadMainThemes, showEditMainThemeForm} from "./ThemeUI";
 import {deleteMainTheme} from "./ThemeRestClient";
 export class mainTheme {
@@ -67,7 +67,22 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
             if (response.ok) {
                 loadMainThemes();
             } else {
-                alert('Failed to add theme');
+                console.error('Failed to update flow');
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to add Theme: ' + text));
+                }
             }
         });
     }

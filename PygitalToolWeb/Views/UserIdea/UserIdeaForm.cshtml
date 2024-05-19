@@ -5,8 +5,12 @@
     ViewBag.Title = "UserPlatform";
     Layout = "_Layout";
 }
-<body class="background-contract-form">   
+<body class="background-contract-form">  
+    <div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
+    </div>
 <h1 class="center">User Ideas</h1>
+
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 {

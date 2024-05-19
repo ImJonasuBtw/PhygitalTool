@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
             });
 
-            if (response.ok) {
-                window.location.reload();
-            } else {
+            if (!response.ok) {
                 alert('Failed to add idea.');
             }
-            
+            alert('idea added successfully!');
+            window.location.reload(); 
         });
+     
     }
 
 
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const ideaId = this.getAttribute('data-ideaId');
-            if (ideaId && !hasCurrentUserLikedIdea(ideaId)) { // Check if the current user has not already liked the idea
+            if (ideaId && !hasCurrentUserLikedIdea(ideaId)) { 
                 try {
                     const response = await fetch(`/api/Ideas/Like/${ideaId}`, {
                         method: 'POST',
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const currentLikes = parseInt(likesCountElement.textContent || '0');
                             likesCountElement.textContent = (currentLikes + 1).toString();
                         }
-                        markIdeaAsLikedByCurrentUser(ideaId); // Mark the idea as liked by the current user
+                        markIdeaAsLikedByCurrentUser(ideaId); 
                     } else {
                         console.error('Failed to like idea');
                     }
@@ -111,6 +111,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 const commentText = commentTextElement?.value;
                 const scriptElement = document.getElementById('UserPlatform-script');
                 const userId = scriptElement?.dataset.userId;
+                if (!commentText) {
+                    alert('Vul comment in');
+                    return;
+                }
 
                 try {
                     const response = await fetch('/api/Comment', {

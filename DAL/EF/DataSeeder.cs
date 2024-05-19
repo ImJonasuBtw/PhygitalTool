@@ -175,7 +175,7 @@ public static class DataSeeder
         var project2 = new Project
         {
             Description = "Verzameling van bevragingen voor jongeren 16-21",
-            ProjectName = "Bevragingen jongvolwassenen",
+            ProjectName = "Jongerenbevragingen",
             CreationDate = default,
             Status = ProjectStatus.NonActive
         };
@@ -185,12 +185,10 @@ public static class DataSeeder
         context.Projects.Add(project1);
         context.Projects.Add(project2);
 
-        var mainTheme1 = new MainTheme("Verkiezingen stad of gemeente", "De verschillende beleidsdomeinen binnen een stad of gemeente");
-        var mainTheme2 = new MainTheme("Educatief samenwerkingsplatform", "Een platform voor het delen van educatieve content en samenwerking tussen leraren en studenten");
-        var mainTheme3 = new MainTheme("Gezondheidsbewustzijn bij tieners", "Het bevorderen van gezonde levensstijlkeuzes en het aanmoedigen van actieve deelname aan lichaamsbeweging en voedingsvoorlichting onder tieners.");
-        var mainTheme4 = new MainTheme("Milieubewustzijn en duurzaamheid",
-            "Onderzoek naar jongeren hun bewustzijn en betrokkenheid bij milieukwesties, het peilen van hun interesse in duurzaamheidsinitiatieven en het verzamelen van feedback over mogelijke acties en projecten die kunnen bijdragen aan een groenere toekomst.");
-        
+        var mainTheme1 = new MainTheme("Verkiez stad/gemeente",  "De verschillende beleidsdomeinen binnen een stad of gemeente");
+        var mainTheme2 = new MainTheme("Educ samenwerkplatf", "Een platform voor het delen van educatieve content en samenwerking tussen leraren en studenten");
+        var mainTheme3 = new MainTheme("Gezondbewustzijn tiener", "Het bevorderen van gezonde levensstijlkeuzes en het aanmoedigen van actieve deelname aan lichaamsbeweging en voedingsvoorlichting onder tieners.");
+        var mainTheme4 = new MainTheme("Milieubewust & duurzaamh", "Jongeren betrokken bij milieukwesties");
         context.MainThemes.Add(mainTheme1);
         context.MainThemes.Add(mainTheme2);
         context.MainThemes.Add(mainTheme3);
@@ -323,9 +321,9 @@ public static class DataSeeder
         // Creating SubThemes
         var subTheme1 = new SubTheme("KiesIntenties",
             "Ben je nog aan het twijfelen over op wie je wilt stemmen bij de aankomende verkiezingen? Het is belangrijk om te overwegen welke kandidaten het beste aansluiten bij jouw waarden en visie voor de toekomst van onze gemeente. Neem de tijd om de verschillende partijprogramma's te bekijken en de standpunten van de kandidaten te onderzoeken, zodat je een weloverwogen keuze kunt maken op verkiezingsdag.");
-        var subTheme2 = new SubTheme("Redenen om (niet) te gaan stemmen",
+        var subTheme2 = new SubTheme("Reden om te gaan stemmen",
             "Stemmen is een belangrijk onderdeel van onze democratie, maar soms kunnen er redenen zijn waarom mensen ervoor kiezen om niet te stemmen. Of het nu gaat om twijfels over het nut van hun stem, ontevredenheid over het politieke systeem, of praktische obstakels zoals tijdgebrek, het is essentieel om deze redenen te begrijpen en manieren te vinden om de betrokkenheid van alle burgers bij het democratische proces te vergroten.");
-        var subTheme3 = new SubTheme("Gevoel van betrokkenheid bij lokaal beleid",
+        var subTheme3 = new SubTheme("Gevoel van betrokkenheid",
             "Hoe betrokken voel jij je bij het beleid dat wordt uitgestippeld in onze gemeente? Of het nu gaat om de planning van nieuwe projecten, de organisatie van lokale evenementen, of het aanpakken van gemeenschapsproblemen, jouw betrokkenheid en input als burger zijn van onschatbare waarde voor het vormgeven van een bloeiende en inclusieve lokale gemeenschap.");
         var subTheme4 = new SubTheme("bevraging peer-feedback",
             "Het subthema \"Verbetering van peer-feedback\" in de bevragingen focust op het verkrijgen van feedback van gebruikers over hoe het platform peer-to-peer samenwerking en feedback kan verbeteren. Dit helpt om inzicht te krijgen in de huidige ervaringen van studenten en om potentiële verbeteringen te identificeren");
@@ -377,7 +375,7 @@ public static class DataSeeder
         // Creating Flows
         var flow1 = new Flow("Bevraging gemeentebeleid", FlowType.Linear, Language.Dutch, "flow over gemeentebeleid");
         var flow2 = new Flow("Bevraging milieu", FlowType.Circular, Language.Dutch, "flow over milieu");
-        var flow3 = new Flow("Bevraging platform studenten", FlowType.Circular, Language.Dutch,
+        var flow3 = new Flow("Bevraging platf studenten", FlowType.Circular, Language.Dutch,
             "Bevraging over samenwerkingsplatform voor middelbare studenten");
         //Creating Userinputs
         var userInput1 = new UserInput(1, 2, 1, 1, 1);

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using PhygitalTool.Domain.FlowPackage;
 
 namespace PhygitalTool.Web.Models;
