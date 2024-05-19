@@ -1,10 +1,8 @@
-﻿using PhygitalTool.Domain.Platform;
-
-namespace PhygitalTool.BL;
+﻿namespace PhygitalTool.BL.BackOffice;
 
 public interface IBackOfficeManager
 {
-    BackOffice GetBackOfficeForManager(string managerId);
+    Domain.Platform.BackOffice GetBackOfficeForManager(string managerId);
 
-    BackOffice GetBackOffice(int backofficeId);
+    Domain.Platform.BackOffice GetBackOffice(int backofficeId);
 } 

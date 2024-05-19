@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhygitalTool.BL;
+using PhygitalTool.BL.AdminPlatform;
+using PhygitalTool.BL.BackOffice;
+using PhygitalTool.BL.Flows;
 using PhygitalTool.BL.Users;
-using PhygitalTool.DAL;
 using PhygitalTool.DAL.EF;
-using PhygitalTool.Domain.FlowPackage;
-using PhygitalTool.Domain.Platform;
+using PhygitalTool.DAL.EF.Repositorys;
+using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +19,15 @@ var connectionString = builder.Configuration.GetConnectionString("PhygitalDbCont
 
 builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString));
-builder.Services.AddScoped<IRepositoryRetrieval, RetrievalRepository>();
-builder.Services.AddScoped<IRepositoryPersistance, PersistanceRepository>();
+builder.Services.AddScoped<IRepositoryAnswer, AnswerRepository>();
+builder.Services.AddScoped<IRepositoryAnswerPossibility, AnswerPossibilityRepository>();
+builder.Services.AddScoped<IRepositoryBackOffice, BackOfficeRepository>();
+builder.Services.AddScoped<IRepositoryContactInformation, ContactInformationRepository>();
+builder.Services.AddScoped<IRepositoryFlow, FlowRepository>();
+builder.Services.AddScoped<IRepositoryProject, ProjectRepository>();
+builder.Services.AddScoped<IRepositoryQuestion, QuestionRepository>();
+builder.Services.AddScoped<IRepositoryUserInput, UserInputRepository>();
+builder.Services.AddScoped<IRepositoryIdea, IdeaRepository>();
 builder.Services.AddScoped<IFlowManager, FlowManger>();
 builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
@@ -40,7 +49,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PhygitalToolDbContext>();
-
 
 
 var app = builder.Build();
@@ -65,13 +73,14 @@ using (var scope = app.Services.CreateScope())
         DataSeeder.Seed(ctx, userManager);
         Console.Write("Data Seeded");
 
-        // Generating User Input
-        IRepositoryRetrieval retrieval = new RetrievalRepository(ctx);
-        IRepositoryPersistance persistence = new PersistanceRepository(ctx);
+        IRepositoryFlow flowRepository = new FlowRepository(ctx);
+        IRepositoryUserInput userInputRepository = new UserInputRepository(ctx);
+        IRepositoryAnswer answerRepository = new AnswerRepository(ctx);
 
-        var userInputFactory = new UserInputFactory(retrieval, persistence);
+
+        var userInputFactory = new UserInputFactory(answerRepository, userInputRepository, flowRepository);
         var amountOfFlows = ctx.Flows.Count();
-        
+
         userInputFactory.GenerateRandomUserInputForAllFlows(amountOfFlows, 50);
         Console.WriteLine("UserInputs Generated");
     }
