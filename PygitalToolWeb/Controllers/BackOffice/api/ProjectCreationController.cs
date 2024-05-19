@@ -28,17 +28,24 @@ public class ProjectCreationController : Controller
             return BadRequest(ModelState);
         }
         
-        var domainProject = new Project
+        try
         {
-            Description = project.Description,
-            ProjectName = project.ProjectName,
-            CreationDate = DateTime.UtcNow,
-            Status = ProjectStatus.NonActive,
-            BackOfficeId = project.BackOfficeId
-        };
+            var domainProject = new Project
+            {
+                Description = project.Description,
+                ProjectName = project.ProjectName,
+                CreationDate = DateTime.UtcNow,
+                Status = ProjectStatus.NonActive,
+                BackOfficeId = project.BackOfficeId
+            };
 
-        _projectManager.AddProject(domainProject);
-        return Ok();
+            _projectManager.AddProject(domainProject);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
     
     [Authorize(Roles = "Manager")]

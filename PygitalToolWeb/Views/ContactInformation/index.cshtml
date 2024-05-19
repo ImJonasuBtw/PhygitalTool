@@ -6,44 +6,45 @@
     Layout = "_Layout";
 }
 <body class="background-contract-form">
-<h2>Laat je contactgegevens achter en blijf op de hoogte over info rond dit thema</h2>
+    <h2>Laat je contactgegevens achter en blijf op de hoogte over info rond dit thema</h2>
 
-<form asp-controller="ContactInformation" asp-action="Contact" method="post">
-    <div class="mb-3">
-        <label asp-for="Email" class="form-label">Email</label>
-        <input asp-for="Email" class="form-control"/>
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+    <form asp-controller="ContactInformation" asp-action="Contact" method="post">
 
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label">Name</label>
-        <input asp-for="Name" class="form-control"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="Birthdate" class="form-label">Birthdate</label>
-        <input asp-for="Birthdate" class="form-control" type="date"/>
-        <span asp-validation-for="Birthdate" class="text-danger"></span>
-    </div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
 
-    <input asp-for="FlowId" type="hidden"/>
+        <div class="mb-3">
+            <label asp-for="Birthdate" class="form-label">Birthdate</label>
+            <input asp-for="Birthdate" class="form-control" type="date"/>
+            <span asp-validation-for="Birthdate" class="text-danger"></span>
+        </div>
 
-    @foreach (var question in Model.Flow.Questions)
-    {
-        if (question.QuestionType == QuestionType.Open)
+        <input asp-for="FlowId" type="hidden"/>
+
+        @foreach (var question in Model.Flow.Questions)
         {
-            <div class="mb-3">
-                <label class="form-label">@question.QuestionText</label>
-                <input type="text" name="answers[@question.QuestionId]" class="form-control"/>
-                <span class="text-danger"></span>
-                <input type="hidden" name="currentFlow" value="@question.FlowId"/>
-                <input type="hidden" name="currentQuestion" value="@question.QuestionId"/>
-                <input type="hidden" name="subThemeId" value="@question.Flow.SubThemeId"/>
-            </div>
+            if (question.QuestionType == QuestionType.Open)
+            {
+                <div class="mb-3">
+                    <label class="form-label">@question.QuestionText</label>
+                    <input type="text" name="answers[@question.QuestionId]" class="form-control"/>
+                    <span class="text-danger"></span>
+                    <input type="hidden" name="currentFlow" value="@question.FlowId"/>
+                    <input type="hidden" name="currentQuestion" value="@question.QuestionId"/>
+                    <input type="hidden" name="subThemeId" value="@question.Flow.SubThemeId"/>
+                </div>
+            }
         }
-    }
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </body>

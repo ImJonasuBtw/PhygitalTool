@@ -1,6 +1,8 @@
 ﻿import {loadProjects} from "./ProjectUI";
 
-export function updateProject(projectId: number): void {
+
+
+export   function updateProject(projectId: number): void {
     const projectNameInput = document.getElementById('projectName') as HTMLInputElement;
     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
     const statusSelect = document.getElementById('statusSelect') as HTMLSelectElement;
@@ -17,13 +19,26 @@ export function updateProject(projectId: number): void {
             status: statusSelect.value === "Active" ? 0 : 1
         })
     })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
                 console.log('Project updated successfully');
                 loadProjects();
             } else {
-                console.error('Failed to update project');
-                response.text().then(text => alert('Failed to update project: ' + text));
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to update Project: ' + text));
+                }
             }
         })
         .catch(error => {
