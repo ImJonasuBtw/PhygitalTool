@@ -27,13 +27,26 @@ export function updateSubtheme(subthemeId: number): void {
             SubThemeInformation: informationInput.value
         })
     })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
                 console.log('subtheme updated successfully');
                 loadSubThemes();
             } else {
-                console.error('Failed to update subtheme');
-                response.text().then(text => alert('Failed to update subtheme: ' + text));
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to update subtheme: ' + text));
+                }
             }
         })
         .catch(error => {

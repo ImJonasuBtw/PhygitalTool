@@ -23,10 +23,12 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
                 <div class="mb-3">
                     <label for="projectName" class="form-label">Project Name</label>
                     <input type="text" class="form-control" id="projectName" required>
+                     <span id="projectNameError" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" required></textarea>
+                    <span id="descriptionError" class="text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary">Add Project</button>
                 <button type="button" class="btn btn-secondary" id="cancel-buttonAdd">Cancel</button>
@@ -62,7 +64,21 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
             if (response.ok) {
                 loadProjects();
             } else {
-                alert('Failed to add project');
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to add Project: ' + text));
+                }
             }
         });
     }

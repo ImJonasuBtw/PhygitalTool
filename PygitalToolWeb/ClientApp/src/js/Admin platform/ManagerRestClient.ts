@@ -1,33 +1,64 @@
 ﻿import {loadManagers} from "./ManagerUI";
+import {validatePassword} from "../validation";
 
 export async function submitManagersForm() {
     const form = document.getElementById('managersForm') as HTMLFormElement;
     const formData = new FormData(form);
     try {
-        const fileResponse = await fetch('/api/files/uploadFile', {
-            method: 'POST',
-            body: formData
-        });
-        const fileResult = await fileResponse.json();
-        const imageUrl = fileResult.url;
-
         const email = (document.getElementById('email') as HTMLInputElement).value;
         const password = (document.getElementById('password') as HTMLInputElement).value;
         const userName = (document.getElementById('userName') as HTMLInputElement).value;
-        const backofficeId : number = Number((document.getElementById('backoffice') as HTMLSelectElement).value);
+        const backofficeId: number = Number((document.getElementById('backoffice') as HTMLSelectElement).value);
 
+        if (!validatePassword(password)) {
+            alert('Password must contain at least one uppercase letter, one lowercase letter, and one non-alphabetic character.');
+            return;
+        }
+        
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+        let imageUrl = null;
+        if (fileInput.files && fileInput.files.length > 0) {
+            
+            formData.append('file', fileInput.files[0]);
 
-        const Response = await fetch('/api/Managers', {
+            const fileResponse = await fetch('/api/files/uploadFile', {
+                method: 'POST',
+                body: formData
+            });
+
+            const fileResult = await fileResponse.json();
+            if (fileResult && fileResult.url) {
+                imageUrl = fileResult.url;
+            } 
+        } else {
+            alert("Geef een profielfoto mee");
+            return;
+        }
+
+        const response = await fetch('/api/Managers', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email, password, imageUrl, userName,
+                email,
+                password,
+                imageUrl,
+                userName,
                 backofficeId
             })
         });
-        const data = await Response.json();
+
+        if (!response.ok) {
+            if (response.status === 400) {
+                alert(`Failed to add supervisor: Email already exists`);
+            } else if (response.status === 409) {
+                alert('Failed to add supervisor: Email already exists.');
+            }
+            return;
+        }
+
+        const data = await response.json();
         console.log('Success:', data);
         alert('Managers added successfully!');
         loadManagers();

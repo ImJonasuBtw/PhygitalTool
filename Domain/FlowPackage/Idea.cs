@@ -9,7 +9,11 @@ public class Idea
     // Prop
     [Key]
     public int IdeaId { get; set; }
+    [Required(ErrorMessage = "Title is required")]
+    [StringLength(50, ErrorMessage = "Title cannot exceed 50 characters.")]
     public string Title{ get; set; }
+    [Required(ErrorMessage = "Description is required")]
+    [StringLength(500, ErrorMessage = "Description  cannot exceed 500 characters.")]
     public string Description { get; set; }
     public int Likes { get; set; }
     

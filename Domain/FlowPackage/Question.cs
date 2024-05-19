@@ -8,9 +8,13 @@ public class Question
     [Key]
     // Prop
     public int QuestionId { get; set; }
+    [Required(ErrorMessage = "QuestionText is required")]
+    [StringLength(400, ErrorMessage = "Question cannot exceed 400 characters.")]
     public string QuestionText { get; set; }
+   
     
     public string QuestionImage { get; set; }
+    [Required(ErrorMessage = "QuestionType  is required")]
     public QuestionType QuestionType { get; set; }
     //foreing key for flow
     public int FlowId { get; set; }

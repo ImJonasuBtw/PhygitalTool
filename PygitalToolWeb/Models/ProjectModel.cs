@@ -8,9 +8,11 @@ public class ProjectModel
     [Key] public int ProjectId { get; set; }
 
     [Required(ErrorMessage = "Description is required")]
+    [StringLength(150, ErrorMessage = "Description cannot exceed 150 characters.")]
     public string Description { get; set; }
 
     [Required(ErrorMessage = "Project Name is required")]
+    [StringLength(25, ErrorMessage = "Name cannot exceed 25 characters.")]
     public string ProjectName { get; set; }
 
     [Required(ErrorMessage = "Creation Date is required")]

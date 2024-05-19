@@ -28,9 +28,7 @@ export async function updateFlow(flowId: number): Promise<void> {
         const questionId = questionContainer.getAttribute('data-question-id');
         const questionTypeSelect = questionContainer.querySelector('select') as HTMLSelectElement;
         const selectedQuestionType = parseInt(questionTypeSelect.value);
-        if (questionInput.value.trim() === '') {
-            return null;
-        }
+       
         const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
         const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
         const answerPossibilities: any[] = Array.from(filteredAnswerPossibilities).map(input => {
@@ -85,13 +83,27 @@ export async function updateFlow(flowId: number): Promise<void> {
             Questions: questions
         })
     })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
                 console.log('Flow updated successfully');
                 loadFlows();
             } else {
                 console.error('Failed to update flow');
-                response.text().then(text => alert('Failed to update flow: ' + text));
+                if (response.status === 400) {
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
+                } else {
+                    response.text().then(text => alert('Failed to update flow: ' + text));
+                }
             }
         })
         .catch(error => {

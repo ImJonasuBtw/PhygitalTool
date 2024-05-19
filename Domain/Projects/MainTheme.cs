@@ -8,7 +8,11 @@ public class MainTheme
 
     [Key]
     public int ThemeId { get; set; }
+    [Required(ErrorMessage = "Name is required.")]
+    [StringLength(25, ErrorMessage = "Name cannot exceed 25 characters.")]
     public string ThemeName { get; set; }
+    [Required(ErrorMessage = "MainThemeInformation required.")]
+    [StringLength(150, ErrorMessage = "MainThemeInformation cannot exceed 150 characters.")]
     public string MainThemeInformation { get; set; }
     
     //nav

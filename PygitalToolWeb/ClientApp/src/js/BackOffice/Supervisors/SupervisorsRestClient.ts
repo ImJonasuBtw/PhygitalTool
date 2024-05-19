@@ -1,5 +1,8 @@
 ﻿import {backOfficeId, Supervisor} from "./Supervisors";
 import {addSupervisor} from "./SuperVisorsUI";
+import {validatePassword} from "../../validation";
+
+
 
 export function loadSupervisors(backofficeId: number) {
     console.log(backofficeId);
@@ -32,16 +35,33 @@ export async function submitSupervisorForm() {
     const form = document.getElementById('supervisorForm') as HTMLFormElement;
     const formData = new FormData(form);
     try {
-        const fileResponse = await fetch('/api/files/uploadFile', {
-            method: 'POST',
-            body: formData
-        });
-        const fileResult = await fileResponse.json();
-        const imageUrl = fileResult.url;
-
         const email = (document.getElementById('email') as HTMLInputElement).value;
         const password = (document.getElementById('password') as HTMLInputElement).value;
         const userName = (document.getElementById('userName') as HTMLInputElement).value;
+
+        if (!validatePassword(password)) {
+            alert('Password must contain at least one uppercase letter, one lowercase letter, and one non-alphabetic character.');
+            return;
+        }
+        
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+        let imageUrl = null;
+        if (fileInput.files && fileInput.files.length > 0) {
+           
+            formData.append('file', fileInput.files[0]);
+        
+            const fileResponse = await fetch('/api/files/uploadFile', {
+                method: 'POST',
+                body: formData
+             });
+            const fileResult = await fileResponse.json();
+            if (fileResult && fileResult.url) {
+                imageUrl = fileResult.url;
+            }
+        } else {
+            alert("Geef een profielfoto mee");
+            return;
+        }
         const supervisorResponse = await fetch('/api/supervisors', {
             method: 'POST',
             headers: {
@@ -52,6 +72,17 @@ export async function submitSupervisorForm() {
                 BackOfficeId: Number(backOfficeId)
             })
         });
+
+        if (!supervisorResponse.ok) {
+            if (supervisorResponse.status === 400) {
+                alert(`Failed to add supervisor: Email already exists`);
+            } else if (supervisorResponse.status === 409) {
+                alert('Failed to add supervisor: Email already exists.');
+                
+            }
+        
+            return;
+        }
         const data = await supervisorResponse.json();
         console.log('Success:', data);
         alert('Supervisor added successfully!');

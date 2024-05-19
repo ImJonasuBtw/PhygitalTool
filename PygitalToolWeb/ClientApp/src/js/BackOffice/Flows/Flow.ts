@@ -58,9 +58,14 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
         document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
         document.getElementById('new-flow-form')?.addEventListener('submit', async function (event) {
             event.preventDefault();
+            
             const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
             const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
             const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
+            if (!flowTypeRadio) {
+                alert('Please select a flow type.');
+                return;
+            }
             const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
             const questionContainers = document.querySelectorAll('.question-container');
             const questions: any[] = Array.from(questionContainers).map(async (container: Element) => {
@@ -69,9 +74,7 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                 const questionId = questionContainer.getAttribute('data-question-id');
                 const questionTypeSelect = questionContainer.querySelector('select') as HTMLSelectElement;
                 const selectedQuestionType = parseInt(questionTypeSelect.value);
-                if (questionInput.value.trim() === '') {
-                    return null;
-                }
+             
                 const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
                 const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
                 const answerPossibilities: any[] = Array.from(filteredAnswerPossibilities).map(input => {
@@ -83,30 +86,33 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
                 });
 
                 const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
-                const formData = new FormData();
-
-                if (fileInput.files && fileInput.files.length > 0) {
-                    formData.append('file', fileInput.files[0]);
-                }
-
-                const response = await fetch('/api/files/uploadFile', {
-                    method: 'POST',
-                    body: formData
-
-                });
-
-                const fileResult = await response.json();
+                
                 let questionImage = null;
-                if (fileResult && fileResult.url) {
-                    questionImage = fileResult.url;
+                if (fileInput.files && fileInput.files.length > 0) {
+                    const formData = new FormData();
+                    formData.append('file', fileInput.files[0]);
+
+
+                    const response = await fetch('/api/files/uploadFile', {
+                        method: 'POST',
+                        body: formData
+
+                    });
+
+                    const fileResult = await response.json();
+
+                    if (fileResult && fileResult.url) {
+                        questionImage = fileResult.url;
+                    }
                 }
-                return {
-                    questionId: questionId,
-                    questionText: questionInput.value,
-                    questionType: selectedQuestionType,
-                    answerPossibilities: answerPossibilities,
-                    questionImage: questionImage
-                };
+                    return {
+                        questionId: questionId,
+                        questionText: questionInput.value,
+                        questionType: selectedQuestionType,
+                        answerPossibilities: answerPossibilities,
+                        questionImage: questionImage
+                    };
+                
             }).filter(question => question !== null);
 
             const resolvedQuestions = await Promise.all(questions);
@@ -140,13 +146,25 @@ document.getElementById('add-Flow-button')?.addEventListener('click', () => {
             } else {
                 let errorMessage = 'Failed to add flow';
                 if (response.status === 400) {
-                    errorMessage = 'Fill all data!';
+                    const errorData = await response.json();
+                    if (errorData && errorData.errors) {
+                        for (const key in errorData.errors) {
+                            if (errorData.errors.hasOwnProperty(key)) {
+                                const errorMessage = errorData.errors[key];
+                                alert(errorMessage);
+                            }
+                        }
+                    } else {
+                        alert('Validation error occurred.');
+                    }
                 } else if (response.status === 404) {
                     errorMessage = 'Not Found';
                 } else if (response.status === 409) {
                     errorMessage = 'Conflict - Key exists already';
                 } else if (response.status === 500) {
                     errorMessage = 'Internal Server Error';
+                    const errorData = await response.json();
+                    errorMessage = errorData.message;
                 }
                 alert(errorMessage);
             }
