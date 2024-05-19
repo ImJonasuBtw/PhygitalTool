@@ -262,7 +262,7 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
-            _projectManager.DeleteanswerPossibility(AnswerPossibility);
+            _projectManager.DeleteAnswerPossibility(AnswerPossibility);
             return Ok();
         }
         catch (Exception ex)

@@ -1,10 +1,8 @@
-using PhygitalTool.Domain.Platform;
-
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.AdminPlatform;
 
 public interface IAdminPlatformManager
 {
-    AdminPlatform GetAdminPlatform();
+    Domain.Platform.AdminPlatform GetAdminPlatform();
     
-    IEnumerable<BackOffice> getBackoffices();
+    IEnumerable<Domain.Platform.BackOffice> getBackoffices();
 }

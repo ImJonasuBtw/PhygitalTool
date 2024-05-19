@@ -1,26 +1,23 @@
-using PhygitalTool.DAL;
-using PhygitalTool.Domain.Platform;
+using PhygitalTool.DAL.IRepositorys;
 
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.AdminPlatform;
 
 public class AdminPlatformManager: IAdminPlatformManager
 {
-    private readonly IRepositoryPersistance _persistence;
-    private readonly IRepositoryRetrieval _retrieval;
+    private readonly IRepositoryBackOffice _repositoryBackOffice;
 
-    public AdminPlatformManager(IRepositoryPersistance persistence, IRepositoryRetrieval retrieval)
+    public AdminPlatformManager(IRepositoryBackOffice repositoryBackOffice )
     {
-        _persistence = persistence;
-        _retrieval = retrieval;
+        _repositoryBackOffice = repositoryBackOffice;
     }
     
-    public AdminPlatform GetAdminPlatform()
+    public Domain.Platform.AdminPlatform GetAdminPlatform()
     {
-        return _retrieval.ReadAdminPlatform();
+        return _repositoryBackOffice.ReadAdminPlatform();
     }
 
-    public IEnumerable<BackOffice> getBackoffices()
+    public IEnumerable<Domain.Platform.BackOffice> getBackoffices()
     {
-        return _retrieval.readBackoffices();
+        return _repositoryBackOffice.ReadBackOffices();
     }
 }
