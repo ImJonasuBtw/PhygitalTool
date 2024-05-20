@@ -20,12 +20,15 @@ public class FlowRepository : IRepositoryFlow
             .ThenInclude(m => m.MainTheme)
             .Include(flow => flow.Questions)
             .ThenInclude(q => q.AnswerPossibilities)
+            .AsNoTracking()
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
     public Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId)
     {
-        return _context.Flows.Include(f => f.Questions).ThenInclude(question => question.AnswerPossibilities)
+        return _context.Flows.Include(f => f.Questions)
+            .ThenInclude(question => question.AnswerPossibilities)
+            .AsNoTracking()
             .FirstOrDefault(flow => flow.FlowId == flowId);
     }
 

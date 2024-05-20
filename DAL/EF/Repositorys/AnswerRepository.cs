@@ -1,4 +1,5 @@
-﻿using PhygitalTool.DAL.IRepositorys;
+﻿using Microsoft.EntityFrameworkCore;
+using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
 namespace PhygitalTool.DAL.EF;
@@ -14,12 +15,12 @@ public class AnswerRepository : IRepositoryAnswer
 
     public IEnumerable<Answer> ReadAllAnswers()
     {
-        return _context.Answers;
+        return _context.Answers.AsNoTracking();
     }
 
     public IEnumerable<Answer> ReadAllAnswersWithQuestions()
     {
-        return _context.Answers.Select(answer => new Answer
+        return _context.Answers.AsNoTracking().Select(answer => new Answer
         {
             AnswerId = answer.AnswerId,
             AnswerText = answer.AnswerText,

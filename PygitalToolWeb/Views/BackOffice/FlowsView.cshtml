@@ -22,14 +22,18 @@
                 }
             </div>
             <div class="nav flex-column">
-                <a class="nav-link active" asp-area="" asp-controller="Themes"
-                   asp-action="index"
-                   asp-route-themeId="@Model.MainThemeId">
-                    Terug naar SubThema's
+                <a class="nav-link active" asp-area="" asp-controller="FlowCreation"
+                   asp-action="index" asp-route-subThemeId="@Model.SubThemeId">
+                    Flows <span class="badge badge-primary ">@Model.Flows.Count</span>
                 </a>
                 <a class="nav-link" asp-area="" asp-controller="BackOffice"
                    asp-action="index">
-                    Terug naar projecten
+                    Projecten
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="Themes"
+                   asp-action="index"
+                   asp-route-themeId="@Model.MainThemeId">
+                    Terug
                 </a>
             </div>
         </div>
