@@ -15,12 +15,13 @@ public class QuestionRepository : IRepositoryQuestion
 
     public Question ReadQuestion(int id)
     {
-        return _context.Questions.SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.AsNoTracking().SingleOrDefault(q => q.QuestionId == id);
     }
 
     public Question ReadQuestionWithAnswerPossibilities(int id)
     {
-        return _context.Questions.Include(q => q.AnswerPossibilities).SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.AsNoTracking().Include(q => q.AnswerPossibilities)
+            .SingleOrDefault(q => q.QuestionId == id);
     }
 
     public Question CreateQuestion(Question question)
@@ -50,8 +51,13 @@ public class QuestionRepository : IRepositoryQuestion
 
     public Question ReadFirstFlowQuestion(int flowId)
     {
-        var flow = _context.Flows.Include(f => f.Questions).ThenInclude(q => q.AnswerPossibilities)
-            .FirstOrDefault(f => f.FlowId == flowId);
+        var flow = _context.Flows
+            .Where(f => f.FlowId == flowId)
+            .Include(f => f.Questions)
+            .ThenInclude(q => q.AnswerPossibilities)
+            .AsNoTracking()
+            .FirstOrDefault();
+
         return flow?.Questions.OrderBy(q => q.QuestionId).FirstOrDefault();
     }
 

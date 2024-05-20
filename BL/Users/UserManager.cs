@@ -36,7 +36,7 @@ public class UserManager : IUserManager
 
     public IdentityUser getUser(string userId)
     {
-        return _repositoryIdeas.GetUser(userId);
+        return _repositoryIdeas.ReadUser(userId);
     }
 
     public void AddCommentToIdea(int IdeaId, Comment comment)
@@ -51,7 +51,7 @@ public class UserManager : IUserManager
 
     public Idea getIdea(int id)
     {
-        return _repositoryIdeas.GetIdea(id);
+        return _repositoryIdeas.ReadIdea(id);
     }
 
     public IEnumerable<Manager> getManagers()

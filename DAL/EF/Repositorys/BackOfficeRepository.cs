@@ -15,11 +15,15 @@ public class BackOfficeRepository : IRepositoryBackOffice
 
     public BackOffice ReadBackOfficeForManager(string managerId)
     {
-        var backOfficeId = _context.Managers.Where(manager => manager.Id == managerId)
-            .Select(manager => manager.BackOfficeId).FirstOrDefault();
-        
-        return _context.BackOffices.Include(bo => bo.Projects).Include(bo => bo.Managers)
-            .FirstOrDefault(bo => bo.BackOfficeId == backOfficeId);
+        var backOffice = _context.Managers
+            .Where(manager => manager.Id == managerId)
+            .Include(manager => manager.BackOffice.Projects)
+            .Include(manager => manager.BackOffice.Managers)
+            .Select(manager => manager.BackOffice)
+            .AsNoTracking()
+            .FirstOrDefault();
+
+        return backOffice;
     }
 
     public BackOffice ReadBackOffice(int backofficeId)
@@ -30,12 +34,12 @@ public class BackOfficeRepository : IRepositoryBackOffice
 
     public IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId)
     {
-        return _context.BackOffices.Where(b => b.BackOfficeId == backofficeId).SelectMany(b => b.Supervisors).ToList();
+        return _context.BackOffices.AsNoTracking().Where(b => b.BackOfficeId == backofficeId).SelectMany(b => b.Supervisors).ToList();
     }
 
     public IEnumerable<BackOffice> ReadBackOffices()
     {
-        return _context.BackOffices.ToList();
+        return _context.BackOffices.AsNoTracking().ToList();
     }
 
     public AdminPlatform ReadAdminPlatform()
@@ -43,11 +47,12 @@ public class BackOfficeRepository : IRepositoryBackOffice
         return _context.AdminPlatforms
             .Include(a => a.BackOffices)
             .Include(a => a.Admins)
+            .AsNoTracking()
             .FirstOrDefault();
     }
-    
+
     public IEnumerable<Manager> ReadManagers()
     {
-        return _context.Managers.ToList();
+        return _context.Managers.AsNoTracking().ToList();
     }
 }

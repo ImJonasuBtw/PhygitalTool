@@ -16,12 +16,12 @@ public class IdeaRepository : IRepositoryIdea
     
     public IEnumerable<Idea> ReadAllIdeas()
     {
-        return _context.Ideas.Include(u =>u.Comments).ThenInclude(c =>c.User)
+        return _context.Ideas.AsNoTracking().Include(u =>u.Comments).ThenInclude(c =>c.User)
             .Include(i =>i.User);
 
     }
     
-    public IdentityUser GetUser(string userId)
+    public IdentityUser ReadUser(string userId)
     {
         return _context.Users
             .FirstOrDefault(u => u.Id == userId);
@@ -45,9 +45,9 @@ public class IdeaRepository : IRepositoryIdea
         }
     }
 
-    public Idea GetIdea(int id)
+    public Idea ReadIdea(int id)
     {
-        return _context.Ideas.FirstOrDefault(i => i.IdeaId == id);
+        return _context.Ideas.AsNoTracking().FirstOrDefault(i => i.IdeaId == id);
     }
     
     public void CreateIdea(Idea idea)

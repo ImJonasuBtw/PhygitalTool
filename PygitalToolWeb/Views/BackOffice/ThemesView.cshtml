@@ -24,9 +24,13 @@
                 }
             </div>
             <div class="nav flex-column">
-                <a class="nav-link active" asp-area="" asp-controller="BackOffice"
+                <a class="nav-link active" asp-area="" asp-controller="Projects"
+                   asp-action="index" asp-route-projectId="@Model.ProjectId">
+                    Thema's <span class="badge badge-primary ">@Model.MainThemes.Count</span>
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="BackOffice"
                    asp-action="index">
-                    Terug naar projecten
+                    Terug
                 </a>
             </div>
         </div>
