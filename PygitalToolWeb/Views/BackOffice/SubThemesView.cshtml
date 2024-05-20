@@ -23,7 +23,19 @@
                 }
             </div>
             <div class="nav flex-column">
-                <a href="#" onclick="window.history.back(); return false;" class="nav-link active">Terug naar Hoofd Thema's</a>
+                <a class="nav-link active" asp-area="" asp-controller="Themes"
+                   asp-action="index" asp-route-themeId="@Model.ThemeId">
+                    SubThema's <span class="badge badge-primary ">@Model.SubThemes.Count</span>
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="BackOffice"
+                   asp-action="index">
+                    Projecten
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="Projects"
+                   asp-action="index"
+                   asp-route-projectId="@Model.ProjectId">
+                    Terug
+                </a>
             </div>
         </div>
 

@@ -1,1 +1,1 @@
-﻿import '../site.ts';
+﻿import '../Site.ts';

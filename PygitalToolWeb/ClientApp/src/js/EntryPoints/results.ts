@@ -1,3 +1,4 @@
-﻿import "../BackOffice/Results/resultsInformation.ts";
-import "../BackOffice/Results/results.ts";
-import "../BackOffice/Results/resultCharts.ts";
+﻿import "../BackOffice/Results/ResultRestClient.ts";
+import "../BackOffice/Results/Results.ts";
+import "../BackOffice/Results/ResultCharts.ts";
+import "../BackOffice/Results/ResultUI.ts";

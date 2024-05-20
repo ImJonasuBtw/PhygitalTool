@@ -1,0 +1,66 @@
+﻿@import '../variables';
+.idea_card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: $border-radius;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.ideas_title{
+  text-align: center;
+}
+
+
+.first_letter_name {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  display: inline-block;
+  margin-right: 10px;
+  background-color: $btn-color-4;
+}
+
+.row{
+ margin-left: 0;
+}
+
+.row > *{
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.username{
+  color: $light-text-color;
+}
+
+.idea_card {
+  position: relative; 
+}
+
+.like-section{
+  display: flex; 
+  justify-content: flex-end; 
+  align-items: center; 
+  margin-top: 10px; 
+}
+
+.bi {
+  margin-left: 5px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+div[class^="comments-container-"] {
+  background-color: $secondary-color;
+  border-radius: 10px;
+}
+
+.center{
+  text-align: center;
+}

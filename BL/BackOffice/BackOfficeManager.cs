@@ -1,31 +1,29 @@
-﻿using PhygitalTool.DAL;
-using PhygitalTool.Domain.Platform;
+﻿using PhygitalTool.DAL.IRepositorys;
 
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.BackOffice;
 
 public class BackOfficeManager : IBackOfficeManager
 {
-    private readonly IRepositoryPersistance _repositoryPersistance;
-    private readonly IRepositoryRetrieval _repositoryRetrieval;
+    private readonly IRepositoryBackOffice _repositoryBackOffice;
+    
 
-    public BackOfficeManager(IRepositoryPersistance repositoryPersistance, IRepositoryRetrieval repositoryRetrieval)
+    public BackOfficeManager(IRepositoryBackOffice repositoryBackOffice)
     {
-        _repositoryPersistance = repositoryPersistance;
-        _repositoryRetrieval = repositoryRetrieval;
+       _repositoryBackOffice = repositoryBackOffice;
+    } 
+
+    public Domain.Platform.BackOffice GetBackOfficeForManager(string managerId)
+    {
+        return _repositoryBackOffice.ReadBackOfficeForManager(managerId);
     }
 
-    public void AddBackOffice(BackOffice backOffice)
+    public Domain.Platform.BackOffice GetBackOffice(int backofficeId)
     {
-        _repositoryPersistance.CreateBackOffice(backOffice);
+        return _repositoryBackOffice.ReadBackOffice(backofficeId);
     }
-
-    public BackOffice GetBackOfficeForManager(string managerId)
+    
+    public void AddBackOffice(Domain.Platform.BackOffice backOffice)
     {
-        return _repositoryRetrieval.ReadBackOfficeForManager(managerId);
-    }
-
-    public BackOffice GetBackOffice(int backofficeId)
-    {
-        return _repositoryRetrieval.ReadBackOffice(backofficeId);
+        _repositoryBackOffice.CreateBackOffice(backOffice);
     }
 }

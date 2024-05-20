@@ -1,2 +1,1 @@
-﻿import "../BackOffice/Themes/themeCreation.ts";
-import "../BackOffice/Themes/themeEditAndDelete.ts";
+﻿import "../BackOffice/Themes/ThemeCreation.ts";

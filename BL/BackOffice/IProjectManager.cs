@@ -31,5 +31,5 @@ public interface IProjectManager
     void UpdateQuestion(Question question);
     Question GetQuestion(int QuestionId);
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
-    void DeleteanswerPossibility(int answerPossibilityID);
+    void DeleteAnswerPossibility(int answerPossibilityID);
 }

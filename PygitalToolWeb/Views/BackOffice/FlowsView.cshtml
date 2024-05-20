@@ -22,7 +22,19 @@
                 }
             </div>
             <div class="nav flex-column">
-                <a href="#" onclick="window.history.back(); return false;" class="nav-link active">Terug naar SubThema's</a>
+                <a class="nav-link active" asp-area="" asp-controller="FlowCreation"
+                   asp-action="index" asp-route-subThemeId="@Model.SubThemeId">
+                    Flows <span class="badge badge-primary ">@Model.Flows.Count</span>
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="BackOffice"
+                   asp-action="index">
+                    Projecten
+                </a>
+                <a class="nav-link" asp-area="" asp-controller="Themes"
+                   asp-action="index"
+                   asp-route-themeId="@Model.MainThemeId">
+                    Terug
+                </a>
             </div>
         </div>
         <!-- Flows-->
@@ -81,6 +93,7 @@
 <button type="button" style="position: fixed; bottom: 20px; right: 20px; background-color: purple; color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border: none;" id="add-Flow-button">+</button>
 
 @section Scripts {
-   <script id="flowPage-script" src="~/dist/flowPage.entry.js" defer="defer" ></script>
+    <script id="flowPage-script" src="~/dist/flowPage.entry.js" data-subthemeId="@Model.SubThemeId" defer="defer"></script>
 }
+
 </body>

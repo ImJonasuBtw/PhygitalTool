@@ -1,0 +1,23 @@
+﻿@import '../variables';
+#confirmationModal {
+  .modal-content {
+    background-color: $background-color;
+    border: none;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    border-bottom: 1px solid darken($background-color, 10%);
+  }
+
+  .btn-secondary {
+    color: $text-color;
+    background-color: $btn-edit;
+  }
+
+  .btn-danger {
+    background-color: $btn-delete;
+    border-color: $btn-delete;
+  }
+}

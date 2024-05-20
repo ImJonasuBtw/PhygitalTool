@@ -9,9 +9,16 @@ public class Project
     // Prop
     [Key]
     public int ProjectId { get; set; }
+    [Required(ErrorMessage = "Description required.")]
+    [StringLength(150, ErrorMessage = "Description cannot exceed 150 characters.")]
     public string Description { get; set; }
+    
+    [Required(ErrorMessage = "Name is required.")]
+    [StringLength(25, ErrorMessage = "Name cannot exceed 25 characters.")]
     public string ProjectName { get; set; }
+    [Required(ErrorMessage = "CreationDate is required.")]
     public DateTime CreationDate { get; set; }
+    [Required(ErrorMessage = "Status is required.")]
     public ProjectStatus Status { get; set; }
 
     // Foreign key property for BackOffice

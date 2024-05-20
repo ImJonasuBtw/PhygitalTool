@@ -8,16 +8,22 @@ public class ContactInformation
     // Prop
     public int ContactInformationId;
 
-    [Required] [EmailAddress] public string Email { get; set; }
+    [Required(ErrorMessage = "Email is required")] 
+    [EmailAddress(ErrorMessage = "Invalid Email Address")] 
+    public string Email { get; set; }
 
-    [Required] [StringLength(100)] public string Name { get; set; }
-    [Required] public DateOnly Birthdate { get; set; }
+    [Required(ErrorMessage = "Name is required")]
+    [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters")] 
+    public string Name { get; set; }
+    [Required(ErrorMessage = "Birthdate is required")] 
+    public DateOnly Birthdate { get; set; }
 
     //fk
     public int FlowId { get; set; }
 
     // nav
-    [ForeignKey("FlowId")] public Flow Flow { get; set; }
+    [ForeignKey("FlowId")] 
+    public Flow Flow { get; set; }
 
 
     public ContactInformation()

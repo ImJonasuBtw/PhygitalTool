@@ -26,7 +26,8 @@ public class FlowCreationController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+            return BadRequest(errors);
         }
 
 
@@ -261,7 +262,7 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
-            _projectManager.DeleteanswerPossibility(AnswerPossibility);
+            _projectManager.DeleteAnswerPossibility(AnswerPossibility);
             return Ok();
         }
         catch (Exception ex)
