@@ -1,0 +1,44 @@
+<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="InterestHeading" xml:space="preserve">
+        <value>Zinsen?</value>
+    </data>
+    <data name="IntrestDescription" xml:space="preserve">
+        <value>Hinterlassen Sie hier Ihre Daten.</value>
+    </data>
+    <data name="ChoseOne" xml:space="preserve">
+        <value>Wählen Sie 1 der Optionen</value>
+    </data>
+    <data name="ChoseMulptiple" xml:space="preserve">
+        <value>Geben Sie 1 oder mehrere Antworten an</value>
+    </data>
+    <data name="Submit" xml:space="preserve">
+        <value>Einreichen</value>
+    </data>
+    <data name="EndLinear" xml:space="preserve">
+        <value>Ende des linearen Flusses</value>
+    </data>
+    <data name="BackToHome" xml:space="preserve">
+        <value>Zurück zur Hauptseite</value>
+    </data>
+    <data name="ScanCode" xml:space="preserve">
+        <value>Scannen Sie den QR-Code, um Ihre Kontaktinformationen zu hinterlassen</value>
+    </data>
+    <data name="EndCirculair" xml:space="preserve">
+        <value>Ende des Kreislaufs</value>
+    </data>
+    <data name="StartCirculair" xml:space="preserve">
+        <value>Start Kreislauf</value>
+    </data>
+</root>

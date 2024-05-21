@@ -42,15 +42,15 @@ export function updateSubtheme(subthemeId: number): void {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Error in de validatie');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to update subtheme: ' + text));
+                    response.text().then(text => alert('Kon subthema niet updaten ' + text));
                 }
             }
         })
         .catch(error => {
             console.error('Error updating subtheme:', error);
-            alert('Error updating subtheme: ' + error);
+            alert('Kon subthema niet updaten  ' + error);
         });
 }

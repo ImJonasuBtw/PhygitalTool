@@ -58,6 +58,22 @@
           <Folder Include="Areas\Identity\Data\" />
           <Folder Include="Views\AdminPlatform\" />
         </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\ResourcesFlow.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>ResourcesFlow.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+    
+        <ItemGroup>
+          <Compile Update="Resources\ResourcesFlow.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ResourcesFlow.resx</DependentUpon>
+          </Compile>
+        </ItemGroup>
+    
     
     
     

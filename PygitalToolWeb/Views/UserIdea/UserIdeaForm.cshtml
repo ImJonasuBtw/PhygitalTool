@@ -9,17 +9,17 @@
     <div>
         <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
     </div>
-<h1 class="center">User Ideas</h1>
+<h1 class="center">ideeën</h1>
 
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
 {
     <div>
-        <h2>Create New Idea</h2>
+        <h2>Maak een nieuw Idee aan</h2>
         <form id="createIdeaForm">
-            <input class="form-control" type="text" id="newIdeaTitle" placeholder="Title" required>
-            <input class="form-control" type="text" id="newIdeaDescription" placeholder="Description" required>
-            <button class=" btn btn-primary mt-3" type="submit" id="addIdeaButton">Add Idea</button>
+            <input class="form-control" type="text" id="newIdeaTitle" placeholder="Titel" required>
+            <input class="form-control" type="text" id="newIdeaDescription" placeholder="Bericht" required>
+            <button class=" btn btn-primary mt-3" type="submit" id="addIdeaButton">Toevoegen</button>
         </form>
     </div>
 }
@@ -50,8 +50,8 @@
             }
             <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
             <div class=""id="commentForm-@idea.IdeaId" style="display:none;">
-                <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Enter your comment" required>
-                <button class="btn btn-primary mt-3 addCommentButton"  data-ideaId="@idea.IdeaId">Submit</button>
+                <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
+                <button class="btn btn-primary mt-3 addCommentButton"  data-ideaId="@idea.IdeaId">Verzend</button>
             </div>
         </div>
     </div>

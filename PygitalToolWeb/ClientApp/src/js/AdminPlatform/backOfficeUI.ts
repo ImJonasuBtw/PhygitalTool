@@ -12,11 +12,11 @@ export function showEditProjectForm(backOfficeId: number): void {
                     <h2 class="mt-4">Edit BackOffice</h2>
                     <form id="edit-backoffice-form">
                         <div class="mb-3">
-                            <label for="backOfficeName" class="form-label">BackOffice Name</label>
+                            <label for="backOfficeName" class="form-label">BackOffice Naam</label>
                             <input type="text" class="form-control" id="backOfficeName" required value="${backOffice.name}">
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
                     </form>
                 `;
                 document.getElementById('cancel-button')?.addEventListener('click', loadBackOffices);

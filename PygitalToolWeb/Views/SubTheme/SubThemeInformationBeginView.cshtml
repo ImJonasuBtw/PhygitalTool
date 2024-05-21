@@ -1,12 +1,28 @@
 @using PhygitalTool.Domain.Util
+@using Microsoft.Extensions.Localization
+@using PhygitalTool.Web.Resources
 @model PhygitalTool.Domain.FlowPackage.Flow
+@inject IStringLocalizer<ResourcesFlow> Localizer
+
+@{
+    var culture = Model.Language switch
+    {
+        Language.Dutch => "nl",
+        Language.French => "fr",
+        Language.German => "de",
+        _ => "en"
+        };
+    System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo(culture);
+    System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+}
 
 <div class="container-information-view">
 <div class="row">
     <div class="sidebar-container col-md-2 p-4">
+        
         <img src="https://via.placeholder.com/150" alt="Placeholder afbeelding" class="qr-code">
-        <h3 class="pt-3">Interesting??</h3>
-        <p>Laat hier je gegevens achter.</p>
+        <h3 class="pt-3">@Localizer[ResourcesFlow.InterestHeading]</h3>
+        <p>@Localizer[ResourcesFlow.IntrestDescription]</p>
         @{
             var scheme = Context.Request.Scheme;
             var host = Context.Request.Host.ToString();

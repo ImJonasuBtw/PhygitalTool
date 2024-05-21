@@ -21,18 +21,18 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
     console.log(subThemasContainer);
     if (subThemasContainer) {
         subThemasContainer.innerHTML = `
-            <h2 class="mt-4">Add New SubTheme</h2>
+            <h2 class="mt-4">Voeg nieuw subthema toe</h2>
             <form id="new-project-form">
                 <div class="mb-3">
-                    <label for="subThemeName" class="form-label">Subtheme name</label>
+                    <label for="subThemeName" class="form-label">Subthema Naam</label>
                     <input type="text" class="form-control" id="subThemeName" required>
                 </div>
                 <div class="mb-3">
-                    <label for="subThemeInformation" class="form-label">Subtheme information</label>
+                    <label for="subThemeInformation" class="form-label">Subthema informatie</label>
                     <textarea class="form-control" id="subThemeInformation" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Subtheme</button>
-                <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                <button type="submit" class="btn btn-primary">Subthema toevoegen</button>
+                <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
             </form>
         `;
 
@@ -79,10 +79,10 @@ document.getElementById('add-subtheme-button')?.addEventListener('click', () => 
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Error in de validatie');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to add subtheme: ' + text));
+                    response.text().then(text => alert('Kon subthema niet toevoegen' + text));
                 }
             }
         });
