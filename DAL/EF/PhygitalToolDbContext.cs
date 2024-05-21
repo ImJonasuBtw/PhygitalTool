@@ -47,6 +47,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<AdminPlatform>().Property(a => a.AdminPlatformId).ValueGeneratedOnAdd();
         modelBuilder.Entity<BackOffice>().Property(b => b.BackOfficeId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Flow>().Property(f => f.FlowId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Project>().Property(p => p.ProjectId).ValueGeneratedOnAdd();

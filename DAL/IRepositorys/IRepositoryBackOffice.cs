@@ -15,4 +15,8 @@ public interface IRepositoryBackOffice
     AdminPlatform ReadAdminPlatform();
     
     IEnumerable<Manager> ReadManagers();
+    
+    void CreateBackOffice(BackOffice backOffice);
+    void RemoveBackOffice(int backOfficeId);
+    void UpdateBackOffice(BackOffice backOffice);
 }
