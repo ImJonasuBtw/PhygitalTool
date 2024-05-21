@@ -1,5 +1,6 @@
 import {Modal} from "bootstrap";
-import {showEditProjectForm, deleteBackOffice} from "./backOfficeUpdateDelete";
+import {loadBackOffices, showEditProjectForm} from "./backOfficeUI"
+import {deleteBackOffice} from "./backOfficeRestClient";
 
 export class BackOffice {
     public name: string;
@@ -25,11 +26,10 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
             </form>
         `;
 
-        const scriptElement = document.getElementById('backoffice-script');
         const adminPlatformId = document.getElementById('add-project-button')?.getAttribute('data-adminplatform-id');
         console.log(adminPlatformId);
 
-        document.getElementById('cancel-button')?.addEventListener('click', loadProjects);
+        document.getElementById('cancel-button')?.addEventListener('click', loadBackOffices);
         document.getElementById('new-project-form')?.addEventListener('submit', async function (event) {
             event.preventDefault();
             const backOfficeNameInput = document.getElementById('backOfficeNameInput') as HTMLInputElement;
@@ -50,7 +50,7 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
             });
 
             if (response.ok) {
-                loadProjects();
+                loadBackOffices();
             } else {
                 if (response.status === 400) {
                     const errorData = await response.json();
@@ -108,9 +108,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-export function loadProjects() {
-    window.location.reload();
-}
 
 
