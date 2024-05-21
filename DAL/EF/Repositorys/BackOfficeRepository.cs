@@ -2,7 +2,7 @@
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.Platform;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class BackOfficeRepository : IRepositoryBackOffice
 {
@@ -21,7 +21,7 @@ public class BackOfficeRepository : IRepositoryBackOffice
             .Include(manager => manager.BackOffice.Managers)
             .Select(manager => manager.BackOffice)
             .AsNoTracking()
-            .FirstOrDefault();
+            .SingleOrDefault();
 
         return backOffice;
     }
@@ -34,12 +34,12 @@ public class BackOfficeRepository : IRepositoryBackOffice
 
     public IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId)
     {
-        return _context.BackOffices.AsNoTracking().Where(b => b.BackOfficeId == backofficeId).SelectMany(b => b.Supervisors).ToList();
+        return _context.BackOffices.AsNoTracking().Where(b => b.BackOfficeId == backofficeId).SelectMany(b => b.Supervisors);
     }
 
     public IEnumerable<BackOffice> ReadBackOffices()
     {
-        return _context.BackOffices.AsNoTracking().ToList();
+        return _context.BackOffices.AsNoTracking();
     }
 
     public AdminPlatform ReadAdminPlatform()
@@ -48,12 +48,12 @@ public class BackOfficeRepository : IRepositoryBackOffice
             .Include(a => a.BackOffices)
             .Include(a => a.Admins)
             .AsNoTracking()
-            .FirstOrDefault();
+            .SingleOrDefault();
     }
 
     public IEnumerable<Manager> ReadManagers()
     {
-        return _context.Managers.AsNoTracking().ToList();
+        return _context.Managers.AsNoTracking();
     }
 
     public void CreateBackOffice(BackOffice backOffice)

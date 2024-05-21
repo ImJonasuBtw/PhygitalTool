@@ -2,7 +2,7 @@
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class AnswerRepository : IRepositoryAnswer
 {
@@ -25,7 +25,7 @@ public class AnswerRepository : IRepositoryAnswer
             AnswerId = answer.AnswerId,
             AnswerText = answer.AnswerText,
             QuestionId = answer.QuestionId,
-            Question = _context.Questions.FirstOrDefault(question => question.QuestionId == answer.QuestionId)
+            Question = _context.Questions.SingleOrDefault(question => question.QuestionId == answer.QuestionId)
         });
     }
 

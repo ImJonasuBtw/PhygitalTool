@@ -1,7 +1,7 @@
 ﻿using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class AnswerPossibilityRepository : IRepositoryAnswerPossibility
 {

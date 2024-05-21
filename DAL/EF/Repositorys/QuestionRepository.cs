@@ -2,7 +2,7 @@
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class QuestionRepository : IRepositoryQuestion
 {
@@ -28,7 +28,7 @@ public class QuestionRepository : IRepositoryQuestion
     {
         _context.Questions.Add(question);
         _context.SaveChanges();
-        return _context.Questions.FirstOrDefault(q =>
+        return _context.Questions.SingleOrDefault(q =>
             q.QuestionText == question.QuestionText && q.QuestionType == question.QuestionType);
     }
 
@@ -56,44 +56,42 @@ public class QuestionRepository : IRepositoryQuestion
             .Include(f => f.Questions)
             .ThenInclude(q => q.AnswerPossibilities)
             .AsNoTracking()
-            .FirstOrDefault();
+            .SingleOrDefault();
 
         return flow?.Questions.OrderBy(q => q.QuestionId).FirstOrDefault();
     }
 
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
     {
-        var questionsInFlow = ReadFlowQuestions(flowId);
         var currentQuestion = ReadQuestion(currentQuestionId);
+
+        if (currentQuestion == null)
+        {
+            return null;
+        }
 
         if (currentQuestion.IsConditional)
         {
-            foreach (var answerPossibility in
-                     ReadQuestionWithAnswerPossibilities(currentQuestionId).AnswerPossibilities)
+            var answerPossibilities = ReadQuestionWithAnswerPossibilities(currentQuestionId).AnswerPossibilities;
+
+            foreach (var answerPossibility in answerPossibilities)
             {
                 if (answer == answerPossibility.Description)
                 {
                     if (answerPossibility.NextQuestionId != 0)
                     {
-                        return questionsInFlow.FirstOrDefault(q => q.QuestionId == answerPossibility.NextQuestionId);
+                        return ReadQuestion(answerPossibility.NextQuestionId);
                     }
-
-                    var currentQuestionIndex =
-                        questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
-                    if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+                    else
                     {
-                        return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+                        return GetNextSequentialQuestion(flowId, currentQuestionId);
                     }
                 }
             }
         }
         else
         {
-            var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
-            if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
-            {
-                return questionsInFlow.ElementAt(currentQuestionIndex + 1);
-            }
+            return GetNextSequentialQuestion(flowId, currentQuestionId);
         }
 
         return null;
@@ -101,20 +99,39 @@ public class QuestionRepository : IRepositoryQuestion
 
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
-        var questionsInFlow = ReadFlowQuestions(flowId);
-        var currentQuestionIndex = questionsInFlow.ToList().FindIndex(q => q.QuestionId == currentQuestionId);
-        if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsInFlow.Count - 1)
+        return GetNextSequentialQuestion(flowId, currentQuestionId);
+    }
+    
+    
+    private Question GetNextSequentialQuestion(int flowId, int currentQuestionId)
+    {
+        var flow = _context.Flows
+            .AsNoTracking()
+            .SingleOrDefault(f => f.FlowId == flowId);
+
+        if (flow == null)
         {
-            return questionsInFlow.ElementAt(currentQuestionIndex + 1);
+            return null;
         }
 
-        return null;
+        int subThemeId = flow.SubThemeId;
+        
+        var nextQuestion = _context.Questions
+            .Include(q => q.AnswerPossibilities)
+            .Include(question => question.Flow)
+            .Where(q => q.FlowId == flowId && q.Flow.SubThemeId == subThemeId && q.QuestionId > currentQuestionId)
+            .OrderBy(q => q.QuestionId)
+            .AsNoTracking()
+            .FirstOrDefault(); // hier moesten we echt first or default gebruiken, anders kregen we een exception
+
+        return nextQuestion;
     }
+    
 
     public ICollection<Question> ReadFlowQuestions(int flowId)
     {
         var flow = _context.Flows.Include(f => f.Questions).ThenInclude(q => q.AnswerPossibilities)
-            .FirstOrDefault(f => f.FlowId == flowId);
+            .SingleOrDefault(f => f.FlowId == flowId);
         return flow?.Questions.OrderBy(q => q.QuestionId).ToList();
     }
 }
