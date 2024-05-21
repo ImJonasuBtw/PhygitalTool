@@ -17,7 +17,7 @@ export const Language =
     {
         English: 0,
         Dutch: 1,
-        French:2,
+        French: 2,
         German : 3
     }
 
