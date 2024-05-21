@@ -26,16 +26,16 @@ export   function updateProject(backOfficeId: number): void {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Er is een validatiefout opgetreden.');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to update BackOffice: ' + text));
+                    response.text().then(text => alert('Mislukt bij het bijwerken van BackOffice: ' + text));
                 }
             }
         })
         .catch(error => {
             console.error('Error updating backoffice:', error);
-            alert('Error updating backoffice: ' + error);
+            alert('Mislukt bij het bijwerken van BackOffice:  ' + error);
         });
 }
 

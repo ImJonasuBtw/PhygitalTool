@@ -8,18 +8,18 @@ export function showEditSubThemeForm(subthemeId: number): void {
             const subthemesContainer = document.getElementById('subthemes-container');
             if (subthemesContainer) {
                 subthemesContainer.innerHTML = `
-                    <h2 class="mt-4">Edit Subtheme</h2>
+                    <h2 class="mt-4">Subthema aanpassen</h2>
                     <form id="edit-subtheme-form">
                         <div class="mb-3">
-                            <label for="subtheme-name" class="form-label">Subtheme Name</label>
+                            <label for="subtheme-name" class="form-label">Subthema Naam</label>
                             <input type="text" class="form-control" id="subtheme-name" required value="${subTheme.subThemeName}">
                         </div>
                         <div class="mb-3">
-                            <label for="subtheme-information" class="form-label">Information</label>
+                            <label for="subtheme-information" class="form-label">Informatie</label>
                             <textarea class="form-control" id="information" required>${subTheme.subThemeInformation}</textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Update subtheme</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update subthema</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
                     </form>
                 `;
                 document.getElementById('cancel-button')?.addEventListener('click', loadSubThemes);

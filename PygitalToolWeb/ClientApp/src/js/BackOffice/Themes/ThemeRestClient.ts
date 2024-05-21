@@ -43,10 +43,10 @@ export function updateMaintheme(mainthemeId: number): void {
                         }
                     }
                 } else {
-                    alert('Validation error occurred.');
+                    alert('Error in de validatie');
                 }
             } else {
-                response.text().then(text => alert('Failed to update Main theme: ' + text));
+                response.text().then(text => alert('Gefaald om te updaten' + text));
             }
         }
     })

@@ -21,7 +21,9 @@ export async function updateFlow(flowId: number): Promise<void> {
     const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
     const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
     const questionContainers = document.querySelectorAll('.question-container');
-
+    const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
+    const flowLanguage = parseInt(flowLanguageSelect.value);
+    
     const questions: any[] = await Promise.all(Array.from(questionContainers).map(async (container: Element) => {
         const questionContainer = container as HTMLElement;
         const questionInput = questionContainer.querySelector('.question-input') as HTMLInputElement;
@@ -41,7 +43,7 @@ export async function updateFlow(flowId: number): Promise<void> {
 
         const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
         let questionImage = null;
-
+    
         if (fileInput.files && fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
@@ -60,7 +62,6 @@ export async function updateFlow(flowId: number): Promise<void> {
                 questionImage = existingImage.src;
             }
         }
-        console.log('questionImage:', questionImage);
 
         return {
             questionId: questionId,
@@ -70,8 +71,9 @@ export async function updateFlow(flowId: number): Promise<void> {
             questionImage: questionImage
         };
     }).filter(question => question !== null));
-
+    
     fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
+        
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -80,6 +82,7 @@ export async function updateFlow(flowId: number): Promise<void> {
             FlowName: flowNameInput.value,
             FlowDescription: informationInput.value,
             FlowType: flowType,
+            Language: flowLanguage,
             Questions: questions
         })
     })

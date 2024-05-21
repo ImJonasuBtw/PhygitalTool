@@ -18,18 +18,18 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
     console.log(themesContainer);
     if (themesContainer) {
         themesContainer.innerHTML = `
-            <h2 class="mt-4">Add New Theme</h2>
+            <h2 class="mt-4">voeg nieuw thema toe</h2>
             <form id="new-theme-form">
                 <div class="mb-3">
-                    <label for="themeName" class="form-label">Theme name</label>
+                    <label for="themeName" class="form-label">Hoofdthema Naam</label>
                     <input type="text" class="form-control" id="themeName" required>
                 </div>
                 <div class="mb-3">
-                    <label for="themeInformation" class="form-label">Theme information</label>
+                    <label for="themeInformation" class="form-label">Informatie</label>
                     <textarea class="form-control" id="themeInformation" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Theme</button>
-                <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                <button type="submit" class="btn btn-primary">Voeg Toe</button>
+                <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
             </form>
         `;
 
@@ -78,10 +78,10 @@ document.getElementById('add-theme-button')?.addEventListener('click', () => {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('error in de validatie');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to add Theme: ' + text));
+                    response.text().then(text => alert('kon Thema niet toevoegen ' + text));
                 }
             }
         });

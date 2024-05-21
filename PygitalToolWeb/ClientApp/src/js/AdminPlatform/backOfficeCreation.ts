@@ -15,14 +15,14 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
     const projectsContainer = document.getElementById('backoffice-container');
     if (projectsContainer) {
         projectsContainer.innerHTML = `
-            <h2 class="mt-4">Add New BackOffice</h2>
+            <h2 class="mt-4">voeg nieuwe backOffice toe</h2>
             <form id="new-project-form">
                 <div class="mb-3">
-                    <label for="backOfficeNameInput" class="form-label">BackOffice Name</label>
+                    <label for="backOfficeNameInput" class="form-label">BackOffice Naam</label>
                     <input type="text" class="form-control" id="backOfficeNameInput" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add BackOffice</button>
-                <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                <button type="submit" class="btn btn-primary">Voeg toe</button>
+                <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
             </form>
         `;
 
@@ -62,10 +62,10 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Er is een validatiefout opgetreden.');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to add BackOffice: ' + text));
+                    response.text().then(text => alert('Toevoeging van BackOffice mislukt: ' + text));
                 }
             }
         });
