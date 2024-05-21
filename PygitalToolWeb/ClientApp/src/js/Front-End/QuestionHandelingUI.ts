@@ -57,7 +57,7 @@ export function setTimerText(): void {
 export function validateForm(): boolean {
     const answer: string = (document.getElementById("selectedAnswer") as HTMLInputElement).value;
     if (answer.trim() === "") {
-        alert("Please enter your answer.");
+        alert("Voer je antwoord in");
         return false; // answer is empty
     }
 

@@ -11,7 +11,7 @@ export async function submitManagersForm() {
         const backofficeId: number = Number((document.getElementById('backoffice') as HTMLSelectElement).value);
 
         if (!validatePassword(password)) {
-            alert('Password must contain at least one uppercase letter, one lowercase letter, and one non-alphabetic character.');
+            alert('Het wachtwoord moet minstens één hoofdletter, één kleine letter en één niet-alfabetisch teken bevatten.');
             return;
         }
         
@@ -51,16 +51,16 @@ export async function submitManagersForm() {
 
         if (!response.ok) {
             if (response.status === 400) {
-                alert(`Failed to add supervisor: Email already exists`);
+                alert(`Supervisor niet toegevoegd: E-mail bestaat al`);
             } else if (response.status === 409) {
-                alert('Failed to add supervisor: Email already exists.');
+                alert('Supervisor niet toegevoegd: E-mail bestaat al');
             }
             return;
         }
 
         const data = await response.json();
         console.log('Success:', data);
-        alert('Managers added successfully!');
+        alert('Managers succesvol toegevoegd!');
         loadManagers();
     } catch (error) {
         console.error('Error:', error);

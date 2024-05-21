@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             if (!response.ok) {
-                alert('Failed to add idea.');
+                alert('Kon het idee niet toevoegen');
             }
-            alert('idea added successfully!');
+            alert('Idee goed toegevoegd');
             window.location.reload(); 
         });
      
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         markIdeaAsLikedByCurrentUser(ideaId); 
                     } else {
-                        console.error('Failed to like idea');
+                        console.error('Kon idee niet liken');
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.reload();
 
                     } else {
-                        console.error('Failed to add comment');
+                        console.error('kon comment niet toevoegen');
                     }
                 } catch (error) {
                     console.error('Error:', error);

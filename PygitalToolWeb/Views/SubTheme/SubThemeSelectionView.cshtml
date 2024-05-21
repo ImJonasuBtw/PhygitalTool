@@ -19,7 +19,7 @@
             <a class="btn btn-outline-secondary btn-block" asp-area=""
                asp-controller="LinearFlow"
                asp-action="StartFLow"
-               asp-route-flowId="@flow.FlowId"> @subtheme.SubThemeName (linear)
+               asp-route-flowId="@flow.FlowId"> @flow.FlowName (linear)
             </a>
         }
         
@@ -28,7 +28,7 @@
             <a class="btn btn-outline-secondary btn-block" asp-area=""
                asp-controller="CircularFlow"
                asp-action="StartFLow"
-               asp-route-flowId="@flow.FlowId"> @subtheme.SubThemeName (circulair)
+               asp-route-flowId="@flow.FlowId">@flow.FlowName (circulair)
             </a>
         }
     }

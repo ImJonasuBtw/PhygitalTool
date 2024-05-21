@@ -34,7 +34,7 @@ export function addManager() {
             <h3>Voeg nieuwe begeleider toe</h3>
             <form id="managersForm" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="userName">Name:</label>
+                    <label for="userName">Naam:</label>
                     <input type="text" class="form-control" id="userName" name="userName" required>
                 </div>
                 <div class="form-group">
@@ -42,7 +42,7 @@ export function addManager() {
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
+                    <label for="password">Wachtwoord:</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@ export function addManager() {
                     </select>
                 </div>
             <div class="form-group">
-                  <label for="file">Profile Image:</label>
+                  <label for="file">Profielfoto:</label>
                   <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg,.png">
             </div>
 

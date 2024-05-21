@@ -32,16 +32,16 @@ export   function updateProject(projectId: number): void {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Er is een validatiefout opgetreden.');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to update Project: ' + text));
+                    response.text().then(text => alert('Project kon niet worden bijgewerkt:' + text));
                 }
             }
         })
         .catch(error => {
             console.error('Error updating project:', error);
-            alert('Error updating project: ' + error);
+            alert('Project kon niet worden bijgewerkt:' + error);
         });
 }
 

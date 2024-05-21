@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhygitalTool.BL;
@@ -8,7 +9,9 @@ using PhygitalTool.BL.Users;
 using PhygitalTool.DAL.EF;
 using PhygitalTool.DAL.EF.Repositorys;
 using PhygitalTool.DAL.IRepositorys;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Web.Services;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +40,8 @@ builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 builder.Services.AddScoped<CloudStorageService>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
 
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
@@ -96,11 +101,26 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+var supportedCultures = new[]
+{
+    new CultureInfo("nl"),
+    new CultureInfo("en")
+   
+};
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+
+
 
 //first auth then auth
 app.UseAuthentication();
