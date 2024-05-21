@@ -24,13 +24,13 @@ public class IdeaRepository : IRepositoryIdea
     public IdentityUser ReadUser(string userId)
     {
         return _context.Users
-            .FirstOrDefault(u => u.Id == userId);
+            .SingleOrDefault(u => u.Id == userId);
 
     }
 
     public void UpdateLikeIdea(Idea idea)
     {
-        var existingIdea = _context.Ideas.FirstOrDefault(i => i.IdeaId == idea.IdeaId);
+        var existingIdea = _context.Ideas.SingleOrDefault(i => i.IdeaId == idea.IdeaId);
 
 
         if (existingIdea != null)
@@ -47,7 +47,7 @@ public class IdeaRepository : IRepositoryIdea
 
     public Idea ReadIdea(int id)
     {
-        return _context.Ideas.AsNoTracking().FirstOrDefault(i => i.IdeaId == id);
+        return _context.Ideas.AsNoTracking().SingleOrDefault(i => i.IdeaId == id);
     }
     
     public void CreateIdea(Idea idea)
@@ -59,7 +59,7 @@ public class IdeaRepository : IRepositoryIdea
     public void CreateCommentToIdea(int ideaId, Comment comment)
     {
         _context.Comments.Add(comment);
-        Idea idea =  _context.Ideas.FirstOrDefault(i => i.IdeaId == ideaId);
+        Idea idea =  _context.Ideas.SingleOrDefault(i => i.IdeaId == ideaId);
         idea?.Comments.Add(comment);
         _context.SaveChanges();
     }
