@@ -17,6 +17,8 @@ var connectionString = builder.Configuration.GetConnectionString("PhygitalDbCont
                        throw new InvalidOperationException(
                            "Connection string 'PhygitalDbContextConnection' not found.");
 
+//var connectionString = "Host=34.171.252.227;Port=5432;Database=test;Username=postgres;Password=Student_1234;";
+
 builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString));
 builder.Services.AddScoped<IRepositoryAnswer, AnswerRepository>();
@@ -32,6 +34,7 @@ builder.Services.AddScoped<IFlowManager, FlowManger>();
 builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 builder.Services.AddScoped<CloudStorageService>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 

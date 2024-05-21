@@ -1,7 +1,5 @@
 ﻿import {loadProjects} from "./ProjectUI";
 
-
-
 export   function updateProject(projectId: number): void {
     const projectNameInput = document.getElementById('projectName') as HTMLInputElement;
     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;

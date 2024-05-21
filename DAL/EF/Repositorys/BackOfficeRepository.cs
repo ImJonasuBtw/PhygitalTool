@@ -55,4 +55,26 @@ public class BackOfficeRepository : IRepositoryBackOffice
     {
         return _context.Managers.AsNoTracking().ToList();
     }
+
+    public void CreateBackOffice(BackOffice backOffice)
+    {
+        _context.BackOffices.Add(backOffice);
+        _context.SaveChanges();
+    }
+
+    public void RemoveBackOffice(int backOfficeId)
+    {
+        var backOffice = _context.BackOffices.Find(backOfficeId);
+        if (backOffice == null) throw new ArgumentException("BackOffice Not Found");
+        _context.BackOffices.Remove(backOffice);
+        _context.SaveChanges();
+    }
+
+    public void UpdateBackOffice(BackOffice backOffice)
+    {
+        var existingBackOffice = _context.BackOffices.Find(backOffice.BackOfficeId);
+        if (existingBackOffice == null) throw new ArgumentException("BackOffice Not Found");
+        existingBackOffice.Name = backOffice.Name;
+        _context.SaveChanges();
+    }
 }

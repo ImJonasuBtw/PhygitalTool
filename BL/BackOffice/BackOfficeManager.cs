@@ -5,12 +5,12 @@ namespace PhygitalTool.BL.BackOffice;
 public class BackOfficeManager : IBackOfficeManager
 {
     private readonly IRepositoryBackOffice _repositoryBackOffice;
-    
+
 
     public BackOfficeManager(IRepositoryBackOffice repositoryBackOffice)
     {
-       _repositoryBackOffice = repositoryBackOffice;
-    } 
+        _repositoryBackOffice = repositoryBackOffice;
+    }
 
     public Domain.Platform.BackOffice GetBackOfficeForManager(string managerId)
     {
@@ -20,5 +20,20 @@ public class BackOfficeManager : IBackOfficeManager
     public Domain.Platform.BackOffice GetBackOffice(int backofficeId)
     {
         return _repositoryBackOffice.ReadBackOffice(backofficeId);
+    }
+
+    public void AddBackOffice(Domain.Platform.BackOffice backOffice)
+    {
+        _repositoryBackOffice.CreateBackOffice(backOffice);
+    }
+
+    public void DeleteBackOffice(int backOfficeId)
+    {
+        _repositoryBackOffice.RemoveBackOffice(backOfficeId);
+    }
+
+    public void UpdateBackOffice(Domain.Platform.BackOffice backOffice)
+    {
+        _repositoryBackOffice.UpdateBackOffice(backOffice);
     }
 }

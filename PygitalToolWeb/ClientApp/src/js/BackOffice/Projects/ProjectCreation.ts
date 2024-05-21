@@ -10,7 +10,6 @@ export class Project {
         this.description = description;
         this.projectName = projectName;
     }
-    
 }
 
 document.getElementById('add-project-button')?.addEventListener('click', () => {

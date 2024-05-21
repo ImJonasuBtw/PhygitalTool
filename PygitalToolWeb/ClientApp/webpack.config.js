@@ -12,7 +12,7 @@ module.exports = {
         results: './src/js/EntryPoints/results.ts',
         questionsPage: './src/js/EntryPoints/questionsPage.ts',
         userPlatform: './src/js/EntryPoints/userPlatform.ts',
-        managers: './src/js/EntryPoints/managers.ts',
+        adminPlatform: './src/js/EntryPoints/adminPlatform.ts'
     },
     output: {
         filename: '[name].entry.js',
