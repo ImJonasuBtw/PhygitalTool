@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.DAL.EF.Repositorys;
 
@@ -119,7 +120,7 @@ public class QuestionRepository : IRepositoryQuestion
         var nextQuestion = _context.Questions
             .Include(q => q.AnswerPossibilities)
             .Include(question => question.Flow)
-            .Where(q => q.FlowId == flowId && q.Flow.SubThemeId == subThemeId && q.QuestionId > currentQuestionId)
+            .Where(q => q.FlowId == flowId && q.Flow.SubThemeId == subThemeId && q.QuestionId > currentQuestionId && q.QuestionType != QuestionType.Open )
             .OrderBy(q => q.QuestionId)
             .AsNoTracking()
             .FirstOrDefault(); // hier moesten we echt first or default gebruiken, anders kregen we een exception
