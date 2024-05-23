@@ -1,0 +1,28 @@
+﻿@using PhygitalTool.Domain.Util
+@model PhygitalTool.Domain.FlowPackage.Question
+
+<body class="animated-background">
+<div class="row main-container">
+     <div>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
+        </div>
+    <div class="questionInfo-container mt-3">
+        <div class="mb-3 col-md-9">
+            <form action="">
+                <p id="currentQuestionId"></p>
+                <p id="questionText" questionId="" class="text-body"> </p>
+                <label for="questionNote" class="form-label">Notes</label>
+                <textarea type="text" class="form-control" id="questionNote"></textarea>
+                <button id="submitNote" questionId="" class="btn-primary btn mt-3">Submit Note</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+
+@section Scripts
+{
+    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
+    <script id="questionPage-script" src="~/dist/notes.entry.js" defer="defer" ></script>
+}

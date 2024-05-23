@@ -39,6 +39,11 @@ public class UserManager : IUserManager
         return _repositoryIdeas.ReadUser(userId);
     }
 
+    public Supervisor GetSupervisor(string supervisorId)
+    {
+        return _repositoryBackOffice.ReadSupervisorWithFlows(supervisorId);
+    }
+
     public void AddCommentToIdea(int IdeaId, Comment comment)
     {
         _repositoryIdeas.CreateCommentToIdea(IdeaId, comment);

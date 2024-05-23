@@ -5,7 +5,7 @@ import {
     configureAnswerButtons,
     configureAnswerButtonsSingleChoice, configureSlider,
     configureSubmitButton,
-    configureSubmitButtonSingleChoice, setTimerText, timer
+    configureSubmitButtonSingleChoice, setTimerText
 } from "./QuestionHandelingUI";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     linkKeyPressesToButtons();
 
     if (flowType === 'circular') {
-        timer();
         setTimerText();
     }
 });

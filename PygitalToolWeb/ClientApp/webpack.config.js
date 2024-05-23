@@ -12,6 +12,9 @@ module.exports = {
         results: './src/js/EntryPoints/results.ts',
         questionsPage: './src/js/EntryPoints/questionsPage.ts',
         userPlatform: './src/js/EntryPoints/userPlatform.ts',
+        hubConnection: './src/js/Front-End/hubConnection.ts',
+        notes: './src/js/EntryPoints/notes.ts',
+        supervisorPlatform: './src/js/EntryPoints/superVisorPlatform.ts',
         adminPlatform: './src/js/EntryPoints/adminPlatform.ts'
     },
     output: {

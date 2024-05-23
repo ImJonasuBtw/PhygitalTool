@@ -10,18 +10,30 @@ public class ProjectManager : IProjectManager
     private readonly IRepositoryFlow _repositoryFlow;
     private readonly IRepositoryQuestion _repositoryQuestion;
     private readonly IRepositoryAnswerPossibility _answerPossibilityRepository;
+    private readonly IRepositoryNote _noteRepository;
 
-    public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow, IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository)
+    public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow, IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository, IRepositoryNote noteRepository)
     {
         _repositoryProject = repositoryProject;
         _repositoryFlow = repositoryFlow;
         _repositoryQuestion = repositoryQuestion;
         _answerPossibilityRepository = answerPossibilityRepository;
+        _noteRepository = noteRepository;
     }
     
     public void AddProject(Project project) 
     {
         _repositoryProject.CreateProject(project);
+    }
+
+    public void AddNote(Note note)
+    {
+        _noteRepository.CreateNote(note);
+    }
+
+    public IEnumerable<Note> getNotes()
+    {
+        return _noteRepository.ReadAllNotes();
     }
     public void AddSubTheme(SubTheme subTheme)
     {
