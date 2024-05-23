@@ -66,10 +66,10 @@ public static class DataSeeder
                 Email = "manager.phygital@example.com",
                 EmailConfirmed = true,
                 ImageUrl = "https://mandaraperera.dev/media/beheerder.jpg",
-                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+                BackOfficeId = backOffice1.BackOfficeId
             };
 
-            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; 
             userManager.AddToRoleAsync(manager1, Manager).Wait();
             if (!creationResult.Succeeded)
             {
