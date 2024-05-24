@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
 using PhygitalTool.BL.Users;
 using PhygitalTool.Domain.FlowPackage;
 
@@ -9,10 +10,12 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class CommentController: ControllerBase
 {
     private readonly IUserManager _userManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public CommentController(IUserManager userManager)
+    public CommentController(IUserManager userManager, UnitOfWork unitOfWork)
     {
         _userManager = userManager;
+        _unitOfWork = unitOfWork;
     }
 
     [HttpPost]
@@ -30,7 +33,10 @@ public class CommentController: ControllerBase
             IdeaId = comment.IdeaId
         };
         
+        _unitOfWork.BeginTransaction();
         _userManager.AddCommentToIdea(comment.IdeaId,domainComment);
+        _unitOfWork.Commit();
+        
         return Ok();
     }
 }

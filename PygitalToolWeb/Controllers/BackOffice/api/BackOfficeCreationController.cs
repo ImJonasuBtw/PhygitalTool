@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Util;
@@ -12,10 +13,12 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class BackOfficeCreationController : Controller
 {
     private readonly IBackOfficeManager _backOfficeManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public BackOfficeCreationController(IBackOfficeManager backOfficeManager)
+    public BackOfficeCreationController(IBackOfficeManager backOfficeManager, UnitOfWork unitOfWork)
     {
         _backOfficeManager = backOfficeManager;
+        _unitOfWork = unitOfWork;
     }
 
     [Authorize(Roles = "Admin")]
@@ -35,7 +38,10 @@ public class BackOfficeCreationController : Controller
                 AdminPlatformId = backOffice.AdminPlatformId
             };
 
+            _unitOfWork.BeginTransaction();
             _backOfficeManager.AddBackOffice(domainBackOffice);
+            _unitOfWork.Commit();
+
             return Ok();
         }
         catch (Exception ex)
@@ -43,14 +49,16 @@ public class BackOfficeCreationController : Controller
             return StatusCode(500, $"internal server error: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpDelete("DeleteBackOffice/{backOfficeId}")]
     public IActionResult DeleteBackOffice(int backOfficeId)
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _backOfficeManager.DeleteBackOffice(backOfficeId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -58,7 +66,7 @@ public class BackOfficeCreationController : Controller
             return BadRequest($"Error deleting backoffice: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpGet("GetBackOfficeDetails/{backOfficeId}")]
     public IActionResult GetBackOfficeDetails(int backOfficeId)
@@ -76,7 +84,7 @@ public class BackOfficeCreationController : Controller
                 Name = backOffice.Name,
                 AdminPlatformId = backOffice.AdminPlatformId
             };
-        
+
             return Ok(model);
         }
         catch (Exception ex)
@@ -84,7 +92,7 @@ public class BackOfficeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Admin")]
     [HttpPut("UpdateBackOffice/{backOfficeId}")]
     public IActionResult UpdateBackOffice(int backOfficeId, [FromBody] BackOfficeModel backOfficeModel)
@@ -103,8 +111,10 @@ public class BackOfficeCreationController : Controller
             }
 
             existingBackOffice.Name = backOfficeModel.Name;
-       
+
+            _unitOfWork.BeginTransaction();
             _backOfficeManager.UpdateBackOffice(existingBackOffice);
+            _unitOfWork.Commit();
 
             return Ok();
         }

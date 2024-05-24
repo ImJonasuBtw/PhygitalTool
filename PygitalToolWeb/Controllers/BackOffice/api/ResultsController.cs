@@ -18,7 +18,7 @@ public class ResultsController : Controller
     private readonly IFlowManager _flowManager;
     private readonly ILogger<ResultsController> _logger;
 
-    public ResultsController(IProjectManager iProjectManager,IFlowManager iFlowManager , ILogger<ResultsController> logger)
+    public ResultsController(IProjectManager iProjectManager,IFlowManager iFlowManager , ILogger<ResultsController> logger, UnitOfWork unitOfWork)
     {
         _projectManager = iProjectManager;
         _flowManager = iFlowManager;

@@ -13,10 +13,12 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class NotesController : Controller
 {
     private readonly IProjectManager _projectManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public NotesController(IProjectManager projectManager)
+    public NotesController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
+        _unitOfWork = unitOfWork;
     }
     
     [HttpPost("PostNote")]
@@ -32,7 +34,9 @@ public class NotesController : Controller
             QuestionId = note.QuestionId,
             Description = note.Description
         };
+        _unitOfWork.BeginTransaction();
         _projectManager.AddNote(domainNote);
+        _unitOfWork.Commit();
         return Ok();
     }
     

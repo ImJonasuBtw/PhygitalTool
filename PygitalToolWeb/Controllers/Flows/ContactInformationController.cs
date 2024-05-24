@@ -10,6 +10,7 @@ public class ContactInformationController : Controller
     
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
+    private readonly UnitOfWork _unitOfWork;
     
     public ContactInformationController(IFlowManager flowManager, ILogger<QuestionController> logger)
     {
@@ -36,7 +37,9 @@ public class ContactInformationController : Controller
         
         if(ModelState.IsValid)
         {
+            _unitOfWork.BeginTransaction();
             _flowManager.SaveContactInformation(contactInformation);
+            _unitOfWork.Commit();
             return RedirectToAction("Index", "Home"); 
         }
   
