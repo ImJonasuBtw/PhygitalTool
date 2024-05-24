@@ -11,11 +11,13 @@ public class SubThemeCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
     private readonly ILogger<SubThemeCreationController> _logger;
+    private readonly UnitOfWork _unitOfWork;
 
-    public SubThemeCreationController(IProjectManager projectManager, ILogger<SubThemeCreationController> logger)
+    public SubThemeCreationController(IProjectManager projectManager, ILogger<SubThemeCreationController> logger, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     
     [Authorize(Roles = "Manager")]
@@ -35,7 +37,9 @@ public class SubThemeCreationController : Controller
             MainThemeId = subTheme.MainThemeId
         };
  
+        _unitOfWork.BeginTransaction();
         _projectManager.AddSubTheme(domainSubTheme);
+        _unitOfWork.Commit();
         return Ok();
     }
     [Authorize(Roles = "Manager")]
@@ -44,7 +48,9 @@ public class SubThemeCreationController : Controller
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteSubTheme(subThemeId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -97,8 +103,9 @@ public class SubThemeCreationController : Controller
 
             existingSubTheme.SubThemeName = subThemeModel.SubThemeName;
             existingSubTheme.SubThemeInformation = subThemeModel.SubThemeInformation;
-       
+            _unitOfWork.BeginTransaction();
             _projectManager.UpdateSubTheme(existingSubTheme);
+            _unitOfWork.Commit();
 
             return Ok();
         }

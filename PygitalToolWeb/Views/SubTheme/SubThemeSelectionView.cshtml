@@ -1,5 +1,6 @@
 ﻿
 @using PhygitalTool.Domain.Util
+@using Microsoft.IdentityModel.Tokens
 @model PhygitalTool.Domain.Projects.MainTheme
 
 @{
@@ -14,22 +15,26 @@
     <h3>@subtheme.SubThemeName :</h3>
     foreach (var flow in subtheme.Flows)
     {
-        if (flow.FlowType == FlowType.Linear)
+        if (!flow.Questions.IsNullOrEmpty())
         {
-            <a class="btn btn-outline-secondary btn-block" asp-area=""
-               asp-controller="LinearFlow"
-               asp-action="StartFLow"
-               asp-route-flowId="@flow.FlowId"> @flow.FlowName (linear)
-            </a>
-        }
+            if (flow.FlowType == FlowType.Linear)
+            {
+                <a class="btn btn-outline-secondary btn-block" asp-area=""
+                   asp-controller="LinearFlow"
+                   asp-action="StartFLow"
+                   asp-route-flowId="@flow.FlowId"> @flow.FlowName (linear)
+                </a>
+            }
         
-        if (flow.FlowType == FlowType.Circular)
-        {
-            <a class="btn btn-outline-secondary btn-block" asp-area=""
-               asp-controller="CircularFlow"
-               asp-action="StartFLow"
-               asp-route-flowId="@flow.FlowId">@flow.FlowName (circulair)
-            </a>
+            if (flow.FlowType == FlowType.Circular)
+            {
+                <a class="btn btn-outline-secondary btn-block" asp-area=""
+                   asp-controller="CircularFlow"
+                   asp-action="StartFLow"
+                   asp-route-flowId="@flow.FlowId"> @flow.FlowName (circulair)
+                </a>
+            }
         }
+
     }
 }
