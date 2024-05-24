@@ -14,7 +14,7 @@ export class BackOffice {
     }
 }
 
-function setupAddProjectButton() {
+function setupAddBackofficeButton() {
     document.getElementById('add-project-button')?.addEventListener('click', () => {
         console.log('Add backoffice button has been pressed!');
         const backofficeContainer = document.getElementById('backoffice-container');
@@ -95,7 +95,7 @@ function setupBackOfficeContainer() {
 
 
 export function initializeEventListenersBackoffice() {
-    setupAddProjectButton();
+    setupAddBackofficeButton();
     setupConfirmationModal();
     setupBackOfficeContainer();
 }

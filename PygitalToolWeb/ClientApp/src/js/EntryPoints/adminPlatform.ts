@@ -1,6 +1,6 @@
 import {initializeEventListenersBackoffice} from "../AdminPlatform/backOfficeCreation";
-import {initializeDOMListenersManager} from "../AdminPlatform/Managers"
-//import "../AdminPlatform/Managers"
+import {initializeDOMListenersManager} from "../AdminPlatform/managers"
+
 
 function initializeAllEventListeners() {
     initializeEventListenersBackoffice();

@@ -1,4 +1,5 @@
-import {loadManagers} from "./managerRestClient";
+import {loadManagers} from "../../AdminPlatform/managerRestClient";
+
 export function validatePassword(password:string) {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasLowerCase = /[a-z]/.test(password);
@@ -9,7 +10,7 @@ export async function handleResponse(response: Response): Promise<void> {
     if (!response.ok) {
         if (response.status === 400 || response.status === 409) {
             const errorMessage = await response.text();
-            alert(`Manager niet toegevoegd: ${errorMessage}`);
+            alert(`Supervisor niet toegevoegd: ${errorMessage}`);
         } else {
             const errorMessage = await response.text();
             console.error('Server error:', errorMessage);
@@ -19,6 +20,6 @@ export async function handleResponse(response: Response): Promise<void> {
     }
     const data = await response.json();
     console.log('Success:', data);
-    alert('Managers succesvol toegevoegd!');
+    alert('Supervisor succesvol toegevoegd!');
     await loadManagers();
 }

@@ -1,4 +1,4 @@
-﻿import { loadSupervisors } from "./SupervisorsRestClient";
+﻿import { loadSupervisors } from "./supervisorsRestClient";
 
 console.log("Supervisor script loaded");
 export const scriptElement = document.getElementById('backOfficeHomePage-script');
@@ -10,7 +10,7 @@ export interface Supervisor {
     imageUrl: string;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+export function initializeDOMListenerSupervisor(): void {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         if (link.textContent && link.textContent.trim() === "Begeleiders") {
@@ -20,7 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-});
+}
+
+
 
 
 

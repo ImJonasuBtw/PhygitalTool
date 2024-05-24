@@ -1,6 +1,6 @@
-﻿import { Managers} from "./Managers";
+﻿import { Managers} from "./managers";
 import {validatePassword, handleResponse} from "./managerValidation";
-import {renderManagers} from "./ManagerUI";
+import {renderManagers} from "./managerUI";
 
 
 export async function loadManagers(): Promise<void> {

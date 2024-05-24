@@ -1,5 +1,5 @@
-﻿import {fetchBackOffices, submitManagersForm, loadManagers} from "./ManagerRestClient";
-import {Managers} from "./Managers";
+﻿import {fetchBackOffices, submitManagersForm, loadManagers} from "./managerRestClient";
+import {Managers} from "./managers";
 
 export function renderManagers(managers: Managers[]): void {
     const backOfficeContainer = document.getElementById('backoffice-container');
