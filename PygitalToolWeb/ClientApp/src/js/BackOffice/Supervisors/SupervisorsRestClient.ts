@@ -1,8 +1,13 @@
 ﻿import {backOfficeId, Supervisor} from "./Supervisors";
 import {addSupervisor} from "./SuperVisorsUI";
-import {validatePassword} from "../../validation";
 
 
+export function validatePassword(password:string) {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNonAlphabetic = /[^A-Za-z]/.test(password);
+    return hasUpperCase && hasLowerCase && hasNonAlphabetic;
+}
 
 export function loadSupervisors(backofficeId: number) {
     console.log(backofficeId);

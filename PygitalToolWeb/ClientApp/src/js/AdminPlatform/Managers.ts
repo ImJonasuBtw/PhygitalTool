@@ -1,4 +1,4 @@
-import {loadManagers} from "./ManagerUI";
+import {loadManagers} from "./ManagerRestClient";
 
 console.log("Managers script loaded");
 export interface Managers {
@@ -7,23 +7,17 @@ export interface Managers {
     imageUrl: string;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        if (link.textContent && link.textContent.trim() === "Beheerders") {
-            link.addEventListener('click', (event) => {
-                event.preventDefault();
-                loadManagers();
-            });
-        }
-    });
-});
-
-
-
-
-
-
-
-
-
+export function initializeDOMListenersManager(): void {
+        const navLinks = document.querySelectorAll('.nav-link');
+        console.log("navLinks:", navLinks);
+        navLinks.forEach(link => {
+            console.log("Attaching click event listener to link:", link);
+            if (link.textContent && link.textContent.trim() === "Beheerders") {
+                link.addEventListener('click', async (event) => {
+                    console.log("Beheerders link clicked.");
+                    event.preventDefault();
+                    await loadManagers();
+                });
+            }
+        });
+}
