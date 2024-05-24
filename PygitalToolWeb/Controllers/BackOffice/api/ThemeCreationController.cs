@@ -14,11 +14,13 @@ public class ThemeCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
     private readonly ILogger<ThemeCreationController> _logger;
+    private readonly UnitOfWork _unitOfWork;
 
-    public ThemeCreationController(IProjectManager projectManager, ILogger<ThemeCreationController> logger)
+    public ThemeCreationController(IProjectManager projectManager, ILogger<ThemeCreationController> logger, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     
     [Authorize(Roles = "Manager")]
@@ -38,7 +40,9 @@ public class ThemeCreationController : Controller
             ProjectId = theme.ProjectId
         };
 
+        _unitOfWork.BeginTransaction();
         _projectManager.AddMainTheme(domainTheme);
+        _unitOfWork.Commit();
         return Ok();
     }
     [Authorize(Roles = "Manager")]
@@ -47,7 +51,9 @@ public class ThemeCreationController : Controller
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteMainTheme(mainThemeId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -101,8 +107,10 @@ public class ThemeCreationController : Controller
 
             existingMainTheme.ThemeName = themeModel.ThemeName;
             existingMainTheme.MainThemeInformation = themeModel.MainThemeInformation;
-       
+            
+            _unitOfWork.BeginTransaction();
             _projectManager.UpdateMainTheme(existingMainTheme);
+            _unitOfWork.Commit();
             _logger.LogInformation("Existing main theme: {@ExistingMainTheme}", existingMainTheme);
 
             return Ok();

@@ -44,6 +44,7 @@ builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 builder.Services.AddScoped<IRepositoryNote, NoteRepository>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+builder.Services.AddScoped<UnitOfWork>();
 
 builder.Services.AddSignalR();
 

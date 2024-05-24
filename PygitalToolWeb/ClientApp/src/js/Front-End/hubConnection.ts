@@ -53,6 +53,7 @@ function updateButtonVisibility() {
         stopButton.style.display = "inline-block";
     }
 }
+
 async function fetchCurrentIds() {
     try {
         const initialQuestionId = await hubConnection.invoke("GetCurrentQuestionId");
@@ -70,20 +71,21 @@ async function fetchCurrentIds() {
     }
     try {
         const initialFlowId = await hubConnection.invoke("GetCurrentFlowId");
-        //console.log("Current flow ID:", initialFlowId);
+        console.log("Current flow ID:", initialFlowId);
         currentFlowId = initialFlowId;
         const flowIdInfo = document.getElementById('current_flow');
-        if (flowIdInfo) {
-            flowIdInfo.innerText = initialFlowId;
-        }
     } catch (error) {
         console.error("Error getting current flow ID:", error);
     }
     try {
         const initialFlowState = await hubConnection.invoke("GetFlowState");
-        //console.log("Current flow state:", initialFlowState);
+        console.log("Current FLOW state:", initialFlowState);
         currentFlowState = initialFlowState;
         updateFlowStateElement(initialFlowState);
+        if(currentFlowState == "stopped" && window.location.pathname.startsWith("/CircularFlow")){
+            const newUrl = `/api/Supervisors/show-start-screen`;
+            window.location.href = newUrl;
+        }
     } catch (error) {
         console.error("Error getting current flow state:", error);
     }
@@ -235,6 +237,12 @@ document.querySelector('#stopFlow')?.addEventListener('click', async () => {
     } catch (error) {
         console.error("Error pausing flow:", error);
     }
+    try {
+        await hubConnection.invoke("StartFlow");
+        console.log("Flow started successfully");
+    } catch (error) {
+        console.error("Error pausing flow:", error);
+    }
 });
 
 
@@ -252,3 +260,19 @@ hubConnection.on("FlowStateUpdated", newFlowState => {
     }
 });
 
+document.querySelector('#backToSupervisorScreen')?.addEventListener('click', async () => {
+    try {
+        await hubConnection.invoke("StopFlow");
+        console.log("Flow stopped successfully");
+        window.history.back();
+    } catch (error) {
+        console.error("Error pausing flow:", error);
+    }
+    try {
+        await hubConnection.invoke("StartFlow");
+        console.log("Flow started successfully");
+    } catch (error) {
+        console.error("Error pausing flow:", error);
+    }
+    history.back()
+});
