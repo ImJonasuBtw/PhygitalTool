@@ -19,6 +19,9 @@ public interface IProjectManager
     Flow AddFlow(Flow flow);
     Question AddQuestion(Question question);
 
+    void AddNote(Note note);
+    IEnumerable<Note> getNotes();
+
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
     void AddMainTheme(MainTheme mainTheme);
     void UpdateSubTheme(SubTheme subTheme);

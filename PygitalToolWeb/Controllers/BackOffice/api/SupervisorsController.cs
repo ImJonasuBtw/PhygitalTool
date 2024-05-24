@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using PhygitalTool.BL.Users;
+using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Web.Models;
 
@@ -19,12 +20,15 @@ public class SupervisorsController : Controller
 
     private readonly UserManager<IdentityUser> _identityUserManager;
     
+    private readonly IRepositoryBackOffice _repositoryBackOffice;
+    
     private const string Supervisorrole = "Supervisor";
 
-    public SupervisorsController(IUserManager userManager, UserManager<IdentityUser> identityUserManager)
+    public SupervisorsController(IUserManager userManager, UserManager<IdentityUser> identityUserManager, IRepositoryBackOffice repositoryBackOffice)
     {
         _userManager = userManager;
         _identityUserManager = identityUserManager;
+        _repositoryBackOffice = repositoryBackOffice;
     }
 
     [Authorize(Roles = "Manager")]
@@ -40,7 +44,7 @@ public class SupervisorsController : Controller
         }
         return Ok(supervisors);
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpPost]
     public IActionResult CreateSupervisor([FromBody] SupervisorDto supervisorDto)
@@ -49,9 +53,10 @@ public class SupervisorsController : Controller
         {
             return BadRequest(ModelState);
         }
-        
 
-        var supervisor = new Supervisor {
+
+        var supervisor = new Supervisor
+        {
             Email = supervisorDto.Email,
             UserName = supervisorDto.Email,
             ImageUrl = supervisorDto.ImageUrl,
@@ -65,8 +70,25 @@ public class SupervisorsController : Controller
             return BadRequest(result.Errors);
         }
 
-        return Ok(new { Message = "Supervisor added successfully"});
+        return Ok(new { Message = "Supervisor added successfully" });
     }
+    [HttpGet("show-supervisor-screen")]
+    public IActionResult ShowSupervisorScreen(string supervisorId)
+    {
+        var supervisor = _repositoryBackOffice.ReadSupervisorWithFlows(supervisorId);
 
-
+        return View("~/Views/Supervisors/SupervisorView.cshtml", supervisor);
+    }
+    
+    [HttpGet("show-start-screen")]
+    public IActionResult ShowStartScreen()
+    {
+        return View("~/Views/Circularflow/CircularFlowWithSupervisor.cshtml");
+    }
+    
+    [HttpGet("show-supervisor-control-screen")]
+    public IActionResult ShowSuperVisorFlowControl()
+    {
+        return View("~/Views/Supervisors/SuperVisorFlowControl.cshtml");
+    }
 }

@@ -1,21 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
-
 namespace PhygitalTool.Web.Controllers.Flows;
 
 public class QuestionController : Controller
 {
+    private readonly IHubContext<QuestionHub> _hubContext;
     private readonly IFlowManager _flowManager;
     private readonly IProjectManager _projectManager;
     private readonly ILogger<QuestionController> _logger;
 
-    public QuestionController(ILogger<QuestionController> logger, IFlowManager iflowManager,
+    public QuestionController(IHubContext<QuestionHub> hubContext,ILogger<QuestionController> logger, IFlowManager iflowManager,
         IProjectManager projectManager)
     {
+        _hubContext = hubContext;
         _logger = logger;
         _flowManager = iflowManager;
         _projectManager = projectManager;
@@ -68,6 +70,39 @@ public class QuestionController : Controller
         return RedirectToAction("GetNextQuestion", "LinearFlow",
             new { flowId = currentFlow, questionId = currentQuestion });
     }
+        
+    [HttpGet("GetQuestion/{questionId}")]
+    public IActionResult GetQuestion(int questionId)
+    {
+        Question question = _flowManager.GetQuestion(questionId);
 
- 
+        if (question == null)
+        {
+            return NotFound();
+        }
+        return Ok(question);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> ShowQuestion(int questionId)
+    {
+        // Haal de vraag op uit de database op basis van de ID
+        var question = _flowManager.GetQuestion(questionId);
+
+        // Stuur de vraag naar de clients via SignalR
+        await _hubContext.Clients.All.SendAsync("SendQuestion", question);
+        return Ok(question);
+    }
+
+    public async Task UpdateCurrentQuestion(Question question)
+    {
+        await _hubContext.Clients.All.SendAsync("UpdateCurrentQuestion", question);
+    }
+    public async Task<IActionResult> QuestionInfo()
+    {
+        // Gebruik de huidige vraag in je weergave
+        return Ok();
+    }
+
+
 }

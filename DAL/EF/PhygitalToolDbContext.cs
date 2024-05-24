@@ -6,12 +6,14 @@ using Microsoft.Extensions.Logging;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
+using Note = PhygitalTool.Domain.FlowPackage.Note;
 
 namespace PhygitalTool.DAL.EF;
 
 public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Question> Questions { get; set; }
+    public DbSet<Note> Notes { get; set; }
     public DbSet<AnswerPossibility> AnswerPossibilities { get; set; }
     public DbSet<UserInput> UserInputs { get; set; }
     public DbSet<Answer> Answers { get; set; }
@@ -56,7 +58,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<MainTheme>().Property(m => m.ThemeId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Question>().Property(q => q.QuestionId).ValueGeneratedOnAdd();
         modelBuilder.Entity<AnswerPossibility>().Property(a=>a.AnswerPossibilityId).ValueGeneratedOnAdd();
-
+        modelBuilder.Entity<Note>().Property(n => n.NoteId).ValueGeneratedOnAdd();
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
 
@@ -79,6 +81,11 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .HasOne(m => m.BackOffice)
             .WithMany(b => b.Managers)
             .HasForeignKey(m => m.BackOfficeId);
+        
+        modelBuilder.Entity<Note>()
+            .HasOne(n => n.Question)
+            .WithMany(q => q.Notes)
+            .HasForeignKey(q => q.QuestionId);
 
         modelBuilder.Entity<Supervisor>()
             .HasOne(s => s.BackOffice)
@@ -108,6 +115,11 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .WithOne(q => q.Flow)
             .HasForeignKey(q => q.FlowId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Flow>()
+            .HasOne(f => f.Supervisor)
+            .WithMany(s => s.Flows)
+            .HasForeignKey(f => f.SupervisorId);
         
         modelBuilder.Entity<Question>()
             .HasMany(q => q.AnswerPossibilities)

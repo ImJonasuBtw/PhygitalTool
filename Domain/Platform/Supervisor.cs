@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
+using PhygitalTool.Domain.FlowPackage;
 
 namespace PhygitalTool.Domain.Platform;
 
@@ -14,4 +15,6 @@ public class Supervisor : IdentityUser
     
     //nav
     public BackOffice BackOffice;
+    
+    public ICollection<Flow> Flows = new List<Flow>();
 }

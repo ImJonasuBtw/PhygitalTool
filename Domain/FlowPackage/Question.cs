@@ -23,6 +23,7 @@ public class Question
     public ICollection<AnswerPossibility> AnswerPossibilities { get; set; } = new List<AnswerPossibility>();
     public Flow Flow { get; set; }
     public ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    public ICollection<Note> Notes { get; set; } = new List<Note>();
     public bool IsConditional { get; set; }
     
     
