@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
 using PhygitalTool.BL;
+using PhygitalTool.BL.BackOffice;
+using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
@@ -38,7 +40,7 @@ public class QuestionController : Controller
         int projectId = mainTheme.ProjectId;
         
         _unitOfWork.BeginTransaction();
-        _flowManager.SaveUserAnswer(selectedAnswer, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
+        _flowManager.AddUserAnswer(selectedAnswer, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
         _unitOfWork.Commit();
 
 
@@ -64,7 +66,7 @@ public class QuestionController : Controller
 
         for (int i = 0; i < selectedAnswers.Length; i++)
         {
-            _flowManager.SaveUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow,
+            _flowManager.AddUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow,
                 currentQuestion, projectId, mainThemeId, subThemeId);
         }
 

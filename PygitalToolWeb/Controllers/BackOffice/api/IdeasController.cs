@@ -35,7 +35,7 @@ public class IdeasController : ControllerBase
             UserId = idea.UserId
         };
         _unitOfWork.BeginTransaction();
-        _userManager.addIdeas(domainIdea);
+        _userManager.AddIdeas(domainIdea);
         _unitOfWork.Commit();
         return Ok();
     }
@@ -45,7 +45,7 @@ public class IdeasController : ControllerBase
     {
         try
         {
-            var idea = _userManager.getIdea(ideaId);
+            var idea = _userManager.GetIdea(ideaId);
             if (idea == null)
             {
                 return NotFound();
@@ -53,7 +53,7 @@ public class IdeasController : ControllerBase
 
             idea.Likes++;
             _unitOfWork.BeginTransaction();
-            _userManager.updateLikeIdea(idea);
+            _userManager.UpdateLikeIdea(idea);
             _unitOfWork.Commit();
             return Ok(new { likes = idea.Likes });
         }

@@ -6,17 +6,18 @@ namespace PhygitalTool.BL.Users;
 
 public interface IUserManager
 {
-    IEnumerable<Supervisor> getSuperVisorsForBackoffice(int backofficeId);
+    IEnumerable<Supervisor> GetSuperVisorsForBackoffice(int backofficeId);
 
-    IEnumerable<Idea> getAllIdeasWithUsers();
+    IEnumerable<Idea> GetAllIdeasWithUsers();
 
-    void addIdeas(Idea idea);
+    void AddIdeas(Idea idea);
 
-    IdentityUser getUser(string userId);
+    IdentityUser GetUser(string userId);
 
-    void AddCommentToIdea(int IdeaId,Comment comment);
+    public void AddCommentToIdea(string description, string userId, int ideaId);
+    //void AddManager(string email, string password, string imageUrl, int backOfficeId, bool emailConfirmed);
 
-    void updateLikeIdea(Idea idea);
-    Idea getIdea(int id);
-    IEnumerable<Manager> getManagers();
+    void UpdateLikeIdea(Idea idea);
+    Idea GetIdea(int id);
+    IEnumerable<Manager> GetManagers();
 }

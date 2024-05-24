@@ -16,7 +16,7 @@ public class AdminPlatformManager: IAdminPlatformManager
         return _repositoryBackOffice.ReadAdminPlatform();
     }
 
-    public IEnumerable<Domain.Platform.BackOffice> getBackoffices()
+    public IEnumerable<Domain.Platform.BackOffice> GetBackoffices()
     {
         return _repositoryBackOffice.ReadBackOffices();
     }
