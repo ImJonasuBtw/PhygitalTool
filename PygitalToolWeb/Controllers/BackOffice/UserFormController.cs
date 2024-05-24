@@ -13,7 +13,7 @@ public class UserFormController : Controller
     }
     public IActionResult Index()
     {
-        var ideas = _userManager.getAllIdeasWithUsers();
+        var ideas = _userManager.GetAllIdeasWithUsers();
         return View("~/Views/UserIdea/UserIDeaForm.cshtml",ideas);
     }
 }

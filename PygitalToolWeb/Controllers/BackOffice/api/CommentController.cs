@@ -20,21 +20,15 @@ public class CommentController: ControllerBase
 
     [HttpPost]
     [Authorize]
-    public IActionResult PostComment( [FromBody] Comment comment)
+    public IActionResult PostComment(Comment comment)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        var domainComment = new Comment()
-        {
-            Description =comment.Description,
-            UserId = comment.UserId,
-            IdeaId = comment.IdeaId
-        };
-        
+      
         _unitOfWork.BeginTransaction();
-        _userManager.AddCommentToIdea(comment.IdeaId,domainComment);
+        _userManager.AddCommentToIdea(comment.Description, comment.UserId, comment.IdeaId);
         _unitOfWork.Commit();
         
         return Ok();

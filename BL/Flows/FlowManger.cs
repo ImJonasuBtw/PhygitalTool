@@ -110,7 +110,7 @@ public class FlowManger : IFlowManager
         _repositoryContactInformation.SaveContactInformation(contactInformation);
     }
 
-    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion,int projectId, int mainThemeId, int subthemeId)
+    public void AddUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion,int projectId, int mainThemeId, int subthemeId)
     {
         int newAnswerId;
 
@@ -131,7 +131,7 @@ public class FlowManger : IFlowManager
         AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
         AddUserInput(currentFlow, newAnswerId,  projectId, mainThemeId, subthemeId);
     }
-    public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
+    public void AddUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
     {
         int newAnswerId;
         _repositoryQuestion.ReadQuestion(currentQuestion);

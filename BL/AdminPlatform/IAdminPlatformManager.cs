@@ -4,5 +4,5 @@ public interface IAdminPlatformManager
 {
     Domain.Platform.AdminPlatform GetAdminPlatform();
     
-    IEnumerable<Domain.Platform.BackOffice> getBackoffices();
+    IEnumerable<Domain.Platform.BackOffice> GetBackoffices();
 }

@@ -11,7 +11,7 @@ public class FilesController : ControllerBase
 
     public FilesController(CloudStorageService cloudStorageService)
     {
-        this._cloudStorageService = cloudStorageService;
+        _cloudStorageService = cloudStorageService;
     }
 
     [HttpPost("uploadFile")]
