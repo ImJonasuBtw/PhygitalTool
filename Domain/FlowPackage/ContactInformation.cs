@@ -22,7 +22,6 @@ public class ContactInformation
     public int FlowId { get; set; }
 
     // nav
-    [ForeignKey("FlowId")] 
     public Flow Flow { get; set; }
 
 

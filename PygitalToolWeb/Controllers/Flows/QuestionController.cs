@@ -5,6 +5,7 @@ using PhygitalTool.BL;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
+
 namespace PhygitalTool.Web.Controllers.Flows;
 
 public class QuestionController : Controller
@@ -12,15 +13,18 @@ public class QuestionController : Controller
     private readonly IHubContext<QuestionHub> _hubContext;
     private readonly IFlowManager _flowManager;
     private readonly IProjectManager _projectManager;
+    private readonly UnitOfWork _unitOfWork;
     private readonly ILogger<QuestionController> _logger;
 
-    public QuestionController(IHubContext<QuestionHub> hubContext,ILogger<QuestionController> logger, IFlowManager iflowManager,
-        IProjectManager projectManager)
+    public QuestionController(IHubContext<QuestionHub> hubContext, ILogger<QuestionController> logger,
+        IFlowManager iflowManager,
+        IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _hubContext = hubContext;
         _logger = logger;
         _flowManager = iflowManager;
         _projectManager = projectManager;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -32,7 +36,10 @@ public class QuestionController : Controller
         int mainThemeId = subTheme.MainThemeId;
         MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
         int projectId = mainTheme.ProjectId;
+        
+        _unitOfWork.BeginTransaction();
         _flowManager.SaveUserAnswer(selectedAnswer, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
+        _unitOfWork.Commit();
 
 
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)
@@ -70,7 +77,7 @@ public class QuestionController : Controller
         return RedirectToAction("GetNextQuestion", "LinearFlow",
             new { flowId = currentFlow, questionId = currentQuestion });
     }
-        
+
     [HttpGet("GetQuestion/{questionId}")]
     public IActionResult GetQuestion(int questionId)
     {
@@ -80,9 +87,10 @@ public class QuestionController : Controller
         {
             return NotFound();
         }
+
         return Ok(question);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> ShowQuestion(int questionId)
     {
@@ -98,11 +106,10 @@ public class QuestionController : Controller
     {
         await _hubContext.Clients.All.SendAsync("UpdateCurrentQuestion", question);
     }
+
     public async Task<IActionResult> QuestionInfo()
     {
         // Gebruik de huidige vraag in je weergave
         return Ok();
     }
-
-
 }

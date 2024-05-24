@@ -14,10 +14,12 @@ using PhygitalTool.Web.Models;
 public class FlowCreationController : ControllerBase
 {
     private readonly IProjectManager _projectManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public FlowCreationController(IProjectManager projectManager)
+    public FlowCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
+        _unitOfWork = unitOfWork;
     }
 
     [Authorize(Roles = "Manager")]
@@ -40,6 +42,7 @@ public class FlowCreationController : ControllerBase
             SubThemeId = flow.SubthemeId,
         };
 
+        _unitOfWork.BeginTransaction();
         Flow newFlow = _projectManager.AddFlow(domainFlow);
         domainFlow.FlowId = newFlow.FlowId;
 
@@ -73,6 +76,7 @@ public class FlowCreationController : ControllerBase
                         domainQuestion.AnswerPossibilities.Add(domainAnswer);
                     }
                 }
+                _unitOfWork.Commit();
             }
         }
 
@@ -86,7 +90,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteFlow(flowId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -174,6 +180,7 @@ public class FlowCreationController : ControllerBase
 
             foreach (var newQuestion in newQuestions)
             {
+                _unitOfWork.BeginTransaction();
                 var domainQuestion = new Question()
                 {
                     QuestionText = newQuestion.QuestionText,
@@ -193,6 +200,7 @@ public class FlowCreationController : ControllerBase
                     _projectManager.AddAnswerPossibility(domainAnswer);
                     domainQuestion.AnswerPossibilities.Add(domainAnswer);
                 }
+                _unitOfWork.Commit();
             }
 
 
@@ -203,6 +211,7 @@ public class FlowCreationController : ControllerBase
                     flowModel.Questions.FirstOrDefault(q => q.QuestionId == existingQuestion.QuestionId);
                 if (updatedQuestion != null)
                 {
+                    _unitOfWork.BeginTransaction();
                     existingQuestion.QuestionText = updatedQuestion.QuestionText;
                     existingQuestion.QuestionImage = updatedQuestion.QuestionImage;
                     existingQuestion.QuestionType = updatedQuestion.QuestionType;
@@ -229,6 +238,7 @@ public class FlowCreationController : ControllerBase
                             existingQuestion.AnswerPossibilities.Add(domainAnswer);
                         }
                     }
+                    _unitOfWork.Commit();
                 }
             }
 
@@ -248,7 +258,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteQuestion(questionId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -262,7 +274,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteAnswerPossibility(AnswerPossibility);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)

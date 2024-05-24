@@ -12,22 +12,23 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class ProjectCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public ProjectCreationController(IProjectManager projectManager)
+    public ProjectCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
+        _unitOfWork = unitOfWork;
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpPost("AddProjectToBackoffice")]
     public IActionResult AddProjectToBackoffice([FromBody] ProjectModel project)
     {
-        
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        
+
         try
         {
             var domainProject = new Project
@@ -38,8 +39,9 @@ public class ProjectCreationController : Controller
                 Status = ProjectStatus.NonActive,
                 BackOfficeId = project.BackOfficeId
             };
-
+            _unitOfWork.BeginTransaction();
             _projectManager.AddProject(domainProject);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -47,14 +49,16 @@ public class ProjectCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteProject/{projectId}")]
     public IActionResult DeleteProject(int projectId)
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteProject(projectId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -62,7 +66,7 @@ public class ProjectCreationController : Controller
             return BadRequest($"Error deleting project: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectDetails/{projectId}")]
     public IActionResult GetProjectDetails(int projectId)
@@ -83,7 +87,7 @@ public class ProjectCreationController : Controller
                 Status = project.Status,
                 BackOfficeId = project.BackOfficeId
             };
-        
+
             return Ok(model);
         }
         catch (Exception ex)
@@ -91,7 +95,7 @@ public class ProjectCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateProject/{projectId}")]
     public IActionResult UpdateProject(int projectId, [FromBody] ProjectModel projectModel)
@@ -112,8 +116,10 @@ public class ProjectCreationController : Controller
             existingProject.ProjectName = projectModel.ProjectName;
             existingProject.Description = projectModel.Description;
             existingProject.Status = projectModel.Status;
-       
+
+            _unitOfWork.BeginTransaction();
             _projectManager.UpdateProject(existingProject);
+            _unitOfWork.Commit();
 
             return Ok();
         }
