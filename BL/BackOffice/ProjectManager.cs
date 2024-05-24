@@ -31,7 +31,7 @@ public class ProjectManager : IProjectManager
         _noteRepository.CreateNote(note);
     }
 
-    public IEnumerable<Note> getNotes()
+    public IEnumerable<Note> GetNotes()
     {
         return _noteRepository.ReadAllNotes();
     }

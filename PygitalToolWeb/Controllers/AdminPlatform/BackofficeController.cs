@@ -18,7 +18,7 @@ public class BackofficeController : Controller
     public IActionResult GetBackoffices()
     {
         
-        IEnumerable <Domain.Platform.BackOffice> backoffices = _adminPlatformManager.getBackoffices();
+        IEnumerable <Domain.Platform.BackOffice> backoffices = _adminPlatformManager.GetBackoffices();
         
         if (!backoffices.Any())
         {

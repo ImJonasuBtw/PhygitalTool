@@ -29,7 +29,7 @@ public class ManagersController : Controller
     public IActionResult GetManagers()
     {
         
-        IEnumerable <Manager> managers = _userManager.getManagers();
+        IEnumerable <Manager> managers = _userManager.GetManagers();
         
         if (!managers.Any())
         {

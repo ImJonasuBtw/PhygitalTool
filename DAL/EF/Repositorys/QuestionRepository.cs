@@ -85,14 +85,14 @@ public class QuestionRepository : IRepositoryQuestion
                     }
                     else
                     {
-                        return GetNextSequentialQuestion(flowId, currentQuestionId);
+                        return ReadNextSequentialQuestion(flowId, currentQuestionId);
                     }
                 }
             }
         }
         else
         {
-            return GetNextSequentialQuestion(flowId, currentQuestionId);
+            return ReadNextSequentialQuestion(flowId, currentQuestionId);
         }
 
         return null;
@@ -100,11 +100,11 @@ public class QuestionRepository : IRepositoryQuestion
 
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
     {
-        return GetNextSequentialQuestion(flowId, currentQuestionId);
+        return ReadNextSequentialQuestion(flowId, currentQuestionId);
     }
     
     
-    private Question GetNextSequentialQuestion(int flowId, int currentQuestionId)
+    private Question ReadNextSequentialQuestion(int flowId, int currentQuestionId)
     {
         var flow = _context.Flows
             .AsNoTracking()
