@@ -1,7 +1,7 @@
 ﻿<body class="animated-background">
 <div class="row main-container">
     <div class="mb-3 col-md-9">
-        <button class="btn-secondary btn" onclick="history.back()">Terug naar hoofdpagina</button>
+        <button class="btn-secondary btn" id="backToSupervisorScreen">Terug naar hoofdpagina</button>
     </div>
     <div class="mb-3 col-md-9">
         <button id="pauseFlow" style="display: none;" class="btn-primary btn ">pauze</button>
@@ -11,14 +11,12 @@
 
     <div class="questionInfo-container mt-3">
         <div class="mb-3 col-md-9">
-            <h2>Flow naam: </h2>
-            <h2 id="notesFlowName"></h2>
             <form action="">
-                <p id="currentQuestionId"></p>
-                <p id="questionText" questionId="" class="text-body"> </p>
-                <label for="questionNote" class="form-label">Notes</label>
-                <textarea type="text" class="form-control" id="questionNote"></textarea>
-                <button id="submitNote" questionId="" class="btn-primary btn mt-3">Submit Note</button>
+                <p id="currentQuestionId" style="display: none"></p>
+                <p id="questionText" questionId="" class="text-body">Wacht tot er een vraag wordt getoond. </p>
+                <label for="questionNote" class="form-label">Notities</label>
+                <textarea type="text" class="form-control" id="questionNote">Maak hier je notities</textarea>
+                <button id="submitNote" questionId="" class="btn-primary btn mt-3">Bewaar notitie</button>
             </form>
 
         </div>
