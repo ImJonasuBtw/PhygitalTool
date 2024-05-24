@@ -35,13 +35,60 @@
 
         </div>
         <div class="questionContainer col-md-10 p-4">
-
+    
+            <p id="QuestionId">@Model.QuestionId</p>
             <h1>@Model.QuestionText</h1>
 
             @if (!string.IsNullOrEmpty(Model.QuestionImage))
             {
                 <img src="@Model.QuestionImage" alt="flowImage.png" class="img-responsive">
             }
+
+
+            @* @if (Model.QuestionType == QuestionType.SingleChoice && Model.Flow.FlowType == FlowType.Linear) *@
+            @* { *@
+            @*     <p>Duid één antwoord aan</p> *@
+            @* *@
+            @*     <form method="post" action="/Question/SaveAnswerAndUserInput"> *@
+            @*         <div class="row"> *@
+            @*             <div class="col-md-6 left-column p-3"> *@
+            @*                 @{ *@
+            @*                     int counter = 0; *@
+            @*                     int buttonId = 1; *@
+            @*                     foreach (var answerPossibility in Model.AnswerPossibilities.Skip(Model.AnswerPossibilities.Count() / 2)) *@
+            @*                     { *@
+            @*                         <button class="btn-answer col-12 m-2 p-4" type="submit" id="button-@buttonId" name="selectedAnswer" value="@answerPossibility.Description"> *@
+            @*                             <i class="@(counter % 3 == 0 ? "bi bi-circle-fill" : counter % 3 == 1 ? "bi bi-square-fill" : "bi bi-triangle-fill")"></i> *@
+            @*                             @answerPossibility.Description *@
+            @*                         </button> *@
+            @*                         counter++; *@
+            @*                         buttonId += 2; *@
+            @*                     } *@
+            @*                 } *@
+            @*             </div> *@
+            @*             <div class="col-md-6 right-column p-3"> *@
+            @*                 @{ *@
+            @*                     int counter2 = 0; *@
+            @*                     int buttonId2 = 2; *@
+            @*                     foreach (var answerPossibility in Model.AnswerPossibilities.Take(Model.AnswerPossibilities.Count() / 2)) *@
+            @*                     { *@
+            @*                         <button class="btn-answer col-12 m-2 p-4" type="submit" id="button-@buttonId2" name="selectedAnswer" value="@answerPossibility.Description"> *@
+            @*                             <i class="@(counter2 % 3 == 0 ? "bi bi-star-fill" : counter2 % 3 == 1 ? "bi bi-heart-fill" : "bi bi-diamond-fill")"></i> *@
+            @*                             @answerPossibility.Description *@
+            @*                         </button> *@
+            @*                         counter2++; *@
+            @*                         buttonId2 += 2; *@
+            @*                     } *@
+            @*                 } *@
+            @*             </div> *@
+            @*         </div> *@
+            @* *@
+            @*         <input type="hidden" name="currentFlow" value="@Model.FlowId"/> *@
+            @*         <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/> *@
+            @*         <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/> *@
+            @*     </form> *@
+            @* } *@
+
 
             @if (Model.QuestionType == QuestionType.Open)
             {
@@ -68,6 +115,7 @@
                     </div>
                     <p class="pt-4">Gekozen: <span id="sliderValue">Ik weet het nog niet</span></p>
                     <form id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput">
+                        <!-- Knop om het formulier in te dienen -->
                         <button type="button" class="btn btn-primary submit-button" id="submitButton">Klaar</button>
                         <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                         <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
@@ -202,4 +250,5 @@
 @section Scripts
 {
      <script id="questionPage-script" src="~/dist/questionsPage.entry.js" data-flowtype="@Model.Flow.FlowType.ToString().ToLower()" defer="defer" ></script>
+    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
 }

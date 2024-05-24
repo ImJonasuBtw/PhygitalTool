@@ -1,6 +1,9 @@
-﻿@{
+﻿@using System.Security.Claims
+@{
     ViewData["Title"] = "Home Page";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
+
 
 
 <div class="container mt-5">
@@ -33,14 +36,38 @@
                     Circulair flow doorlopen
                 </a>
             </li>
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                   asp-controller="UserForm"
+                   asp-action="Index"
+                >
+                    GebruikersPlatform
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                   asp-controller="Notes"
+                   asp-action="Index"
+                >
+                    Maak notities
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                    asp-controller="Supervisors"
+                   asp-action="ShowSupervisorScreen"
+                   asp-route-supervisorId="@userId">
+                    Supervisor platform (flow opstarten)
+                </a>
+            </li>
              <li class="nav-item mb-2">
-                            <a class="btn btn-outline-secondary btn-block"
-                            asp-controller="UserForm"
-                            asp-action="Index"
-                            >
-                               GebruikersPlatform
-                            </a>
-                        </li>
+                 <a class="btn btn-outline-secondary btn-block"
+                     asp-controller="Supervisors"
+                    asp-action="ShowStartScreen">
+                     Startscherm voor gebruikers
+                 </a>
+             </li>
+
         </ul>
     </div>
 </div>

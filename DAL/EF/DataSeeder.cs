@@ -66,10 +66,10 @@ public static class DataSeeder
                 Email = "manager.phygital@example.com",
                 EmailConfirmed = true,
                 ImageUrl = "https://mandaraperera.dev/media/beheerder.jpg",
-                BackOfficeId = backOffice1.BackOfficeId // Ensure this is correctly assigned
+                BackOfficeId = backOffice1.BackOfficeId
             };
 
-            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; // Use a secure password
+            var creationResult = userManager.CreateAsync(manager1, "Test23!").Result; 
             userManager.AddToRoleAsync(manager1, Manager).Wait();
             if (!creationResult.Succeeded)
             {
@@ -78,24 +78,7 @@ public static class DataSeeder
         }
         
         
-        if (!context.Users.Any(u => u.Email == "supervisor1@example.com"))
-        {
-            var supervisor1 = new Supervisor
-            {
-                UserName = "supervisor1@example.com",
-                Email = "supervisor1@example.com",
-                EmailConfirmed = true,
-                ImageUrl = "https://mandaraperera.dev/media/begeleider.jpg",
-                BackOfficeId = backOffice1.BackOfficeId
-            };
-
-            var creationResult1 = userManager.CreateAsync(supervisor1, "Test23!").Result;
-            userManager.AddToRoleAsync(supervisor1, Supervisor).Wait();
-            if (!creationResult1.Succeeded)
-            {
-                throw new System.Exception("Failed to create dummy supervisor.");
-            }
-        }
+      
         
         if (!context.Users.Any(u => u.Email == "Admin1@example.com"))
         {
@@ -401,7 +384,8 @@ public static class DataSeeder
         flow3.Questions.Add(range3);
         flow3.Questions.Add(multipleChoice3);
         flow3.Questions.Add(open3);
-        
+
+       
         // Adding objects to the context
         context.SubThemes.Add(subTheme1);
         context.SubThemes.Add(subTheme2);
@@ -425,6 +409,7 @@ public static class DataSeeder
         context.Questions.Add(multipleChoice3);
         context.Questions.Add(range3);
         context.Questions.Add(open3);
+        
 
         context.AnswerPossibilities.Add(answerPossibility1);
         context.AnswerPossibilities.Add(answerPossibility2);
@@ -474,6 +459,27 @@ public static class DataSeeder
         context.AnswerPossibilities.Add(answerPossibility44);
         context.AnswerPossibilities.Add(answerPossibility45);
         
+        if (!context.Users.Any(u => u.Email == "supervisor1@example.com"))
+        {
+            var supervisor1 = new Supervisor
+            {
+                UserName = "supervisor1@example.com",
+                Email = "supervisor1@example.com",
+                EmailConfirmed = true,
+                ImageUrl = "https://mandaraperera.dev/media/begeleider.jpg",
+                BackOfficeId = backOffice1.BackOfficeId
+            };
+
+            supervisor1.Flows.Add(flow1);
+            supervisor1.Flows.Add(flow2);
+            supervisor1.Flows.Add(flow3);
+            var creationResult1 = userManager.CreateAsync(supervisor1, "Test23!").Result;
+            userManager.AddToRoleAsync(supervisor1, Supervisor).Wait();
+            if (!creationResult1.Succeeded)
+            {
+                throw new System.Exception("Failed to create dummy supervisor.");
+            }
+        }
         
         context.SaveChanges();
         context.ChangeTracker.Clear();

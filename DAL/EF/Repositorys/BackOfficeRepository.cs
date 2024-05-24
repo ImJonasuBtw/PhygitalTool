@@ -77,4 +77,14 @@ public class BackOfficeRepository : IRepositoryBackOffice
         existingBackOffice.Name = backOffice.Name;
         _context.SaveChanges();
     }
+    
+    public Supervisor ReadSupervisorWithFlows(string supervisorId)
+    {
+        var supervisor = _context.Supervisors
+            .Where(s => s.Id == supervisorId)
+            .Include(s => s.Flows)
+            .FirstOrDefault();
+
+        return supervisor;
+    }
 }

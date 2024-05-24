@@ -9,6 +9,7 @@ using PhygitalTool.BL.Users;
 using PhygitalTool.DAL.EF;
 using PhygitalTool.DAL.EF.Repositorys;
 using PhygitalTool.DAL.IRepositorys;
+using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Platform;
 using PhygitalTool.Web.Services;
 using Microsoft.Extensions.Localization;
@@ -40,9 +41,11 @@ builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 builder.Services.AddScoped<CloudStorageService>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
+builder.Services.AddScoped<IRepositoryNote, NoteRepository>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 
+builder.Services.AddSignalR();
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>
@@ -57,6 +60,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PhygitalToolDbContext>();
+
 
 
 var app = builder.Build();
@@ -119,14 +123,19 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
-
-
 //first auth then auth
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<QuestionHub>("/questionHub");
+});
 
 app.MapRazorPages();
 app.MapControllerRoute(

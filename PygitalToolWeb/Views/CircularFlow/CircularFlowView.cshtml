@@ -3,10 +3,12 @@
 @using Microsoft.Extensions.Localization
 @model PhygitalTool.Domain.FlowPackage.Flow
 @inject IStringLocalizer<ResourcesFlow> Localizer
+
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+
 @{
     var culture = Model.Language switch
     {
