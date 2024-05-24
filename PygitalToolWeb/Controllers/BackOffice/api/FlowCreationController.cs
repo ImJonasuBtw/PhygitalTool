@@ -103,7 +103,7 @@ public class FlowCreationController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpGet("GetFlowDetails/{FlowId}")]
-    public IActionResult GetFlowDetails(int FlowId)
+    public IActionResult GcetFlowDetails(int FlowId)
     {
         try
         {
