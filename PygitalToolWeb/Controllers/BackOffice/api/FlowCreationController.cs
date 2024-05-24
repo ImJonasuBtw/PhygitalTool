@@ -25,7 +25,7 @@ public class FlowCreationController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpPost("AddFlowToSubtheme")]
-    public IActionResult AddFlowToSubtheme([FromBody] FlowModel flow)
+    public IActionResult AddFlowToSubtheme(FlowModel flow)
     {
         if (!ModelState.IsValid)
         {
@@ -33,54 +33,11 @@ public class FlowCreationController : ControllerBase
             return BadRequest(errors);
         }
 
-
-        var domainFlow = new Flow()
-        {
-            FlowDescription = flow.FlowDescription,
-            FlowName = flow.FlowName,
-            FlowType = flow.FlowType,
-            Language = flow.Language,
-            SubThemeId = flow.SubthemeId,
-        };
+        var questions = flow.Questions.Select(q => (q.QuestionText, q.QuestionType, q.QuestionImage, q.AnswerPossibilities.Select(a => a.Description).ToList())).ToList();
 
         _unitOfWork.BeginTransaction();
-        Flow newFlow = _projectManager.AddFlow(domainFlow);
-        domainFlow.FlowId = newFlow.FlowId;
-
-        if (flow.Questions != null && flow.Questions.Count > 0)
-        {
-            foreach (var questionModel in flow.Questions)
-            {
-                var domainQuestion = new Question()
-                {
-                    QuestionText = questionModel.QuestionText,
-                    QuestionType = questionModel.QuestionType,
-                    QuestionImage = questionModel.QuestionImage,
-                    FlowId = newFlow.FlowId,
-                };
-                Question newQuestion = _projectManager.AddQuestion(domainQuestion);
-                questionModel.QuestionId = newQuestion.QuestionId;
-                domainQuestion.QuestionId = newQuestion.QuestionId;
-                newFlow.Questions.Add(domainQuestion);
-
-
-                if (questionModel.AnswerPossibilities != null && questionModel.AnswerPossibilities.Any())
-                {
-                    foreach (var answer in questionModel.AnswerPossibilities)
-                    {
-                        var domainAnswer = new AnswerPossibility()
-                        {
-                            Description = answer.Description,
-                            QuestionId = newQuestion.QuestionId
-                        };
-                        _projectManager.AddAnswerPossibility(domainAnswer);
-                        domainQuestion.AnswerPossibilities.Add(domainAnswer);
-                    }
-                }
-                _unitOfWork.Commit();
-            }
-        }
-
+        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName, flow.FlowType, flow.Language, flow.SubthemeId, questions);
+        _unitOfWork.Commit();
 
         return Ok();
     }

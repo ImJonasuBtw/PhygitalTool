@@ -1,5 +1,6 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL.BackOffice;
 
@@ -35,4 +36,7 @@ public interface IProjectManager
     Question GetQuestion(int questionId);
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
     void DeleteAnswerPossibility(int answerPossibilityId);
+    
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType, Language language, int subthemeId, List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)> questions);
+
 }

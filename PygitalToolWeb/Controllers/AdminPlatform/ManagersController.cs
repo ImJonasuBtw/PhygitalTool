@@ -46,7 +46,6 @@ public class ManagersController : Controller
             return BadRequest(ModelState);
         }
         
-
         var manager = new Manager() {
             Email = managerDto.Email,
             UserName = managerDto.Email,
@@ -54,6 +53,7 @@ public class ManagersController : Controller
             BackOfficeId = managerDto.BackOfficeId,
             EmailConfirmed = true
         };
+        
         var result = _identityUserManager.CreateAsync(manager, managerDto.Password).Result;
         _identityUserManager.AddToRoleAsync(manager, Managerrole).Wait();
         if (!result.Succeeded)
