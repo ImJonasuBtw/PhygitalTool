@@ -1,3 +1,3 @@
-﻿import "../BackOffice/Notes/addNotes.ts";
-import "../BackOffice/Notes/showNotes.ts";
-//nog aan te passen
+﻿import {LoadDomsNotes} from "../BackOffice/Notes/notes";
+
+document.addEventListener('DOMContentLoaded', LoadDomsNotes);
