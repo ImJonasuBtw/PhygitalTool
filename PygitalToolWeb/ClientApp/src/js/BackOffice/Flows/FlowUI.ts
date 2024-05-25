@@ -1,5 +1,5 @@
-﻿import {Flow, FlowTypeEnum, Language, QuestionType} from "./Flow";
-import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestClient";
+import {Flow, FlowTypeEnum, Language, QuestionType} from "./flow";
+import {deleteAnswerPossibility, deleteQuestion} from "./flowRestClient";
 
  export function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `
@@ -35,8 +35,8 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
                         </select>
                 </div>
                 <div class="mb-3">
-                          <div id="questions-container">
-                                     <!-- Here question rows will be added -->
+                          <div id="question-list">
+                                    
                           </div>
                           <button type="button" id="add-question-button" class="add-question-button btn btn-primary me-2 mt-3">Add Question</button>
                 </div>
@@ -46,8 +46,8 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
         `;
 }
 
- export function addQuestionForm() {
-    const questionList = document.getElementById('questions-container');
+ export function QuestionForm() {
+    const questionList = document.getElementById('question-list');
     if (questionList) {
         const newQuestionContainer = document.createElement('div');
         newQuestionContainer.className = 'question-container';
@@ -57,7 +57,6 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
         const imageInputLabel = document.createElement("label");
         imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
         imageInputLabel.textContent = "Flow image:";
-
         const imageInput = document.createElement("input");
         imageInput.type = "file";
         imageInput.className = "form-control";
@@ -94,7 +93,7 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
         addAnswerPossibilityButton.className = 'btn btn-primary add-answerposs-button col-md-4 mt-3';
         addAnswerPossibilityButton.addEventListener('click', (event) => {
             event.preventDefault();
-            addAnswerPossibility(newQuestionContainer);
+            AnswerPossibility(newQuestionContainer);
         });
 
 
@@ -117,7 +116,7 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
     }
 }
 
-function addAnswerPossibility(questionContainer: HTMLElement): void {
+function AnswerPossibility(questionContainer: HTMLElement): void {
     const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
     if (answerPossibilityInputs.length < 5) {
@@ -183,12 +182,17 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void
                             </select>
                         </div>
                            
-                        <div class="mb-3">
+                   
                             <h3>Questions</h3>
-                            <div id="question-list"></div>
-                            
-                            
+                              <div class="mb-3">
+                            <div id="question-list">
+                                    
+                          </div>
+                          <div id="QuestionButton">
+                          </div>
+                     
                         </div>
+                        
                                 
                         <button type="submit" class="btn btn-primary">Update flow</button>
                         <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
@@ -196,16 +200,16 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void
                 `;
 }
 
-export function addQuestionButton(questionList: { appendChild: (arg0: HTMLButtonElement) => void; }): void{
+export function addQuestionButton(QuestionButton: HTMLElement | null ): void{
     const addQuestionButton = document.createElement('button');
     addQuestionButton.textContent = 'Add Question';
     addQuestionButton.className = 'add-question-button btn btn-primary me-2 mt-3';
     addQuestionButton.addEventListener('click', (event) => {
         event.preventDefault();
-        addQuestionForm2();
+        QuestionForm();
 
     });
-    questionList?.appendChild(addQuestionButton);
+    QuestionButton?.appendChild(addQuestionButton);
 }
 
 export function deleteQuestionButton(questionContainer: { remove: () => void; appendChild: (arg0: HTMLButtonElement) => void; }, question: any): void{
@@ -309,10 +313,9 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         possibilityInput.value = possibility.description;
         possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
         possibilityInput.className = 'answer-possibility-input  input-styling col-md-9 ml-3';
-
-
-        answerPossibilityContainer.appendChild(answerPossibilityAndButton);
+        
         answerPossibilityAndButton.appendChild(possibilityInput)
+        answerPossibilityContainer.appendChild(answerPossibilityAndButton);
         deleteAnswerpossibilitiesButton(answerPossibilityAndButton,possibility);
 
         answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
@@ -324,143 +327,12 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         addAnswerPossibilityButton.className = 'add-answerposs-button mt-3 btn btn-primary me-2';
         addAnswerPossibilityButton.addEventListener('click', (event) => {
             event.preventDefault();
-            addAnswerPossibility(questionContainer);
+            AnswerPossibility(questionContainer);
         });
         answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
     }
     questionContainer.appendChild(answerPossibilitiesContainer);
     questionList.appendChild(questionContainer);
-}
-
-
-export function showEditFlowForm(flowId: number): void {
-    fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
-        .then(response => response.json())
-        .then((flow: Flow) => {
-            console.log(flow)
-            const FlowContainer = document.getElementById('flow-container');
-            if (FlowContainer) {
-                editForm(FlowContainer, flow)
-                // Render questions
-                const questionList = document.getElementById('question-list');
-                if (questionList) {
-                    flow.questions.forEach((question, index) => {
-                        showQuestionAndAnswerPossibilities(question,index,questionList);
-                    });
-                    addQuestionButton(questionList);
-                }
-                document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
-                document.getElementById('edit-flow-form')?.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    updateFlow(flowId);
-                });
-
-            }
-        })
-        .catch(error => console.error('Failed to fetch flow details:', error));
-}
-
-function addQuestionForm2() {
-    const questionList = document.getElementById('question-list');
-    if (questionList) {
-        const newQuestionContainer = document.createElement('div');
-        newQuestionContainer.className = 'question-container';
-
-        const questionIndex = questionList.getElementsByClassName('question-container').length;
-
-        const imageInputLabel = document.createElement("label");
-        imageInputLabel.setAttribute("for", QuestionType + "File" + questionIndex);
-        imageInputLabel.textContent = "Flow image:";
-
-        const imageInput = document.createElement("input");
-        imageInput.type = "file";
-        imageInput.className = "form-control";
-        imageInput.id = QuestionType + "File" + questionIndex;
-        imageInput.name = "file" + questionIndex;
-        imageInput.accept = ".jpg,.jpeg,.png";
-        imageInputLabel.appendChild(imageInput);
-
-        newQuestionContainer.appendChild(imageInputLabel);
-
-        const newQuestionInput = document.createElement('input');
-        newQuestionInput.type = 'text';
-        newQuestionInput.placeholder = 'Enter your question here';
-        newQuestionInput.className = 'question-input mb-3 mt-3 input-styling col-md-10';
-
-        const newQuestionTypeSelect = document.createElement('select');
-        newQuestionTypeSelect.name = 'new-question-type';
-        newQuestionTypeSelect.className = 'form-select form-control';
-        for (let type in QuestionType) {
-            if (!isNaN(Number(QuestionType[type]))) {
-                const option = document.createElement('option');
-                option.value = QuestionType[type].toString();
-                option.text = type;
-                option.className = ' ';
-                newQuestionTypeSelect.appendChild(option);
-            }
-        }
-
-        const newAnswerPossibilityContainer = document.createElement('div');
-        newAnswerPossibilityContainer.className = 'answer-possibilities-container';
-
-        const addAnswerPossibilityButton = document.createElement('button');
-        addAnswerPossibilityButton.textContent = 'Add Answer Possibility';
-        addAnswerPossibilityButton.className = 'btn btn-primary add-answerposs-button col-md-4 mt-3';
-        addAnswerPossibilityButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            addAnswerPossibility2(newQuestionContainer);
-        });
-
-
-        const deleteButtonQuestion = document.createElement('button');
-        deleteButtonQuestion.className = 'btn btn-outline-danger delete-question-button col-md-1';
-        const iconElement = document.createElement('i');
-        iconElement.className = 'bi-trash';
-        deleteButtonQuestion.appendChild(iconElement);
-        deleteButtonQuestion.addEventListener('click', () => {
-            newQuestionContainer.remove();
-        });
-
-        newQuestionContainer.appendChild(newQuestionInput);
-        newQuestionContainer.appendChild(deleteButtonQuestion);
-        newQuestionContainer.appendChild(newQuestionTypeSelect);
-        newQuestionContainer.appendChild(newAnswerPossibilityContainer);
-        newQuestionContainer.appendChild(addAnswerPossibilityButton);
-        newQuestionContainer.setAttribute('data-question-id', '0');
-        questionList.appendChild(newQuestionContainer);
-    }
-}
-
-function addAnswerPossibility2(questionContainer: HTMLElement): void {
-    const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
-    const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
-    if (answerPossibilityInputs.length < 5) {
-        const newAnswerPossibilityContainer = document.createElement('div');
-        newAnswerPossibilityContainer.className = 'answer-possibility-container mt-3';
-
-        const newPossibilityInput = document.createElement('input');
-        newPossibilityInput.type = 'text';
-        newPossibilityInput.placeholder = 'Enter answer possibility';
-        newPossibilityInput.className = 'answer-possibility-input input-styling mb-2 col-md-10';
-        newPossibilityInput.setAttribute('data-AnswerPoss-id', '0');
-
-        const deleteButtonPossibility = document.createElement('button');
-        deleteButtonPossibility.className = 'btn btn-outline-danger delete-answerposs-button col-md-1';
-        const iconElement = document.createElement('i');
-        iconElement.className = 'bi-trash';
-        deleteButtonPossibility.appendChild(iconElement);
-        deleteButtonPossibility.addEventListener('click', () => {
-            newAnswerPossibilityContainer.remove();
-        });
-
-        newAnswerPossibilityContainer.appendChild(newPossibilityInput);
-        newAnswerPossibilityContainer.appendChild(deleteButtonPossibility);
-
-        answerPossibilityContainer.appendChild(newAnswerPossibilityContainer);
-        answerPossibilityContainer.setAttribute("data-AnswerPoss-id", '0');
-    } else {
-        alert('Maximum number of answer possibilities reached (5)');
-    }
 }
 
 export function loadFlows() {
