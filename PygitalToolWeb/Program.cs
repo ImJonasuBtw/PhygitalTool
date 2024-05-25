@@ -63,7 +63,6 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<PhygitalToolDbContext>();
 
 
-
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -78,7 +77,14 @@ using (var scope = app.Services.CreateScope())
     PhygitalToolDbContext ctx = scope.ServiceProvider.GetRequiredService<PhygitalToolDbContext>();
     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    bool isDatabaseCreated = ctx.CreateDataBase(true);
+    bool isDatabaseCreated;
+
+    if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+    {
+        isDatabaseCreated = ctx.CreateDataBase(false);
+    }
+
+    isDatabaseCreated = ctx.CreateDataBase(true);
 
     if (isDatabaseCreated)
     {
@@ -106,11 +112,11 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 var supportedCultures = new[]
 {
     new CultureInfo("nl"),
     new CultureInfo("en")
-   
 };
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
@@ -133,10 +139,7 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<QuestionHub>("/questionHub");
-});
+app.UseEndpoints(endpoints => { endpoints.MapHub<QuestionHub>("/questionHub"); });
 
 app.MapRazorPages();
 app.MapControllerRoute(
