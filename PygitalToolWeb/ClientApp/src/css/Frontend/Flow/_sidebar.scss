@@ -1,4 +1,5 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
+
 body:has(.container-question-view){
   padding-top: 0;
   overflow: hidden;
@@ -21,7 +22,7 @@ body:has(.container-information-view){
   max-height: 100vh;
   height: 100vh;
   padding: 0;
-  background-color: rgba($background-color, 0.4);
+  background-color: rgba(variables.$background-color, 0.4);
   font-family: "Outfit", sans-serif;
   text-align: center;
   main{
@@ -38,7 +39,7 @@ body:has(.container-information-view){
   max-height: 100vh;
   height: 100vh;
   padding: 0;
-  background-color: rgba($background-color, 0.4);
+  background-color: rgba(variables.$background-color, 0.4);
   font-family: "Outfit", sans-serif;
   text-align: center;
   main{
@@ -51,8 +52,8 @@ body:has(.container-information-view){
 }
 
 .sidebar-container{
-  background-color:$primary-color;
-  color:$light-color;
+  background-color:variables.$primary-color;
+  color:variables.$light-color;
   h3{
     font-size: calc(0.8rem + 0.6vw);
   }
@@ -60,7 +61,7 @@ body:has(.container-information-view){
 }
 
 
-@media (max-width:$tablet-screen) {
+@media (max-width:variables.$tablet-screen) {
   body:has(.container-question-view){
     overflow: scroll;
   }

@@ -1,17 +1,83 @@
-﻿const timerLength: number = 5;
+﻿import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
+
+let currentFlowState: string | null = null;
+const timerLength: number = 10;
+let timeLeft: number = timerLength;
+let countdown:  NodeJS.Timeout | null;
+let isPaused: boolean = false;
+let submitTimeout: NodeJS.Timeout | null = null;
 const progressBar = document.querySelector('.progress-bar') as HTMLElement;
-
-
 // Timer that clicks the submit button when time runs out
-export function timer(): void {
+
+// SignalR connection setup
+const hubConnection: HubConnection = new HubConnectionBuilder()
+    .withUrl("/questionHub")
+    .withAutomaticReconnect()
+    .build();
+
+hubConnection.on("FlowStateUpdated", newFlowState => {
+    console.log("Current FLOW state updated:", newFlowState);
+    currentFlowState = newFlowState;
+    if (newFlowState === "paused") {
+        pauseTimer();
+    } else if (newFlowState === "running") {
+        resumeTimer();
+    }
+    else if (newFlowState === "stopped") {
+        const newUrl = `/api/Supervisors/show-start-screen`;
+        window.location.href = newUrl;
+    }
+});
+
+hubConnection.start()
+    .then(async () => {
+        console.log("Hub connection established.");
+        if (currentFlowState === "paused") {
+            pauseTimer();
+        } else if (currentFlowState === "running") {
+            resumeTimer();
+        }else if (currentFlowState === "stopped") {
+            const newUrl = `/api/Supervisors/show-start-screen`;
+            window.location.href = newUrl;
+        }
+        try {
+            const initialFlowState = await hubConnection.invoke("GetFlowState");
+            console.log("Current flow state:", initialFlowState);
+        } catch (error) {
+            console.error("Error getting current flow state:", error);
+        }
+    })
+    .catch(error => {
+        console.error("Error establishing hub connection:", error);
+    });
+
+function pauseTimer(): void {
+    console.log("ik weet dat timer gepauzeerd is");
+    console.log(countdown);
+    if (countdown !== null) {
+        clearInterval(countdown);
+        countdown = null;
+    }
+    if (submitTimeout !== null) {
+        clearTimeout(submitTimeout);
+        submitTimeout = null;
+    }
+    isPaused = true;
+}
+
+function resumeTimer(): void {
+    if (isPaused && timeLeft > 0) {
+        isPaused = false;
+        startCountdown();
+        startSubmitTimeout();
+    }
+}
+
+function startSubmitTimeout(): void {
     let button: HTMLElement | null;
-    button = document.getElementById('submitButton');
-    if (button == null) {
-        button = document.getElementById('submitButtonCircular')
-    }
-    if (button == null) {
-        button = document.getElementById('Submit');
-    }
+    button = document.getElementById('submitButton') ||
+        document.getElementById('submitButtonCircular') ||
+        document.getElementById('Submit');
 
     if (button) {
         function clickButton() {
@@ -19,45 +85,54 @@ export function timer(): void {
                 button.click();
             }
         }
-
-        const timer = setTimeout(clickButton, timerLength * 1000);
+        submitTimeout = setTimeout(clickButton, timeLeft * 1000);
 
         button.addEventListener('click', function () {
-            clearTimeout(timer);
+            if (submitTimeout !== null) {
+                clearTimeout(submitTimeout);
+                submitTimeout = null;
+            }
         });
     }
 }
 
-// HTML text updater to display the timer to the user
-export function setTimerText(): void {
-    const timerElement: HTMLElement | null = document.getElementById('circular-timer');
-    let timeLeft = timerLength;
 
+// HTML text updater to display the timer to the user
+function startCountdown(): void {
+    const timerElement: HTMLElement | null = document.getElementById('circular-timer');
     if (timerElement) {
         timerElement.textContent = timeLeft.toString();
+        countdown = setInterval(() => {
+            if (!isPaused) {
+                timeLeft--;
+                timerElement.textContent = timeLeft.toString();
 
-        const countdown = setInterval(() => {
-            timeLeft--;
-            timerElement.textContent = timeLeft.toString();
+                // Update progress bar width based on time left
+                const progressWidth = (timerLength - timeLeft) / timerLength * 100;
+                if (progressBar) {
+                    progressBar.style.width = progressWidth + "%";
+                }
 
-            // Update progress bar width based on time left
-            const progressWidth = (timerLength - timeLeft) / timerLength * 100;
-            if (progressBar) {
-                progressBar.style.width = progressWidth + "%";
-            }
-
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                timerElement.textContent = "0";
+                if (timeLeft <= 0) {
+                    // @ts-ignore
+                    clearInterval(countdown);
+                    timerElement.textContent = "0";
+                }
             }
         }, 1000);
     }
 }
 
+export function setTimerText(): void {
+    timeLeft = timerLength;
+    startCountdown();
+    startSubmitTimeout();
+}
+
 export function validateForm(): boolean {
     const answer: string = (document.getElementById("selectedAnswer") as HTMLInputElement).value;
     if (answer.trim() === "") {
-        alert("Please enter your answer.");
+        alert("Voer je antwoord in");
         return false; // answer is empty
     }
 

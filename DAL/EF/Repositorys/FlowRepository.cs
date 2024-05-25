@@ -2,7 +2,7 @@
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class FlowRepository : IRepositoryFlow
 {
@@ -20,20 +20,23 @@ public class FlowRepository : IRepositoryFlow
             .ThenInclude(m => m.MainTheme)
             .Include(flow => flow.Questions)
             .ThenInclude(q => q.AnswerPossibilities)
+            .AsNoTracking()
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
     public Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId)
     {
-        return _context.Flows.Include(f => f.Questions).ThenInclude(question => question.AnswerPossibilities)
-            .FirstOrDefault(flow => flow.FlowId == flowId);
+        return _context.Flows.Include(f => f.Questions)
+            .ThenInclude(question => question.AnswerPossibilities)
+            .AsNoTracking()
+            .SingleOrDefault(flow => flow.FlowId == flowId);
     }
 
     public Flow CreateFlow(Flow flow)
     {
         _context.Flows.Add(flow);
         _context.SaveChanges();
-        return _context.Flows.FirstOrDefault(f =>
+        return _context.Flows.SingleOrDefault(f =>
             f.FlowName == flow.FlowName && f.FlowDescription == flow.FlowDescription);
     }
 
@@ -51,6 +54,8 @@ public class FlowRepository : IRepositoryFlow
         if (existingFlow == null) throw new ArgumentException("Flow not found");
         existingFlow.FlowName = flow.FlowName;
         existingFlow.FlowDescription = flow.FlowDescription;
+        existingFlow.FlowType = flow.FlowType;
+        existingFlow.Language = flow.Language;
         _context.SaveChanges();
     }
 }

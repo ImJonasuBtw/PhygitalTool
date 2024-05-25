@@ -1,13 +1,28 @@
+@using Microsoft.Extensions.Localization
+@using PhygitalTool.Domain.Util
+@using PhygitalTool.Web.Resources
 @model PhygitalTool.Domain.FlowPackage.Flow
+@inject IStringLocalizer<ResourcesFlow> Localizer
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+@{
+    var culture = Model.Language switch
+    {
+        Language.Dutch => "nl",
+        Language.French => "fr",
+        Language.German => "de",
+        _ => "en"
+        };
+    System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo(culture);
+    System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+}
 
-<h2>Circular Flow Stopped</h2>
+<h2> @Localizer[ResourcesFlow.EndCirculair]</h2>
 
 <a class="btn btn-outline-secondary btn-block" asp-area=""
         asp-controller="Home"
         asp-action="Index">
-    Terug naar de home pagina
+   @Localizer[ResourcesFlow.BackToHome]
 </a>

@@ -1,6 +1,7 @@
 ﻿using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 
 namespace PhygitalTool.BL.BackOffice;
 
@@ -10,18 +11,30 @@ public class ProjectManager : IProjectManager
     private readonly IRepositoryFlow _repositoryFlow;
     private readonly IRepositoryQuestion _repositoryQuestion;
     private readonly IRepositoryAnswerPossibility _answerPossibilityRepository;
+    private readonly IRepositoryNote _noteRepository;
 
-    public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow, IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository)
+    public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow, IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository, IRepositoryNote noteRepository)
     {
         _repositoryProject = repositoryProject;
         _repositoryFlow = repositoryFlow;
         _repositoryQuestion = repositoryQuestion;
         _answerPossibilityRepository = answerPossibilityRepository;
+        _noteRepository = noteRepository;
     }
     
     public void AddProject(Project project) 
     {
         _repositoryProject.CreateProject(project);
+    }
+
+    public void AddNote(Note note)
+    {
+        _noteRepository.CreateNote(note);
+    }
+
+    public IEnumerable<Note> GetNotes()
+    {
+        return _noteRepository.ReadAllNotes();
     }
     public void AddSubTheme(SubTheme subTheme)
     {
@@ -139,5 +152,53 @@ public class ProjectManager : IProjectManager
     public void UpdateMainTheme(MainTheme mainTheme)
     {
         _repositoryProject.UpdateMainTheme(mainTheme);
+    }
+    
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType, Language language, int subthemeId, List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)> questions)
+    {
+        var domainFlow = new Flow()
+        {
+            FlowDescription = flowDescription,
+            FlowName = flowName,
+            FlowType = flowType,
+            Language = language,
+            SubThemeId = subthemeId,
+        };
+
+        Flow newFlow = AddFlow(domainFlow);
+        domainFlow.FlowId = newFlow.FlowId;
+
+        if (questions != null && questions.Count > 0)
+        {
+            foreach (var (questionText, questionType, questionImage, answerDescriptions) in questions)
+            {
+                var domainQuestion = new Question()
+                {
+                    QuestionText = questionText,
+                    QuestionType = questionType,
+                    QuestionImage = questionImage,
+                    FlowId = newFlow.FlowId,
+                };
+                Question newQuestion = AddQuestion(domainQuestion);
+                domainQuestion.QuestionId = newQuestion.QuestionId;
+                newFlow.Questions.Add(domainQuestion);
+
+                if (answerDescriptions != null && answerDescriptions.Any())
+                {
+                    foreach (var answer in answerDescriptions)
+                    {
+                        var domainAnswer = new AnswerPossibility()
+                        {
+                            Description = answer,
+                            QuestionId = newQuestion.QuestionId
+                        };
+                        AddAnswerPossibility(domainAnswer);
+                        domainQuestion.AnswerPossibilities.Add(domainAnswer);
+                    }
+                }
+            }
+        }
+
+        return newFlow;
     }
 }

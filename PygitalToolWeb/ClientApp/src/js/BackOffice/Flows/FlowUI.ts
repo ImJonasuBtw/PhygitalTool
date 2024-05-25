@@ -3,14 +3,14 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
 
  export function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `
-            <h2 class="mt-4">Add New Flow</h2>
+            <h2 class="mt-4">Nieuwe stroom toevoegen</h2>
             <form id="new-flow-form">
                 <div class="mb-3">
-                    <label for="flowName" class="form-label">Flow name</label>
+                    <label for="flowName" class="form-label">Flow naam</label>
                     <input type="text" class="form-control" id="flowName" required>
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label">Beschrijving</label>
                     <textarea class="form-control" id="description" required></textarea>
                 </div>
                 <div class="mb-3">
@@ -26,10 +26,12 @@ import {deleteAnswerPossibility, deleteQuestion, updateFlow} from "./FlowRestCli
                          
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Language</label>
+                    <label class="form-label">Taal</label>
                         <select class="form-select form-control" id="flowLanguage" required>
                                  <option value="${Language.English}">English</option>
                                  <option value="${Language.Dutch}">Dutch</option>
+                                 <option value="${Language.French}">French</option>
+                                 <option value="${Language.German}">German</option>
                         </select>
                 </div>
                 <div class="mb-3">
@@ -149,14 +151,14 @@ function addAnswerPossibility(questionContainer: HTMLElement): void {
 
 export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void{
     FlowContainer.innerHTML = `
-                    <h2 class="mt-4">Edit Flow</h2>
+                    <h2 class="mt-4">Flow bewerken</h2>
                     <form id="edit-flow-form">
                         <div class="mb-3">
-                            <label for="flowName" class="form-label">Flow name</label>
+                            <label for="flowName" class="form-label">Flow naam</label>
                              <input type="text" class="form-control" id="flowName" required value="${flow.flowName}">
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description" class="form-label">Beschrijvind</label>
                             <textarea class="form-control" id="description" required>${flow.flowDescription}</textarea>
                         </div>
                         <div class="mb-3">
@@ -172,10 +174,12 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void
                          
                         </div>
                           <div class="mb-3">
-                            <label class="form-label">Language</label>
+                            <label class="form-label">Taal</label>
                             <select class="form-select form-control" id="flowLanguage" required>
                                 <option value="${Language.English}" ${flow.language === Language.English ? 'selected' : ''}>English</option>
                                 <option value="${Language.Dutch}" ${flow.language === Language.Dutch ? 'selected' : ''}>Dutch</option>
+                                   <option value="${Language.French}"${flow.language === Language.French ? 'selected' : ''}>French</option>
+                                 <option value="${Language.German}"${flow.language === Language.German ? 'selected' : ''}>German</option>
                             </select>
                         </div>
                            

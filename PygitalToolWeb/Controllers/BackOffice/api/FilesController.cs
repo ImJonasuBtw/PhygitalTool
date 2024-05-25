@@ -7,11 +7,11 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 [Route("/api/files")]
 public class FilesController : ControllerBase
 {
-    private readonly CloudStorageService cloudStorageService;
+    private readonly CloudStorageService _cloudStorageService;
 
     public FilesController(CloudStorageService cloudStorageService)
     {
-        this.cloudStorageService = cloudStorageService;
+        _cloudStorageService = cloudStorageService;
     }
 
     [HttpPost("uploadFile")]
@@ -19,7 +19,7 @@ public class FilesController : ControllerBase
     {
         using var memoryStream = new MemoryStream();
         file.CopyTo(memoryStream);
-        var url = cloudStorageService.UploadFileToBucket(memoryStream, file.ContentType);
+        var url = _cloudStorageService.UploadFileToBucket(memoryStream, file.ContentType);
         return Ok(new { url });
     }
     

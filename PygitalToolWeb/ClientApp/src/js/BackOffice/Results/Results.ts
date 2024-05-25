@@ -1,4 +1,4 @@
-﻿import {getAllAnswersWithQuestions} from "./ResultRestClient";
+﻿ import {getAllAnswersWithQuestions} from "./ResultRestClient";
 
 
 document.addEventListener('DOMContentLoaded', function (this: Document) {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
+using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Web.Controllers.Flows;
 
@@ -10,6 +11,7 @@ public class ContactInformationController : Controller
     
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
+    private readonly UnitOfWork _unitOfWork;
     
     public ContactInformationController(IFlowManager flowManager, ILogger<QuestionController> logger)
     {
@@ -31,12 +33,14 @@ public class ContactInformationController : Controller
         
         foreach (var answer in answers)
         {
-            _flowManager.SaveUserAnswer(answer.Value, contactInformation.FlowId, answer.Key);
+            _flowManager.AddUserAnswer(answer.Value, contactInformation.FlowId, answer.Key);
         }
         
         if(ModelState.IsValid)
         {
+            _unitOfWork.BeginTransaction();
             _flowManager.SaveContactInformation(contactInformation);
+            _unitOfWork.Commit();
             return RedirectToAction("Index", "Home"); 
         }
   

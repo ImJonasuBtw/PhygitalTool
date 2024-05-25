@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using PhygitalTool.BL;
+using PhygitalTool.BL.BackOffice;
+using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Web.Models;
@@ -18,7 +20,7 @@ public class ResultsController : Controller
     private readonly IFlowManager _flowManager;
     private readonly ILogger<ResultsController> _logger;
 
-    public ResultsController(IProjectManager iProjectManager,IFlowManager iFlowManager , ILogger<ResultsController> logger)
+    public ResultsController(IProjectManager iProjectManager,IFlowManager iFlowManager , ILogger<ResultsController> logger, UnitOfWork unitOfWork)
     {
         _projectManager = iProjectManager;
         _flowManager = iFlowManager;

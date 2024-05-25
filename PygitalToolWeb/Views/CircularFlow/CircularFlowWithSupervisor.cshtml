@@ -1,0 +1,25 @@
+﻿
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+        <div class="container text-center animated-background container-circular-wait-view p-3">
+           <h2 class="mb-3">Wacht even tot de circulaire flow gestart wordt</h2>
+                               <div class="loading-bar-container">
+                                   <div class="loading-bar"></div>
+                               </div>
+                          
+        <p id="current_flow" style="display: none;"></p>
+         </div>
+
+
+
+
+
+@section Scripts
+{
+    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
+    <script id="questionPage-script" src="~/dist/notes.entry.js" defer="defer" ></script>
+}

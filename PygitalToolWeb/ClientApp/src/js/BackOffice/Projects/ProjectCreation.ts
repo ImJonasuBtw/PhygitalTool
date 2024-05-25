@@ -10,7 +10,6 @@ export class Project {
         this.description = description;
         this.projectName = projectName;
     }
-    
 }
 
 document.getElementById('add-project-button')?.addEventListener('click', () => {
@@ -18,20 +17,20 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
     const projectsContainer = document.getElementById('projects-container');
     if (projectsContainer) {
         projectsContainer.innerHTML = `
-            <h2 class="mt-4">Add New Project</h2>
+            <h2 class="mt-4">Voeg nieuw Project toe</h2>
             <form id="new-project-form">
                 <div class="mb-3">
-                    <label for="projectName" class="form-label">Project Name</label>
+                    <label for="projectName" class="form-label">Project naam</label>
                     <input type="text" class="form-control" id="projectName" required>
                      <span id="projectNameError" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label">Beschrijving</label>
                     <textarea class="form-control" id="description" required></textarea>
                     <span id="descriptionError" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Project</button>
-                <button type="button" class="btn btn-secondary" id="cancel-buttonAdd">Cancel</button>
+                <button type="submit" class="btn btn-primary"> Voeg project toe</button>
+                <button type="button" class="btn btn-secondary" id="cancel-buttonAdd">annuleer</button>
             </form>
         `;
 
@@ -74,10 +73,10 @@ document.getElementById('add-project-button')?.addEventListener('click', () => {
                             }
                         }
                     } else {
-                        alert('Validation error occurred.');
+                        alert('Er is een validatiefout opgetreden.');
                     }
                 } else {
-                    response.text().then(text => alert('Failed to add Project: ' + text));
+                    response.text().then(text => alert('Project niet toegevoegd: ' + text));
                 }
             }
         });

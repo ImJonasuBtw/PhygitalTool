@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PhygitalTool.BL.BackOffice;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Util;
 
@@ -14,15 +15,17 @@ using PhygitalTool.Web.Models;
 public class FlowCreationController : ControllerBase
 {
     private readonly IProjectManager _projectManager;
+    private readonly UnitOfWork _unitOfWork;
 
-    public FlowCreationController(IProjectManager projectManager)
+    public FlowCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
+        _unitOfWork = unitOfWork;
     }
 
     [Authorize(Roles = "Manager")]
     [HttpPost("AddFlowToSubtheme")]
-    public IActionResult AddFlowToSubtheme([FromBody] FlowModel flow)
+    public IActionResult AddFlowToSubtheme(FlowModel flow)
     {
         if (!ModelState.IsValid)
         {
@@ -30,52 +33,11 @@ public class FlowCreationController : ControllerBase
             return BadRequest(errors);
         }
 
+        var questions = flow.Questions.Select(q => (q.QuestionText, q.QuestionType, q.QuestionImage, q.AnswerPossibilities.Select(a => a.Description).ToList())).ToList();
 
-        var domainFlow = new Flow()
-        {
-            FlowDescription = flow.FlowDescription,
-            FlowName = flow.FlowName,
-            FlowType = flow.FlowType,
-            Language = flow.Language,
-            SubThemeId = flow.SubthemeId,
-        };
-
-        Flow newFlow = _projectManager.AddFlow(domainFlow);
-        domainFlow.FlowId = newFlow.FlowId;
-
-        if (flow.Questions != null && flow.Questions.Count > 0)
-        {
-            foreach (var questionModel in flow.Questions)
-            {
-                var domainQuestion = new Question()
-                {
-                    QuestionText = questionModel.QuestionText,
-                    QuestionType = questionModel.QuestionType,
-                    QuestionImage = questionModel.QuestionImage,
-                    FlowId = newFlow.FlowId,
-                };
-                Question newQuestion = _projectManager.AddQuestion(domainQuestion);
-                questionModel.QuestionId = newQuestion.QuestionId;
-                domainQuestion.QuestionId = newQuestion.QuestionId;
-                newFlow.Questions.Add(domainQuestion);
-
-
-                if (questionModel.AnswerPossibilities != null && questionModel.AnswerPossibilities.Any())
-                {
-                    foreach (var answer in questionModel.AnswerPossibilities)
-                    {
-                        var domainAnswer = new AnswerPossibility()
-                        {
-                            Description = answer.Description,
-                            QuestionId = newQuestion.QuestionId
-                        };
-                        _projectManager.AddAnswerPossibility(domainAnswer);
-                        domainQuestion.AnswerPossibilities.Add(domainAnswer);
-                    }
-                }
-            }
-        }
-
+        _unitOfWork.BeginTransaction();
+        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName, flow.FlowType, flow.Language, flow.SubthemeId, questions);
+        _unitOfWork.Commit();
 
         return Ok();
     }
@@ -86,7 +48,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteFlow(flowId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -97,7 +61,7 @@ public class FlowCreationController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpGet("GetFlowDetails/{FlowId}")]
-    public IActionResult GetFlowDetails(int FlowId)
+    public IActionResult GcetFlowDetails(int FlowId)
     {
         try
         {
@@ -174,6 +138,7 @@ public class FlowCreationController : ControllerBase
 
             foreach (var newQuestion in newQuestions)
             {
+                _unitOfWork.BeginTransaction();
                 var domainQuestion = new Question()
                 {
                     QuestionText = newQuestion.QuestionText,
@@ -193,6 +158,7 @@ public class FlowCreationController : ControllerBase
                     _projectManager.AddAnswerPossibility(domainAnswer);
                     domainQuestion.AnswerPossibilities.Add(domainAnswer);
                 }
+                _unitOfWork.Commit();
             }
 
 
@@ -203,6 +169,7 @@ public class FlowCreationController : ControllerBase
                     flowModel.Questions.FirstOrDefault(q => q.QuestionId == existingQuestion.QuestionId);
                 if (updatedQuestion != null)
                 {
+                    _unitOfWork.BeginTransaction();
                     existingQuestion.QuestionText = updatedQuestion.QuestionText;
                     existingQuestion.QuestionImage = updatedQuestion.QuestionImage;
                     existingQuestion.QuestionType = updatedQuestion.QuestionType;
@@ -229,6 +196,7 @@ public class FlowCreationController : ControllerBase
                             existingQuestion.AnswerPossibilities.Add(domainAnswer);
                         }
                     }
+                    _unitOfWork.Commit();
                 }
             }
 
@@ -248,7 +216,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteQuestion(questionId);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)
@@ -262,7 +232,9 @@ public class FlowCreationController : ControllerBase
     {
         try
         {
+            _unitOfWork.BeginTransaction();
             _projectManager.DeleteAnswerPossibility(AnswerPossibility);
+            _unitOfWork.Commit();
             return Ok();
         }
         catch (Exception ex)

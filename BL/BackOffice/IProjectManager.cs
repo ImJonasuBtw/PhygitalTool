@@ -1,7 +1,8 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
+using PhygitalTool.Domain.Util;
 
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.BackOffice;
 
 public interface IProjectManager
 {
@@ -19,17 +20,23 @@ public interface IProjectManager
     Flow AddFlow(Flow flow);
     Question AddQuestion(Question question);
 
+    void AddNote(Note note);
+    IEnumerable<Note> GetNotes();
+
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
     void AddMainTheme(MainTheme mainTheme);
     void UpdateSubTheme(SubTheme subTheme);
     void UpdateMainTheme(MainTheme mainTheme);
     void UpdateProject(Project existingProject);
-    void DeleteFlow(int FlowId);
-    Flow GetFlowWithQuestionAndAnswerPossibilities(int FlowId);
+    void DeleteFlow(int flowId);
+    Flow GetFlowWithQuestionAndAnswerPossibilities(int flowId);
     void UpdateFlow(Flow flow);
     void DeleteQuestion(int questionId);
     void UpdateQuestion(Question question);
-    Question GetQuestion(int QuestionId);
+    Question GetQuestion(int questionId);
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
-    void DeleteAnswerPossibility(int answerPossibilityID);
+    void DeleteAnswerPossibility(int answerPossibilityId);
+    
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType, Language language, int subthemeId, List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)> questions);
+
 }

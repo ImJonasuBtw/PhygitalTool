@@ -1,0 +1,31 @@
+﻿<body class="animated-background">
+<div class="row main-container">
+    <div class="mb-3 col-md-9">
+        <button class="btn-secondary btn" id="backToSupervisorScreen">Terug naar hoofdpagina</button>
+    </div>
+    <div class="mb-3 col-md-9">
+        <button id="pauseFlow" style="display: none;" class="btn-primary btn ">pauze</button>
+        <button id="stopFlow" style="display: none;"  class="btn-primary btn">stop</button>
+        <button id="resumeFlow" style="display: none;"  class="btn-primary btn">hervat</button>
+    </div>
+
+    <div class="questionInfo-container mt-3">
+        <div class="mb-3 col-md-9">
+            <form action="">
+                <p id="currentQuestionId" style="display: none"></p>
+                <p id="questionText" questionId="" class="text-body">Wacht tot er een vraag wordt getoond. </p>
+                <label for="questionNote" class="form-label">Notities</label>
+                <textarea type="text" class="form-control" id="questionNote">Maak hier je notities</textarea>
+                <button id="submitNote" questionId="" class="btn-primary btn mt-3">Bewaar notitie</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+
+@section Scripts
+{
+    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
+    <script id="questionPage-script" src="~/dist/notes.entry.js" defer="defer" ></script>
+}

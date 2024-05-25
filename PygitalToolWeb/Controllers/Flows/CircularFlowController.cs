@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using PhygitalTool.BL;
+using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Web.Controllers.Flows;
 
@@ -9,12 +11,14 @@ public class CircularFlowController : Controller
 {
     private readonly IFlowManager _flowManager;
     private readonly ILogger<QuestionController> _logger;
+    private readonly IHubContext<QuestionHub> _hubContext;
 
 
-    public CircularFlowController(IFlowManager flowManager, ILogger<QuestionController> logger)
+    public CircularFlowController(IFlowManager flowManager, ILogger<QuestionController> logger, IHubContext<QuestionHub> hubContext)
     {
         _flowManager = flowManager;
         _logger = logger;
+        _hubContext = hubContext;
     }
 
     // Launches a Flow after a user/supervisor selects it. Returns a SubThemView to select the subtheme.
@@ -73,5 +77,12 @@ public class CircularFlowController : Controller
     {
         Flow flow = _flowManager.GetFlow(flowId);
         return View("CircularFlowEndView", flow);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> StartFlow()
+    {
+        await _hubContext.Clients.All.SendAsync("FlowStarted");
+        return Ok();
     }
 }

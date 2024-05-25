@@ -21,7 +21,7 @@ export function loadSupervisors(backofficeId: number) {
                         </div>
                     `).join('')}
                 </div>
-                <button id="add-supervisor-button" class="btn btn-primary">Add Begeleider</button>
+                <button id="add-supervisor-button" class="btn btn-primary">Voeg Begeleider toe</button>
                 `;
 
                     document.getElementById('add-supervisor-button')?.addEventListener('click', addSupervisor);
@@ -40,7 +40,7 @@ export async function submitSupervisorForm() {
         const userName = (document.getElementById('userName') as HTMLInputElement).value;
 
         if (!validatePassword(password)) {
-            alert('Password must contain at least one uppercase letter, one lowercase letter, and one non-alphabetic character.');
+            alert('Het wachtwoord moet minstens één hoofdletter, één kleine letter en één niet-alfabetisch teken bevatten.');
             return;
         }
         
@@ -75,9 +75,9 @@ export async function submitSupervisorForm() {
 
         if (!supervisorResponse.ok) {
             if (supervisorResponse.status === 400) {
-                alert(`Failed to add supervisor: Email already exists`);
+                alert(`Supervisor niet toegevoegd: E-mail bestaat al`);
             } else if (supervisorResponse.status === 409) {
-                alert('Failed to add supervisor: Email already exists.');
+                alert('Supervisor niet toegevoegd: E-mail bestaat al');
                 
             }
         
@@ -85,7 +85,7 @@ export async function submitSupervisorForm() {
         }
         const data = await supervisorResponse.json();
         console.log('Success:', data);
-        alert('Supervisor added successfully!');
+        alert('Supervisor succesvol toegevoegd!');
         loadSupervisors(Number(backOfficeId));
     } catch (error) {
         console.error('Error:', error);

@@ -1,10 +1,25 @@
+@using PhygitalTool.Domain.Util
+@using PhygitalTool.Web.Resources
+@using Microsoft.Extensions.Localization
 @model PhygitalTool.Domain.FlowPackage.Flow
+@inject IStringLocalizer<ResourcesFlow> Localizer
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h2>Start Circular flow @Model.FlowId</h2>
+@{
+    var culture = Model.Language switch
+    {
+        Language.Dutch => "nl",
+        Language.French => "fr",
+        Language.German => "de",
+        _ => "en"
+        };
+    System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo(culture);
+    System.Globalization.CultureInfo.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+}
+<h2>@Localizer[ResourcesFlow.StartCirculair] @Model.FlowId</h2>
 
 <a class="nav-link text-dark" asp-area="" asp-controller="CircularFlow" asp-action="getFirstQuestion" asp-route-flowId=@Model.FlowId >Test</a>

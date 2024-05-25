@@ -6,13 +6,13 @@ namespace PhygitalTool.DAL.IRepositorys;
 public interface IRepositoryIdea
 {
     IEnumerable<Idea> ReadAllIdeas();
-    IdentityUser GetUser(string userId);
+    IdentityUser ReadUser(string userId);
     
     void UpdateLikeIdea(Idea idea);
     
-    Idea GetIdea(int id);
+    Idea ReadIdea(int id);
     
     void CreateIdea(Idea idea);
     
-    void CreateCommentToIdea(int ideaId, Comment comment);
+    public void CreateCommentToIdea(Comment comment);
 }

@@ -2,7 +2,7 @@
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.Projects;
 
-namespace PhygitalTool.DAL.EF;
+namespace PhygitalTool.DAL.EF.Repositorys;
 
 public class ProjectRepository : IRepositoryProject
 {
@@ -16,31 +16,37 @@ public class ProjectRepository : IRepositoryProject
     public Project ReadProjectWithThemes(int projectId)
     {
         return _context.Projects.Include(p => p.MainThemes).Include(project => project.BackOffice)
-            .ThenInclude(office => office.Managers).FirstOrDefault(p => p.ProjectId == projectId);
+            .ThenInclude(office => office.Managers)
+            .AsNoTracking()
+            .SingleOrDefault(p => p.ProjectId == projectId);
     }
 
     public MainTheme ReadThemeWithSubthemes(int themeId)
     {
-        return _context.MainThemes.Include(t => t.SubThemes).ThenInclude(theme => theme.Flows).Include(mt => mt.Project)
+        return _context.MainThemes.Include(t => t.SubThemes).ThenInclude(theme => theme.Flows)
+            .ThenInclude(flow => flow.Questions)
+            .Include(mt => mt.Project)
             .ThenInclude(project => project.BackOffice).ThenInclude(office => office.Managers)
-            .FirstOrDefault(theme => theme.ThemeId == themeId);
+            .AsNoTracking()
+            .SingleOrDefault(theme => theme.ThemeId == themeId);
     }
 
     public SubTheme ReadSubThemeWithFlows(int subThemeId)
     {
-        return _context.SubThemes.Include(s => s.Flows).Include(theme => theme.MainTheme)
+        return _context.SubThemes.AsNoTracking().Include(s => s.Flows).Include(theme => theme.MainTheme)
             .ThenInclude(theme => theme.Project).ThenInclude(project => project.BackOffice)
-            .ThenInclude(office => office.Managers).FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
+            .ThenInclude(office => office.Managers).SingleOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
+            
     }
 
     public SubTheme ReadSubTheme(int subThemeId)
     {
-        return _context.SubThemes.FirstOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
+        return _context.SubThemes.AsNoTracking().SingleOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
     }
 
     public MainTheme ReadMainTheme(int mainThemeId)
     {
-        return _context.MainThemes.FirstOrDefault(mainTheme => mainTheme.ThemeId == mainThemeId);
+        return _context.MainThemes.AsNoTracking().SingleOrDefault(mainTheme => mainTheme.ThemeId == mainThemeId);
     }
 
     public void CreateProject(Project project)
@@ -98,7 +104,7 @@ public class ProjectRepository : IRepositoryProject
     public void UpdateSubTheme(SubTheme updatedSubTheme)
     {
         var existingSubTheme =
-            _context.SubThemes.FirstOrDefault(subTheme => subTheme.SubThemeId == updatedSubTheme.SubThemeId);
+            _context.SubThemes.SingleOrDefault(subTheme => subTheme.SubThemeId == updatedSubTheme.SubThemeId);
         if (existingSubTheme != null)
         {
             existingSubTheme.SubThemeName = updatedSubTheme.SubThemeName;
@@ -113,7 +119,7 @@ public class ProjectRepository : IRepositoryProject
 
     public void UpdateMainTheme(MainTheme updatedMainTheme)
     {
-        var existingMainTheme = _context.MainThemes.FirstOrDefault(theme => theme.ThemeId == updatedMainTheme.ThemeId);
+        var existingMainTheme = _context.MainThemes.SingleOrDefault(theme => theme.ThemeId == updatedMainTheme.ThemeId);
         if (existingMainTheme != null)
         {
             existingMainTheme.ThemeName = updatedMainTheme.ThemeName;
@@ -128,31 +134,13 @@ public class ProjectRepository : IRepositoryProject
 
     public ProjectDTO ReadProjectFromFlowId(int flowId)
     {
-        var flow = _context.Flows
-            .Include(f => f.SubTheme)
-            .SingleOrDefault(f => f.FlowId == flowId);
+        var projectDto = _context.Flows
+            .Where(f => f.FlowId == flowId)
+            .Select(f => f.SubTheme.MainTheme.Project)
+            .AsNoTracking()
+            .Select(p => new ProjectDTO { ProjectId = p.ProjectId })
+            .SingleOrDefault();
 
-        var subtheme = _context.SubThemes
-            .SingleOrDefault(s => s.SubThemeId == flow.SubThemeId);
-
-        var maintheme = _context.MainThemes
-            .SingleOrDefault(m => m.ThemeId == subtheme.MainThemeId);
-
-        var project = _context.Projects
-            .SingleOrDefault(p => p.ProjectId == maintheme.ProjectId);
-
-        if (flow != null)
-        {
-            var projectDTO = new ProjectDTO()
-            {
-                ProjectId = project.ProjectId
-            };
-
-            return projectDTO;
-        }
-        else
-        {
-            return null;
-        }
+        return projectDto;
     }
 }

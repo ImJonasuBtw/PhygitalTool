@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhygitalTool.BL;
@@ -8,7 +9,10 @@ using PhygitalTool.BL.Users;
 using PhygitalTool.DAL.EF;
 using PhygitalTool.DAL.EF.Repositorys;
 using PhygitalTool.DAL.IRepositorys;
+using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Web.Services;
+using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("PhygitalDbContextConnection") ??
                        throw new InvalidOperationException(
                            "Connection string 'PhygitalDbContextConnection' not found.");
+
+//var connectionString = "Host=34.171.252.227;Port=5432;Database=test;Username=postgres;Password=Student_1234;";
 
 builder.Services.AddDbContext<PhygitalToolDbContext>(optionsBuilder =>
     optionsBuilder.UseNpgsql(connectionString));
@@ -32,9 +38,15 @@ builder.Services.AddScoped<IFlowManager, FlowManger>();
 builder.Services.AddScoped<IBackOfficeManager, BackOfficeManager>();
 builder.Services.AddScoped<IProjectManager, ProjectManager>();
 builder.Services.AddScoped<IUserManager, UserManager>();
+builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
 builder.Services.AddScoped<CloudStorageService>();
 builder.Services.AddScoped<IAdminPlatformManager, AdminPlatformManager>();
+builder.Services.AddScoped<IRepositoryNote, NoteRepository>();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
+builder.Services.AddScoped<UnitOfWork>();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
 builder.Services.AddSession(options =>
@@ -49,6 +61,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<PhygitalToolDbContext>();
+
 
 
 var app = builder.Build();
@@ -93,6 +106,18 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+var supportedCultures = new[]
+{
+    new CultureInfo("nl"),
+    new CultureInfo("en")
+   
+};
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -104,6 +129,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSession();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<QuestionHub>("/questionHub");
+});
 
 app.MapRazorPages();
 app.MapControllerRoute(

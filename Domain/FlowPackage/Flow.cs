@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using PhygitalTool.Domain.Platform;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
 
@@ -27,6 +28,10 @@ public class Flow
     
    //Foreign key
     public int SubThemeId { get; set; }
+    
+    public string SupervisorId { get; set; }
+    
+    public Supervisor Supervisor { get; set; }
 
     public Flow()
     {
@@ -39,4 +44,5 @@ public class Flow
         Language = language;
         FlowDescription = flowDescription;
     }
+    
 }
