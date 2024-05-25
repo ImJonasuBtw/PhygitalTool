@@ -83,8 +83,11 @@ using (var scope = app.Services.CreateScope())
     {
         isDatabaseCreated = ctx.CreateDataBase(false);
     }
-
-    isDatabaseCreated = ctx.CreateDataBase(true);
+    else
+    {
+        isDatabaseCreated = ctx.CreateDataBase(true);
+    }
+    
 
     if (isDatabaseCreated)
     {
