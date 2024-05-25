@@ -1,4 +1,4 @@
-import {loadBackOffices} from "./backOfficeUI";
+import {loadBackOffices, renderEditBackOfficeForm} from "./backOfficeUI";
 import {BackOffice} from "./backOfficeCreation";
 import {handleErrorResponse} from "./backOfficeValidation";
 
@@ -41,6 +41,25 @@ export function deleteBackOffice(backOfficeId: number) {
             return response.text().then(text => Promise.reject(text));
         }
     })
+}
+export function setupBackofficeEditForm(backOfficeId: number): void {
+    fetch(`/api/BackOfficeCreation/GetBackOfficeDetails/` + backOfficeId)
+        .then(response => response.json())
+        .then((backOffice: BackOffice) => {
+            console.log(backOffice.name);
+            const backOfficeContainer = document.getElementById('backoffice-container');
+            if (backOfficeContainer) {
+                renderEditBackOfficeForm(backOfficeContainer, backOffice);
+                document.getElementById('cancel-button')?.addEventListener('click', loadBackOffices);
+                document.getElementById('edit-backoffice-form')?.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    (async () => {
+                        await updateBackoffice(backOfficeId);
+                    })();
+                });
+            }
+        })
+        .catch(error => console.error('Failed to fetch backoffice details:', error));
 }
 
  export async function handleFormSubmit(adminPlatformId: string | null | undefined) {
