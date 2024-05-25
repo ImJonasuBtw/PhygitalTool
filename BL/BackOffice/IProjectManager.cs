@@ -9,7 +9,7 @@ public interface IProjectManager
     void AddProject(string description, string projectName, DateTime creationDate, ProjectStatus status,
         int backOfficeId);
 
-    void AddSubTheme(SubTheme subTheme);
+    void AddSubTheme(string subThemeName, string subThemeInformation, int mainThemeId);
     void DeleteSubTheme(int subThemeId);
     void DeleteMainTheme(int mainThemeId);
     Project GetProjectWithThemes(int projectId);
@@ -26,10 +26,10 @@ public interface IProjectManager
     IEnumerable<Note> GetNotes();
 
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
-    void AddMainTheme(MainTheme mainTheme);
-    void UpdateSubTheme(SubTheme subTheme);
-    void UpdateMainTheme(MainTheme mainTheme);
-    void UpdateProject(string projectName,string projectDesc, ProjectStatus projectStatus, int projectId);
+    void AddMainTheme(string mainThemeName, string mainThemeInformation, int projectId);
+    void UpdateSubTheme(int subThemeId, string subThemeName, string subThemeInformation);
+    void UpdateMainTheme(int mainThemeId, string mainThemeName, string mainThemeInformation);
+    void UpdateProject(string projectName, string projectDesc, ProjectStatus projectStatus, int projectId);
     void DeleteFlow(int flowId);
     Flow GetFlowWithQuestionAndAnswerPossibilities(int flowId);
     void UpdateFlow(Flow flow);

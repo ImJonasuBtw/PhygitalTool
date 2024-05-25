@@ -24,7 +24,8 @@ public class ProjectManager : IProjectManager
         _noteRepository = noteRepository;
     }
 
-    public void AddProject(string description, string projectName , DateTime creationDate, ProjectStatus status, int backOfficeId)
+    public void AddProject(string description, string projectName, DateTime creationDate, ProjectStatus status,
+        int backOfficeId)
     {
         var newProject = new Project
         {
@@ -34,7 +35,7 @@ public class ProjectManager : IProjectManager
             Status = status,
             BackOfficeId = backOfficeId
         };
-        
+
         _repositoryProject.CreateProject(newProject);
     }
 
@@ -53,14 +54,28 @@ public class ProjectManager : IProjectManager
         return _noteRepository.ReadAllNotes();
     }
 
-    public void AddSubTheme(SubTheme subTheme)
+    public void AddSubTheme(string subThemeName, string subThemeInformation, int mainThemeId)
     {
-        _repositoryProject.CreateSubTheme(subTheme);
+        var newSubTheme = new SubTheme
+        {
+            SubThemeName = subThemeName,
+            SubThemeInformation = subThemeInformation,
+            MainThemeId = mainThemeId
+        };
+
+        _repositoryProject.CreateSubTheme(newSubTheme);
     }
 
-    public void AddMainTheme(MainTheme mainTheme)
+    public void AddMainTheme(string mainThemeName, string mainThemeInformation, int projectId)
     {
-        _repositoryProject.CreateMainTheme(mainTheme);
+        var newMainTheme = new MainTheme
+        {
+            ThemeName = mainThemeName,
+            MainThemeInformation = mainThemeInformation,
+            ProjectId = projectId
+        };
+
+        _repositoryProject.CreateMainTheme(newMainTheme);
     }
 
     public void DeleteSubTheme(int subThemeId)
@@ -104,12 +119,12 @@ public class ProjectManager : IProjectManager
         _answerPossibilityRepository.CreateAnswerPossibility(answerPossibility);
     }
 
-    public void UpdateProject(string projectName,string projectDesc, ProjectStatus projectStatus, int projectId)
+    public void UpdateProject(string projectName, string projectDesc, ProjectStatus projectStatus, int projectId)
     {
         try
         {
             var existingProject = GetProjectWithThemes(projectId);
-            
+
             existingProject.ProjectName = projectName;
             existingProject.Description = projectDesc;
             existingProject.Status = projectStatus;
@@ -120,7 +135,6 @@ public class ProjectManager : IProjectManager
             Console.WriteLine(e.Message);
             throw;
         }
-        
     }
 
     public void DeleteFlow(int flowId)
@@ -178,14 +192,32 @@ public class ProjectManager : IProjectManager
         return _repositoryProject.ReadMainTheme(mainthemeId);
     }
 
-    public void UpdateSubTheme(SubTheme subTheme)
+    public void UpdateSubTheme(int subThemeId, string subThemeName, string subThemeInformation)
     {
-        _repositoryProject.UpdateSubTheme(subTheme);
+        var existingSubTheme = GetSubThemeWithFlows(subThemeId);
+        if (existingSubTheme == null)
+        {
+            throw new Exception($"Subtheme with ID {subThemeId} not found.");
+        }
+
+        existingSubTheme.SubThemeName = subThemeName;
+        existingSubTheme.SubThemeInformation = subThemeInformation;
+        
+        _repositoryProject.UpdateSubTheme(existingSubTheme);
     }
 
-    public void UpdateMainTheme(MainTheme mainTheme)
+    public void UpdateMainTheme(int mainThemeId, string mainThemeName, string mainThemeInformation)
     {
-        _repositoryProject.UpdateMainTheme(mainTheme);
+        var existingMainTheme = GetThemeWithSubthemes(mainThemeId);
+        if (existingMainTheme == null)
+        {
+            throw new Exception($"Main theme with ID {mainThemeId} not found.");
+        }
+
+        existingMainTheme.ThemeName = mainThemeName;
+        existingMainTheme.MainThemeInformation = mainThemeInformation;
+        
+        _repositoryProject.UpdateMainTheme(existingMainTheme);
     }
 
     public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType,
