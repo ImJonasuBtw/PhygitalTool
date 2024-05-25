@@ -6,7 +6,9 @@ namespace PhygitalTool.BL.BackOffice;
 
 public interface IProjectManager
 {
-    void AddProject(Project project);
+    void AddProject(string description, string projectName, DateTime creationDate, ProjectStatus status,
+        int backOfficeId);
+
     void AddSubTheme(SubTheme subTheme);
     void DeleteSubTheme(int subThemeId);
     void DeleteMainTheme(int mainThemeId);
@@ -15,19 +17,19 @@ public interface IProjectManager
     SubTheme GetSubTheme(int subThemeId);
     MainTheme GetMainTheme(int mainThemeId);
     SubTheme GetSubThemeWithFlows(int subThemeId);
-    void DeleteProject(int projectId); 
-   
+    void DeleteProject(int projectId);
+
     Flow AddFlow(Flow flow);
     Question AddQuestion(Question question);
 
-    void AddNote(Note note);
+    void AddNote(int questionId, string noteDesc);
     IEnumerable<Note> GetNotes();
 
     void AddAnswerPossibility(AnswerPossibility answerPossibility);
     void AddMainTheme(MainTheme mainTheme);
     void UpdateSubTheme(SubTheme subTheme);
     void UpdateMainTheme(MainTheme mainTheme);
-    void UpdateProject(Project existingProject);
+    void UpdateProject(string projectName,string projectDesc, ProjectStatus projectStatus, int projectId);
     void DeleteFlow(int flowId);
     Flow GetFlowWithQuestionAndAnswerPossibilities(int flowId);
     void UpdateFlow(Flow flow);
@@ -36,7 +38,12 @@ public interface IProjectManager
     Question GetQuestion(int questionId);
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
     void DeleteAnswerPossibility(int answerPossibilityId);
-    
-    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType, Language language, int subthemeId, List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)> questions);
 
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType,
+        Language language, int subthemeId,
+        List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)>
+            questions);
+
+    void UpdateFlowWithQuestionsAndAnswers(int flowId, string flowName, string flowDescription, FlowType flowType,
+        Language language, List<Question> questions);
 }

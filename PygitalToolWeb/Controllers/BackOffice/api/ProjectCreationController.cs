@@ -23,7 +23,7 @@ public class ProjectCreationController : Controller
 
     [Authorize(Roles = "Manager")]
     [HttpPost("AddProjectToBackoffice")]
-    public IActionResult AddProjectToBackoffice([FromBody] ProjectModel project)
+    public IActionResult AddProjectToBackoffice(ProjectModel project)
     {
         if (!ModelState.IsValid)
         {
@@ -32,16 +32,9 @@ public class ProjectCreationController : Controller
 
         try
         {
-            var domainProject = new Project
-            {
-                Description = project.Description,
-                ProjectName = project.ProjectName,
-                CreationDate = DateTime.UtcNow,
-                Status = ProjectStatus.NonActive,
-                BackOfficeId = project.BackOfficeId
-            };
             _unitOfWork.BeginTransaction();
-            _projectManager.AddProject(domainProject);
+            _projectManager.AddProject(project.ProjectName, project.Description, project.CreationDate, project.Status,
+                project.BackOfficeId);
             _unitOfWork.Commit();
             return Ok();
         }
@@ -99,7 +92,7 @@ public class ProjectCreationController : Controller
 
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateProject/{projectId}")]
-    public IActionResult UpdateProject(int projectId, [FromBody] ProjectModel projectModel)
+    public IActionResult UpdateProject(int projectId, ProjectModel projectModel)
     {
         if (!ModelState.IsValid)
         {
@@ -108,18 +101,9 @@ public class ProjectCreationController : Controller
 
         try
         {
-            var existingProject = _projectManager.GetProjectWithThemes(projectId);
-            if (existingProject == null)
-            {
-                return NotFound($"Project with ID {projectId} not found.");
-            }
-
-            existingProject.ProjectName = projectModel.ProjectName;
-            existingProject.Description = projectModel.Description;
-            existingProject.Status = projectModel.Status;
-
             _unitOfWork.BeginTransaction();
-            _projectManager.UpdateProject(existingProject);
+            _projectManager.UpdateProject(projectModel.ProjectName, projectModel.Description, projectModel.Status,
+                projectId);
             _unitOfWork.Commit();
 
             return Ok();
