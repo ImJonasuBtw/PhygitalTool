@@ -1,5 +1,5 @@
 import {Modal} from "bootstrap";
-import {loadProjects, renderAddProjectForm} from "./ProjectUI";
+import {loadProjects, renderAddProjectForm} from "./projectUI";
 import {AddFormSubmit, deleteProject, showEditProjectForm} from "./projectRestClient";
 
 

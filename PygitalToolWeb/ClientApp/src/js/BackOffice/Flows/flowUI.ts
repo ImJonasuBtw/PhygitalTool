@@ -242,10 +242,100 @@ export function deleteAnswerpossibilitiesButton(answerPossibilityAndButton: { re
     answerPossibilityAndButton.appendChild(deleteButtonPossibility);
 }
 
-export function showQuestionAndAnswerPossibilities(question:any, index: any, questionList: { appendChild: (arg0: HTMLDivElement) => void; }): void{
+export function showQuestionAndAnswerPossibilities(question:any, index: any, questionList: HTMLElement): void{
     const questionContainer = document.createElement('div');
     questionContainer.className = 'question-container';
     questionContainer.setAttribute('data-question-id', question.questionId.toString());
+
+    const moveUpButton = document.createElement('button');
+    moveUpButton.textContent = 'Naar boven';
+    moveUpButton.className = 'btn btn-secondary move-up-button';
+    moveUpButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const previousQuestionContainer = questionContainer.previousElementSibling;
+        if (previousQuestionContainer) {
+
+            // Get the answer possibilities
+            const currentAnswerPossibilities = questionContainer.querySelectorAll('.answer-possibility-input');
+            const previousAnswerPossibilities = previousQuestionContainer.querySelectorAll('.answer-possibility-input');
+
+            console.log('Current answer possibilities:', currentAnswerPossibilities);
+            console.log('Previous answer possibilities:', previousAnswerPossibilities);
+
+            // Swap the questionId foreign keys
+            currentAnswerPossibilities.forEach((input, index) => {
+                const temp = input.getAttribute('data-question-id') || '';
+                const previousQuestionId = previousAnswerPossibilities[index].getAttribute('data-question-id') || '';
+                console.log(`Swapping questionId ${temp} with ${previousQuestionId}`);
+                input.setAttribute('data-question-id', previousQuestionId);
+                previousAnswerPossibilities[index].setAttribute('data-question-id', temp);
+            });
+
+            // Get the question IDs
+            const currentQuestionId = questionContainer.getAttribute('data-question-id');
+            const previousQuestionId = previousQuestionContainer.getAttribute('data-question-id');
+
+            console.log('Current question ID:', currentQuestionId);
+            console.log('Previous question ID:', previousQuestionId);
+            // Check if the IDs are not null before swapping
+            if (currentQuestionId && previousQuestionId) {
+                // Swap the question IDs
+                questionContainer.setAttribute('data-question-id', previousQuestionId);
+                previousQuestionContainer.setAttribute('data-question-id', currentQuestionId);
+            }
+
+            questionList.insertBefore(questionContainer, previousQuestionContainer);
+        }
+    });
+
+    const moveDownButton = document.createElement('button');
+    moveDownButton.textContent = 'Naar beneden';
+    moveDownButton.className = 'btn btn-secondary move-down-button';
+    moveDownButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const nextQuestionContainer = questionContainer.nextElementSibling;
+        if (nextQuestionContainer) {
+            // Get the answer possibilities
+            const currentAnswerPossibilities = questionContainer.querySelectorAll('.answer-possibility-input');
+            const nextAnswerPossibilities = nextQuestionContainer.querySelectorAll('.answer-possibility-input');
+
+            console.log('Current answer possibilities:', currentAnswerPossibilities);
+            console.log('Next answer possibilities:', nextAnswerPossibilities);
+
+            // Swap the questionId foreign keys
+            currentAnswerPossibilities.forEach((input, index) => {
+                const temp = input.getAttribute('data-question-id') || '';
+                const nextQuestionId = nextAnswerPossibilities[index].getAttribute('data-question-id') || '';
+                console.log(`Swapping questionId ${temp} with ${nextQuestionId}`);
+                input.setAttribute('data-question-id', nextQuestionId);
+                nextAnswerPossibilities[index].setAttribute('data-question-id', temp);
+            });
+
+            // Get the question IDs
+            const currentQuestionId = questionContainer.getAttribute('data-question-id');
+            const nextQuestionId = nextQuestionContainer.getAttribute('data-question-id');
+
+            console.log('Current question ID:', currentQuestionId);
+            console.log('Next question ID:', nextQuestionId);
+
+            // Check if the IDs are not null before swapping
+            if (currentQuestionId && nextQuestionId) {
+                // Swap the question IDs
+                questionContainer.setAttribute('data-question-id', nextQuestionId);
+                nextQuestionContainer.setAttribute('data-question-id', currentQuestionId);
+            }
+
+            const nextElementSibling = nextQuestionContainer.nextElementSibling;
+            if (nextElementSibling) {
+                questionList.insertBefore(nextQuestionContainer, nextElementSibling);
+            } else {
+                questionList.appendChild(questionContainer);
+            }
+        }
+    });
+
+    questionContainer.appendChild(moveUpButton);
+    questionContainer.appendChild(moveDownButton);
 
     const questionInput = document.createElement('input');
     questionInput.type = 'text';
@@ -309,6 +399,7 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         answerPossibilityAndButton.className = 'buttonAndPossibility row'
         const possibilityInput = document.createElement('input');
         possibilityInput.setAttribute('data-AnswerPoss-id',possibility.answerPossibilityId.toString());
+        possibilityInput.setAttribute('data-question-id', question.questionId.toString());
         possibilityInput.type = 'text';
         possibilityInput.value = possibility.description;
         possibilityInput.name = `question-${index}-possibility-${possibilityIndex}`;
