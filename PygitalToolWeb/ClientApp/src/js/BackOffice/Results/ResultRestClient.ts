@@ -3,18 +3,19 @@ import {exportChartAsPNG, exportDataAsCSV, exportDataAsXLS} from "./Results";
 
 export async function getAllAnswersWithQuestions() {
     const resultsContainer = document.getElementById('results-container');
+    const loaderContainer = document.createElement('div');
     const loader = document.createElement('div');
-    // @ts-ignore
-    resultsContainer.appendChild(loader)
-    loader.classList.add('loader');
-    document.body.appendChild(loader);
-
+    if(resultsContainer){
+        loaderContainer.classList.add('row', 'justify-content-center', 'align-items-center');
+        loader.classList.add('myloader');
+        loaderContainer.appendChild(loader);
+        resultsContainer.appendChild(loaderContainer);
+    }
+    
     try {
         loader.style.display = 'block';
-
         // @ts-ignore
         const projectIdPage = parseInt(document.querySelector('#results-information-container').getAttribute('data-project-id'));
-
         const response = await fetch(`/api/Results/GetAllAnswersWithQuestions`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -52,6 +53,7 @@ export async function getAllAnswersWithQuestions() {
                 }
             }
 
+            loader.style.display = 'none';
             const resultsContainer = document.getElementById('results-container');
             const existingCharts = document.querySelectorAll('.chart-container');
             existingCharts.forEach(chart => chart.remove());
@@ -97,6 +99,7 @@ export async function getAllAnswersWithQuestions() {
                     counter++;
                 }
             }
+            loader.style.display = 'block';
             const projectExportBtn = document.createElement('button');
             projectExportBtn.className = 'export-project btn btn-primary mb-3 mt-3 mr-3';
             projectExportBtn.textContent = 'Exporteer gegevens als XLS';
@@ -128,7 +131,7 @@ export async function getAllAnswersWithQuestions() {
             resultsContainer.appendChild(exportAsCsv);
 
             // Verberg de loader wanneer de gegevens zijn geladen
-            loader.style.display = 'none';
+            loader.style.display = 'none !important';
         } else {
             console.error('Data is not in the expected format');
             // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
@@ -137,6 +140,9 @@ export async function getAllAnswersWithQuestions() {
     } catch (error) {
         console.error('Error fetching answers with questions:', error);
         // Zorg ervoor dat de loader wordt verborgen in het geval van een fout
+        loader.style.display = 'none';
+    }
+    finally {
         loader.style.display = 'none';
     }
 }
