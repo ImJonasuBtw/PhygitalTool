@@ -36,7 +36,7 @@ public class SupervisorsController : Controller
     public IActionResult GetSupervisors(int backofficeId)
     {
         
-        IEnumerable <Supervisor> supervisors = _userManager.getSuperVisorsForBackoffice(backofficeId);
+        IEnumerable <Supervisor> supervisors = _userManager.GetSuperVisorsForBackoffice(backofficeId);
         
         if (!supervisors.Any())
         {

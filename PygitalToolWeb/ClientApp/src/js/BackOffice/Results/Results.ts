@@ -1,5 +1,3 @@
-﻿console.log("Results.ts geladen")
-
 import {getAllAnswersWithQuestions} from "./ResultRestClient";
 
 

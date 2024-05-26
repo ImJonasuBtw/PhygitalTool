@@ -1,8 +1,7 @@
 ﻿using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
-using PhygitalTool.Domain.Util;
 
-namespace PhygitalTool.BL;
+namespace PhygitalTool.BL.Flows;
 
 public interface IFlowManager
 {
@@ -40,7 +39,7 @@ public interface IFlowManager
     // Saves contactinformation
     public void SaveContactInformation(ContactInformation contactInformation);
 
-   public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion, int projectId, int mainThemeId, int subthemeId);
-   public void SaveUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion);
+   public void AddUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion, int projectId, int mainThemeId, int subthemeId);
+   public void AddUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion);
    ICollection<UserInput> GetUserInputsForProject(int projectId);
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
+using PhygitalTool.BL.BackOffice;
 using PhygitalTool.DAL;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Web.Models;
@@ -44,7 +45,7 @@ public class NotesController : Controller
     [HttpGet("GetNotes")]
     public IActionResult GetNotes()
     {
-        IEnumerable<Note> notes = _projectManager.getNotes();
+        IEnumerable<Note> notes = _projectManager.GetNotes();
         
         if (!notes.Any())
         {

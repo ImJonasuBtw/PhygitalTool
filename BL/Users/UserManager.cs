@@ -19,22 +19,22 @@ public class UserManager : IUserManager
         _repositoryIdeas = repositoryIdeas;
     }
 
-    public IEnumerable<Supervisor> getSuperVisorsForBackoffice(int backofficeId)
+    public IEnumerable<Supervisor> GetSuperVisorsForBackoffice(int backofficeId)
     {
         return _repositoryBackOffice.ReadSuperVisorsForBackoffice(backofficeId);
     }
 
-    public IEnumerable<Idea> getAllIdeasWithUsers()
+    public IEnumerable<Idea> GetAllIdeasWithUsers()
     {
         return _repositoryIdeas.ReadAllIdeas();
     }
 
-    public void addIdeas(Idea idea)
+    public void AddIdeas(Idea idea)
     {
         _repositoryIdeas.CreateIdea(idea);
     }
 
-    public IdentityUser getUser(string userId)
+    public IdentityUser GetUser(string userId)
     {
         return _repositoryIdeas.ReadUser(userId);
     }
@@ -44,22 +44,30 @@ public class UserManager : IUserManager
         return _repositoryBackOffice.ReadSupervisorWithFlows(supervisorId);
     }
 
-    public void AddCommentToIdea(int IdeaId, Comment comment)
+    public void AddCommentToIdea(string description, string userId, int ideaId)
     {
-        _repositoryIdeas.CreateCommentToIdea(IdeaId, comment);
+        var comment = new Comment()
+        {
+            Description =description,
+            UserId = userId,
+            IdeaId = ideaId
+        };
+
+        
+        _repositoryIdeas.CreateCommentToIdea(comment);
     }
 
-    public void updateLikeIdea(Idea idea)
+    public void UpdateLikeIdea(Idea idea)
     {
         _repositoryIdeas.UpdateLikeIdea(idea);
     }
 
-    public Idea getIdea(int id)
+    public Idea GetIdea(int id)
     {
         return _repositoryIdeas.ReadIdea(id);
     }
 
-    public IEnumerable<Manager> getManagers()
+    public IEnumerable<Manager> GetManagers()
     {
         return _repositoryBackOffice.ReadManagers();
     }

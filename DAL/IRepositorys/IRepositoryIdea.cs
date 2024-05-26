@@ -14,5 +14,5 @@ public interface IRepositoryIdea
     
     void CreateIdea(Idea idea);
     
-    void CreateCommentToIdea(int ideaId, Comment comment);
+    public void CreateCommentToIdea(Comment comment);
 }

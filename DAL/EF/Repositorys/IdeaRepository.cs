@@ -56,10 +56,10 @@ public class IdeaRepository : IRepositoryIdea
         _context.SaveChanges();
     }
 
-    public void CreateCommentToIdea(int ideaId, Comment comment)
+    public void CreateCommentToIdea(Comment comment)
     {
         _context.Comments.Add(comment);
-        Idea idea =  _context.Ideas.SingleOrDefault(i => i.IdeaId == ideaId);
+        Idea idea =  _context.Ideas.SingleOrDefault(i => i.IdeaId == comment.IdeaId);
         idea?.Comments.Add(comment);
         _context.SaveChanges();
     }
