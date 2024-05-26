@@ -1,12 +1,12 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
 .background-contract-form {
-  background-color: $background-color;
+  background-color: variables.$background-color;
   padding: 20px;
   margin: 0 auto;
   font-family: "Outfit", sans-serif;
 
   h2 {
-    color: $text-color;
+    color: variables.$text-color;
     margin-bottom: 20px;
     text-align: center;
     
@@ -15,7 +15,7 @@
   form {
     background-color: #fff;
     padding: 20px;
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     width: 100%;
     max-width: 500px; 
@@ -23,7 +23,7 @@
   }
 
   .form-label {
-    color: $text-color;
+    color: variables.$text-color;
     font-weight: bold;
     margin-bottom: 5px;
   }
@@ -47,11 +47,11 @@
 
 
   .btn-primary {
-    background-color: $btn-color-1;
-    border: 10px $text-color;
+    background-color: variables.$btn-color-1;
+    border: 10px variables.$text-color;
     padding: 10px 20px;
-    color: $text-color;
-    border-radius: $border-radius;
+    color: variables.$text-color;
+    border-radius: variables.$border-radius;
     cursor: pointer;
     width: 100%;
     font-weight: bold;

@@ -1,3 +1,3 @@
-﻿import {LoadDomsNotes} from "../BackOffice/Notes/notes";
+import {LoadDomsNotes} from "../BackOffice/Notes/notes";
 
 document.addEventListener('DOMContentLoaded', LoadDomsNotes);

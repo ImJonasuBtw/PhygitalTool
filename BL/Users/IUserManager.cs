@@ -10,14 +10,14 @@ public interface IUserManager
 
     IEnumerable<Idea> GetAllIdeasWithUsers();
 
-    void AddIdeas(Idea idea);
+    void AddIdeas(string title, string description, string userId);
 
     IdentityUser GetUser(string userId);
 
     public void AddCommentToIdea(string description, string userId, int ideaId);
     //void AddManager(string email, string password, string imageUrl, int backOfficeId, bool emailConfirmed);
 
-    void UpdateLikeIdea(Idea idea);
+    int UpdateLikeIdea(int ideaId);
     Idea GetIdea(int id);
     IEnumerable<Manager> GetManagers();
 }

@@ -42,12 +42,13 @@ public class SupervisorsController : Controller
         {
             return NoContent();
         }
+        
         return Ok(supervisors);
     }
 
     [Authorize(Roles = "Manager")]
     [HttpPost]
-    public IActionResult CreateSupervisor([FromBody] SupervisorDto supervisorDto)
+    public IActionResult CreateSupervisor(SupervisorDto supervisorDto)
     {
         if (!ModelState.IsValid)
         {
@@ -72,6 +73,8 @@ public class SupervisorsController : Controller
 
         return Ok(new { Message = "Supervisor added successfully" });
     }
+    
+    
     [HttpGet("show-supervisor-screen")]
     public IActionResult ShowSupervisorScreen(string supervisorId)
     {

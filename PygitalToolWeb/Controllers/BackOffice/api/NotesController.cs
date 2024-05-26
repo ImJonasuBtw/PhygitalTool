@@ -23,29 +23,25 @@ public class NotesController : Controller
     }
     
     [HttpPost("PostNote")]
-    public IActionResult PostNote([FromBody] Note note)
+    public IActionResult PostNote(Note note)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         } 
-
-        var domainNote = new Note
-        {
-            QuestionId = note.QuestionId,
-            Description = note.Description
-        };
+        
         _unitOfWork.BeginTransaction();
-        _projectManager.AddNote(domainNote);
+        _projectManager.AddNote(note.QuestionId, note.Description);
         _unitOfWork.Commit();
+        
         return Ok();
     }
     
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Supervisor")]
     [HttpGet("GetNotes")]
     public IActionResult GetNotes()
     {
-        IEnumerable<Note> notes = _projectManager.GetNotes();
+        var notes = _projectManager.GetNotes();
         
         if (!notes.Any())
         {
