@@ -33,4 +33,9 @@ public class AnswerPossibilityRepository : IRepositoryAnswerPossibility
         _context.AnswerPossibilities.Remove(answerPossibility);
         _context.SaveChanges();
     }
+    
+    public AnswerPossibility ReadAnswerPossibility(int answerPossibilityId)
+    {
+        return _context.AnswerPossibilities.Find(answerPossibilityId);
+    }
 }
