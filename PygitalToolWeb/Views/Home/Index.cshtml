@@ -6,7 +6,7 @@
 
 
 
-<div class="container mt-5">
+<!--<div class="container mt-5">
     <div class="text-center">
         <partial name="_LoginPartial"></partial>
         <ul class="list-unstyled">
@@ -22,9 +22,9 @@
 
             <li class="nav-item mb-2">
                 <a class="btn btn-outline-secondary btn-block"
-                asp-controller="SubTheme"
-                asp-action="ShowSubThemeSelection"
-                asp-route-mainThemeId="1">
+                   asp-controller="SubTheme"
+                   asp-action="ShowSubThemeSelection"
+                   asp-route-mainThemeId="1">
                     MainTheme1
                 </a>
             </li>
@@ -46,7 +46,7 @@
             </li>
             <li class="nav-item mb-2">
                 <a class="btn btn-outline-secondary btn-block"
-                   asp-controller="Notes"
+                   asp-controller="ShowNotes"
                    asp-action="Index"
                 >
                     Maak notities
@@ -54,20 +54,90 @@
             </li>
             <li class="nav-item mb-2">
                 <a class="btn btn-outline-secondary btn-block"
-                    asp-controller="Supervisors"
+                   asp-controller="Supervisors"
                    asp-action="ShowSupervisorScreen"
                    asp-route-supervisorId="@userId">
                     Supervisor platform (flow opstarten)
                 </a>
             </li>
-             <li class="nav-item mb-2">
-                 <a class="btn btn-outline-secondary btn-block"
-                     asp-controller="Supervisors"
-                    asp-action="ShowStartScreen">
-                     Startscherm voor gebruikers
-                 </a>
-             </li>
+            <li class="nav-item mb-2">
+                <a class="btn btn-outline-secondary btn-block"
+                   asp-controller="Supervisors"
+                   asp-action="ShowStartScreen">
+                    Startscherm voor gebruikers
+                </a>
+            </li>
 
         </ul>
+    </div>
+</div>-->
+
+<div class="container">
+    <div class="hero-section p-5 row mt-5">
+        <div class="hero-content col-md-6">
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <partial name="_LoginPartial"></partial>
+                            var userRole = User.IsInRole("Admin") ? "Admin" :
+                                User.IsInRole("BackOffice") ? "BackOffice" :
+                                    User.IsInRole("Manager") ? "Manager" :
+                                        User.IsInRole("Supervisor") ? "Supervisor" :
+                                            "User";
+                            <div class="pt-3">
+                               <h1>Welkom bij Qflow</h1>
+                                <p>Je bent ingelogd als @userRole.</p>
+                            </div>
+                            
+                        }
+                        else
+                        {
+                            <h1>Welkom bij Qflow</h1>
+                            <p>Zonder inloggen heb je enkel toegang tot ons gebruikersplatform. Ontdek het platform.</p>
+                            <p>Jouw mening maakt het verschil! 🌟 Sluit je aan bij ons platform en laat je stem horen!</p>
+                            <a class="btn btn-primary btn-block"
+                               asp-controller="UserForm"
+                               asp-action="Index"
+                            >
+                                GebruikersPlatform
+                            </a>
+                            <partial name="_LoginPartial"></partial>
+                        }
+                        @if (User.IsInRole("User"))
+                        {
+                            <div class="pt-3">
+                                <p>Jouw mening maakt het verschil! 🌟 Sluit je aan bij ons platform en laat je stem horen!</p>
+                                 <a class="btn btn-primary btn-block" asp-controller="UserForm" asp-action="Index"> GebruikersPlatform </a>
+                            </div>
+                            
+                        }@if (User.IsInRole("Admin"))
+                                                  {
+                                                      <div class="pt-3">
+                                                          <a class="btn btn-primary btn-block" asp-controller="UserForm" asp-action="Index"> GebruikersPlatform </a>
+                                                          <a class="btn btn-primary btn-block" asp-area="" asp-controller="AdminPlatform" asp-action="index">Admin Platform</a>
+                                                      </div>
+                                                  }
+                        @if (User.IsInRole("Manager"))
+                         {
+                             <div class="pt-3">
+                                 <a class="btn btn-primary btn-block" asp-controller="UserForm" asp-action="Index"> GebruikersPlatform </a>
+                                 <a class="btn btn-primary btn-block" asp-area="" asp-controller="BackOffice" asp-action="Index">Backoffice</a>
+                             </div>
+                         }
+                         @if (User.IsInRole("Supervisor"))
+                         {
+                             <p>1) Start in het ene tabblad "Startscherm voor gebruikers" op</p>
+                             <p>2) Start in een ander tabblad  " Supervisor platform" (flow opstarten)</p>
+                             <div class="pt-3">
+                                 <a class="btn btn-primary btn-block" asp-controller="Supervisors" asp-action="ShowStartScreen"> Startscherm voor gebruikers </a>
+                                 <a class="btn btn-primary btn-block" asp-controller="Supervisors" asp-action="ShowSupervisorScreen" asp-route-supervisorId="@userId"> Supervisor platform </a>
+                                 </div>
+                         }
+        </div>
+        <div class="hero-image col-md-6">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
     </div>
 </div>

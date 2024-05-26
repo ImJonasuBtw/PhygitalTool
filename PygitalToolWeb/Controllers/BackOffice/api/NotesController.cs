@@ -40,7 +40,7 @@ public class NotesController : Controller
         return Ok();
     }
     
-    [Authorize(Roles = "Manager")]
+    [Authorize(Roles = "Manager,Supervisor")]
     [HttpGet("GetNotes")]
     public IActionResult GetNotes()
     {

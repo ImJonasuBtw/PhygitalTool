@@ -1,14 +1,11 @@
-﻿<ul class="btn-primary flex-grow-1 flex-row-reverse">
+﻿
     @if (User.Identity?.IsAuthenticated ?? false)
     {
-        <li class="nav-item">
-            <a href="/Identity/Account/Logout">Afmelden</a>  (@User.Identity.Name)
-        </li>
+            <a class="btn btn-danger" href="/Identity/Account/Logout">Afmelden</a>
+             
     }
     else
     {
-        <li class="nav-item">
-            <a href="/Identity/Account/Login">Aanmelden</a>
-        </li>
+            <a class="btn btn-dark" href="/Identity/Account/Login">Aanmelden</a>
+        
     }
-</ul>

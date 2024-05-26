@@ -1,9 +1,9 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
 #add-project-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: rgba($primary-color, 0.5);
+  background-color: rgba(variables.$primary-color, 0.5);
   color: white;
   border-radius: 50%;
   width: 50px;
@@ -15,7 +15,12 @@
   backdrop-filter: blur(10px);
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken(variables.$primary-color, 10%);
   }
+}
+
+
+.full-width-btn {
+  width: 100%;
 }
 

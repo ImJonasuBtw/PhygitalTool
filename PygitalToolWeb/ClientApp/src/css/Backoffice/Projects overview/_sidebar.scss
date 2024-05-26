@@ -1,11 +1,11 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
 .sidebar {
-  background-color: rgba($background-color, 0.7);
+  background-color: rgba(variables.$background-color, 0.7);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   padding: 2rem 1rem;
-  color: $text-color;
+  color: variables.$text-color;
   overflow-y: auto;
 
   @media (min-width: 768px) {
@@ -29,7 +29,7 @@
   img {
     border-radius: 50%;
     margin-bottom: 1rem;
-    width: 80%;
+    width: 40%;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -38,18 +38,18 @@
   .nav-link {
     display: block;
     margin: 1rem 0;
-    color: $text-color;
+    color: variables.$text-color;
     text-decoration: none;
 
 
     &.active {
-      color: $primary-color;
+      color: variables.$primary-color;
       font-weight: bold;
     }
 
 
     .badge {
-      background-color: $primary-color;
+      background-color: variables.$primary-color;
     }
   }
 }
