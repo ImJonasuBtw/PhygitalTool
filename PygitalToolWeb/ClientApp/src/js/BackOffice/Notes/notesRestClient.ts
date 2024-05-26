@@ -26,14 +26,14 @@ export async function AddNote(newNote: Note, noteDescription: HTMLInputElement )
 }
 
 export function loadNotes() {
-    fetch('/api/Notes/GetNotes/')
+    fetch('/api/Notes/GetNotes')
         .then(response => response.json())
         .then((notes) => {
             console.log(notes);
             const projectsContainer = document.getElementById('projects-container');
             const displayedQuestions = new Set();
             if (projectsContainer) {
-                NotesHtml(projectsContainer,displayedQuestions, notes)
+                NotesHtml(projectsContainer,displayedQuestions,notes)
             }
         })
         .catch(error => console.error('Error loading notes:', error));

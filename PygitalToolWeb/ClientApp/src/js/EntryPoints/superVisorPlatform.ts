@@ -1,1 +1,3 @@
-﻿import "../BackOffice/SupervisorPlatform/SuperVisorPlatform.ts";
+﻿import {initializeDOMListenerSupervisor} from "../BackOffice/Supervisors/supervisors";
+
+document.addEventListener('DOMContentLoaded', initializeDOMListenerSupervisor);

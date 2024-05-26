@@ -1,7 +1,7 @@
 ﻿import { loadSupervisors } from "./supervisorsRestClient";
 
 console.log("Supervisor script loaded");
-export const scriptElement = document.getElementById('backOfficeHomePage-script');
+export const scriptElement = document.getElementById('superVisor-script');
 export const backOfficeId = scriptElement?.dataset.backofficeId;
 
 export interface Supervisor {

@@ -479,6 +479,10 @@ public static class DataSeeder
                 throw new System.Exception("Failed to create dummy supervisor.");
             }
         }
+
+        Note note1 = new Note(1, "Dit is een moeilijke vraag");
+        context.Notes.Add(note1);
+        
         
         context.SaveChanges();
         context.ChangeTracker.Clear();
