@@ -1,4 +1,4 @@
-﻿export function hasCurrentUserLikedIdea(ideaId: string): boolean {
+export function hasCurrentUserLikedIdea(ideaId: string): boolean {
     const likedIdeas = localStorage.getItem('likedIdeas');
     const currentUserId = document.getElementById('UserPlatform-script')?.dataset.userId;
     if (likedIdeas && currentUserId) {

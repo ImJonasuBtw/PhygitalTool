@@ -1,12 +1,12 @@
 ﻿// Checks if form input is empty
 
-import {linkKeyPressesToButtons} from "./QuestionHandelingPhysicalButtons";
+import {linkKeyPressesToButtons} from "./questionHandelingPhysicalButtons";
 import {
     configureAnswerButtons,
     configureAnswerButtonsSingleChoice, configureSlider,
     configureSubmitButton,
     configureSubmitButtonSingleChoice, setTimerText
-} from "./QuestionHandelingUI";
+} from "./questionHandelingUI";
 
 export function initializePage() { 
     const scriptElement = document.getElementById('questionPage-script');

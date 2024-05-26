@@ -1,4 +1,4 @@
 ﻿
-import {initializePage} from "../Front-End/QuestionHandling";
+import {initializePage} from "../Front-End/questionHandling";
 
 document.addEventListener('DOMContentLoaded', initializePage);
