@@ -19,7 +19,7 @@ public class CommentController: ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "User")]
     public IActionResult PostComment(Comment comment)
     {
         if (!ModelState.IsValid)
