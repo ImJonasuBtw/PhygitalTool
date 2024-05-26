@@ -1,2 +1,4 @@
-﻿import "../Front-End/QuestionHandling.ts";
+﻿
+import {initializePage} from "../Front-End/questionHandling";
 
+document.addEventListener('DOMContentLoaded', initializePage);

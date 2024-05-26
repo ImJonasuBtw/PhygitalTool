@@ -1,1 +1,5 @@
-﻿import "../BackOffice/Themes/ThemeCreation.ts";
+﻿
+import {loadDOMs} from "../BackOffice/Themes/themeCreation";
+
+
+document.addEventListener('DOMContentLoaded', loadDOMs);

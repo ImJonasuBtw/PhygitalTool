@@ -1,35 +1,27 @@
-﻿import {fetchBackOffices, submitManagersForm} from "./ManagerRestClient";
-import {Managers} from "./Managers";
+﻿import {fetchBackOffices, submitManagersForm, loadManagers} from "./managerRestClient";
+import {Managers} from "./managers";
 
-export function loadManagers() {
-    fetch('/api/Managers/GetManagers/' )
-        .then(response => response.json())
-        .then((managers: Managers[]) => {
-                const backOfficeContainer = document.getElementById('backoffice-container');
-                if (backOfficeContainer) {
-                    backOfficeContainer.innerHTML = `
-                <h2>Beheerders</h2>
-                <div class="list-group">
-                    ${managers.map(sup => `
-                        <div href="#" class="list-group-item list-group-item-action">
-                            <img src="${sup.imageUrl}" alt="${sup.email}" class="img-thumbnail">
-                            ${sup.email} 
-                        </div>
-                    `).join('')}
-                </div>
-                <button id="add-Manager-button" class="btn btn-primary">Beheerder Toevoegen</button>
-                `;
-                    document.getElementById('add-Manager-button')?.addEventListener('click', addManager);
-                }
-            }
-        )
-        .catch(error => console.error('Error loading managers:', error));
+export function renderManagers(managers: Managers[]): void {
+    const backOfficeContainer = document.getElementById('backoffice-container');
+    if (backOfficeContainer) {
+        backOfficeContainer.innerHTML = `
+            <h2>Beheerders</h2>
+            <div class="list-group">
+                ${managers.map(manager => `
+                    <div href="#" class="list-group-item list-group-item-action">
+                        <img src="${manager.imageUrl}" alt="${manager.email}" class="img-thumbnail">
+                        ${manager.email} 
+                    </div>
+                `).join('')}
+            </div>
+            <button id="add-Manager-button" class="btn btn-primary">Beheerder Toevoegen</button>
+        `;
+        document.getElementById('add-Manager-button')?.addEventListener('click', addManager);
+    }
 }
-
 export function addManager() {
     const backOfficeContainer = document.getElementById('backoffice-container');
     if (backOfficeContainer) {
-
         backOfficeContainer.innerHTML = `
             <h3>Voeg nieuwe begeleider toe</h3>
             <form id="managersForm" enctype="multipart/form-data">
@@ -48,15 +40,12 @@ export function addManager() {
                 <div class="form-group">
                     <label for="backoffice">Backoffice:</label>
                      <select class="form-control" id="backoffice" name="backoffice" required>
-                       
                     </select>
                 </div>
             <div class="form-group">
                   <label for="file">Profielfoto:</label>
                   <input type="file" class="form-control" id="file" name="file" accept=".jpg,.jpeg,.png">
             </div>
-
-                
                 <button type="submit" class="btn btn-primary">Beheerder toevoegen</button>
                 <button type="button" class="btn btn-secondary" id="cancelButton">Annuleer</button>
             </form>
@@ -71,11 +60,10 @@ export function addManager() {
         } else {
             console.error('The form element was not found in the DOM.');
         }
-
         const cancelButton = document.getElementById("cancelButton");
         if (cancelButton) {
-            cancelButton.onclick = function () {
-                loadManagers();
+            cancelButton.onclick = async function () {
+                await loadManagers();
             };
         } else {
             console.error('The cancel button was not found in the DOM.');

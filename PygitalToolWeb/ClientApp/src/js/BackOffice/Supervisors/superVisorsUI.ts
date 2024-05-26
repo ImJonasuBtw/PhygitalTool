@@ -1,5 +1,5 @@
-﻿import {loadSupervisors, submitSupervisorForm} from "./SupervisorsRestClient";
-import {backOfficeId} from "./Supervisors";
+﻿import {loadSupervisors, submitSupervisorForm} from "./supervisorsRestClient";
+import {backOfficeId, Supervisor} from "./supervisors";
 
 export function addSupervisor() {
     const projectsContainer = document.getElementById('projects-container');
@@ -56,4 +56,22 @@ export function addSupervisor() {
         console.error('The projects container was not found in the DOM.');
     }
 }
+export function renderSupervisors(supervisors: Supervisor[]): void {
+    const projectsContainer = document.getElementById('projects-container');
+    if (projectsContainer) {
+        projectsContainer.innerHTML = `
+                <h2>Begeleiders</h2>
+                <div class="list-group">
+                    ${supervisors.map(sup => `
+                        <div href="#" class="list-group-item list-group-item-action">
+                            <img src="${sup.imageUrl}" alt="${sup.email}" class="img-thumbnail">
+                            ${sup.email} 
+                        </div>
+                    `).join('')}
+                </div>
+                <button id="add-supervisor-button" class="btn btn-primary">Voeg Begeleider toe</button>
+                `;
 
+        document.getElementById('add-supervisor-button')?.addEventListener('click', addSupervisor);
+    }
+}

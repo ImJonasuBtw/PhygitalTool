@@ -1,6 +1,8 @@
-﻿import {addQuestionForm, loadFlows, showEditFlowForm, ShowForm} from "./FlowUI";
+import {QuestionForm, loadFlows, ShowForm} from "./flowUI";
 import bootstrap from "bootstrap";
-import {deleteFlow} from "./FlowRestClient";
+import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flowRestClient";
+
+
 
 export enum QuestionType {
     SingleChoice,
@@ -46,135 +48,94 @@ export class Flow {
     }
 }
 
-document.getElementById('add-Flow-button')?.addEventListener('click', () => {
-    console.log('Add button has been pressed!');
-    const FlowContainer = document.getElementById('flow-container');
-    if (FlowContainer) {
-        ShowForm(FlowContainer);
+function setupAddFlowButton() {
+    document.getElementById('add-Flow-button')?.addEventListener('click', () => {
+        console.log('Add button has been pressed!');
+        const FlowContainer = document.getElementById('flow-container');
+        if (FlowContainer) {
+            ShowForm(FlowContainer);
 
-        const scriptElement = document.getElementById('flowPage-script');
-        const subthemeId = scriptElement?.dataset.subthemeid;
-        
+            const scriptElement = document.getElementById('flowPage-script');
+            const subthemeId = scriptElement?.dataset.subthemeid;
 
-        document.getElementById('add-question-button')?.addEventListener('click', addQuestionForm);
-        document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
-        document.getElementById('new-flow-form')?.addEventListener('submit', async function (event) {
-            event.preventDefault();
-            
-            const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
-            const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
-            const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
-            if (!flowTypeRadio) {
-                alert('Please select a flow type.');
-                return;
-            }
-            const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
-            const questionContainers = document.querySelectorAll('.question-container');
-            const questions: any[] = Array.from(questionContainers).map(async (container: Element) => {
-                const questionContainer = container as HTMLElement;
-                const questionInput = questionContainer.querySelector('.question-input') as HTMLInputElement;
-                const questionId = questionContainer.getAttribute('data-question-id');
-                const questionTypeSelect = questionContainer.querySelector('select') as HTMLSelectElement;
-                const selectedQuestionType = parseInt(questionTypeSelect.value);
-             
-                const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
-                const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
-                const answerPossibilities: any[] = Array.from(filteredAnswerPossibilities).map(input => {
-                    const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
-                    return {
-                        answerPossibilityId: answerPossibilityId,
-                        description: input.value
-                    };
-                });
+            document.getElementById('add-question-button')?.addEventListener('click', QuestionForm);
+            document.getElementById('cancel-button')?.addEventListener('click', loadFlows);
+            document.getElementById('new-flow-form')?.addEventListener('submit', handleSubmit(subthemeId));
+        }
+    });
+}
+function handleSubmit(subthemeId :string | undefined) {
+    return async function (event: { preventDefault: () => void; }) {
+        event.preventDefault();
 
-                const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
-                
-                let questionImage = null;
-                if (fileInput.files && fileInput.files.length > 0) {
-                    const formData = new FormData();
-                    formData.append('file', fileInput.files[0]);
+        const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
+        const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
+        const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
+        if (!flowTypeRadio) {
+            alert('Please select a flow type.');
+            return;
+        }
+        const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
 
+        const questions = await gatherQuestions();
 
-                    const response = await fetch('/api/files/uploadFile', {
-                        method: 'POST',
-                        body: formData
+        const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
+        const flowLanguage = parseInt(flowLanguageSelect.value);
+        if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
+        const flowName = flowNameInput.value;
+        const description = descriptionInput.value;
 
-                    });
+        // Create a new flow instance
+        const newFlow = new Flow(description, flowName, flowType, flowLanguage, questions);
 
-                    const fileResult = await response.json();
-
-                    if (fileResult && fileResult.url) {
-                        questionImage = fileResult.url;
-                    }
-                }
-                    return {
-                        questionId: questionId,
-                        questionText: questionInput.value,
-                        questionType: selectedQuestionType,
-                        answerPossibilities: answerPossibilities,
-                        questionImage: questionImage
-                    };
-                
-            }).filter(question => question !== null);
-
-            const resolvedQuestions = await Promise.all(questions);
-
-            const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
-            const flowLanguage = parseInt(flowLanguageSelect.value);
-            if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
-            const flowName = flowNameInput.value;
-            const description = descriptionInput.value;
-
-            // Create a new flow instance
-            const newFlow = new Flow(description, flowName, flowType, flowLanguage, resolvedQuestions);
-
-            const response = await fetch('/api/FlowCreation/AddFlowToSubtheme', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    FlowName: newFlow.flowName,
-                    FlowDescription: newFlow.flowDescription,
-                    FlowType: newFlow.flowType,
-                    SubthemeId: subthemeId,
-                    Questions: resolvedQuestions,
-                    Language: flowLanguage
-                })
-            });
-            if (response.ok) {
-                loadFlows();
-
-            } else {
-                let errorMessage = 'Failed to add flow';
-                if (response.status === 400) {
-                    const errorData = await response.json();
-                    if (errorData && errorData.errors) {
-                        for (const key in errorData.errors) {
-                            if (errorData.errors.hasOwnProperty(key)) {
-                                const errorMessage = errorData.errors[key];
-                                alert(errorMessage);
-                            }
-                        }
-                    } else {
-                        alert('Validation error occurred.');
-                    }
-                } else if (response.status === 404) {
-                    errorMessage = 'Not Found';
-                } else if (response.status === 409) {
-                    errorMessage = 'Conflict - Key exists already';
-                } else if (response.status === 500) {
-                    errorMessage = 'Internal Server Error';
-                    const errorData = await response.json();
-                    errorMessage = errorData.message;
-                }
-                alert(errorMessage);
-            }
-        });
+        await AddFlow(newFlow, subthemeId);
     }
-});
+}
+async function gatherQuestions() {
+    const questionContainers = document.querySelectorAll('.question-container');
+    const questions = Array.from(questionContainers).map(async (container: Element) => {
+        const questionContainer = container as HTMLElement;
+        const questionInput = questionContainer.querySelector('.question-input') as HTMLInputElement;
+        const questionId = questionContainer.getAttribute('data-question-id');
+        const questionTypeSelect = questionContainer.querySelector('select') as HTMLSelectElement;
+        const selectedQuestionType = parseInt(questionTypeSelect.value);
 
-document.addEventListener('DOMContentLoaded', () => {
+        const answerPossibilities = gatherAnswerPossibilities(questionContainer);
+
+        const fileInput = questionContainer.querySelector('input[type="file"]') as HTMLInputElement;
+
+        let questionImage = null;
+        if (fileInput.files && fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            questionImage = await uploadFile(formData);
+        }
+
+        return {
+            questionId: questionId,
+            questionText: questionInput.value,
+            questionType: selectedQuestionType,
+            answerPossibilities: answerPossibilities,
+            questionImage: questionImage
+        };
+    });
+
+    return await Promise.all(questions);
+}
+function gatherAnswerPossibilities(questionContainer: HTMLElement) {
+    const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
+    const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
+    return Array.from(filteredAnswerPossibilities).map(input => {
+        const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
+        return {
+            answerPossibilityId: answerPossibilityId,
+            description: input.value
+        };
+    });
+}
+
+function setupConfirmationModal() {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
@@ -193,9 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     });
-});
+}
 
-document.addEventListener('DOMContentLoaded', () => {
+function setupEditFlowContainer() {
     const FlowContainer = document.getElementById('flow-container');
     if (FlowContainer) {
         FlowContainer.addEventListener('click', event => {
@@ -209,4 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-});
+}
+
+export  function  SetupDoms(){
+    setupAddFlowButton();
+    setupConfirmationModal();
+    setupEditFlowContainer();
+}
