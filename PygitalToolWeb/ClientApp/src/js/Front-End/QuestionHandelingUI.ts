@@ -1,4 +1,4 @@
-﻿import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
+import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 
 let currentFlowState: string | null = null;
 const timerLength: number = 10;

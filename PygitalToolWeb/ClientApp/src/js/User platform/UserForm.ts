@@ -1,6 +1,7 @@
-import {hasCurrentUserLikedIdea, markIdeaAsLikedByCurrentUser} from "./UserFormUI";
+import {hasCurrentUserLikedIdea} from "./userFormUI";
+import {AddIdea, CommentIdea, LikeIdea} from "./userFormRestClient";
 
-class Idea {
+export class Idea {
     public description: string;
     public title: string;
 
@@ -10,44 +11,25 @@ class Idea {
     }
 
 }
-
-document.addEventListener('DOMContentLoaded', function () {
+const scriptElement = document.getElementById('UserPlatform-script');
+const userId = scriptElement?.dataset.userId;
+function  SetupaddIdea(){
     const addButton = document.getElementById('addIdeaButton');
     if (addButton) {
         addButton.addEventListener('click', async () => {
             const title = (document.getElementById('newIdeaTitle') as HTMLInputElement).value;
             const description = (document.getElementById('newIdeaDescription') as HTMLInputElement).value;
-            const scriptElement = document.getElementById('UserPlatform-script');
-            const userId = scriptElement?.dataset.userId;
             const newIdea = new Idea(description, title);
             if (!title || !description) {
                 alert('Vul beide velden titel en beschrijving in.');
                 return;
             }
-            const response = await fetch('/api/ideas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title: newIdea.title,
-                    description: newIdea.description,
-                    userId : userId
-                })
-            });
-
-            if (!response.ok) {
-                alert('Kon het idee niet toevoegen');
-            }
-            alert('Idee goed toegevoegd');
-            window.location.reload(); 
+            await AddIdea(newIdea, userId)
         });
-     
+
     }
-
-
-
-
+}
+function setupLike(){
     const likeButtons = document.querySelectorAll('.likeButton');
     likeButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
@@ -59,29 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const ideaId = this.getAttribute('data-ideaId');
-            if (ideaId && !hasCurrentUserLikedIdea(ideaId)) { 
+            if (ideaId && !hasCurrentUserLikedIdea(ideaId)) {
                 try {
-                    const response = await fetch(`/api/Ideas/Like/${ideaId}`, {
-                        method: 'POST',
-                    });
-
-                    if (response.ok) {
-                        const likesCountElement = document.getElementById(`likesCount-${ideaId}`);
-                        if (likesCountElement) {
-                            const currentLikes = parseInt(likesCountElement.textContent || '0');
-                            likesCountElement.textContent = (currentLikes + 1).toString();
-                        }
-                        markIdeaAsLikedByCurrentUser(ideaId); 
-                    } else {
-                        console.error('Kon idee niet liken');
-                    }
+                    await LikeIdea(ideaId)
                 } catch (error) {
                     console.error('Error:', error);
                 }
             }
         });
     });
-
+}
+function setupComment(){
     const commentButtons = document.querySelectorAll('.commentButton');
     commentButtons.forEach(button => {
         button.addEventListener('click', function (this: HTMLElement) {
@@ -98,7 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
+}
+function setupAddComment(){
     const addCommentButtons = document.querySelectorAll('.addCommentButton');
     addCommentButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
@@ -109,36 +80,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 const ideaId = parseInt(ideaIdString);
                 const commentTextElement = document.getElementById('commentText-' + ideaId) as HTMLInputElement | null;
                 const commentText = commentTextElement?.value;
-                const scriptElement = document.getElementById('UserPlatform-script');
-                const userId = scriptElement?.dataset.userId;
                 if (!commentText) {
                     alert('Vul comment in');
                     return;
                 }
 
                 try {
-                    const response = await fetch('/api/Comment', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            ideaId: ideaId,
-                            description: commentText,
-                            userId: userId
-                        })
-                    });
-
-                    if (response.ok) {
-                        window.location.reload();
-
-                    } else {
-                        console.error('kon comment niet toevoegen');
-                    }
+                    await CommentIdea(ideaId, commentText, userId)
                 } catch (error) {
                     console.error('Error:', error);
                 }
             }
         });
     });
-});
+}
+export  function loadDoms(){
+    SetupaddIdea();
+    setupLike();
+    setupComment();
+    setupAddComment();
+}
+

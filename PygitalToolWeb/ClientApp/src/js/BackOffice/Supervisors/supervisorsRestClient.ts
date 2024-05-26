@@ -1,0 +1,80 @@
+﻿import {backOfficeId, Supervisor} from "./supervisors";
+import {renderSupervisors} from "./superVisorsUI";
+import {validatePassword} from "./supervisorsValidarion";
+import {handleResponse} from "../../AdminPlatform/managerValidation";
+
+export function loadSupervisors(backofficeId: number) {
+    console.log(backofficeId);
+    fetch('/api/supervisors/Getsupervisors/' + backofficeId)
+        .then(response => response.json())
+        .then((supervisors: Supervisor[]) => {
+            renderSupervisors(supervisors)
+            }
+        )
+        .catch(error => console.error('Error loading supervisors:', error));
+}
+
+async function uploadFile(formData: FormData): Promise<string | null> {
+    try {
+        const fileResponse = await fetch('/api/files/uploadFile', {
+            method: 'POST',
+            body: formData
+        });
+        const fileResult = await fileResponse.json();
+        return fileResult && fileResult.url;
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        return null;
+    }
+}
+async function addSupervisor(supervisorData: any): Promise<Response> {
+    try {
+        return await fetch('/api/supervisors', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(supervisorData)
+        });
+    } catch (error) {
+        console.error('Error adding supervisor:', error);
+        throw error;
+    }
+}
+export async function submitSupervisorForm() {
+    const form = document.getElementById('supervisorForm') as HTMLFormElement;
+    const formData = new FormData(form);
+    try {
+        const email = (document.getElementById('email') as HTMLInputElement).value;
+        const password = (document.getElementById('password') as HTMLInputElement).value;
+        const userName = (document.getElementById('userName') as HTMLInputElement).value;
+
+        if (!validatePassword(password)) {
+            alert('Het wachtwoord moet minstens één hoofdletter, één kleine letter en één niet-alfabetisch teken bevatten.');
+            return;
+        }
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+        if (!fileInput.files || fileInput.files.length === 0) {
+            alert("Geef een profielfoto mee");
+            return;
+        }
+        formData.append('file', fileInput.files[0]);
+        const imageUrl = await uploadFile(formData);
+        if (!imageUrl) {
+            alert("Er is een fout opgetreden bij het uploaden van het bestand");
+            return;
+        }
+
+        const supervisorResponse = await addSupervisor({
+            email,
+            password,
+            imageUrl,
+            userName,
+            BackOfficeId: Number(backOfficeId)
+        });
+
+        await handleResponse(supervisorResponse);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}

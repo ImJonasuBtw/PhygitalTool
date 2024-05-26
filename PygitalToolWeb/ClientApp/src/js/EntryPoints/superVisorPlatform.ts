@@ -1,1 +1,1 @@
-﻿import "../BackOffice/SupervisorPlatform/SuperVisorPlatform.ts";
+﻿import "../BackOffice/SupervisorPlatform/superVisorPlatform.ts";

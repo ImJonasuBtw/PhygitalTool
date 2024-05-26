@@ -1,14 +1,7 @@
 import {BackOffice} from "./backOfficeCreation";
-import {updateProject} from "./backOfficeRestClient";
 
-export function showEditProjectForm(backOfficeId: number): void {
-    fetch(`/api/BackOfficeCreation/GetBackOfficeDetails/` + backOfficeId)
-        .then(response => response.json())
-        .then((backOffice: BackOffice) => {
-            console.log(backOffice.name);
-            const backOfficeContainer = document.getElementById('backoffice-container');
-            if (backOfficeContainer) {
-                backOfficeContainer.innerHTML = `
+export function renderEditBackOfficeForm(container: { innerHTML: string; }, backOffice: BackOffice) {
+    container.innerHTML = `
                     <h2 class="mt-4">Edit BackOffice</h2>
                     <form id="edit-backoffice-form">
                         <div class="mb-3">
@@ -19,14 +12,20 @@ export function showEditProjectForm(backOfficeId: number): void {
                         <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
                     </form>
                 `;
-                document.getElementById('cancel-button')?.addEventListener('click', loadBackOffices);
-                document.getElementById('edit-backoffice-form')?.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    updateProject(backOfficeId);
-                });
-            }
-        })
-        .catch(error => console.error('Failed to fetch backoffice details:', error));
+}
+
+export function renderAddBackOfficeForm(container: { innerHTML: string; }) {
+    container.innerHTML = `
+        <h2 class="mt-4">voeg nieuwe backOffice toe</h2>
+        <form id="new-project-form">
+            <div class="mb-3">
+                <label for="backOfficeNameInput" class="form-label">BackOffice Naam</label>
+                <input type="text" class="form-control" id="backOfficeNameInput" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Voeg toe</button>
+            <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
+        </form>
+    `;
 }
 
 export function loadBackOffices() {

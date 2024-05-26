@@ -48,16 +48,19 @@
                 <p class="form-label">@comment.Description</p>
                 <p>@comment.User</p>
             }
-            <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
-            <div class=""id="commentForm-@idea.IdeaId" style="display:none;">
-                <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
-                <button class="btn btn-primary mt-3 addCommentButton"  data-ideaId="@idea.IdeaId">Verzend</button>
-            </div>
+              @if (User.IsInRole("User"))
+                        {
+                            <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
+                            <div id="commentForm-@idea.IdeaId" style="display:none;">
+                                <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
+                                <button class="btn btn-primary mt-3 addCommentButton" data-ideaId="@idea.IdeaId">Verzend</button>
+                            </div>
+                        }
         </div>
     </div>
 }
 
 </body>
 @section Scripts {
-    <script id="UserPlatform-script" src="~/dist/UserPlatform.entry.js" defer="defer" data-user-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity.IsAuthenticated.ToString().ToLower())"></script>
+    <script id="UserPlatform-script" src="~/dist/UserPlatform.entry.js" defer="defer" data-user-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity?.IsAuthenticated.ToString().ToLower())"></script>
 }
