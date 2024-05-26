@@ -1,13 +1,11 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using PhygitalTool.BL.BackOffice;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
 
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
-using PhygitalTool.Web.Models;
-
+using BL;
+using Models;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -17,35 +15,30 @@ public class ThemeCreationController : Controller
     private readonly ILogger<ThemeCreationController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
-    public ThemeCreationController(IProjectManager projectManager, ILogger<ThemeCreationController> logger, UnitOfWork unitOfWork)
+    public ThemeCreationController(IProjectManager projectManager, ILogger<ThemeCreationController> logger,
+        UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpPost("AddThemeToBackoffice")]
-    public IActionResult AddThemeToBackoffice([FromBody] ThemeModel theme)
+    public IActionResult AddThemeToBackoffice(ThemeModel theme)
     {
-        
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        
-        var domainTheme = new Domain.Projects.MainTheme
-        {
-            ThemeName = theme.ThemeName,
-            MainThemeInformation = theme.MainThemeInformation,
-            ProjectId = theme.ProjectId
-        };
 
         _unitOfWork.BeginTransaction();
-        _projectManager.AddMainTheme(domainTheme);
+        _projectManager.AddMainTheme(theme.ThemeName, theme.MainThemeInformation, theme.ProjectId);
         _unitOfWork.Commit();
+
         return Ok();
     }
+
     [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteMainTheme/{mainThemeId}")]
     public IActionResult DeleteMainTheme(int mainThemeId)
@@ -62,6 +55,7 @@ public class ThemeCreationController : Controller
             return BadRequest($"Error deleting subTheme: {ex.Message}");
         }
     }
+
     [Authorize(Roles = "Manager")]
     [HttpGet("GetMainThemeDetails/{mainthemeId}")]
     public IActionResult GetMainThemeDetails(int mainthemeId)
@@ -69,7 +63,7 @@ public class ThemeCreationController : Controller
         try
         {
             var mainTheme = _projectManager.GetThemeWithSubthemes(mainthemeId);
-            Console.WriteLine($"{mainTheme}");
+          
             if (mainTheme == null)
             {
                 return NotFound($"Theme with ID {mainthemeId} not found.");
@@ -81,7 +75,7 @@ public class ThemeCreationController : Controller
                 MainThemeInformation = mainTheme.MainThemeInformation,
                 ProjectId = mainTheme.ProjectId
             };
-        
+
             return Ok(model);
         }
         catch (Exception ex)
@@ -89,9 +83,10 @@ public class ThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateMainTheme/{mainThemeId}")]
-    public IActionResult UpdateMainTheme(int mainThemeId, [FromBody] ThemeModel themeModel)
+    public IActionResult UpdateMainTheme(int mainThemeId, ThemeModel themeModel)
     {
         if (!ModelState.IsValid)
         {
@@ -100,19 +95,9 @@ public class ThemeCreationController : Controller
 
         try
         {
-            var existingMainTheme = _projectManager.GetThemeWithSubthemes(mainThemeId);
-            if (existingMainTheme == null)
-            {
-                return NotFound($"Maintheme with ID {mainThemeId} not found.");
-            }
-
-            existingMainTheme.ThemeName = themeModel.ThemeName;
-            existingMainTheme.MainThemeInformation = themeModel.MainThemeInformation;
-            
             _unitOfWork.BeginTransaction();
-            _projectManager.UpdateMainTheme(existingMainTheme);
+            _projectManager.UpdateMainTheme(mainThemeId, themeModel.ThemeName, themeModel.MainThemeInformation);
             _unitOfWork.Commit();
-            _logger.LogInformation("Existing main theme: {@ExistingMainTheme}", existingMainTheme);
 
             return Ok();
         }
@@ -121,6 +106,4 @@ public class ThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-
-
 }
