@@ -1,3 +1,7 @@
+/*!************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/StartScreen/startScreenStyles.scss ***!
+  \************************************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Flow/frontendFlowStyles.scss ***!
   \****************************************************************************************************************************************/
@@ -5,6 +9,10 @@
 /*!**********************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Login/loginStyles.scss ***!
   \**********************************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
+/*!************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Logout/logoutStyles.scss ***!
+  \************************************************************************************************************************************/
 @import url(https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap);
 /*!************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss ***!
@@ -20665,7 +20673,7 @@ body {
 .sidebar img {
   border-radius: 50%;
   margin-bottom: 1rem;
-  width: 80%;
+  width: 40%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -20810,35 +20818,6 @@ body {
   margin-right: 0;
   margin-left: 0;
 }
-.main-container .card {
-  background-color: rgba(248, 244, 244, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  backdrop-filter: blur(5px);
-  overflow: hidden;
-}
-.main-container .card:hover {
-  background-color: rgba(248, 244, 244, 0.7);
-}
-.main-container .card .card-title {
-  color: #333333;
-  font-weight: bold;
-}
-.main-container .card .card-text {
-  color: black;
-}
-.main-container .card .badge {
-  background-color: #b254e7;
-}
-.main-container .card button {
-  margin: 1px;
-}
-.main-container .card .creationDate {
-  background: none;
-  color: #333333;
-}
 
 @keyframes gradientAnimation {
   0% {
@@ -20852,6 +20831,36 @@ body {
   background: linear-gradient(-45deg, #b254e7, #c9b2e5, #d7b2e5, #c9b2e5);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
+}
+
+.card {
+  background-color: rgba(248, 244, 244, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+.card:hover {
+  background-color: rgba(248, 244, 244, 0.7);
+}
+.card .card-title {
+  color: #333333;
+  font-weight: bold;
+}
+.card .card-text {
+  color: black;
+}
+.card .badge {
+  background-color: #b254e7;
+}
+.card button {
+  margin: 1px;
+}
+.card .creationDate {
+  background: none;
+  color: #333333;
 }
 
 #confirmationModal .modal-content {
@@ -20890,6 +20899,10 @@ body {
 #add-project-button:hover {
   background-color: #9e27e1;
 }
+
+.full-width-btn {
+  width: 100%;
+}
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Results/resultsStyles.scss ***!
   \****************************************************************************************************************************************/
@@ -20900,7 +20913,6 @@ body {
 
 .loader {
   border: 4px solid rgba(0, 0, 0, 0.2);
-  border-left: 4px solid #b254e7;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -20930,6 +20942,50 @@ body {
   100% {
     transform: rotate(360deg);
   }
+}
+/*!****************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/StartScreen/startScreenStyles.scss (1) ***!
+  \****************************************************************************************************************************************************/
+.hero-section {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.hero-image {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 400px;
+}
+
+.shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shape-1 {
+  background-color: #b254e7;
+  border-bottom-left-radius: 50px;
+}
+
+.shape-2 {
+  background-color: #ff85b2;
+}
+
+.shape-3 {
+  background-color: #fff;
+}
+
+.shape-4 {
+  background-color: #cb1b59;
+  border-bottom-left-radius: 50px;
+}
+
+.btn-danger {
+  background-color: #cb1b59;
+  border-color: #cb1b59;
 }
 /*!********************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Flow/frontendFlowStyles.scss (1) ***!
@@ -21221,13 +21277,6 @@ body:has(.container-information-view) {
   object-fit: cover;
 }
 
-.qr-code {
-  height: auto !important;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
-
 .login-img {
   background-color: #e5d2ff;
 }
@@ -21293,9 +21342,9 @@ body:has(.login-container) {
     width: 100%;
   }
 }
-/*!**********************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/ContactForm/contactFormStyles.scss ***!
-  \**********************************************************************************************************************************************/
+/*!****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/Logout/logoutStyles.scss (1) ***!
+  \****************************************************************************************************************************************/
 .qr-code {
   height: auto !important;
   max-width: 100%;
@@ -21303,6 +21352,75 @@ body:has(.login-container) {
   object-fit: cover;
 }
 
+.logout-img {
+  background-color: #e5d2ff;
+}
+
+#logout-submit {
+  background-color: #8657d8;
+  font-family: "Outfit", sans-serif;
+  border: none;
+  border-radius: 15px;
+  height: 4rem;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+#logout-submit:hover {
+  background-color: #9d66fe;
+}
+
+.logout-container {
+  font-family: "Outfit", sans-serif;
+  height: 100vh !important;
+}
+.logout-container h1 {
+  margin-bottom: 30px;
+}
+
+.input-text {
+  border-radius: 15px;
+}
+
+.logout-link {
+  text-decoration: none;
+}
+
+.logout-password-forgot {
+  display: flex;
+  justify-content: end;
+}
+
+body:has(.logout-container) {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.logout-form {
+  align-self: center;
+}
+.logout-form section {
+  width: 75%;
+}
+
+@media (max-width: 768px) {
+  .logout-img {
+    display: none;
+  }
+  .logout-form {
+    align-self: start;
+    margin-top: 3rem;
+  }
+}
+@media (max-width: 1200px) {
+  .logout-form section {
+    width: 100%;
+  }
+}
+/*!**********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/ContactForm/contactFormStyles.scss ***!
+  \**********************************************************************************************************************************************/
 .qr-code {
   height: auto !important;
   max-width: 100%;
@@ -21367,13 +21485,6 @@ body:has(.login-container) {
 /*!****************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Frontend/IdeaPlatform/ideaPlatformStyles.scss (1) ***!
   \****************************************************************************************************************************************************/
-.qr-code {
-  height: auto !important;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
-
 .qr-code {
   height: auto !important;
   max-width: 100%;

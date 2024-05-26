@@ -1,7 +1,7 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
 .main-container {
-  transition: margin-left $margin-transition-time ease;
-  padding: $default-padding 2rem $default-padding 1rem;
+  transition: margin-left variables.$margin-transition-time ease;
+  padding: variables.$default-padding 2rem variables.$default-padding 1rem;
 
   .list-group {
     width: 100%; 
@@ -11,8 +11,8 @@
       width: 100%; 
       padding: 10px; 
       text-decoration: none;
-      color: $text-color;
-      background-color: rgba($background-color, 0.4);
+      color: variables.$text-color;
+      background-color: rgba(variables.$background-color, 0.4);
 
       .img-thumbnail {
         width: 100px;
@@ -27,52 +27,49 @@
     }
   }
   
-
-
-
   form {
-    background-color: rgba($background-color, 0.4);
-    border: $card-border;
+    background-color: rgba(variables.$background-color, 0.4);
+    border: variables.$card-border;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: $card-border-radius;
-    margin-bottom: $default-margin;
+    border-radius: variables.$card-border-radius;
+    margin-bottom: variables.$default-margin;
     backdrop-filter: blur(5px);
     overflow: hidden;
 
     .form-label {
-      color: $text-color;
+      color: variables.$text-color;
       font-weight: bold;
     }
     .input-styling{
-      background-color: rgba($light-color, 0.5);
-      border: $card-border;
-      border-radius: $card-border-radius;
+      background-color: rgba(variables.$light-color, 0.5);
+      border: variables.$card-border;
+      border-radius: variables.$card-border-radius;
       box-shadow: none;
       padding: 0.5rem 1rem;
       font-size: 1rem;
-      color: $text-color;
+      color: variables.$text-color;
 
       &:focus {
-        border-color: $primary-color;
+        border-color: variables.$primary-color;
         outline: none;
-        box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(variables.$primary-color, 0.25);
       }
     }
 
     .form-control {
-      background-color: rgba($light-color, 0.5); 
-      border: $card-border;
-      border-radius: $card-border-radius;
+      background-color: rgba(variables.$light-color, 0.5); 
+      border: variables.$card-border;
+      border-radius: variables.$card-border-radius;
       box-shadow: none;
       padding: 0.5rem 1rem;
       font-size: 1rem;
-      color: $text-color;
+      color: variables.$text-color;
 
       &:focus {
-        border-color: $primary-color;
+        border-color: variables.$primary-color;
         outline: none;
-        box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+        box-shadow: 0 0 0 0.2rem rgba(variables.$primary-color, 0.25);
       }
     }
 
@@ -81,29 +78,29 @@
     }
 
     .btn-primary {
-      background-color: $primary-color;
-      border-color: darken($primary-color, 5%);
-      transition: background-color $default-transition-time, border-color $default-transition-time;
+      background-color: variables.$primary-color;
+      border-color: darken(variables.$primary-color, 5%);
+      transition: background-color variables.$default-transition-time, border-color variables.$default-transition-time;
 
       &:hover {
-        background-color: darken($primary-color, 10%);
-        border-color: darken($primary-color, 10%);
+        background-color: darken(variables.$primary-color, 10%);
+        border-color: darken(variables.$primary-color, 10%);
       }
     }
 
     .btn-secondary {
-      background-color: $btn-delete;
-      border-color: darken($btn-delete, 5%);
-      transition: background-color $default-transition-time, border-color $default-transition-time;
+      background-color: variables.$btn-delete;
+      border-color: darken(variables.$btn-delete, 5%);
+      transition: background-color variables.$default-transition-time, border-color variables.$default-transition-time;
 
       &:hover {
-        background-color: darken($btn-delete, 10%);
-        border-color: darken($btn-delete, 10%);
+        background-color: darken(variables.$btn-delete, 10%);
+        border-color: darken(variables.$btn-delete, 10%);
       }
     }
 
     button {
-      margin-right: $default-margin;
+      margin-right: variables.$default-margin;
 
       &:last-child {
         margin-right: 0;
@@ -119,25 +116,25 @@
     font-weight: bold;
   }
 
-  @media (min-width: $tablet-screen) and (max-width: $large-screen) {
+  @media (min-width: variables.$tablet-screen) and (max-width: variables.$large-screen) {
     margin-left: 250px;
   }
 
-  @media (min-width: $large-screen) {
+  @media (min-width: variables.$large-screen) {
     margin-left: 0;
   }
 
   .form-check-input:checked {
-    background-color: rgba($primary-color, 0.4);
-    border-color: $transparent-border;
+    background-color: rgba(variables.$primary-color, 0.4);
+    border-color: variables.$transparent-border;
     box-shadow: none;
   }
 
   .form-check-input {
-    background-color: rgba($background-color, 0.4);
-    border-color: $transparent-border;
+    background-color: rgba(variables.$background-color, 0.4);
+    border-color: variables.$transparent-border;
     box-shadow: none;
-    transition: background-color $default-transition-time, border-color $default-transition-time;
+    transition: background-color variables.$default-transition-time, border-color variables.$default-transition-time;
   }
 
   .row {
@@ -145,42 +142,6 @@
     margin-left: 0;
   }
   
-
-  .card {
-    background-color: rgba($background-color, 0.4);
-    border: $card-border;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: $card-border-radius;
-    margin-bottom: $default-margin;
-    backdrop-filter: blur(5px);
-    overflow: hidden;
-
-    &:hover {
-      background-color: rgba($background-color, 0.7);
-    }
-
-    .card-title {
-      color: $text-color;
-      font-weight: bold;
-    }
-
-    .card-text {
-      color: darken($text-color, 20%);
-    }
-
-    .badge {
-      background-color: $primary-color;
-    }
-    button{
-      margin: 1px;
-    }
-
-    .creationDate {
-      background: none;
-      color: $text-color;
-    }
-    
-  }
 }
 
 @keyframes gradientAnimation {
@@ -193,7 +154,43 @@
 }
 
 .animated-background {
-  background: linear-gradient(-45deg, $primary-color, $secondary-gradient-colors);
+  background: linear-gradient(-45deg, variables.$primary-color, variables.$secondary-gradient-colors);
   background-size: 400% 400%;
   animation: gradientAnimation 20s ease infinite;
+}
+
+.card {
+  background-color: rgba(variables.$background-color, 0.4);
+  border: variables.$card-border;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: variables.$card-border-radius;
+  margin-bottom: variables.$default-margin;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+
+  &:hover {
+    background-color: rgba(variables.$background-color, 0.7);
+  }
+
+  .card-title {
+    color: variables.$text-color;
+    font-weight: bold;
+  }
+
+  .card-text {
+    color: darken(variables.$text-color, 20%);
+  }
+
+  .badge {
+    background-color: variables.$primary-color;
+  }
+  button{
+    margin: 1px;
+  }
+
+  .creationDate {
+    background: none;
+    color: variables.$text-color;
+  }
+
 }

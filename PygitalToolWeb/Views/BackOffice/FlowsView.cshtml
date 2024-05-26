@@ -40,26 +40,26 @@
         <!-- Flows-->
         <div class="col-md-9 main-container" id="flow-container">
             <h2 class="mt-4">Flows</h2>
-            <div class="d-flex justify-content-start">
+            <div class="row">
 
                 @foreach (var flow in Model.Flows)
                 {
-                    <div class="col-md-4 mb-4">
+                    <div class="col-md-4 m-2">
                         <div class="card">
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="card-title">@flow.FlowName</h5>
-                                    <div>
-                                        <button class="btn btn-outline-secondary edit-flow-button" data-flow-id="@flow.FlowId" title="Edit Flow">
-                                            <i class="bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-flow-id="@flow.FlowId" title="Delete Flow">
-                                            <i class="bi-trash"></i>
-                                        </button>
-
-                                    </div>
                                 </div>
                                 <p class="card-text">@flow.FlowDescription</p>
+                                <div>
+                                    <button class="btn btn-outline-secondary edit-flow-button" data-flow-id="@flow.FlowId" title="Edit Flow">
+                                        <i class="bi-pencil"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-flow-id="@flow.FlowId" title="Delete Flow">
+                                        <i class="bi-trash"></i>
+                                    </button>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               Ben je zeker dat je dit wilt verwijderen?
+                Ben je zeker dat je dit wilt verwijderen?
             </div>
             <div class="modal-footer">
                 <form id="deleteForm" action="" method="post">

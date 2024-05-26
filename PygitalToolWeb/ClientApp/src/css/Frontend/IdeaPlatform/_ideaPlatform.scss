@@ -1,8 +1,8 @@
-﻿@import '../variables';
+﻿@use '../variables' as variables;
 .idea_card {
   background-color: #fff;
   padding: 20px;
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 500px;
@@ -21,7 +21,7 @@
   line-height: 30px;
   display: inline-block;
   margin-right: 10px;
-  background-color: $btn-color-4;
+  background-color: variables.$btn-color-4;
 }
 
 .row{
@@ -34,7 +34,7 @@
 }
 
 .username{
-  color: $light-text-color;
+  color: variables.$light-text-color;
 }
 
 .idea_card {
@@ -57,7 +57,7 @@
 }
 
 div[class^="comments-container-"] {
-  background-color: $secondary-color;
+  background-color: variables.$secondary-color;
   border-radius: 10px;
 }
 

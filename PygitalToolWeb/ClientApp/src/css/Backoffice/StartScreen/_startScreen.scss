@@ -1,0 +1,32 @@
+﻿@use '../variables' as variables;
+.hero-section {
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: variables.$light-color;
+}
+.hero-image {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  height: 400px;
+}
+.shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shape-1 { 
+  background-color: variables.$primary-color;
+  border-bottom-left-radius: 50px;
+}
+.shape-2 { background-color: variables.$light-pink;}
+.shape-3 { background-color: variables.$light-color; }
+.shape-4 {
+  background-color: variables.$btn-delete;
+  border-bottom-left-radius: 50px;
+}
+
+.btn-danger {
+  background-color: variables.$btn-delete;
+  border-color: variables.$btn-delete;
+}

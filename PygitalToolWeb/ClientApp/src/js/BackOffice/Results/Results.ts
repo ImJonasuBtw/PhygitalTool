@@ -1,4 +1,4 @@
-﻿ import {getAllAnswersWithQuestions} from "./ResultRestClient";
+import {getAllAnswersWithQuestions} from "./ResultRestClient";
 
 
 document.addEventListener('DOMContentLoaded', function (this: Document) {
@@ -14,6 +14,25 @@ document.addEventListener('DOMContentLoaded', function (this: Document) {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.results-btn');
+    // Add a click event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            if(this){
+                // @ts-ignore
+                var url = this.getAttribute('data-href');
+                if (url !== null) {
+                    window.location.href = url;
+                } else {
+                    console.error("Data-href attribute is null");
+                }
+            }
+        });
+    });
+});
+
 
 
 
