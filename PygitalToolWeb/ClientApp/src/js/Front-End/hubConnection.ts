@@ -1,6 +1,5 @@
 ﻿import { HubConnectionBuilder, HubConnection } from "@microsoft/signalr";
-import { get } from "jquery";
-import {Flow} from "../BackOffice/Flows/flow";
+
 
 let currentQuestionId: string | null = null;
 let currentFlowId: string | null = null;

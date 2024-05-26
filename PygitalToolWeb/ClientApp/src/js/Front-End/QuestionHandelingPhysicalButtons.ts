@@ -72,10 +72,5 @@ export function linkKeyPressesToButtons() {
     }
 }
 
-function setPlayerSelectedButton(user: number, button: HTMLButtonElement) {
-    
-}
 
-document.addEventListener('DOMContentLoaded', () => {
-    linkKeyPressesToButtons();
-});
+

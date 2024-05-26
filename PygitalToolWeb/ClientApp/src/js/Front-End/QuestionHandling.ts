@@ -8,7 +8,7 @@ import {
     configureSubmitButtonSingleChoice, setTimerText
 } from "./QuestionHandelingUI";
 
-document.addEventListener('DOMContentLoaded', () => {
+export function initializePage() { 
     const scriptElement = document.getElementById('questionPage-script');
     console.log('Script Element:', scriptElement);
     const flowType = scriptElement?.dataset.flowtype;
@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flowType === 'circular') {
         setTimerText();
     }
-});
+}
+
 
 
 
