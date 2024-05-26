@@ -29,8 +29,15 @@ public class UserManager : IUserManager
         return _repositoryIdeas.ReadAllIdeas();
     }
 
-    public void AddIdeas(Idea idea)
+    public void AddIdeas(string title, string description, string userId)
     {
+        var idea = new Idea()
+        {
+            Title = title,
+            Description = description,
+            UserId = userId
+        };
+        
         _repositoryIdeas.CreateIdea(idea);
     }
 
@@ -57,9 +64,21 @@ public class UserManager : IUserManager
         _repositoryIdeas.CreateCommentToIdea(comment);
     }
 
-    public void UpdateLikeIdea(Idea idea)
+    public int UpdateLikeIdea(int ideaId)
     {
-        _repositoryIdeas.UpdateLikeIdea(idea);
+        try
+        {
+            var idea = GetIdea(ideaId);
+            idea.Likes++;
+            _repositoryIdeas.UpdateLikeIdea(idea);
+            return idea.Likes;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error updating like idea: " + e.Message);
+            throw;
+        }
+      
     }
 
     public Idea GetIdea(int id)

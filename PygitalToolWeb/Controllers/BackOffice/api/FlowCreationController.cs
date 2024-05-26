@@ -61,7 +61,7 @@ public class FlowCreationController : ControllerBase
 
     [Authorize(Roles = "Manager")]
     [HttpGet("GetFlowDetails/{FlowId}")]
-    public IActionResult GcetFlowDetails(int FlowId)
+    public IActionResult GetFlowDetails(int FlowId)
     {
         try
         {
@@ -107,9 +107,10 @@ public class FlowCreationController : ControllerBase
         }
     }
 
+    
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateFlow/{FlowId}")]
-    public IActionResult UpdateFlow(int FlowId, [FromBody] FlowModel flowModel)
+    public IActionResult UpdateFlow(int FlowId,  FlowModel flowModel)
     {
         if (!ModelState.IsValid)
         {
@@ -118,89 +119,29 @@ public class FlowCreationController : ControllerBase
 
         try
         {
-            var existingFlow = _projectManager.GetFlowWithQuestionAndAnswerPossibilities(FlowId);
-            if (existingFlow == null)
+            var questions = flowModel.Questions.Select(q => new Question
             {
-                return NotFound($"Flow with ID {FlowId} not found.");
-            }
-
-
-            existingFlow.FlowName = flowModel.FlowName;
-            existingFlow.FlowDescription = flowModel.FlowDescription;
-            existingFlow.FlowType = flowModel.FlowType;
-            existingFlow.Language = flowModel.Language;
-            
-
-            var newQuestions =
-                flowModel.Questions.Where(q => !existingFlow.Questions.Any(eq => eq.QuestionId == q.QuestionId));
-            var newAnswerPossibilities = newQuestions.SelectMany(q => q.AnswerPossibilities);
-
-
-            foreach (var newQuestion in newQuestions)
-            {
-                _unitOfWork.BeginTransaction();
-                var domainQuestion = new Question()
+                QuestionId = q.QuestionId,
+                QuestionText = q.QuestionText,
+                QuestionType = q.QuestionType,
+                QuestionImage = q.QuestionImage,
+                AnswerPossibilities = q.AnswerPossibilities.Select(a => new AnswerPossibility
                 {
-                    QuestionText = newQuestion.QuestionText,
-                    QuestionType = newQuestion.QuestionType,
-                    QuestionImage = newQuestion.QuestionImage,
-                    FlowId = FlowId
-                };
-                _projectManager.AddQuestion(domainQuestion);
-                existingFlow.Questions.Add(domainQuestion);
-                foreach (var newAnswerPossibility in newQuestion.AnswerPossibilities)
-                {
-                    var domainAnswer = new AnswerPossibility()
-                    {
-                        Description = newAnswerPossibility.Description,
-                        QuestionId = domainQuestion.QuestionId
-                    };
-                    _projectManager.AddAnswerPossibility(domainAnswer);
-                    domainQuestion.AnswerPossibilities.Add(domainAnswer);
-                }
-                _unitOfWork.Commit();
-            }
-
-
-            // Update bestaande vragen en antwoordmogelijkheden
-            foreach (var existingQuestion in existingFlow.Questions)
-            {
-                var updatedQuestion =
-                    flowModel.Questions.FirstOrDefault(q => q.QuestionId == existingQuestion.QuestionId);
-                if (updatedQuestion != null)
-                {
-                    _unitOfWork.BeginTransaction();
-                    existingQuestion.QuestionText = updatedQuestion.QuestionText;
-                    existingQuestion.QuestionImage = updatedQuestion.QuestionImage;
-                    existingQuestion.QuestionType = updatedQuestion.QuestionType;
-                    _projectManager.UpdateQuestion(existingQuestion);
-
-
-                    foreach (var updatedAnswer in updatedQuestion.AnswerPossibilities)
-                    {
-                        var existingAnswer = existingQuestion.AnswerPossibilities.FirstOrDefault(a =>
-                            a.AnswerPossibilityId == updatedAnswer.AnswerPossibilityId);
-                        if (existingAnswer != null)
-                        {
-                            existingAnswer.Description = updatedAnswer.Description;
-                            _projectManager.UpdateAnswerPossibility(existingAnswer);
-                        }
-                        else
-                        {
-                            var domainAnswer = new AnswerPossibility()
-                            {
-                                Description = updatedAnswer.Description,
-                                QuestionId = existingQuestion.QuestionId
-                            };
-                            _projectManager.AddAnswerPossibility(domainAnswer);
-                            existingQuestion.AnswerPossibilities.Add(domainAnswer);
-                        }
-                    }
-                    _unitOfWork.Commit();
-                }
-            }
-
-            _projectManager.UpdateFlow(existingFlow);
+                    AnswerPossibilityId = a.AnswerPossibilityId,
+                    Description = a.Description
+                }).ToList()
+            }).ToList();
+        
+            _unitOfWork.BeginTransaction();
+            _projectManager.UpdateFlowWithQuestionsAndAnswers(
+                flowId: FlowId,
+                flowName: flowModel.FlowName,
+                flowDescription: flowModel.FlowDescription,
+                flowType: flowModel.FlowType,
+                language: flowModel.Language,
+                questions: questions
+            );
+            _unitOfWork.Commit();
 
             return Ok();
         }
@@ -209,6 +150,7 @@ public class FlowCreationController : ControllerBase
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+    
 
     [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteQuestion/{QuestionId}")]
