@@ -57,7 +57,7 @@ function updateButtonVisibility() {
 async function fetchCurrentIds() {
     try {
         const initialQuestionId = await hubConnection.invoke("GetCurrentQuestionId");
-        //console.log("Current question ID:", initialQuestionId);
+        console.log("Current question ID:", initialQuestionId);
         currentQuestionId = initialQuestionId;
         const questionText = document.getElementById("questionText") as HTMLButtonElement;
         const questionIdInfo = document.getElementById('currentQuestionId');
@@ -134,7 +134,7 @@ hubConnection.onclose(error => {
 });
 
 async function updateQuestionIdFromHTML() {
-    if (window.location.pathname.startsWith("/CircularFlow")) {
+    if (window.location.pathname.startsWith("/CircularFlow") || window.location.pathname.startsWith("/LinearFlow")) {
         const questionIdElement = document.getElementById('QuestionId');
         if (questionIdElement) {
             const newQuestionId = questionIdElement.textContent;
