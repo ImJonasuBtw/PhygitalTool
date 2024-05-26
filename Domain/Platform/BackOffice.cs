@@ -25,9 +25,8 @@ public class BackOffice
     {
     }
 
-    public BackOffice(int backOfficeId, string name, int adminPlatformId)
+    public BackOffice( string name, int adminPlatformId)
     {
-        BackOfficeId = backOfficeId;
         Name = name;
         AdminPlatformId = adminPlatformId;
     }
