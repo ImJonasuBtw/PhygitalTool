@@ -1,17 +1,19 @@
 ﻿import {backOfficeId, Supervisor} from "./supervisors";
 import {renderSupervisors} from "./superVisorsUI";
-import {validatePassword} from "./supervisorsValidarion";
-import {handleResponse} from "../../AdminPlatform/managerValidation";
+import {validatePassword,handleResponseSupervisor} from "./supervisorsValidarion";
 
-export function loadSupervisors(backofficeId: number) {
-    console.log(backofficeId);
-    fetch('/api/supervisors/Getsupervisors/' + backofficeId)
-        .then(response => response.json())
-        .then((supervisors: Supervisor[]) => {
-            renderSupervisors(supervisors)
-            }
-        )
-        .catch(error => console.error('Error loading supervisors:', error));
+
+export async function loadSupervisors(backofficeId: number | undefined): Promise<void> {
+    try {
+        const response = await fetch(`/api/supervisors/Getsupervisors/${backofficeId}`);
+        if (!response.ok) {
+            throw new Error('Error loading supervisors');
+        }
+        const supervisors: Supervisor[] = await response.json();
+        renderSupervisors(supervisors);
+    } catch (error) {
+        console.error('Error loading supervisors:', error);
+    }
 }
 
 async function uploadFile(formData: FormData): Promise<string | null> {
@@ -73,7 +75,8 @@ export async function submitSupervisorForm() {
             BackOfficeId: Number(backOfficeId)
         });
 
-        await handleResponse(supervisorResponse);
+        await handleResponseSupervisor(supervisorResponse);
+       
     } catch (error) {
         console.error('Error:', error);
     }
