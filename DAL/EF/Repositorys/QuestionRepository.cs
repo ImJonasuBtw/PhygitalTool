@@ -47,6 +47,7 @@ public class QuestionRepository : IRepositoryQuestion
         if (existingQ == null) throw new ArgumentException("Question not found");
         existingQ.QuestionText = question.QuestionText;
         existingQ.QuestionType = question.QuestionType;
+        existingQ.QuestionImage = question.QuestionImage;
         _context.SaveChanges();
     }
 

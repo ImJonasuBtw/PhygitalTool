@@ -140,9 +140,14 @@ function AnswerPossibility(questionContainer: HTMLElement): void {
 
         newAnswerPossibilityContainer.appendChild(newPossibilityInput);
         newAnswerPossibilityContainer.appendChild(deleteButtonPossibility);
-
-        answerPossibilityContainer.appendChild(newAnswerPossibilityContainer);
         answerPossibilityContainer.setAttribute("data-AnswerPoss-id", '0');
+
+        const addAnswerPossButton = answerPossibilityContainer.querySelector('.add-answerposs-button');
+        if (addAnswerPossButton) {
+            answerPossibilityContainer.insertBefore(newAnswerPossibilityContainer, addAnswerPossButton);
+        } else {
+            answerPossibilityContainer.appendChild(newAnswerPossibilityContainer);
+        }
     } else {
         alert('Maximum number of answer possibilities reached (5)');
     }
@@ -425,6 +430,8 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
 
         answerPossibilitiesContainer.appendChild(answerPossibilityContainer);
     });
+  
+    questionContainer.appendChild(answerPossibilitiesContainer);
     const selectedQuestionType = parseInt(questionTypeSelect.value);
     if (selectedQuestionType !== QuestionType.Open) { // Alleen toevoegen als het geen open vraag is
         const addAnswerPossibilityButton = document.createElement('button');
@@ -436,7 +443,6 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         });
         answerPossibilitiesContainer.appendChild(addAnswerPossibilityButton);
     }
-    questionContainer.appendChild(answerPossibilitiesContainer);
     questionList.appendChild(questionContainer);
 }
 
