@@ -1,4 +1,6 @@
 import {loadManagers} from "../../AdminPlatform/managerRestClient";
+import {loadSupervisors} from "./supervisorsRestClient";
+import {backOfficeId} from "./supervisors";
 
 export function validatePassword(password:string) {
     const hasUpperCase = /[A-Z]/.test(password);
@@ -6,11 +8,11 @@ export function validatePassword(password:string) {
     const hasNonAlphabetic = /[^A-Za-z]/.test(password);
     return hasUpperCase && hasLowerCase && hasNonAlphabetic;
 }
-export async function handleResponse(response: Response): Promise<void> {
+export async function handleResponseSupervisor(response: Response): Promise<void> {
     if (!response.ok) {
         if (response.status === 400 || response.status === 409) {
             const errorMessage = await response.text();
-            alert(`Supervisor niet toegevoegd: ${errorMessage}`);
+            alert(`Supervisor niet toegevoegd: Email  bestaat al}`);
         } else {
             const errorMessage = await response.text();
             console.error('Server error:', errorMessage);
@@ -21,5 +23,5 @@ export async function handleResponse(response: Response): Promise<void> {
     const data = await response.json();
     console.log('Success:', data);
     alert('Supervisor succesvol toegevoegd!');
-    await loadManagers();
+    await loadSupervisors(Number(backOfficeId))
 }

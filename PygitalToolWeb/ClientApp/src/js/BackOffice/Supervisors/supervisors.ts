@@ -1,7 +1,7 @@
 ﻿import { loadSupervisors } from "./supervisorsRestClient";
 
 console.log("Supervisor script loaded");
-export const scriptElement = document.getElementById('superVisor-script');
+const scriptElement = document.getElementById('backOfficeHomePage-script');
 export const backOfficeId = scriptElement?.dataset.backofficeId;
 
 export interface Supervisor {
@@ -11,12 +11,13 @@ export interface Supervisor {
 }
 
 export function initializeDOMListenerSupervisor(): void {
+    console.log(backOfficeId)
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         if (link.textContent && link.textContent.trim() === "Begeleiders") {
-            link.addEventListener('click', (event) => {
+            link.addEventListener('click', async (event) => {
                 event.preventDefault();
-                loadSupervisors(Number(backOfficeId));
+                await loadSupervisors(Number(backOfficeId));
             });
         }
     });
