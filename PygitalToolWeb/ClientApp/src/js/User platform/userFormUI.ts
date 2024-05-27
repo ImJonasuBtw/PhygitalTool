@@ -26,3 +26,7 @@ export function markIdeaAsLikedByCurrentUser(ideaId: string): void {
         }
     }
 }
+
+export function reloadUserPlatform() {
+    window.location.href = window.location.href;
+}

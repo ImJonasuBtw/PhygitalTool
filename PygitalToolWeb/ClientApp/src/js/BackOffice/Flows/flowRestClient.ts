@@ -14,7 +14,8 @@ export async function AddFlow(newFlow: Flow, subthemeId: string |  undefined): P
             FlowType: newFlow.flowType,
             SubthemeId: subthemeId,
             Questions: newFlow.questions,
-            Language: newFlow.language
+            Language: newFlow.language,
+            FlowImage: newFlow.flowImage
         })
     });
     if (response.ok) {
@@ -32,6 +33,7 @@ async function updateFlowForm(flowId: number): Promise<void> {
     const questionContainers = document.querySelectorAll('.question-container');
     const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
     const flowLanguage = parseInt(flowLanguageSelect.value);
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
 
     const questions: any[] = await Promise.all(Array.from(questionContainers).map(async (container: Element) => {
         const questionContainer = container as HTMLElement;
@@ -75,7 +77,21 @@ async function updateFlowForm(flowId: number): Promise<void> {
             questionImage: questionImage
         };
     }).filter(question => question !== null));
-    
+
+    let flowImage = null;
+    if (fileInput.files && fileInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        flowImage = await uploadFile(formData);
+    }
+    else {
+        const existingImage = document.querySelector('#existingFlowImage') as HTMLImageElement;
+        
+        if (existingImage) {
+            flowImage = existingImage.src;
+        }
+    }
  
     
     fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
@@ -89,7 +105,8 @@ async function updateFlowForm(flowId: number): Promise<void> {
             FlowDescription: informationInput.value,
             FlowType: flowType,
             Language: flowLanguage,
-            Questions: questions
+            Questions: questions,
+            FlowImage: flowImage
         })
     })
         .then(async response => {

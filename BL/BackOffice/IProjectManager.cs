@@ -39,11 +39,12 @@ public interface IProjectManager
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
     void DeleteAnswerPossibility(int answerPossibilityId);
 
-    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType,
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, string flowImage,
+        FlowType flowType,
         Language language, int subthemeId,
         List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)>
             questions);
 
-    void UpdateFlowWithQuestionsAndAnswers(int flowId, string flowName, string flowDescription, FlowType flowType,
+    void UpdateFlowWithQuestionsAndAnswers(int flowId, string flowName, string flowImage, string flowDescription, FlowType flowType,
         Language language, List<Question> questions);
 }

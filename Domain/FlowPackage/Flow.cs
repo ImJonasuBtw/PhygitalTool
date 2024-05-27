@@ -21,6 +21,8 @@ public class Flow
     public FlowType FlowType { get; set; }
     [Required(ErrorMessage = "Language is required")]
     public Language Language { get; set; }
+    
+    public string FlowImage { get; set; }
     // Nav
     public SubTheme SubTheme { get; set; }
     public ICollection<Question> Questions { get; set; } = new List<Question>();

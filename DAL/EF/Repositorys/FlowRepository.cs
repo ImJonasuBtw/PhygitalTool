@@ -53,6 +53,7 @@ public class FlowRepository : IRepositoryFlow
         var existingFlow = _context.Flows.Find(flow.FlowId);
         if (existingFlow == null) throw new ArgumentException("Flow not found");
         existingFlow.FlowName = flow.FlowName;
+        existingFlow.FlowImage = flow.FlowImage;
         existingFlow.FlowDescription = flow.FlowDescription;
         existingFlow.FlowType = flow.FlowType;
         existingFlow.Language = flow.Language;

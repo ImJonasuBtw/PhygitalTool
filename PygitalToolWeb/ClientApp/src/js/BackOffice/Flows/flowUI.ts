@@ -13,6 +13,10 @@ import {deleteAnswerPossibility, deleteQuestion} from "./flowRestClient";
                     <label for="description" class="form-label">Beschrijving</label>
                     <textarea class="form-control" id="description" required></textarea>
                 </div>
+                 <div class="mb-3">
+                    <label for="flowLogo" class="form-label">Flow Logo</label>
+                    <input type="file" class="form-control" id="flowLogo" accept="image/*">
+                </div>
                 <div class="mb-3">
                      <label class="form-label">Flow Type</label>
                          <div class="form-check">
@@ -154,6 +158,7 @@ function AnswerPossibility(questionContainer: HTMLElement): void {
 }
 
 export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void{
+    console.log(flow.flowImage);
     FlowContainer.innerHTML = `
                     <h2 class="mt-4">Flow bewerken</h2>
                     <form id="edit-flow-form">
@@ -165,6 +170,13 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void
                             <label for="description" class="form-label">Beschrijvind</label>
                             <textarea class="form-control" id="description" required>${flow.flowDescription}</textarea>
                         </div>
+                        
+                         <div class="mb-3">
+                            <label for="flowLogo" class="form-label">Flow Logo</label>
+                            <img id="existingFlowImage" src="${flow.flowImage}" alt="foto">
+                            <input type="file" class="form-control" id="flowLogo" accept="image/*">
+                         </div>
+                         
                         <div class="mb-3">
                         <label class="form-label">Flow Type</label>
                           <div class="form-check">
@@ -308,14 +320,14 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         event.preventDefault();
         const nextQuestionContainer = questionContainer.nextElementSibling;
         if (nextQuestionContainer) {
-            // Get the answer possibilities
+            
             const currentAnswerPossibilities = questionContainer.querySelectorAll('.answer-possibility-input');
             const nextAnswerPossibilities = nextQuestionContainer.querySelectorAll('.answer-possibility-input');
 
             console.log('Current answer possibilities:', currentAnswerPossibilities);
             console.log('Next answer possibilities:', nextAnswerPossibilities);
 
-            // Swap the questionId foreign keys
+            
             currentAnswerPossibilities.forEach((input, index) => {
                 const temp = input.getAttribute('data-question-id') || '';
                 const nextQuestionId = nextAnswerPossibilities[index].getAttribute('data-question-id') || '';
@@ -324,21 +336,21 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
                 nextAnswerPossibilities[index].setAttribute('data-question-id', temp);
             });
 
-            // Get the question IDs
+           
             const currentQuestionId = questionContainer.getAttribute('data-question-id');
             const nextQuestionId = nextQuestionContainer.getAttribute('data-question-id');
 
             console.log('Current question ID:', currentQuestionId);
             console.log('Next question ID:', nextQuestionId);
 
-            // Check if the IDs are not null before swapping
+            
             if (currentQuestionId && nextQuestionId) {
-                // Swap the question IDs
+                
                 questionContainer.setAttribute('data-question-id', nextQuestionId);
                 nextQuestionContainer.setAttribute('data-question-id', currentQuestionId);
             }
 
-            // Move the questionContainer down
+            
             const nextElementSibling = nextQuestionContainer.nextElementSibling;
             if (nextElementSibling) {
                 questionList.insertBefore(questionContainer, nextElementSibling.nextElementSibling);
