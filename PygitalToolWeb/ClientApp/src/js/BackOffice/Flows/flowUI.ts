@@ -248,8 +248,10 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
     questionContainer.setAttribute('data-question-id', question.questionId.toString());
 
     const moveUpButton = document.createElement('button');
-    moveUpButton.textContent = 'Naar boven';
     moveUpButton.className = 'btn btn-secondary move-up-button';
+    const iconElement = document.createElement('i');
+    iconElement.className = 'bi-arrow-up';
+    moveUpButton.appendChild(iconElement);
     moveUpButton.addEventListener('click', (event) => {
         event.preventDefault();
         const previousQuestionContainer = questionContainer.previousElementSibling;
@@ -288,9 +290,15 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         }
     });
 
+
+
+
+
     const moveDownButton = document.createElement('button');
-    moveDownButton.textContent = 'Naar beneden';
     moveDownButton.className = 'btn btn-secondary move-down-button';
+    const iconElement2 = document.createElement('i');
+    iconElement2.className = 'bi-arrow-down';
+    moveDownButton.appendChild(iconElement2);
     moveDownButton.addEventListener('click', (event) => {
         event.preventDefault();
         const nextQuestionContainer = questionContainer.nextElementSibling;
@@ -325,17 +333,18 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
                 nextQuestionContainer.setAttribute('data-question-id', currentQuestionId);
             }
 
+            // Move the questionContainer down
             const nextElementSibling = nextQuestionContainer.nextElementSibling;
             if (nextElementSibling) {
-                questionList.insertBefore(nextQuestionContainer, nextElementSibling);
+                questionList.insertBefore(questionContainer, nextElementSibling.nextElementSibling);
             } else {
                 questionList.appendChild(questionContainer);
             }
         }
     });
 
-    questionContainer.appendChild(moveUpButton);
-    questionContainer.appendChild(moveDownButton);
+
+ 
 
     const questionInput = document.createElement('input');
     questionInput.type = 'text';
@@ -343,6 +352,9 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
     questionInput.name = `question-${index}`;
     questionInput.className = 'question-input input-styling mb-3 col-md-10  mt-3 bold';
     questionContainer.appendChild(questionInput);
+
+    questionContainer.appendChild(moveUpButton);
+    questionContainer.appendChild(moveDownButton);
 
     const imageInputLabel = document.createElement("label");
     imageInputLabel.setAttribute("for", question.questionType + "File");
