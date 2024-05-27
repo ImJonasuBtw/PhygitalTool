@@ -46,7 +46,8 @@ async function updateFlowForm(flowId: number): Promise<void> {
             const answerPossibilityId = input.getAttribute('data-AnswerPoss-id');
             return {
                 answerPossibilityId: answerPossibilityId,
-                description: input.value
+                description: input.value,
+                questionId: questionId
             };
         });
 
@@ -74,7 +75,9 @@ async function updateFlowForm(flowId: number): Promise<void> {
             questionImage: questionImage
         };
     }).filter(question => question !== null));
-
+    
+ 
+    
     fetch(`/api/FlowCreation/UpdateFlow/${flowId}`, {
 
         method: 'PUT',

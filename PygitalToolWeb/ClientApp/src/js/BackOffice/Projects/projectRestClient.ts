@@ -1,4 +1,4 @@
-﻿import {loadProjects, renderEditProjectForm} from "./ProjectUI";
+﻿import {loadProjects, renderEditProjectForm} from "./projectUI";
 import {Project} from "./projectCreation";
 import {BackOffice} from "../../AdminPlatform/backOfficeCreation";
 import {loadBackOffices} from "../../AdminPlatform/backOfficeUI";

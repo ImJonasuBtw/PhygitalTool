@@ -330,11 +330,12 @@ public class ProjectManager : IProjectManager
 
                 foreach (var updatedAnswer in updatedQuestion.AnswerPossibilities)
                 {
-                    var existingAnswer = existingQuestion.AnswerPossibilities.FirstOrDefault(a =>
-                        a.AnswerPossibilityId == updatedAnswer.AnswerPossibilityId);
+                    var existingAnswer = _answerPossibilityRepository.ReadAnswerPossibility(updatedAnswer.AnswerPossibilityId);
+                    
                     if (existingAnswer != null)
                     {
                         existingAnswer.Description = updatedAnswer.Description;
+                        existingAnswer.QuestionId = updatedAnswer.QuestionId;
                         _answerPossibilityRepository.UpdateAnswerPossibility(existingAnswer);
                     }
                     else

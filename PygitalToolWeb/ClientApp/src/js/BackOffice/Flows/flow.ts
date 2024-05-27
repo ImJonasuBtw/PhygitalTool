@@ -35,6 +35,7 @@ export class Flow {
         answerPossibilities: {
             description: string;
             answerPossibilityId: number;
+            questionId: number;
         }[];
         questionImage: string | null;
     }[];

@@ -9,4 +9,6 @@ public interface IRepositoryAnswerPossibility
     void UpdateAnswerPossibility(AnswerPossibility answerPossibility);
     
     void RemoveAnswerPossibility(int answerPossibilityId);
+    
+    AnswerPossibility ReadAnswerPossibility(int answerPossibilityId);
 }

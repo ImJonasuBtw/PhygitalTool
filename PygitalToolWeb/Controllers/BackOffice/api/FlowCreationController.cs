@@ -128,7 +128,8 @@ public class FlowCreationController : ControllerBase
                 AnswerPossibilities = q.AnswerPossibilities.Select(a => new AnswerPossibility
                 {
                     AnswerPossibilityId = a.AnswerPossibilityId,
-                    Description = a.Description
+                    Description = a.Description,
+                    QuestionId = a.QuestionId
                 }).ToList()
             }).ToList();
         

@@ -194,3 +194,15 @@
   }
 
 }
+
+.question-container{
+  background-color: rgba(variables.$background-color, 0.4);
+  border: variables.$card-border;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: variables.$card-border-radius;
+  margin-bottom: variables.$default-margin;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  padding: 10px;
+  
+}
