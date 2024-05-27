@@ -248,7 +248,7 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
     questionContainer.setAttribute('data-question-id', question.questionId.toString());
 
     const moveUpButton = document.createElement('button');
-    moveUpButton.className = 'btn btn-secondary move-up-button';
+    moveUpButton.className = 'btn btn-secondary move-up-button btn-sm';
     const iconElement = document.createElement('i');
     iconElement.className = 'bi-arrow-up';
     moveUpButton.appendChild(iconElement);
@@ -295,7 +295,7 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
 
 
     const moveDownButton = document.createElement('button');
-    moveDownButton.className = 'btn btn-secondary move-down-button';
+    moveDownButton.className = 'btn btn-secondary move-down-button btn-sm';
     const iconElement2 = document.createElement('i');
     iconElement2.className = 'bi-arrow-down';
     moveDownButton.appendChild(iconElement2);
@@ -353,8 +353,10 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
     questionInput.className = 'question-input input-styling mb-3 col-md-10  mt-3 bold';
     questionContainer.appendChild(questionInput);
 
-    questionContainer.appendChild(moveUpButton);
-    questionContainer.appendChild(moveDownButton);
+    const upAndDOwnButtonsContainer = document.createElement('div');
+    upAndDOwnButtonsContainer.appendChild(moveUpButton);
+    upAndDOwnButtonsContainer.appendChild(moveDownButton);
+    questionContainer.appendChild(upAndDOwnButtonsContainer);
 
     const imageInputLabel = document.createElement("label");
     imageInputLabel.setAttribute("for", question.questionType + "File");
