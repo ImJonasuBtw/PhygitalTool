@@ -2,9 +2,8 @@ import {Modal} from "bootstrap";
 import {
     loadBackOffices,
     renderAddBackOfficeForm,
-    renderEditBackOfficeForm,
 } from "./backOfficeUI"
-import {deleteBackOffice, handleFormSubmit, setupBackofficeEditForm, updateBackoffice} from "./backOfficeRestClient";
+import {deleteBackOffice, handleFormSubmit, setupBackofficeEditForm} from "./backOfficeRestClient";
 
 export class BackOffice {
     public name: string;
