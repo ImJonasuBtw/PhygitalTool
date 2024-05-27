@@ -22,7 +22,7 @@ public static class DataSeeder
         
         //creating dummy users
         //creating backoffice env 
-        var backOffice1 = new BackOffice(1, "TestOffice", adminPlatform1.AdminPlatformId);
+        var backOffice1 = new BackOffice( "TestOffice", adminPlatform1.AdminPlatformId);
         context.BackOffices.Add(backOffice1);
         var idea1 = new Idea("Cool", "Wat een leuke flows",0 );
         var idea2 = new Idea("Meh", "Sommige dingen werken nog niet helemaal goed",0 );
