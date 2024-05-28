@@ -1,3 +1,4 @@
+// Handles error response from the server, displaying error messages or alerts.
 export async function handleErrorResponse(response: Response) {
     if (response.status === 400) {
         const errorData = await response.json();

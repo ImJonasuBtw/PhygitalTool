@@ -2,6 +2,7 @@ import {loadBackOffices, renderEditBackOfficeForm} from "./backOfficeUI";
 import {BackOffice} from "./backOfficeCreation";
 import {handleErrorResponse} from "./backOfficeValidation";
 
+// Updates the backoffice with the provided ID using the input value.
 export async function updateBackoffice(backOfficeId: number): Promise<void> {
     const backOfficeNameInput = document.getElementById('backOfficeName') as HTMLInputElement;
     if (!backOfficeNameInput) return;
@@ -24,24 +25,24 @@ export async function updateBackoffice(backOfficeId: number): Promise<void> {
             await handleErrorResponse(response);
         }
     } catch (error: any) {
-        console.error('Error updating backoffice:', error);
         alert('Mislukt bij het bijwerken van BackOffice: ' + error.message);
     }
 }
 
+// Deletes the backoffice with the provided ID and reloads the backoffices list.
 export function deleteBackOffice(backOfficeId: number) {
     fetch(`/api/BackOfficeCreation/DeleteBackOffice/` + backOfficeId, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            console.log('Backoffice deleted successfully');
             loadBackOffices();
         } else {
-            console.error('Failed to delete backoffice');
             return response.text().then(text => Promise.reject(text));
         }
     })
 }
+
+// Sets up the form for editing the backoffice with the provided ID.
 export function setupBackofficeEditForm(backOfficeId: number): void {
     fetch(`/api/BackOfficeCreation/GetBackOfficeDetails/` + backOfficeId)
         .then(response => response.json())
@@ -62,6 +63,7 @@ export function setupBackofficeEditForm(backOfficeId: number): void {
         .catch(error => console.error('Failed to fetch backoffice details:', error));
 }
 
+// Handles the submission of a form to add a new backoffice, using the provided admin platform ID if available.
  export async function handleFormSubmit(adminPlatformId: string | null | undefined) {
     const backOfficeNameInput = document.getElementById('backOfficeNameInput') as HTMLInputElement;
     if (!backOfficeNameInput) return;

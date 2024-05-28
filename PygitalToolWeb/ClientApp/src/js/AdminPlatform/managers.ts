@@ -1,12 +1,11 @@
 import {loadManagers} from "./managerRestClient";
-
-console.log("Managers script loaded");
 export interface Managers {
     id: number;
     email: string;
     imageUrl: string;
 }
 
+// Initializes DOM listeners for manager-related navigation links.
 export function initializeDOMListenersManager(): void {
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {

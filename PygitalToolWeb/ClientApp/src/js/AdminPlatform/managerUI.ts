@@ -1,6 +1,7 @@
 ﻿import {fetchBackOffices, submitManagersForm, loadManagers} from "./managerRestClient";
 import {Managers} from "./managers";
 
+// Renders the list of managers with their details and an option to add a new manager.
 export function renderManagers(managers: Managers[]): void {
     const backOfficeContainer = document.getElementById('backoffice-container');
     if (backOfficeContainer) {
@@ -19,6 +20,8 @@ export function renderManagers(managers: Managers[]): void {
         document.getElementById('add-Manager-button')?.addEventListener('click', addManager);
     }
 }
+
+// Renders a form to add a new manager and handles form submission.
 export function addManager() {
     const backOfficeContainer = document.getElementById('backoffice-container');
     if (backOfficeContainer) {

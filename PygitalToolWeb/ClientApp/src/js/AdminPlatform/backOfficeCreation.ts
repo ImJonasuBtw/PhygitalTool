@@ -13,9 +13,9 @@ export class BackOffice {
     }
 }
 
+//Sets up event listeners for adding a new project in a backoffice context.
 function setupAddBackofficeButton() {
     document.getElementById('add-project-button')?.addEventListener('click', () => {
-        console.log('Add backoffice button has been pressed!');
         const backofficeContainer = document.getElementById('backoffice-container');
         if (backofficeContainer) {
             renderAddBackOfficeForm(backofficeContainer);
@@ -35,15 +35,13 @@ function setupAddBackofficeButton() {
 }
 
 
+// Sets up the confirmation modal to delete a backoffice entry when confirmed.
 function setupConfirmationModal() {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
         const backOfficeId = button.getAttribute('data-backoffice-id');
         const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
-
-        console.log("Modal shown, backOffice ID:", backOfficeId);
-
         confirmDeleteButton.onclick = () => {
             if (backOfficeId) {
                 deleteBackOffice(parseInt(backOfficeId));
@@ -56,7 +54,7 @@ function setupConfirmationModal() {
     });
 }
 
-
+// Adds click event listener to handle edit button clicks for backoffice projects.
 function setupBackOfficeContainer() {
     const backOfficeContainer = document.getElementById('backoffice-container');
     if (backOfficeContainer) {
@@ -73,7 +71,7 @@ function setupBackOfficeContainer() {
     }
 }
 
-
+// Initializes event listeners for backoffice functionalities.
 export function initializeEventListenersBackoffice() {
     setupAddBackofficeButton();
     setupConfirmationModal();
