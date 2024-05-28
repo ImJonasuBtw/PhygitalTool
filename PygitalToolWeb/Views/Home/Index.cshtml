@@ -4,6 +4,7 @@
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
+
 <div class="container">
     <div class="hero-section p-5 row mt-5">
         <div class="hero-content col-md-6">
@@ -31,6 +32,12 @@
                                asp-action="Index"
                             >
                                 GebruikersPlatform
+                            </a>
+                            <a class="btn btn-primary btn-block"
+                               asp-controller="SubTheme"
+                               asp-action="ShowSubThemeSelection"
+                               asp-route-mainThemeId="1">
+                                Kies bevraging
                             </a>
                             <partial name="_LoginPartial"></partial>
                         }

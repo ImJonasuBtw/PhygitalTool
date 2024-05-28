@@ -6,14 +6,14 @@ import 'bootstrap';
 // Custom CSS imports
 // Custom CSS imports
 import '../css/site.css';
-import "../css/backoffice/projects-overview/projects-overview-styles.scss";
-import "../css/backoffice/results/results-styles.scss";
-import "../css/backoffice/start-screen/start-screen-styles.scss";
-import "../css/frontend/flow/frontend-flow-styles.scss";
-import "../css/frontend/login/login-styles.scss";
-import "../css/frontend/logout/logout-styles.scss";
-import "../css/frontend/contact-form/contact-form-styles.scss";
-import "../css/frontend/idea-platform/idea-platform-styles.scss";
+import "../css/Backoffice/Projects overview/projectsOverviewStyles.scss";
+import "../css/Backoffice/Results/resultsStyles.scss";
+import "../css/Backoffice/StartScreen/startScreenStyles.scss";
+import "../css/Frontend/Flow/frontendFlowStyles.scss";
+import "../css/Frontend/Login/loginStyles.scss";
+import "../css/Frontend/Logout/logoutStyles.scss";
+import "../css/Frontend/ContactForm/contactFormStyles.scss";
+import "../css/Frontend/IdeaPlatform/ideaPlatformStyles.scss";
 
 
 console.log('The \'site\' bundle has been loaded!');
