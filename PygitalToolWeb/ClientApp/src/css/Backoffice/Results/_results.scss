@@ -1,7 +1,53 @@
 @use '../variables' as variables;
+
+.results-container {
+  font-family: Outfit, sans-serif;
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+}
+
+#results-information-container {
+  background-color: variables.$background-color;
+  padding: variables.$default-padding;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  
+  p {
+    margin-bottom: 10px;
+  }
+}
+
+.question-result-container {
+  background-color: variables.$background-color;
+  margin-bottom: 20px;
+  padding: variables.$default-padding;
+  border-radius: 10px;
+}
+
+.question-result-container,
+#results-information-container {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+body:has(.results-container) {
+    background-color: variables.$results-background;
+}
+
 .chart-container {
-  width: 500px;
+  width: 75%;
   height: auto;
+}
+
+.ai-summary {
+  width: 75%;
 }
 
 .loader {
@@ -17,6 +63,11 @@
   z-index: 9999;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.results-container #myloader {
+  margin-bottom: 50px;
+}
+
 .btn-primary {
   background-color: variables.$primary-color;
   border-color: darken(variables.$primary-color, 5%);
@@ -26,6 +77,37 @@
     background-color: darken(variables.$primary-color, 10%);
     border-color: darken(variables.$primary-color, 10%);
   }
+}
+
+.expand-table-button {
+  padding: 0;
+  margin-bottom: 5px;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  color: variables.$primary-color;
+}
+
+.open-question-table {
+  width: 75%;
+  border-collapse: collapse;
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 5px;
+  }
+}
+
+.dot-row {
+  display: revert;
+}
+
+.expandable-row {
+  display: revert;
+}
+
+.row-hidden {
+  display: none;
 }
 
 @keyframes spin {
