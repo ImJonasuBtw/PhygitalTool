@@ -1,4 +1,7 @@
-﻿import "../BackOffice/Results/ResultRestClient.ts";
-import "../BackOffice/Results/Results.ts";
-import "../BackOffice/Results/ResultCharts.ts";
-import "../BackOffice/Results/ResultUI.ts";
+﻿import {showResults} from "../BackOffice/Results/results";
+
+async function init() {
+    await showResults();
+}
+
+document.addEventListener('DOMContentLoaded', init);
