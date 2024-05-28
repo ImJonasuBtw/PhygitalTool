@@ -1,4 +1,5 @@
 @use '../variables' as variables;
+
 .login-img {
   background-color: variables.$login-bg;
 }
@@ -56,7 +57,7 @@ body:has(.login-container) {
   .login-img {
     display: none;
   }
-  
+
   .login-form {
     align-self: start;
     margin-top: 3rem;

@@ -34,9 +34,9 @@
 
 
         </div>
-        <div class="questionContainer col-md-10 p-4">
+        <div class="question-container col-md-10 p-4">
     
-            <p id="QuestionId">@Model.QuestionId</p>
+            <p id="question-id">@Model.QuestionId</p>
             <h1>@Model.QuestionText</h1>
 
             @if (!string.IsNullOrEmpty(Model.QuestionImage))
@@ -48,8 +48,8 @@
             @if (Model.QuestionType == QuestionType.Open)
             {
                 <form method="post" action="/Question/SaveAnswerAndUserInput"onsubmit="return validateForm()">
-                    <textarea type="text" class="form-control" id="selectedAnswer" name="selectedAnswer" placeholder="Typ hier je antwoord"></textarea>
-                    <button type="submit" class="btn btn-primary submit-button mt-3" id="Submit">Submit</button>
+                    <textarea type="text" class="form-control" id="selected-answer" name="selectedAnswer" placeholder="Typ hier je antwoord"></textarea>
+                    <button type="submit" class="btn btn-primary submit-button mt-3" id="submit">Submit</button>
                     <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                     <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
                     <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
@@ -61,17 +61,17 @@
                 <p>@Localizer[ResourcesFlow.ChoseOne]</p>
 
                 <div class="slider-container">
-                    <input type="range" min="0" max="4" value="2" step="1" class="slider" id="myRange">
+                    <input type="range" min="0" max="4" value="2" step="1" class="slider" id="my-range">
                     <div class="slider-labels">
                         @foreach (var answerPossibility in Model.AnswerPossibilities)
                         {
                             <span class="answer-range m-2 p-4">@answerPossibility.Description</span>
                         }
                     </div>
-                    <p class="pt-4">Gekozen: <span id="sliderValue">Ik weet het nog niet</span></p>
-                    <form id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput">
+                    <p class="pt-4">Gekozen: <span id="slider-value">Ik weet het nog niet</span></p>
+                    <form id="answers-form" method="post" action="/Question/SaveAnswerAndUserInput">
                         <!-- Knop om het formulier in te dienen -->
-                        <button type="button" class="btn btn-primary submit-button" id="submitButton">Klaar</button>
+                        <button type="button" class="btn btn-primary submit-button" id="submit-button">Klaar</button>
                         <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                         <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
                         <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
@@ -88,7 +88,7 @@
                             int buttonId = 1;
                             foreach (var answerPossibility in Model.AnswerPossibilities.Skip(Model.AnswerPossibilities.Count() / 2))
                             {
-                                <button class="answerButton btn-answer col-12 m-2 p-4" id="button-@buttonId" value="@answerPossibility.Description">
+                                <button class="answer-button btn-answer col-12 m-2 p-4" id="button-@buttonId" value="@answerPossibility.Description">
                                     <i class="@(counter % 3 == 0 ? "bi bi-circle-fill" : counter % 3 == 1 ? "bi bi-square-fill" : "bi bi-triangle-fill")"></i>
                                     @answerPossibility.Description
                                 </button>
@@ -103,7 +103,7 @@
                             int buttonId2 = 2;
                             foreach (var answerPossibility in Model.AnswerPossibilities.Take(Model.AnswerPossibilities.Count() / 2))
                             {
-                                <button class="answerButton btn-answer col-12 m-2 p-4" id="button-@buttonId2" value="@answerPossibility.Description">
+                                <button class="answer-button btn-answer col-12 m-2 p-4" id="button-@buttonId2" value="@answerPossibility.Description">
                                     <i class="@(counter2 % 3 == 0 ? "bi bi-star-fill" : counter2 % 3 == 1 ? "bi bi-heart-fill" : "bi bi-diamond-fill")"></i>
                                     @answerPossibility.Description
                                 </button>
@@ -112,8 +112,8 @@
                             }
                         }
                     </div>
-                    <form id="answersForm" method="post" action="/Question/SaveAnswersAndUserInput">
-                        <button type="button" class="btn btn-primary submit-button" id="submitButton">@Localizer[ResourcesFlow.Submit]</button>
+                    <form id="answers-form" method="post" action="/Question/SaveAnswersAndUserInput">
+                        <button type="button" class="btn btn-primary submit-button" id="submit-button">@Localizer[ResourcesFlow.Submit]</button>
                         <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                         <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
                         <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
@@ -131,7 +131,7 @@
                             int buttonId = 1;
                             foreach (var answerPossibility in Model.AnswerPossibilities.Skip(Model.AnswerPossibilities.Count() / 2))
                             {
-                                <button class="btn-answer col-12 m-2 p-4 answerButtonSingleChoice" id="button-@buttonId" name="selectedAnswer" value="@answerPossibility.Description">
+                                <button class="btn-answer col-12 m-2 p-4 answer-button-single-choice" id="button-@buttonId" name="selectedAnswer" value="@answerPossibility.Description">
                                     <i class="@(counter % 3 == 0 ? "bi bi-circle-fill" : counter % 3 == 1 ? "bi bi-square-fill" : "bi bi-triangle-fill")"></i>
                                     @answerPossibility.Description
                                     <div class="button-user-selected-container">
@@ -149,7 +149,7 @@
                             int buttonId2 = 2;
                             foreach (var answerPossibility in Model.AnswerPossibilities.Take(Model.AnswerPossibilities.Count() / 2))
                             {
-                                <button class="btn-answer col-12 m-2 p-4 answerButtonSingleChoice" id="button-@buttonId2" name="selectedAnswer" value="@answerPossibility.Description">
+                                <button class="btn-answer col-12 m-2 p-4 answer-button-single-choice" id="button-@buttonId2" name="selectedAnswer" value="@answerPossibility.Description">
                                     <i class="@(counter2 % 3 == 0 ? "bi bi-star-fill" : counter2 % 3 == 1 ? "bi bi-heart-fill" : "bi bi-diamond-fill")"></i>
                                     @answerPossibility.Description
                                     <div class="button-user-selected-container">
@@ -163,8 +163,8 @@
                     </div>
                 </div>
 
-                <form  id="answersForm" method="post" action="/Question/SaveAnswerAndUserInput" class="answersFormSingleChoice">
-                    <button type="button" class="btn btn-primary submit-button submitButtonSingleChoice" id="submitButton">@Localizer[ResourcesFlow.Submit]</button>
+                <form  id="answers-form" method="post" action="/Question/SaveAnswerAndUserInput" class="answers-form-single-choice">
+                    <button type="button" class="btn btn-primary submit-button submit-button-single-choice" id="submit-button">@Localizer[ResourcesFlow.Submit]</button>
                     <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                     <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
                     <input type="hidden" name="subThemeId" value="@Model.Flow.SubThemeId"/>
@@ -173,7 +173,7 @@
             <div class="container">
                 <!-- Progress Bar -->
                 <div class="progress">
-                    <div class="progress-bar " role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar " role="progressbar" style="width: 0;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
         </div>
@@ -204,6 +204,6 @@
 
 @section Scripts
 {
-     <script id="questionPage-script" src="~/dist/questionsPage.entry.js" data-flowtype="@Model.Flow.FlowType.ToString().ToLower()" defer="defer" ></script>
-    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
+     <script id="question-page-script" src="~/dist/questions_page.entry.js" data-flowtype="@Model.Flow.FlowType.ToString().ToLower()" defer="defer" ></script>
+    <script id="hub-connection-script" src="~/dist/hub_connection.entry.js" defer="defer" ></script>
 }

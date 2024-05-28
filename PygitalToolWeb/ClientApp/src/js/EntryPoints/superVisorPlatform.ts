@@ -1,1 +1,0 @@
-﻿import "../BackOffice/SupervisorPlatform/superVisorPlatform.ts";

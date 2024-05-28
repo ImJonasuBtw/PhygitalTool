@@ -1,0 +1,24 @@
+﻿@use '../variables' as variables;
+
+#confirmation-modal {
+  .modal-content {
+    background-color: variables.$background-color;
+    border: none;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    border-bottom: 1px solid darken(variables.$background-color, 10%);
+  }
+
+  .btn-secondary {
+    color: variables.$text-color;
+    background-color: variables.$btn-edit;
+  }
+
+  .btn-danger {
+    background-color: variables.$btn-delete;
+    border-color: variables.$btn-delete;
+  }
+}

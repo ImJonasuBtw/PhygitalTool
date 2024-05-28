@@ -1,14 +1,13 @@
 @using System.Security.Claims
-@using Microsoft.AspNetCore.Identity
 @model  IEnumerable<PhygitalTool.Domain.FlowPackage.Idea>
 @{
     ViewBag.Title = "UserPlatform";
     Layout = "_Layout";
 }
-<body class="background-contract-form">  
-    <div>
-        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
-    </div>
+<body class="background-contract-form">
+<div>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
+</div>
 <h1 class="center">ideeën</h1>
 
 
@@ -38,7 +37,7 @@
         <p class="username">@idea.User.UserName</p>
         <p>@idea.Description</p>
         <p class="form-label like-section">
-            Likes: 
+            Likes:
             <span id="likesCount-@idea.IdeaId">@idea.Likes</span>
             <i class="bi bi-hand-thumbs-up likeButton pointer" data-ideaId="@idea.IdeaId"></i>
         </p>
@@ -48,24 +47,27 @@
                 <p class="form-label">@comment.Description</p>
                 <p>@comment.User</p>
             }
-              @if (User.IsInRole("User"))
-              {
-                            <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
-                            <div id="commentForm-@idea.IdeaId" style="display:none;">
-                                <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
-                                <button class="btn btn-primary mt-3 addCommentButton" data-ideaId="@idea.IdeaId">Verzend</button>
-                            </div>
-              }
-              else
-              {
-                  <div class="InlogMessage"><p>Je moet ingelogd zijn als user om een comment achter te laten</p></div>
-              }
-                        
+            @if (User.IsInRole("User"))
+            {
+                <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
+                <div id="commentForm-@idea.IdeaId" style="display:none;">
+                    <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
+                    <button class="btn btn-primary mt-3 addCommentButton" data-ideaId="@idea.IdeaId">Verzend</button>
+                </div>
+            }
+            else
+            {
+                <div class="InlogMessage">
+                    <p>Je moet ingelogd zijn als user om een comment achter te laten</p>
+                </div>
+            }
+
         </div>
     </div>
 }
 
 </body>
+
 @section Scripts {
     <script id="UserPlatform-script" src="~/dist/UserPlatform.entry.js" defer="defer" data-user-id="@User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value" data-is-authenticated="@(User.Identity?.IsAuthenticated.ToString().ToLower())"></script>
 }

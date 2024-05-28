@@ -39,18 +39,18 @@
         </div>
 
 
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Confirm Deletion</h5>
+                        <h5 class="modal-title" id="modal-label">Confirm Deletion</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         Are you sure you want to delete this project?
                     </div>
                     <div class="modal-footer">
-                        <form id="deleteForm" action="" method="post">
+                        <form id="delete-form" action="" method="post">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                             <button id="delete-confirm" type="submit" class="btn btn-danger">Yes</button>
                         </form>
@@ -62,8 +62,8 @@
 </div>
 
 @section Scripts {
-    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
-    <script id="backOfficeHomePage-script" src="~/dist/backOfficeHome.entry.js" defer="defer" data-backoffice-id="@Model.BackOfficeId"></script>
+    <script id="question-page-script" src="~/dist/hub_connection.entry.js" defer="defer" ></script>
+    <script id="backOffice-script" src="~/dist/backoffice.entry.js" defer="defer" data-backoffice-id="@Model.BackOfficeId"></script>
 }
 
 </body>

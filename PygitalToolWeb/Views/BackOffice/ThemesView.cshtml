@@ -51,7 +51,7 @@
                                     <button class="btn btn-outline-secondary edit-theme-button" data-theme-id="@theme.ThemeId" title="Edit theme">
                                         <i class="bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-theme-id="@theme.ThemeId" title="Delete theme">
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmation-modal" data-theme-id="@theme.ThemeId" title="Delete theme">
                                         <i class="bi-trash"></i>
                                     </button>
 
@@ -68,18 +68,18 @@
         </div>
 
 
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Wil je zeker verwijderen?</h5>
+                        <h5 class="modal-title" id="modal-label">Wil je zeker verwijderen?</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         Ben je zeker dat je dit wilt verwijderen?
                     </div>
                     <div class="modal-footer">
-                        <form id="deleteForm" action="" method="post">
+                        <form id="delete-form" action="" method="post">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nee</button>
                             <button id="theme-delete-confirm" type="submit" class="btn btn-danger">Ja</button>
                         </form>
@@ -89,13 +89,13 @@
         </div>
 
 
-        <button type="button"  id="add-theme-button" class="roundedAddButton">+</button>
+        <button type="button"  id="add-theme-button" class="rounded-add-button">+</button>
 
 
     </div>
 
     @section Scripts {
-        <script id="mainThemePage-script" src="~/dist/mainThemePage.entry.js" defer="defer" data-project-id="@Model.ProjectId"></script>
+        <script id="main-theme-page-script" src="~/dist/main_theme_page.entry.js" defer="defer" data-project-id="@Model.ProjectId"></script>
     }
 
 </div>

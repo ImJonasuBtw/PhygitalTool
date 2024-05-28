@@ -2,12 +2,12 @@
 
 .results-container {
   font-family: Outfit, sans-serif;
-  
+
   h2 {
     font-size: 2rem;
     margin-bottom: 30px;
   }
-  
+
   h3 {
     font-size: 1.5rem;
     margin-bottom: 20px;
@@ -19,7 +19,7 @@
   padding: variables.$default-padding;
   margin-bottom: 20px;
   border-radius: 10px;
-  
+
   p {
     margin-bottom: 10px;
   }
@@ -34,11 +34,11 @@
 
 .question-result-container,
 #results-information-container {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 body:has(.results-container) {
-    background-color: variables.$results-background;
+  background-color: variables.$results-background;
 }
 
 .chart-container {
@@ -91,7 +91,7 @@ body:has(.results-container) {
 .open-question-table {
   width: 75%;
   border-collapse: collapse;
-  
+
   th, td {
     border: 1px solid #ddd;
     padding: 5px;
@@ -111,6 +111,10 @@ body:has(.results-container) {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
