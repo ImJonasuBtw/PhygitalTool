@@ -20899,7 +20899,7 @@ body {
   border-color: #cb1b59;
 }
 
-#add-project-button {
+.roundedAddButton {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -20914,7 +20914,7 @@ body {
   border: none;
   backdrop-filter: blur(10px);
 }
-#add-project-button:hover {
+.roundedAddButton:hover {
   background-color: #9e27e1;
 }
 
@@ -21246,6 +21246,10 @@ body:has(.results-container) {
   .questionContainer {
     margin-left: 0;
   }
+}
+
+.hidden {
+  display: none;
 }
 
 .container-circular-wait-view {
