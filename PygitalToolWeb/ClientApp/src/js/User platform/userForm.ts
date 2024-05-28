@@ -13,6 +13,8 @@ export class Idea {
 }
 const scriptElement = document.getElementById('UserPlatform-script');
 const userId = scriptElement?.dataset.userId;
+
+//  Adds an event listener to a button with the ID addIdeaButton. And checks if the idea is correctly filled.
 function  SetupaddIdea(){
     const addButton = document.getElementById('addIdeaButton');
     if (addButton) {
@@ -29,6 +31,8 @@ function  SetupaddIdea(){
 
     }
 }
+
+// Add click event to like buttons.
 function setupLike(){
     const likeButtons = document.querySelectorAll('.likeButton');
     likeButtons.forEach(button => {
@@ -51,6 +55,8 @@ function setupLike(){
         });
     });
 }
+
+// Add click event to comment buttons.
 function setupComment(){
     const commentButtons = document.querySelectorAll('.commentButton');
     commentButtons.forEach(button => {
@@ -69,12 +75,12 @@ function setupComment(){
         });
     });
 }
+
+// Adds event listener to add comment, and checks if it is correctly filled.
 function setupAddComment(){
     const addCommentButtons = document.querySelectorAll('.addCommentButton');
     addCommentButtons.forEach(button => {
         button.addEventListener('click', async function (this: HTMLElement) {
-
-
             const ideaIdString = this.getAttribute('data-ideaId');
             if (ideaIdString) {
                 const ideaId = parseInt(ideaIdString);
@@ -84,7 +90,6 @@ function setupAddComment(){
                     alert('Vul comment in');
                     return;
                 }
-
                 try {
                     await CommentIdea(ideaId, commentText, userId)
                 } catch (error) {
@@ -94,6 +99,8 @@ function setupAddComment(){
         });
     });
 }
+
+// Initializes a DOM listener for subtheme-related navigation links. 
 export  function loadDoms(){
     SetupaddIdea();
     setupLike();

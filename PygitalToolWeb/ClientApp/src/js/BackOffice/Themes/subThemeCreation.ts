@@ -12,12 +12,10 @@ export class subTheme {
     }
 }
 
-
+// Sets up an event listener for the "Add Subtheme" button.
 function setupAddThemeButton() {
     document.getElementById('add-subtheme-button')?.addEventListener('click', () => {
-        console.log('Add button has been pressed!');
         const subThemasContainer = document.getElementById('subthemes-container');
-        console.log(subThemasContainer);
         if (subThemasContainer) {
             ShowAddForm(subThemasContainer)
 
@@ -43,14 +41,13 @@ function setupAddThemeButton() {
     });
 }
 
+//  Sets up a confirmation modal dialog.
 function setupConfirmationModal() {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
         const subthemeId = button.getAttribute('data-subtheme-id');
         const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
-
-        console.log("Modal shown, subtheme ID:", subthemeId);
 
         confirmDeleteButton.onclick = () => {
             if (subthemeId) {
@@ -64,6 +61,7 @@ function setupConfirmationModal() {
     });
 }
 
+//  Sets up the subthemes container by adding a click event listener
 function setupSubThemesContainer() {
     const projectsContainer = document.getElementById('subthemes-container');
     if (projectsContainer) {
@@ -79,6 +77,8 @@ function setupSubThemesContainer() {
         });
     }
 }
+
+// Initializes a DOM listener for subtheme-related navigation links. 
 export function  loadDoms(){
     setupSubThemesContainer();
     setupConfirmationModal();

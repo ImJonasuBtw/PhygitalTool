@@ -1,3 +1,4 @@
+// Handle responses from subtheme-related requests.
 export async function HandleValidation(response: Response) {
     if (response.status === 400) {
         const errorData = await response.json();

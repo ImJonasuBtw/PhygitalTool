@@ -1,4 +1,5 @@
-﻿export async function getProjectWithData(projectId: number) {
+﻿// This asynchronous function fetches project data along with associated results using the provided project ID.
+export async function getProjectWithData(projectId: number) {
     try {
         const response = await fetch(`/api/Results/GetProjectWithData/${projectId}`);
         if (response.ok) {
@@ -12,6 +13,7 @@
     }
 }
 
+// This asynchronous function fetches all answers along with their associated questions.
 export async function getAllAnswersWithQuestions() {
     try {
         const response = await fetch(`/api/Results/GetAllAnswersWithQuestions`);
@@ -26,6 +28,7 @@ export async function getAllAnswersWithQuestions() {
     }
 }
 
+// This async function fetches a project using a flow ID from the server and handles network errors.
 export async function getProjectFromFlowId(flowId: string) {
     try {
         const projectResponse = await fetch(`/api/Results/GetProjectFromFlowId/${flowId}`);
@@ -40,6 +43,7 @@ export async function getProjectFromFlowId(flowId: string) {
     }
 }
 
+// Retrieves details of a main theme using its ID from the server and handles network errors.
 export async function getMainThemeDetails(mainThemeId: number): Promise<any> {
     try {
         const response = await fetch(`/api/ThemeCreation/GetMainThemeDetails/${mainThemeId}`);
@@ -54,6 +58,7 @@ export async function getMainThemeDetails(mainThemeId: number): Promise<any> {
     }
 }
 
+// Retrieves details of a subtheme using its ID from the server and handles network errors.
 export async function getSubThemeDetails(subThemeId: number): Promise<any> {
     try {
         const response = await fetch(`/api/SubThemeCreation/GetSubThemeDetails/${subThemeId}`);
@@ -68,6 +73,7 @@ export async function getSubThemeDetails(subThemeId: number): Promise<any> {
     }
 }
 
+// Fetches details of a flow using its ID from the server and handles network errors.
 export async function getFlowDetails(flowId: number): Promise<any> {
     try {
         const response = await fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`);

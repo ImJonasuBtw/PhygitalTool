@@ -1,6 +1,5 @@
 ﻿import { loadSupervisors } from "./supervisorsRestClient";
 
-console.log("Supervisor script loaded");
 const scriptElement = document.getElementById('backOfficeHomePage-script');
 export const backOfficeId = scriptElement?.dataset.backofficeId;
 
@@ -10,8 +9,8 @@ export interface Supervisor {
     imageUrl: string;
 }
 
+// Initializes a DOM listener for supervisor-related navigation links. 
 export function initializeDOMListenerSupervisor(): void {
-    console.log(backOfficeId)
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         if (link.textContent && link.textContent.trim() === "Begeleiders") {

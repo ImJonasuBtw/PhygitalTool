@@ -8,6 +8,7 @@ import {
     configureSubmitButtonSingleChoice, setTimerText
 } from "./questionHandelingUI";
 
+// Initialize the flow page.
 export function initializePage() { 
     const scriptElement = document.getElementById('questionPage-script');
     console.log('Script Element:', scriptElement);

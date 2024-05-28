@@ -2,7 +2,7 @@
 import {renderSupervisors} from "./superVisorsUI";
 import {validatePassword,handleResponseSupervisor} from "./supervisorsValidarion";
 
-
+// Loads the supervisors
 export async function loadSupervisors(backofficeId: number | undefined): Promise<void> {
     try {
         const response = await fetch(`/api/supervisors/Getsupervisors/${backofficeId}`);
@@ -16,6 +16,7 @@ export async function loadSupervisors(backofficeId: number | undefined): Promise
     }
 }
 
+// Uploads a file using FormData to a specified API endpoint (/api/files/uploadFile).
 async function uploadFile(formData: FormData): Promise<string | null> {
     try {
         const fileResponse = await fetch('/api/files/uploadFile', {
@@ -29,6 +30,8 @@ async function uploadFile(formData: FormData): Promise<string | null> {
         return null;
     }
 }
+
+// Add a supervisor to the server.
 async function addSupervisor(supervisorData: any): Promise<Response> {
     try {
         return await fetch('/api/supervisors', {
@@ -43,6 +46,8 @@ async function addSupervisor(supervisorData: any): Promise<Response> {
         throw error;
     }
 }
+
+// Submit the add supervisor form
 export async function submitSupervisorForm() {
     const form = document.getElementById('supervisorForm') as HTMLFormElement;
     const formData = new FormData(form);

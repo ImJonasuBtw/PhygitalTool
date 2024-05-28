@@ -1,7 +1,7 @@
 ﻿
 import {subTheme} from "./subThemeCreation";
 
-
+// Creates a edit form for a subtheme and adds it to the HTML.
 export function ShowEditForm(subthemesContainer: HTMLElement, subTheme : subTheme){
     subthemesContainer.innerHTML = `
                     <h2 class="mt-4">Subthema aanpassen</h2>
@@ -20,6 +20,7 @@ export function ShowEditForm(subthemesContainer: HTMLElement, subTheme : subThem
                 `;
 }
 
+// Creates a form to add a subtheme and adds it to the HTML.
 export function ShowAddForm(subThemasContainer: HTMLElement){
     subThemasContainer.innerHTML = `
             <h2 class="mt-4">Voeg nieuw subthema toe</h2>
@@ -37,8 +38,9 @@ export function ShowAddForm(subThemasContainer: HTMLElement){
             </form>
         `;
 }
-export function loadSubThemes() {
 
+// Loads the subthemes and shows the right page.
+export function loadSubThemes() {
     const scriptElement = document.getElementById('subThemePage-script');
     const mainThemeId = scriptElement?.dataset.mainthemeId;
     window.location.href = '/Themes?themeid='+ mainThemeId;

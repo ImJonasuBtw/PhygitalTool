@@ -2,6 +2,7 @@
 import {subTheme} from "./subThemeCreation";
 import {HandleValidation} from "./subthemeValidation";
 
+// Deletes a subtheme from the server.
 export function deleteSubTheme(subthemeId: number) {
     fetch(`/api/SubThemeCreation/DeleteSubTheme/` + subthemeId, {
         method: 'DELETE'
@@ -15,6 +16,8 @@ export function deleteSubTheme(subthemeId: number) {
         }
     })
 }
+
+// Adds a subtheme to the server.
 export async function AddSubtheme(newSubTheme: subTheme, mainthemeId: string| undefined) {
     const response = await fetch('/api/SubThemeCreation/AddSubThemeToBackoffice', {
         method: 'POST',
@@ -34,6 +37,8 @@ export async function AddSubtheme(newSubTheme: subTheme, mainthemeId: string| un
         await HandleValidation(response)
     }
 }
+
+// Sets up an edit form for a certain subtheme. 
 export function showEditSubThemeForm(subthemeId: number): void {
     fetch(`/api/SubThemeCreation/GetSubThemeDetails/` + subthemeId)
         .then(response => response.json())
@@ -50,6 +55,8 @@ export function showEditSubThemeForm(subthemeId: number): void {
         })
         .catch(error => console.error('Failed to fetch project details:', error));
 }
+
+// Updates a subtheme with a certain subthemeId.
 export function updateSubtheme(subthemeId: number): void {
     const subthemeNameInput = document.getElementById('subtheme-name') as HTMLInputElement;
     const informationInput = document.getElementById('information') as HTMLTextAreaElement;

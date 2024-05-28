@@ -1,3 +1,4 @@
+﻿// Checks if the current user has liked a specific idea by looking up the likedIdeas stored in localStorage
 export function hasCurrentUserLikedIdea(ideaId: string): boolean {
     const likedIdeas = localStorage.getItem('likedIdeas');
     const currentUserId = document.getElementById('UserPlatform-script')?.dataset.userId;
@@ -8,6 +9,7 @@ export function hasCurrentUserLikedIdea(ideaId: string): boolean {
     return false;
 }
 
+// Marks an idea as liked by the current user.
 export function markIdeaAsLikedByCurrentUser(ideaId: string): void {
     const currentUserId = document.getElementById('UserPlatform-script')?.dataset.userId;
     if (currentUserId) {

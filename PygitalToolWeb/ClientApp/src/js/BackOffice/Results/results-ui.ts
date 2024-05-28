@@ -2,12 +2,11 @@ import {exportChartAsPNG, exportDataAsCSV, exportDataAsXLS, getQuestionTypeName}
 import Chart, {ChartItem} from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
+// Creates loader elements and appends them to the results container on the web page.
 export function createContainerAndLoaderElements() {
-    // Initial Container Elements
     const resultsContainer = document.getElementById('results-container');
     const loaderContainer = document.createElement('div');
-
-    // Create and Insert Loader HTML
+    
     const loader = document.createElement('div');
     if (resultsContainer) {
         loaderContainer.classList.add('row', 'justify-content-center', 'align-items-center');
@@ -18,6 +17,7 @@ export function createContainerAndLoaderElements() {
     }
 }
 
+// Retrieves the data-project-id attribute value from the results-information-container element on the web page
 export function getDataProjectId() {
     const resultsInformationContainer = document.querySelector('#results-information-container');
     if (resultsInformationContainer) {
@@ -32,11 +32,13 @@ export function getDataProjectId() {
     }
 }
 
+// Clears all the charts.
 export function clearCharts() {
     const existingCharts = document.querySelectorAll('.chart-container');
     existingCharts.forEach(chart => chart.remove());
 }
 
+// Creates a container for both the question and its results
 export function createQuestionAndResultsContainerElements(counter: number, questionTypeId: number, questionText: string) {
     const resultsContainer = document.getElementById('results-container');
     const questionContainerElement = document.createElement('div');
@@ -52,6 +54,7 @@ export function createQuestionAndResultsContainerElements(counter: number, quest
     questionContainerElement.appendChild(questionElement);
 }
 
+// Creates a canvas element for displaying a chart along with an export button to download the chart as a PNG image.
 export function createCanvasElement(counter: number) {
     const canvasId = `chart-${counter}`;
     const chartContainer = document.createElement('div');
@@ -66,6 +69,7 @@ export function createCanvasElement(counter: number) {
     }
 }
 
+// Configures a chart using Chart.js library. It sets up a bar chart with data provided in the chartData parameter
 export function configureChart(counter: number, chartData: { answer: string, count: number }[]) {
     setTimeout(() => {
         const ctx = document.getElementById(`chart-${counter}`) as ChartItem;
@@ -103,6 +107,7 @@ export function configureChart(counter: number, chartData: { answer: string, cou
     }, 0);
 }
 
+// Expands and collapses open question result tables when the corresponding expand buttons are clicked.
 export function expandOpenQuestionResultTables() {
     const expandButtons = document.querySelectorAll('.expand-table-button');
 
@@ -125,6 +130,7 @@ export function expandOpenQuestionResultTables() {
     }
 }
 
+// Creates an element to display the AI summary and open question results
 export function createOpenQuestionResultElement(aiSummary: string, counter: number, uniqueAnswers: string[]) {
     const chartContainer = document.createElement('div');
     chartContainer.className = 'chart-container';
@@ -160,6 +166,7 @@ export function createOpenQuestionResultElement(aiSummary: string, counter: numb
     }
 }
 
+// Creates export buttons for XLS, PNG, and CSV formats
 export function createExportButtons(data: any[]) {
     const exportXlsButton = document.createElement('button');
     exportXlsButton.className = 'export-project btn btn-primary mb-3 mt-3 mr-3';
@@ -194,6 +201,7 @@ export function createExportButtons(data: any[]) {
     }
 }
 
+// Creates a title element "Aantal Antwoorden" and appends it to the results information container in the HTML document.
 export function createResultCountsTitleElement() {
     const resultsContainer = document.getElementById('results-information-container');
     const titleElement = document.createElement('h3');
@@ -203,6 +211,7 @@ export function createResultCountsTitleElement() {
     }
 }
 
+// This function creates a paragraph element displaying the count of answers for a main theme, and appends it to the results information container in the HTML document.
 export function createResultCountsMainThemeElement(mainThemeName: any, count: number) {
     const resultsContainer = document.getElementById('results-information-container');
     const pElement = document.createElement('p');
@@ -212,6 +221,7 @@ export function createResultCountsMainThemeElement(mainThemeName: any, count: nu
     }
 }
 
+// This function creates a paragraph element displaying the count of answers for a subtheme, and appends it to the results information container in the HTML document.
 export function createResultCountsSubThemeElement(subThemeName: any, count: any) {
     const resultsContainer = document.getElementById('results-information-container');
     const pElement = document.createElement('p');
@@ -221,6 +231,7 @@ export function createResultCountsSubThemeElement(subThemeName: any, count: any)
     }
 }
 
+// Creates a paragraph element displaying the count of answers for a flow, and appends it to the results information container in the HTML document.
 export function createResultCountsFlowElement(flowName: any, count: number) {
     const resultsContainer = document.getElementById('results-information-container');
     const pElement = document.createElement('p');
@@ -230,6 +241,7 @@ export function createResultCountsFlowElement(flowName: any, count: number) {
     }
 }
 
+// show loader
 export function showLoader() {
     const loader = document.getElementById('myloader');
     if (loader) {
@@ -237,6 +249,7 @@ export function showLoader() {
     }
 }
 
+// hide loader
 export function hideLoader() {
     const loader = document.getElementById('myloader');
     if (loader) {

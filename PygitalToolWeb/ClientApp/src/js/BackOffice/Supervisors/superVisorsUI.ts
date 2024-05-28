@@ -1,6 +1,7 @@
 ﻿import {loadSupervisors, submitSupervisorForm} from "./supervisorsRestClient";
 import {backOfficeId, Supervisor} from "./supervisors";
 
+// Shows the add supervisor form.
 export function addSupervisor() {
     const projectsContainer = document.getElementById('projects-container');
     if (projectsContainer) {
@@ -56,6 +57,8 @@ export function addSupervisor() {
         console.error('The projects container was not found in the DOM.');
     }
 }
+
+// Takes an array of Supervisor objects as input and renders them as a list of supervisors in the HTML element with the id "projects-container"
 export function renderSupervisors(supervisors: Supervisor[]): void {
     const projectsContainer = document.getElementById('projects-container');
     if (projectsContainer) {

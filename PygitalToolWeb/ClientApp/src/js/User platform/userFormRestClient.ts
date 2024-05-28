@@ -1,5 +1,7 @@
 import  {Idea} from "./userForm"
 import {markIdeaAsLikedByCurrentUser, reloadUserPlatform} from "./userFormUI";
+
+// Adds an idea to the server.
 export async function AddIdea(newIdea: Idea, userId: string | undefined) {
     const response = await fetch('/api/ideas', {
         method: 'POST',
@@ -20,6 +22,8 @@ export async function AddIdea(newIdea: Idea, userId: string | undefined) {
     reloadUserPlatform();
 
 }
+
+// Likes an idea and saves the like.
 export async function LikeIdea(ideaId: string) {
     const response = await fetch(`/api/Ideas/Like/${ideaId}`, {
         method: 'POST',
@@ -36,6 +40,8 @@ export async function LikeIdea(ideaId: string) {
         console.error('Kon idee niet liken');
     }
 }
+
+// Adds a comment to the server.
 export async function CommentIdea(ideaId: number, commentText: string, userId: string | undefined) {
     const response = await fetch('/api/Comment', {
         method: 'POST',
