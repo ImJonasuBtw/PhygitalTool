@@ -1,3 +1,4 @@
+// Handles API error responses#.
 export async function handleErrorResponse(response: Response) {
     if (response.status === 400) {
         const errorData = await response.json();

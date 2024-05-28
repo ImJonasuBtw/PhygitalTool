@@ -4,12 +4,11 @@ import {BackOffice} from "../../AdminPlatform/backOfficeCreation";
 import {loadBackOffices} from "../../AdminPlatform/backOfficeUI";
 import {handleErrorResponse} from "../../AdminPlatform/backOfficeValidation";
 
+// Updates project details via PUT request, reloading projects on success or handling error responses.
 export   function updateProject(projectId: number): void {
     const projectNameInput = document.getElementById('projectName') as HTMLInputElement;
     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
     const statusSelect = document.getElementById('statusSelect') as HTMLSelectElement;
-    console.log("Selected status: " + statusSelect.value);
-    console.log("stat select: "+statusSelect.value)
     fetch(`/api/ProjectCreation/UpdateProject/` + projectId, {
         method: 'PUT',
         headers: {
@@ -36,13 +35,12 @@ export   function updateProject(projectId: number): void {
 }
 
 
-
+// Deletes a project via DELETE request and reloads projects upon success.
 export function deleteProject(projectId: number) {
     fetch(`/api/ProjectCreation/DeleteProject/` + projectId, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            console.log('Project deleted successfully');
             loadProjects();
         } else {
             console.error('Failed to delete project');
@@ -50,6 +48,9 @@ export function deleteProject(projectId: number) {
         }
     })
 }
+
+
+// Fetches project details via GET, renders an edit form.
 export function showEditProjectForm(projectId: number): void {
     fetch(`/api/ProjectCreation/GetProjectDetails/` + projectId)
         .then(response => response.json())
@@ -66,6 +67,8 @@ export function showEditProjectForm(projectId: number): void {
         })
         .catch(error => console.error('Failed to fetch project details:', error));
 }
+
+// Handles form submission for adding a project, sending a POST request with the project details.
 export async function AddFormSubmit(backOfficeId: string | null | undefined) {
     const projectNameInput = document.getElementById('projectName') as HTMLInputElement;
     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;

@@ -1,6 +1,6 @@
 ﻿import {Project} from "./projectCreation";
 
-
+// Renders an edit project form with project details.
 export function renderEditProjectForm(container: { innerHTML: string; }, project: Project) {
     container.innerHTML = `
                     <h2 class="mt-4">Edit Project</h2>
@@ -26,6 +26,7 @@ export function renderEditProjectForm(container: { innerHTML: string; }, project
                 `;
 }
 
+// Renders a form for adding a new project.
 export function renderAddProjectForm(container: { innerHTML: string; }) {
     container.innerHTML = `
             <h2 class="mt-4">Voeg nieuw Project toe</h2>
@@ -45,6 +46,8 @@ export function renderAddProjectForm(container: { innerHTML: string; }) {
             </form>
         `;
 }
+
+// Redirects the user to the '/BackOffice' page to load projects.
 export function loadProjects() {
     window.location.href = '/BackOffice';
 }
