@@ -20863,6 +20863,17 @@ body {
   color: #333333;
 }
 
+.question-container {
+  background-color: rgba(248, 244, 244, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  padding: 10px;
+}
+
 #confirmationModal .modal-content {
   background-color: #f8f4f4;
   border: none;
