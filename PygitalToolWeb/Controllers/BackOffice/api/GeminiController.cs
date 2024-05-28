@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
 

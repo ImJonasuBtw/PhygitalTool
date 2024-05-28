@@ -11,13 +11,11 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class SubThemeCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
-    private readonly ILogger<SubThemeCreationController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
-    public SubThemeCreationController(IProjectManager projectManager, ILogger<SubThemeCreationController> logger, UnitOfWork unitOfWork)
+    public SubThemeCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
-        _logger = logger;
         _unitOfWork = unitOfWork;
     }
     
@@ -35,7 +33,7 @@ public class SubThemeCreationController : Controller
         _projectManager.AddSubTheme(subTheme.SubThemeName, subTheme.SubThemeInformation, subTheme.MainThemeId);
         _unitOfWork.Commit();
         
-        return Ok();
+        return NoContent();
     }
     
     [Authorize(Roles = "Manager")]

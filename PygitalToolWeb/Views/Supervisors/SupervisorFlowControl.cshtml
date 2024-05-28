@@ -4,15 +4,15 @@
         <button class="btn-secondary btn" id="backToSupervisorScreen">Terug naar hoofdpagina</button>
     </div>
     <div class="mb-3 col-md-9">
-        <button id="pauseFlow" style="display: none;" class="btn-primary btn ">pauze</button>
-        <button id="stopFlow" style="display: none;"  class="btn-primary btn">stop</button>
-        <button id="resumeFlow" style="display: none;"  class="btn-primary btn">hervat</button>
+        <button id="pauseFlow" class="btn-primary btn hidden">pauze</button>
+        <button id="stopFlow"   class="btn-primary btn hidden">stop</button>
+        <button id="resumeFlow"   class="btn-primary btn hidden">hervat</button>
     </div>
 
     <div class="questionInfo-container mt-3">
         <div class="mb-3 col-md-9">
             <form action="">
-                <p id="currentQuestionId" style="display: none"></p>
+                <p id="currentQuestionId" class="hidden"></p>
                 <p id="questionText" questionId="" class="text-body">Wacht tot er een vraag wordt getoond. </p>
                 <label for="questionNote" class="form-label">Notities</label>
                 <textarea type="text" class="form-control" id="questionNote" placeholder="Maak hier je notities"></textarea>

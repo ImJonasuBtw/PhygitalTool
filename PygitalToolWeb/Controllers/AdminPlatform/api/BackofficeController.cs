@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
 using PhygitalTool.BL.AdminPlatform;
 
-
-namespace PhygitalTool.Web.Controllers.AdminPlatform;
+namespace PhygitalTool.Web.Controllers.AdminPlatform.api;
 [ApiController]
 [Route("api/[controller]")]
 public class BackofficeController : Controller

@@ -30,7 +30,7 @@ public class CommentController: ControllerBase
         _unitOfWork.BeginTransaction();
         _userManager.AddCommentToIdea(comment.Description, comment.UserId, comment.IdeaId);
         _unitOfWork.Commit();
-        
-        return Ok();
+
+        return NoContent();
     }
 }

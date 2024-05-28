@@ -93,10 +93,7 @@ public class FlowManger : IFlowManager
     {
         return _repositoryQuestion.ReadNextQuestionInFlow(flowId, currentQuestionId);
     }
-    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
-    {
-        return _repositoryQuestion.ReadNextQuestionInFlow(flowId, currentQuestionId, answer);
-    }
+ 
 
     // Returns the first Question from a flow
     public Question GetFirstFlowQuestion(int flowId)

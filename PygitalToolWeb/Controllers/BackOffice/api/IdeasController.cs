@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.BL.Users;
@@ -27,12 +26,12 @@ public class IdeasController : ControllerBase
         {
             return BadRequest(ModelState);
         }
-        
+
         _unitOfWork.BeginTransaction();
         _userManager.AddIdeas(idea.Title, idea.Description, idea.UserId);
         _unitOfWork.Commit();
-        
-        return Ok();
+
+        return NoContent();
     }
 
     [HttpPost("Like/{ideaId}")]
@@ -41,7 +40,7 @@ public class IdeasController : ControllerBase
         try
         {
             _unitOfWork.BeginTransaction();
-            var likesAmount =_userManager.UpdateLikeIdea(ideaId);
+            var likesAmount = _userManager.UpdateLikeIdea(ideaId);
             _unitOfWork.Commit();
             return Ok(new { likes = likesAmount });
         }

@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.Domain.FlowPackage;
-using PhygitalTool.Domain.Util;
+
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
 
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
-using PhygitalTool.Web.Models;
+using BL;
+using Models;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -39,7 +38,7 @@ public class FlowCreationController : ControllerBase
         _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName,flow.FlowImage ,flow.FlowType, flow.Language, flow.SubthemeId, questions);
         _unitOfWork.Commit();
 
-        return Ok();
+        return NoContent();
     }
 
     [Authorize(Roles = "Manager")]

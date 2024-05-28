@@ -28,8 +28,7 @@ public interface IFlowManager
     ProjectDTO GetProjectFromFlow(int flowId);
     // Returns a collection of question from a certain flow
     ICollection<Question> GetFlowQuestions(int flowId);
-    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
-
+    
     // Returns the next question after currentQuestionId in a certain flow
     public Question GetNextQuestionInFlow(int flowId, int currentQuestionId);
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QRCoder;
 
-namespace PhygitalTool.Web.Controllers;
+namespace PhygitalTool.Web.Controllers.Util;
 
 public class QrCodeController : Controller
 {

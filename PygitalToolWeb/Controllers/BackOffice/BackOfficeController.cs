@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
-using PhygitalTool.Domain.Platform;
 
 namespace PhygitalTool.Web.Controllers.BackOffice;
 
@@ -11,13 +9,9 @@ public class BackOfficeController : Controller
 {
     private readonly IBackOfficeManager _backOfficeManager;
 
-    private readonly ILogger<BackOfficeController> _logger;
-
-    public BackOfficeController(IBackOfficeManager backOfficeManager,
-        ILogger<BackOfficeController> logger)
+    public BackOfficeController(IBackOfficeManager backOfficeManager)
     {
         _backOfficeManager = backOfficeManager;
-        _logger = logger;
     }
 
     // GET
