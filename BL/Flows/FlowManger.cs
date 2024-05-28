@@ -93,11 +93,7 @@ public class FlowManger : IFlowManager
     {
         return _repositoryQuestion.ReadNextQuestionInFlow(flowId, currentQuestionId);
     }
-    public Question GetNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
-    {
-        return _repositoryQuestion.ReadNextQuestionInFlow(flowId, currentQuestionId, answer);
-    }
-
+    
     // Returns the first Question from a flow
     public Question GetFirstFlowQuestion(int flowId)
     {
@@ -120,8 +116,8 @@ public class FlowManger : IFlowManager
         }
         else
         {
-            int MaxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
-            newAnswerId = MaxAnswerId + 1;
+            int maxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
+            newAnswerId = maxAnswerId + 1;
         }
 
         if (selectedAnswer.IsNullOrEmpty())
@@ -131,6 +127,7 @@ public class FlowManger : IFlowManager
         AddAnswer(newAnswerId,selectedAnswer, currentQuestion);
         AddUserInput(currentFlow, newAnswerId,  projectId, mainThemeId, subthemeId);
     }
+    
     public void AddUserAnswer(string selectedAnswer, int currentFlow, int currentQuestion)
     {
         int newAnswerId;
@@ -143,8 +140,8 @@ public class FlowManger : IFlowManager
         }
         else
         {
-            int MaxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
-            newAnswerId = MaxAnswerId + 1;
+            int maxAnswerId = GetAllAnswers().Max(a => a.AnswerId);
+            newAnswerId = maxAnswerId + 1;
         }
 
         if (selectedAnswer.IsNullOrEmpty())

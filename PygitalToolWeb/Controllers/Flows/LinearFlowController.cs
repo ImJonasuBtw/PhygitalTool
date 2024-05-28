@@ -52,7 +52,7 @@ public class LinearFlowController : Controller
     [HttpGet("GetNextQuestion/{flowId}/{questionId}/{answer}")]
     public async Task<IActionResult> GetNextQuestion(int flowId , int questionId, string answer)
     {
-        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId, answer);
+        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
         await UpdateCurrentQuestion(nextQuestion);
         if (nextQuestion == null)
         {

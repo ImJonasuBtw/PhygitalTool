@@ -6,6 +6,7 @@ namespace PhygitalTool.DAL.IRepositorys;
 public interface IRepositoryIdea
 {
     IEnumerable<Idea> ReadAllIdeas();
+    
     IdentityUser ReadUser(string userId);
     
     void UpdateLikeIdea(Idea idea);
