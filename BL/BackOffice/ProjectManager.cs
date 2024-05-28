@@ -35,7 +35,6 @@ public class ProjectManager : IProjectManager
             Status = status,
             BackOfficeId = backOfficeId
         };
-
         _repositoryProject.CreateProject(newProject);
     }
 
@@ -62,7 +61,6 @@ public class ProjectManager : IProjectManager
             SubThemeInformation = subThemeInformation,
             MainThemeId = mainThemeId
         };
-
         _repositoryProject.CreateSubTheme(newSubTheme);
     }
 
@@ -74,7 +72,6 @@ public class ProjectManager : IProjectManager
             MainThemeInformation = mainThemeInformation,
             ProjectId = projectId
         };
-
         _repositoryProject.CreateMainTheme(newMainTheme);
     }
 
@@ -102,7 +99,6 @@ public class ProjectManager : IProjectManager
     {
         return _repositoryProject.ReadSubThemeWithFlows(subThemeId);
     }
-
 
     public Flow AddFlow(Flow flow)
     {
@@ -268,11 +264,9 @@ public class ProjectManager : IProjectManager
                 }
             }
         }
-
         return newFlow;
     }
-
-
+    
     public void UpdateFlowWithQuestionsAndAnswers(
         int flowId,
         string flowName,
@@ -354,7 +348,6 @@ public class ProjectManager : IProjectManager
                 }
             }
         }
-
         _repositoryFlow.UpdateFlow(existingFlow);
     }
 }
