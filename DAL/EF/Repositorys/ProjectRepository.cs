@@ -36,7 +36,6 @@ public class ProjectRepository : IRepositoryProject
         return _context.SubThemes.AsNoTracking().Include(s => s.Flows).Include(theme => theme.MainTheme)
             .ThenInclude(theme => theme.Project).ThenInclude(project => project.BackOffice)
             .ThenInclude(office => office.Managers).SingleOrDefault(subTheme => subTheme.SubThemeId == subThemeId);
-            
     }
 
     public SubTheme ReadSubTheme(int subThemeId)

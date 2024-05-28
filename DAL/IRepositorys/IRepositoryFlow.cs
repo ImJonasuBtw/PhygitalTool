@@ -6,6 +6,8 @@ public interface IRepositoryFlow
 {
     Flow ReadFlow(int flowId);
     
+    int ReadTotalAmountOfFlows();
+    
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId);
     
     Flow CreateFlow(Flow flow);

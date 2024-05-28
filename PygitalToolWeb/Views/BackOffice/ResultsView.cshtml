@@ -5,12 +5,17 @@
     Layout = "_Layout";
 }
 
-
-<h2>Resultaten voor @Model.ProjectName</h2>
-
-<div id="results-information-container" data-project-id="@Model.ProjectId"></div>
-<div id="results-container" data-project-id="@Model.ProjectId"></div>
-
+<div class="results-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Resultaten voor @Model.ProjectName</h2>
+        <div>
+            <a href="#export-button-xls" id="export-nav" class="btn btn-primary">Export</a>
+            <a asp-controller="BackOffice" asp-action="index" class="btn btn-primary">BackOffice</a>
+        </div>
+    </div>
+    <div id="results-information-container" data-project-id="@Model.ProjectId"></div>
+    <div id="results-container" data-project-id="@Model.ProjectId"></div>
+</div>
 
 @section Scripts
 {

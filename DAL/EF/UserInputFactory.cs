@@ -14,13 +14,16 @@ public class UserInputFactory
         _answerRepository = answerRepository;
         _repositoryUserInput = repositoryUserInput;
         _repositoryFlow = repositoryFlow;
+        
     }
 
-    public void GenerateRandomUserInputForAllFlows(int amountOfFlows, int amountOfGenerationsPerFlow)
+    public void GenerateRandomUserInputForAllFlows(int amountOfGenerationsPerFlow)
     {
+        var totalAmountOfFlow = _repositoryFlow.ReadTotalAmountOfFlows();
+        
         for (int i = 1; i <= amountOfGenerationsPerFlow; i++)
         {
-            for (int flowId = 1; flowId <= amountOfFlows; flowId++)
+            for (int flowId = 1; flowId <= totalAmountOfFlow; flowId++)
             {
                 GenerateRandomUserInput(flowId);
             }
