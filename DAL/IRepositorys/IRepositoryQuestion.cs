@@ -15,8 +15,6 @@ public interface IRepositoryQuestion
     void UpdateQuestion(Question question);
     
     Question ReadFirstFlowQuestion(int flowId);
-
-    Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer);
     
     Question ReadNextQuestionInFlow(int flowId, int currentQuestionId);
     

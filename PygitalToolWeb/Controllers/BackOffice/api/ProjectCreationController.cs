@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
-using PhygitalTool.Domain.Projects;
-using PhygitalTool.Domain.Util;
 using PhygitalTool.Web.Models;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
@@ -36,7 +34,7 @@ public class ProjectCreationController : Controller
             _projectManager.AddProject(project.ProjectName, project.Description, project.CreationDate, project.Status,
                 project.BackOfficeId);
             _unitOfWork.Commit();
-            return Ok();
+            return NoContent();
         }
         catch (Exception ex)
         {

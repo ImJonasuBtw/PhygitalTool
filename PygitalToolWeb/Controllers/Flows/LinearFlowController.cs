@@ -1,23 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using PhygitalTool.BL;
 using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
-using PhygitalTool.Web.Controllers.Flows;
 
-namespace PhygitalTool.Web.Controllers;
+namespace PhygitalTool.Web.Controllers.Flows;
 
 public class LinearFlowController : Controller
 {
     private readonly  IHubContext<QuestionHub> _questionHub;
     private readonly IFlowManager _flowManager;
-    private readonly ILogger<QuestionController> _logger;
 
-    public LinearFlowController(IHubContext<QuestionHub> questionHub,IFlowManager flowManager, ILogger<QuestionController> logger)
+    public LinearFlowController(IHubContext<QuestionHub> questionHub,IFlowManager flowManager)
     {
         _questionHub = questionHub;
         _flowManager = flowManager;
-        _logger = logger;
     }
 
     // Launches a flow using the flowId, this action is called after the user/supervisor selects the flow.
@@ -38,29 +34,17 @@ public class LinearFlowController : Controller
   
 
     // Returns the View of the next question after the user submitted the last one.
-    public async Task<IActionResult> GetNextQuestion(int flowId , int questionId)
+    public Task<IActionResult> GetNextQuestion(int flowId , int questionId)
     {
         Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
         if (nextQuestion == null)
         {
             Flow flow = _flowManager.GetFlow(flowId);
-            return View("FlowEndView", flow );
+            return Task.FromResult<IActionResult>(View("FlowEndView", flow ));
         }
-        return View("QuestionView",nextQuestion );
+        return Task.FromResult<IActionResult>(View("QuestionView",nextQuestion ));
     }
     
-    [HttpGet("GetNextQuestion/{flowId}/{questionId}/{answer}")]
-    public async Task<IActionResult> GetNextQuestion(int flowId , int questionId, string answer)
-    {
-        Question nextQuestion = _flowManager.GetNextQuestionInFlow(flowId, questionId);
-        await UpdateCurrentQuestion(nextQuestion);
-        if (nextQuestion == null)
-        {
-            Flow flow = _flowManager.GetFlow(flowId);
-            return View("FlowEndView", flow );
-        }
-        return View("QuestionView",nextQuestion );
-    }
     
     public async Task UpdateCurrentQuestion(Question question)
     {

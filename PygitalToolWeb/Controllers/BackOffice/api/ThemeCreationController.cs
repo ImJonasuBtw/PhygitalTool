@@ -12,14 +12,12 @@ using Models;
 public class ThemeCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
-    private readonly ILogger<ThemeCreationController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
-    public ThemeCreationController(IProjectManager projectManager, ILogger<ThemeCreationController> logger,
+    public ThemeCreationController(IProjectManager projectManager,
         UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
-        _logger = logger;
         _unitOfWork = unitOfWork;
     }
 
@@ -36,7 +34,7 @@ public class ThemeCreationController : Controller
         _projectManager.AddMainTheme(theme.ThemeName, theme.MainThemeInformation, theme.ProjectId);
         _unitOfWork.Commit();
 
-        return Ok();
+        return NoContent();
     }
 
     [Authorize(Roles = "Manager")]

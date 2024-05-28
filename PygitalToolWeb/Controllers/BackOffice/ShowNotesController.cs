@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
-using PhygitalTool.BL.BackOffice;
+﻿using Microsoft.AspNetCore.Mvc;
+
 
 namespace PhygitalTool.Web.Controllers.BackOffice;
 
-public class ShowNotesController: Controller
+public class ShowNotesController : Controller
 {
     public IActionResult Index()
     {

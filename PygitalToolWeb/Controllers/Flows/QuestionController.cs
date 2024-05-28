@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.IdentityModel.Tokens;
 using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.BL.Flows;
@@ -16,14 +15,12 @@ public class QuestionController : Controller
     private readonly IFlowManager _flowManager;
     private readonly IProjectManager _projectManager;
     private readonly UnitOfWork _unitOfWork;
-    private readonly ILogger<QuestionController> _logger;
 
-    public QuestionController(IHubContext<QuestionHub> hubContext, ILogger<QuestionController> logger,
+    public QuestionController(IHubContext<QuestionHub> hubContext,
         IFlowManager iflowManager,
         IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _hubContext = hubContext;
-        _logger = logger;
         _flowManager = iflowManager;
         _projectManager = projectManager;
         _unitOfWork = unitOfWork;
@@ -51,7 +48,7 @@ public class QuestionController : Controller
         }
 
         return RedirectToAction("GetNextQuestion", "LinearFlow",
-            new { flowId = currentFlow, questionId = currentQuestion, answer = selectedAnswer });
+            new { flowId = currentFlow, questionId = currentQuestion });
     }
 
     // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.

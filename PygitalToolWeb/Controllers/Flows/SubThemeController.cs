@@ -1,23 +1,19 @@
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.BL.Flows;
 using PhygitalTool.Domain.FlowPackage;
 
-namespace PhygitalTool.Web.Controllers;
+namespace PhygitalTool.Web.Controllers.Flows;
 
 public class SubThemeController : Controller
 {
     private readonly IFlowManager _flowManager;
     private readonly IProjectManager _projectManager;
-    
-    private readonly ILogger<SubThemeController> _logger;
 
-    public SubThemeController(IFlowManager iFlowManager, ILogger<SubThemeController> logger, IProjectManager projectManager)
+    public SubThemeController(IFlowManager iFlowManager, IProjectManager projectManager)
     {
         _flowManager = iFlowManager;
         _projectManager = projectManager;
-        _logger = logger;
     }
 
     // Returns the information view after a user/supervisor selects a subtheme

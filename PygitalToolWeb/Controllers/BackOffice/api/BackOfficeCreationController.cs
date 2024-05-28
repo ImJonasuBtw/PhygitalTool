@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
-using PhygitalTool.Domain.Platform;
-using PhygitalTool.Domain.Util;
 using PhygitalTool.Web.Models;
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
@@ -23,7 +21,7 @@ public class BackOfficeCreationController : Controller
 
     [Authorize(Roles = "Admin")]
     [HttpPost("AddBackOffice")]
-    public IActionResult AddBackOffice([FromBody] BackOfficeModel backOffice)
+    public IActionResult AddBackOffice(BackOfficeModel backOffice)
     {
         if (!ModelState.IsValid)
         {
@@ -42,7 +40,7 @@ public class BackOfficeCreationController : Controller
             _backOfficeManager.AddBackOffice(domainBackOffice);
             _unitOfWork.Commit();
 
-            return Ok();
+            return NoContent();
         }
         catch (Exception ex)
         {
@@ -95,7 +93,7 @@ public class BackOfficeCreationController : Controller
 
     [Authorize(Roles = "Admin")]
     [HttpPut("UpdateBackOffice/{backOfficeId}")]
-    public IActionResult UpdateBackOffice(int backOfficeId, [FromBody] BackOfficeModel backOfficeModel)
+    public IActionResult UpdateBackOffice(int backOfficeId,  BackOfficeModel backOfficeModel)
     {
         if (!ModelState.IsValid)
         {

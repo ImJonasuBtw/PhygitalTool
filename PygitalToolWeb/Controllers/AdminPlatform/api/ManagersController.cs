@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using PhygitalTool.BL;
+using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL.AdminPlatform;
 using PhygitalTool.BL.Users;
 using PhygitalTool.Domain.Platform;
-
 using PhygitalTool.Web.Models;
 
-namespace PhygitalTool.Web.Controllers.AdminPlatform;
-using Microsoft.AspNetCore.Mvc;
+namespace PhygitalTool.Web.Controllers.AdminPlatform.api;
+
 [ApiController]
 [Route("api/[controller]")]
 public class ManagersController : Controller
@@ -39,7 +38,7 @@ public class ManagersController : Controller
     }
     [Authorize(Roles = "Admin")]
     [HttpPost]
-    public IActionResult CreateManager([FromBody] ManagerDto  managerDto)
+    public IActionResult CreateManager(ManagerDto  managerDto)
     {
         if (!ModelState.IsValid)
         {

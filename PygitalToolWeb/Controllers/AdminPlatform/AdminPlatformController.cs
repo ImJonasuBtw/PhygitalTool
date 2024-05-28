@@ -1,7 +1,5 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PhygitalTool.BL;
 using PhygitalTool.BL.AdminPlatform;
 
 
@@ -11,13 +9,9 @@ public class AdminPlatformController : Controller
 {
     private readonly IAdminPlatformManager _adminPlatformManager;
 
-    private readonly ILogger<AdminPlatformController> _logger;
-
-    public AdminPlatformController(IAdminPlatformManager adminPlatformManager,
-        ILogger<AdminPlatformController> logger)
+    public AdminPlatformController(IAdminPlatformManager adminPlatformManager)
     {
         _adminPlatformManager = adminPlatformManager;
-        _logger = logger;
     }
 
     // GET
@@ -27,5 +21,4 @@ public class AdminPlatformController : Controller
         Domain.Platform.AdminPlatform adminPlatform = _adminPlatformManager.GetAdminPlatform();
         return View("AdminPlatformView", adminPlatform);
     }
-    
 }
