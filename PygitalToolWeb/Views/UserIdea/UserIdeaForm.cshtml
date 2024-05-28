@@ -49,13 +49,18 @@
                 <p>@comment.User</p>
             }
               @if (User.IsInRole("User"))
-                        {
+              {
                             <button class="commentButton btn btn-primary" data-ideaId="@idea.IdeaId">Comment</button>
                             <div id="commentForm-@idea.IdeaId" style="display:none;">
                                 <input class="mt-3 form-control" type="text" id="commentText-@idea.IdeaId" placeholder="Geef uw reactie in" required>
                                 <button class="btn btn-primary mt-3 addCommentButton" data-ideaId="@idea.IdeaId">Verzend</button>
                             </div>
-                        }
+              }
+              else
+              {
+                  <div class="InlogMessage"><p>Je moet ingelogd zijn als user om een comment achter te laten</p></div>
+              }
+                        
         </div>
     </div>
 }
