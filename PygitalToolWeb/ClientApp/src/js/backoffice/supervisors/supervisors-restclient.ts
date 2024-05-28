@@ -6,8 +6,14 @@ import {validatePassword,handleResponseSupervisor} from "./supervisors-validatio
 export async function loadSupervisors(backofficeId: number | undefined): Promise<void> {
     try {
         const response = await fetch(`/api/supervisors/Getsupervisors/${backofficeId}`);
+        if (response.status === 204) {
+            renderSupervisors([]);
+            return;
+        }
         if (!response.ok) {
-            throw new Error('Error loading supervisors');
+            
+            console.error('Error loading supervisors:', response.statusText);
+            return;
         }
         const supervisors: Supervisor[] = await response.json();
         renderSupervisors(supervisors);
