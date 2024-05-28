@@ -13,10 +13,11 @@ public class ContactInformationController : Controller
     private readonly ILogger<QuestionController> _logger;
     private readonly UnitOfWork _unitOfWork;
     
-    public ContactInformationController(IFlowManager flowManager, ILogger<QuestionController> logger)
+    public ContactInformationController(IFlowManager flowManager, ILogger<QuestionController> logger, UnitOfWork unitOfWork)
     {
         _flowManager = flowManager;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     
     // GET
