@@ -24,6 +24,11 @@ public class FlowRepository : IRepositoryFlow
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
+    public int ReadTotalAmountOfFlows()
+    {
+        return _context.Flows.Count();
+    }
+
     public Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId)
     {
         return _context.Flows.Include(f => f.Questions)
