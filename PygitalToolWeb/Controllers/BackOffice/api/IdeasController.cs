@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.BL.Users;
@@ -21,23 +20,18 @@ public class IdeasController : ControllerBase
 
     // POST: api/Ideas
     [HttpPost]
-    public IActionResult PostIdea([FromBody] Idea idea)
+    public IActionResult PostIdea(Idea idea)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var domainIdea = new Idea()
-        {
-            Title = idea.Title,
-            Description = idea.Description,
-            UserId = idea.UserId
-        };
         _unitOfWork.BeginTransaction();
-        _userManager.AddIdeas(domainIdea);
+        _userManager.AddIdeas(idea.Title, idea.Description, idea.UserId);
         _unitOfWork.Commit();
-        return Ok();
+
+        return NoContent();
     }
 
     [HttpPost("Like/{ideaId}")]
@@ -45,17 +39,10 @@ public class IdeasController : ControllerBase
     {
         try
         {
-            var idea = _userManager.GetIdea(ideaId);
-            if (idea == null)
-            {
-                return NotFound();
-            }
-
-            idea.Likes++;
             _unitOfWork.BeginTransaction();
-            _userManager.UpdateLikeIdea(idea);
+            var likesAmount = _userManager.UpdateLikeIdea(ideaId);
             _unitOfWork.Commit();
-            return Ok(new { likes = idea.Likes });
+            return Ok(new { likes = likesAmount });
         }
         catch (Exception ex)
         {

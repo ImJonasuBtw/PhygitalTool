@@ -19,7 +19,7 @@ public class CommentController: ControllerBase
     }
 
     [HttpPost]
-    [Authorize]
+    [Authorize(Roles = "User")]
     public IActionResult PostComment(Comment comment)
     {
         if (!ModelState.IsValid)
@@ -30,7 +30,7 @@ public class CommentController: ControllerBase
         _unitOfWork.BeginTransaction();
         _userManager.AddCommentToIdea(comment.Description, comment.UserId, comment.IdeaId);
         _unitOfWork.Commit();
-        
-        return Ok();
+
+        return NoContent();
     }
 }

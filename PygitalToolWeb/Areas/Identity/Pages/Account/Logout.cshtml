@@ -1,21 +1,28 @@
 ﻿@page
 @model LogoutModel
 @{
-    ViewData["Title"] = "Log out";
+    ViewData["Title"] = "Zeker dat je wilt afmelden?";
+    Layout = null;
 }
-
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
-    }
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - PhygitalToolWeb</title>
+    <script src="~/dist/site.entry.js" defer></script>
+    <link rel="stylesheet" href="~/dist/site.css">
+</head>
+<body>
+    <div class="logout-container row mx-0 h-100">
+        <div class="col-md-6 logout-form px-5">
+            <h1 class="fw-bold">@ViewData["Title"]</h1>
+            <section>
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <button type="submit" class="btn btn-danger">Log uit</button></form>
+            </section>
+        </div>
+        <div class="logout-img col-md-6 p-0">
+        </div>
+    </div>
+</body>

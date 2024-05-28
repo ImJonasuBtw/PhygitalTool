@@ -6,7 +6,7 @@
 <p>@Model.SubTheme.SubThemeInformation</p>
 
 
-<a class="nav-link text-dark" id="submitButton"
+<a class="nav-link text-dark" id="submit-button"
    asp-area=""
    asp-controller="CircularFlow"
    asp-action="GetNextQuestion"
@@ -29,9 +29,9 @@
 
     var fullUrl = $"{scheme}://{host}{actionPath}";
 }
-<img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
+<img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code"  />
 
 
 @section Scripts {
-    <script id="questionPage-script" src="~/dist/questionsPage.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
+    <script id="question-page-script" src="~/dist/questions_page.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
 }

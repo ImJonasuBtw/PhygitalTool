@@ -1,19 +1,18 @@
-﻿@using PhygitalTool.Domain.Util
-@model PhygitalTool.Domain.FlowPackage.Question
+﻿@model PhygitalTool.Domain.FlowPackage.Question
 
 <body class="animated-background">
 <div class="row main-container">
      <div>
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Terug naar hoofdpagina</a>
         </div>
-    <div class="questionInfo-container mt-3">
+    <div class="question-info-container mt-3">
         <div class="mb-3 col-md-9">
             <form action="">
-                <p id="currentQuestionId" style="display: none"></p>
-                <p id="questionText" questionId="" class="text-body">Wacht tot er een vraag wordt getoond. </p>
-                <label for="questionNote" class="form-label">Notities</label>
-                <textarea type="text" class="form-control" id="questionNote">Maak hier je notities</textarea>
-                <button id="submitNote" questionId="" class="btn-primary btn mt-3">Bewaar notitie</button>
+                <p id="current-question-id" class="hidden"></p>
+                <p id="question-text" questionId="" class="text-body">Wacht tot er een vraag wordt getoond. </p>
+                <label for="question-note" class="form-label">Notities</label>
+                <textarea type="text" class="form-control" id="question-note">Maak hier je notities</textarea>
+                <button id="submit-note" questionId="" class="btn-primary btn mt-3">Bewaar notitie</button>
             </form>
 
         </div>
@@ -23,6 +22,6 @@
 
 @section Scripts
 {
-    <script id="questionPage-script" src="~/dist/hubConnection.entry.js" defer="defer" ></script>
-    <script id="questionPage-script" src="~/dist/notes.entry.js" defer="defer" ></script>
+    <script id="hub-connection-script" src="~/dist/hub_connection.entry.js" defer="defer" ></script>
+    <script id="notes-script" src="~/dist/notes.entry.js" defer="defer" ></script>
 }

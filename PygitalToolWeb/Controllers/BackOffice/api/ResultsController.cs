@@ -1,11 +1,7 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis;
-using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.BL.Flows;
-using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Web.Models;
 using Project = PhygitalTool.Domain.Projects.Project;
@@ -18,15 +14,13 @@ public class ResultsController : Controller
 {
     private readonly IProjectManager _projectManager;
     private readonly IFlowManager _flowManager;
-    private readonly ILogger<ResultsController> _logger;
 
-    public ResultsController(IProjectManager iProjectManager,IFlowManager iFlowManager , ILogger<ResultsController> logger, UnitOfWork unitOfWork)
+    public ResultsController(IProjectManager iProjectManager, IFlowManager iFlowManager)
     {
         _projectManager = iProjectManager;
         _flowManager = iFlowManager;
-        _logger = logger;
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectWithData/{projectId}")]
     public IActionResult GetProjectWithData(int projectId)
@@ -44,7 +38,7 @@ public class ResultsController : Controller
 
         return Ok(response);
     }
-   
+
     [Authorize(Roles = "Manager")]
     [HttpGet("GetAllAnswersWithQuestions")]
     public IActionResult GetAllAnswersWithQuestions()
@@ -52,7 +46,7 @@ public class ResultsController : Controller
         try
         {
             var answersWithQuestions = _flowManager.GetAllAnswersWithQuestions();
-            
+
             if (answersWithQuestions == null)
             {
                 return NotFound("No answers with questions found.");
@@ -65,7 +59,7 @@ public class ResultsController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
+
     [Authorize(Roles = "Manager")]
     [HttpGet("GetProjectFromFlowId/{flowId}")]
     public IActionResult GetProjectFromFlowId(int flowId)
@@ -73,7 +67,7 @@ public class ResultsController : Controller
         try
         {
             ProjectDTO projectFromFlow = _flowManager.GetProjectFromFlow(flowId);
-            
+
             if (projectFromFlow == null)
             {
                 return NotFound("No answers with questions found.");
@@ -86,9 +80,6 @@ public class ResultsController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-
-
-
 
     public IActionResult Index(int projectId)
     {

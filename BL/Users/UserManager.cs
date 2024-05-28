@@ -8,11 +8,9 @@ namespace PhygitalTool.BL.Users;
 
 public class UserManager : IUserManager
 {
-    
     private readonly IRepositoryBackOffice _repositoryBackOffice;
     private readonly IRepositoryIdea _repositoryIdeas;
-   
-
+    
     public UserManager(IRepositoryBackOffice repositoryBackOffice, IRepositoryIdea repositoryIdeas)
     {
         _repositoryBackOffice = repositoryBackOffice;
@@ -29,8 +27,14 @@ public class UserManager : IUserManager
         return _repositoryIdeas.ReadAllIdeas();
     }
 
-    public void AddIdeas(Idea idea)
+    public void AddIdeas(string title, string description, string userId)
     {
+        var idea = new Idea()
+        {
+            Title = title,
+            Description = description,
+            UserId = userId
+        };
         _repositoryIdeas.CreateIdea(idea);
     }
 
@@ -38,12 +42,7 @@ public class UserManager : IUserManager
     {
         return _repositoryIdeas.ReadUser(userId);
     }
-
-    public Supervisor GetSupervisor(string supervisorId)
-    {
-        return _repositoryBackOffice.ReadSupervisorWithFlows(supervisorId);
-    }
-
+    
     public void AddCommentToIdea(string description, string userId, int ideaId)
     {
         var comment = new Comment()
@@ -52,14 +51,23 @@ public class UserManager : IUserManager
             UserId = userId,
             IdeaId = ideaId
         };
-
-        
         _repositoryIdeas.CreateCommentToIdea(comment);
     }
 
-    public void UpdateLikeIdea(Idea idea)
+    public int UpdateLikeIdea(int ideaId)
     {
-        _repositoryIdeas.UpdateLikeIdea(idea);
+        try
+        {
+            var idea = GetIdea(ideaId);
+            idea.Likes++;
+            _repositoryIdeas.UpdateLikeIdea(idea);
+            return idea.Likes;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error updating like idea: " + e.Message);
+            throw;
+        }
     }
 
     public Idea GetIdea(int id)

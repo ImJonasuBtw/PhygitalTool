@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PhygitalTool.Domain.FlowPackage;
 
 public class Note
@@ -6,6 +8,7 @@ public class Note
     public int NoteId { get; set; }
     public int QuestionId { get; set; }
     public Question Question { get; set; }
+    [Required(ErrorMessage = "Description is required")]
     public string Description { get; set; }
 
     public Note(int questionId, string description)

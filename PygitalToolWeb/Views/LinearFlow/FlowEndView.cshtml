@@ -8,6 +8,8 @@
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
+
+<body class="animated-background">
 @{
     var culture = Model.Language switch
     {
@@ -39,4 +41,6 @@
 <p>@Localizer[ResourcesFlow.ScanCode]</p>
 
 <img src="@Url.Action("Generate", "QrCode", new { data = fullUrl, width = 500, height = 500 })" alt="QR Code" style="width:500px; height:500px;" />
+
+</body>
 

@@ -1,0 +1,74 @@
+﻿@use '../variables' as variables;
+
+.logout-img {
+  background-color: variables.$login-bg;
+}
+
+#logout-submit {
+  background-color: variables.$login-button;
+  font-family: "Outfit", sans-serif;
+  border: none;
+  border-radius: 15px;
+  height: 4rem;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+#logout-submit:hover {
+  background-color: variables.$login-button-lighter;
+}
+
+.logout-container {
+  font-family: "Outfit", sans-serif;
+  height: 100vh !important;
+
+  h1 {
+    margin-bottom: 30px;
+  }
+}
+
+.input-text {
+  border-radius: 15px;
+}
+
+.logout-link {
+  text-decoration: none;
+}
+
+.logout-password-forgot {
+  display: flex;
+  justify-content: end;
+}
+
+body:has(.logout-container) {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.logout-form {
+  align-self: center;
+
+  section {
+    width: 75%;
+  }
+}
+
+@media(max-width: variables.$tablet-screen) {
+  .logout-img {
+    display: none;
+  }
+
+  .logout-form {
+    align-self: start;
+    margin-top: 3rem;
+  }
+}
+
+@media(max-width: 1200px) {
+  .logout-form {
+    section {
+      width: 100%
+    }
+  }
+}

@@ -1,11 +1,15 @@
+using System.ComponentModel.DataAnnotations;
 using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.Domain.Platform;
 
 public class BackOffice
 {
+    [Key]
     // Prop
     public int BackOfficeId { get; set; }
+    [Required(ErrorMessage = "BackOffice Name is required")]
+    [StringLength(25, ErrorMessage = "Name cannot exceed 25 characters.")]
     public string Name { get; set; }
 
     // Foreign key property for AdminPlatform
@@ -21,9 +25,8 @@ public class BackOffice
     {
     }
 
-    public BackOffice(int backOfficeId, string name, int adminPlatformId)
+    public BackOffice( string name, int adminPlatformId)
     {
-        BackOfficeId = backOfficeId;
         Name = name;
         AdminPlatformId = adminPlatformId;
     }

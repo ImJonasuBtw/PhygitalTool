@@ -24,6 +24,11 @@ public class FlowRepository : IRepositoryFlow
             .SingleOrDefault(f => f.FlowId == flowId);
     }
 
+    public int ReadTotalAmountOfFlows()
+    {
+        return _context.Flows.Count();
+    }
+
     public Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId)
     {
         return _context.Flows.Include(f => f.Questions)
@@ -53,6 +58,7 @@ public class FlowRepository : IRepositoryFlow
         var existingFlow = _context.Flows.Find(flow.FlowId);
         if (existingFlow == null) throw new ArgumentException("Flow not found");
         existingFlow.FlowName = flow.FlowName;
+        existingFlow.FlowImage = flow.FlowImage;
         existingFlow.FlowDescription = flow.FlowDescription;
         existingFlow.FlowType = flow.FlowType;
         existingFlow.Language = flow.Language;

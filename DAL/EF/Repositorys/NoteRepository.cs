@@ -23,10 +23,8 @@ public class NoteRepository : IRepositoryNote
         return notesWithQuestions; 
     }
     
-    
     public void CreateNote(Note note)
     {
-        // saves the new user input
         _context.Notes.Add(note);
         _context.SaveChanges();
     }

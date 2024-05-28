@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using PhygitalTool.BL.Users;
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.Platform;
@@ -42,12 +41,13 @@ public class SupervisorsController : Controller
         {
             return NoContent();
         }
+        
         return Ok(supervisors);
     }
 
     [Authorize(Roles = "Manager")]
     [HttpPost]
-    public IActionResult CreateSupervisor([FromBody] SupervisorDto supervisorDto)
+    public IActionResult CreateSupervisor(SupervisorDto supervisorDto)
     {
         if (!ModelState.IsValid)
         {
@@ -72,6 +72,8 @@ public class SupervisorsController : Controller
 
         return Ok(new { Message = "Supervisor added successfully" });
     }
+    
+    
     [HttpGet("show-supervisor-screen")]
     public IActionResult ShowSupervisorScreen(string supervisorId)
     {

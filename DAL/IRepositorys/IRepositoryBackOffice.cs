@@ -18,6 +18,8 @@ public interface IRepositoryBackOffice
     Supervisor ReadSupervisorWithFlows(string supervisorId);
     
     void CreateBackOffice(BackOffice backOffice);
+    
     void RemoveBackOffice(int backOfficeId);
+    
     void UpdateBackOffice(BackOffice backOffice);
 }

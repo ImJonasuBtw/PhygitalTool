@@ -11,19 +11,17 @@ namespace PhygitalTool.Web.Controllers.BackOffice.api;
 public class SubThemeCreationController : Controller
 {
     private readonly IProjectManager _projectManager;
-    private readonly ILogger<SubThemeCreationController> _logger;
     private readonly UnitOfWork _unitOfWork;
 
-    public SubThemeCreationController(IProjectManager projectManager, ILogger<SubThemeCreationController> logger, UnitOfWork unitOfWork)
+    public SubThemeCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
     {
         _projectManager = projectManager;
-        _logger = logger;
         _unitOfWork = unitOfWork;
     }
     
     [Authorize(Roles = "Manager")]
     [HttpPost("AddSubThemeToBackoffice")]
-    public IActionResult AddSubThemeToBackoffice([FromBody] SubThemeModel subTheme)
+    public IActionResult AddSubThemeToBackoffice(SubThemeModel subTheme)
     {
         
         if (!ModelState.IsValid)
@@ -31,18 +29,13 @@ public class SubThemeCreationController : Controller
             return BadRequest(ModelState);
         }
         
-        var domainSubTheme = new Domain.Projects.SubTheme
-        {
-            SubThemeName = subTheme.SubThemeName,
-            SubThemeInformation = subTheme.SubThemeInformation,
-            MainThemeId = subTheme.MainThemeId
-        };
- 
         _unitOfWork.BeginTransaction();
-        _projectManager.AddSubTheme(domainSubTheme);
+        _projectManager.AddSubTheme(subTheme.SubThemeName, subTheme.SubThemeInformation, subTheme.MainThemeId);
         _unitOfWork.Commit();
-        return Ok();
+        
+        return NoContent();
     }
+    
     [Authorize(Roles = "Manager")]
     [HttpDelete("DeleteSubTheme/{subThemeId}")]
     public IActionResult DeleteSubTheme(int subThemeId)
@@ -59,6 +52,8 @@ public class SubThemeCreationController : Controller
             return BadRequest($"Error deleting subTheme: {ex.Message}");
         }
     }
+    
+    
     [Authorize(Roles = "Manager")]
     [HttpGet("GetSubThemeDetails/{subThemeId}")]
     public IActionResult GetSubThemeDetails(int subThemeId)
@@ -85,9 +80,11 @@ public class SubThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+    
+    
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateSubTheme/{subThemeId}")]
-    public IActionResult UpdateSubTheme(int subThemeId, [FromBody] SubThemeModel subThemeModel)
+    public IActionResult UpdateSubTheme(int subThemeId, SubThemeModel subThemeModel)
     {
         if (!ModelState.IsValid)
         {
@@ -96,16 +93,8 @@ public class SubThemeCreationController : Controller
 
         try
         {
-            var existingSubTheme = _projectManager.GetSubThemeWithFlows(subThemeId);
-            if (existingSubTheme == null)
-            {
-                return NotFound($"Subtheme with ID {subThemeId} not found.");
-            }
-
-            existingSubTheme.SubThemeName = subThemeModel.SubThemeName;
-            existingSubTheme.SubThemeInformation = subThemeModel.SubThemeInformation;
             _unitOfWork.BeginTransaction();
-            _projectManager.UpdateSubTheme(existingSubTheme);
+            _projectManager.UpdateSubTheme(subThemeId, subThemeModel.SubThemeName, subThemeModel.SubThemeInformation);
             _unitOfWork.Commit();
 
             return Ok();

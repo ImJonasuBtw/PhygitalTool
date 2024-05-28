@@ -3,19 +3,19 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     entry: {
-        site: './src/js/EntryPoints/site.ts',
-        validation: './src/js/validation.ts',
-        backOfficeHome: './src/js/EntryPoints/backOfficeHome.ts',
-        mainThemePage: './src/js/EntryPoints/mainThemePage.ts',
-        subThemePage: './src/js/EntryPoints/subThemePage.ts',
-        flowPage: './src/js/EntryPoints/flowPage.ts',
-        results: './src/js/EntryPoints/results.ts',
-        questionsPage: './src/js/EntryPoints/questionsPage.ts',
-        userPlatform: './src/js/EntryPoints/userPlatform.ts',
-        hubConnection: './src/js/Front-End/hubConnection.ts',
-        notes: './src/js/EntryPoints/notes.ts',
-        supervisorPlatform: './src/js/EntryPoints/superVisorPlatform.ts',
-        adminPlatform: './src/js/EntryPoints/adminPlatform.ts'
+        admin_platform: './src/js/entry-points/admin-platform.ts',
+        backoffice: './src/js/entry-points/backoffice.ts',
+        flow_page: './src/js/entry-points/flow-page.ts',
+        main_theme_page: './src/js/entry-points/main-theme-page.ts',
+        notes: './src/js/entry-points/notes.ts',
+        questions_page: './src/js/entry-points/questions-page.ts',
+        results: './src/js/entry-points/results.ts',
+        site: './src/js/entry-points/site.ts',
+        sub_theme_page: './src/js/entry-points/sub-theme-page.ts',
+        supervisor_platform: './src/js/entry-points/supervisor-platform.ts',
+        user_platform: './src/js/entry-points/user-platform.ts',
+        hub_connection: './src/js/frontend/hub-connection.ts',
+        validation: './src/js/validation.ts'
     },
     output: {
         filename: '[name].entry.js',

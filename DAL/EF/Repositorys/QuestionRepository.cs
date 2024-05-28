@@ -16,7 +16,7 @@ public class QuestionRepository : IRepositoryQuestion
 
     public Question ReadQuestion(int id)
     {
-        return _context.Questions.AsNoTracking().SingleOrDefault(q => q.QuestionId == id);
+        return _context.Questions.AsNoTracking().SingleOrDefault(q => q.QuestionId == id); 
     }
 
     public Question ReadQuestionWithAnswerPossibilities(int id)
@@ -47,6 +47,7 @@ public class QuestionRepository : IRepositoryQuestion
         if (existingQ == null) throw new ArgumentException("Question not found");
         existingQ.QuestionText = question.QuestionText;
         existingQ.QuestionType = question.QuestionType;
+        existingQ.QuestionImage = question.QuestionImage;
         _context.SaveChanges();
     }
 
@@ -61,50 +62,9 @@ public class QuestionRepository : IRepositoryQuestion
 
         return flow?.Questions.OrderBy(q => q.QuestionId).FirstOrDefault();
     }
-
-    public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId, string answer)
-    {
-        var currentQuestion = ReadQuestion(currentQuestionId);
-
-        if (currentQuestion == null)
-        {
-            return null;
-        }
-
-        if (currentQuestion.IsConditional)
-        {
-            var answerPossibilities = ReadQuestionWithAnswerPossibilities(currentQuestionId).AnswerPossibilities;
-
-            foreach (var answerPossibility in answerPossibilities)
-            {
-                if (answer == answerPossibility.Description)
-                {
-                    if (answerPossibility.NextQuestionId != 0)
-                    {
-                        return ReadQuestion(answerPossibility.NextQuestionId);
-                    }
-                    else
-                    {
-                        return ReadNextSequentialQuestion(flowId, currentQuestionId);
-                    }
-                }
-            }
-        }
-        else
-        {
-            return ReadNextSequentialQuestion(flowId, currentQuestionId);
-        }
-
-        return null;
-    }
+    
 
     public Question ReadNextQuestionInFlow(int flowId, int currentQuestionId)
-    {
-        return ReadNextSequentialQuestion(flowId, currentQuestionId);
-    }
-    
-    
-    private Question ReadNextSequentialQuestion(int flowId, int currentQuestionId)
     {
         var flow = _context.Flows
             .AsNoTracking()
