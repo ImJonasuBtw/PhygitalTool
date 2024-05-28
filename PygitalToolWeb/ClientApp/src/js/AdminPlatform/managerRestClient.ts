@@ -2,7 +2,7 @@
 import {validatePassword, handleResponse} from "./managerValidation";
 import {renderManagers} from "./managerUI";
 
-
+// Loads managers from the server and renders them.
 export async function loadManagers(): Promise<void> {
     try {
         const response = await fetch('/api/Managers/GetManagers/');
@@ -12,11 +12,11 @@ export async function loadManagers(): Promise<void> {
         const managers: Managers[] = await response.json();
         renderManagers(managers);
     } catch (error) {
-        console.error('Error loading managers:', error);
-
+        
     }
 }
 
+// Uploads a file to the server and returns the URL if successful, otherwise returns null.
 async function uploadFile(formData: FormData): Promise<string | null> {
     try {
         const fileResponse = await fetch('/api/files/uploadFile', {
@@ -26,11 +26,11 @@ async function uploadFile(formData: FormData): Promise<string | null> {
         const fileResult = await fileResponse.json();
         return fileResult && fileResult.url;
     } catch (error) {
-        console.error('Error uploading file:', error);
         return null;
     }
 }
 
+// Adds a new manager to the server.
 async function addManager(managerData: any): Promise<Response> {
     try {
         return await fetch('/api/Managers', {
@@ -41,10 +41,12 @@ async function addManager(managerData: any): Promise<Response> {
             body: JSON.stringify(managerData)
         });
     } catch (error) {
-        console.error('Error adding manager:', error);
         throw error;
     }
 }
+
+
+// Submits the managers form data to add a new manager.
 export async function submitManagersForm(): Promise<void> {
     try {
         const form = document.getElementById('managersForm') as HTMLFormElement;
@@ -83,7 +85,7 @@ export async function submitManagersForm(): Promise<void> {
 }
 
 
-
+// Fetches backoffices from the server and populates the backoffice select element.
 export function fetchBackOffices() {
     fetch('api/Backoffice/GetBackoffices')
         .then(response => response.json())

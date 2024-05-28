@@ -1,6 +1,7 @@
-import {Flow, FlowTypeEnum, Language, QuestionType} from "./flow";
+﻿import {Flow, FlowTypeEnum, Language, QuestionType} from "./flow";
 import {deleteAnswerPossibility, deleteQuestion} from "./flowRestClient";
 
+// Renders a form to add a new flow to the specified container.
  export function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `
             <h2 class="mt-4">Nieuwe stroom toevoegen</h2>
@@ -50,6 +51,7 @@ import {deleteAnswerPossibility, deleteQuestion} from "./flowRestClient";
         `;
 }
 
+// Renders a form to add a new question to the question list.
  export function QuestionForm() {
     const questionList = document.getElementById('question-list');
     if (questionList) {
@@ -120,6 +122,7 @@ import {deleteAnswerPossibility, deleteQuestion} from "./flowRestClient";
     }
 }
 
+// Adds a new answer possibility to the specified question container.
 function AnswerPossibility(questionContainer: HTMLElement): void {
     const answerPossibilityContainer = questionContainer.querySelector('.answer-possibilities-container') as HTMLElement;
     const answerPossibilityInputs = answerPossibilityContainer.querySelectorAll('.answer-possibility-input');
@@ -157,8 +160,8 @@ function AnswerPossibility(questionContainer: HTMLElement): void {
     }
 }
 
+// Renders an edit form for a flow, populating it with existing data from a flow for editing.
 export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void{
-    console.log(flow.flowImage);
     FlowContainer.innerHTML = `
                     <h2 class="mt-4">Flow bewerken</h2>
                     <form id="edit-flow-form">
@@ -217,6 +220,8 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow):void
                 `;
 }
 
+
+//Creates and appends a button for adding a new question to a form. When clicked, it triggers the display of a question input form.
 export function addQuestionButton(QuestionButton: HTMLElement | null ): void{
     const addQuestionButton = document.createElement('button');
     addQuestionButton.textContent = 'Add Question';
@@ -224,11 +229,11 @@ export function addQuestionButton(QuestionButton: HTMLElement | null ): void{
     addQuestionButton.addEventListener('click', (event) => {
         event.preventDefault();
         QuestionForm();
-
     });
     QuestionButton?.appendChild(addQuestionButton);
 }
 
+// Creates and appends a delete button for a question. When clicked, it removes the question container from the DOM and triggers the deletion of the corresponding question from the database.
 export function deleteQuestionButton(questionContainer: { remove: () => void; appendChild: (arg0: HTMLButtonElement) => void; }, question: any): void{
     const deleteButtonQuestion = document.createElement('button');
     deleteButtonQuestion.textContent = '';
@@ -244,6 +249,7 @@ export function deleteQuestionButton(questionContainer: { remove: () => void; ap
 
 }
 
+// Creates a delete button for an answer possibility in a form. When clicked, it removes the corresponding answer possibility container from the DOM and triggers the deletion of the corresponding answer possibility from the database.
 export function deleteAnswerpossibilitiesButton(answerPossibilityAndButton: { remove: () => void; appendChild: (arg0: HTMLButtonElement) => void; }, possibility: any): void{
     const deleteButtonPossibility = document.createElement('button');
     deleteButtonPossibility.className = 'btn  btn-outline-danger delete-answerposs-button col-md-2';
@@ -259,6 +265,7 @@ export function deleteAnswerpossibilitiesButton(answerPossibilityAndButton: { re
     answerPossibilityAndButton.appendChild(deleteButtonPossibility);
 }
 
+// Creates and populates a question container with input fields for a question and its answer possibilities, along with buttons for user interactions.
 export function showQuestionAndAnswerPossibilities(question:any, index: any, questionList: HTMLElement): void{
     const questionContainer = document.createElement('div');
     questionContainer.className = 'question-container';
@@ -273,15 +280,12 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
         event.preventDefault();
         const previousQuestionContainer = questionContainer.previousElementSibling;
         if (previousQuestionContainer) {
-
-            // Get the answer possibilities
             const currentAnswerPossibilities = questionContainer.querySelectorAll('.answer-possibility-input');
             const previousAnswerPossibilities = previousQuestionContainer.querySelectorAll('.answer-possibility-input');
 
             console.log('Current answer possibilities:', currentAnswerPossibilities);
             console.log('Previous answer possibilities:', previousAnswerPossibilities);
 
-            // Swap the questionId foreign keys
             currentAnswerPossibilities.forEach((input, index) => {
                 const temp = input.getAttribute('data-question-id') || '';
                 const previousQuestionId = previousAnswerPossibilities[index].getAttribute('data-question-id') || '';
@@ -290,15 +294,13 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
                 previousAnswerPossibilities[index].setAttribute('data-question-id', temp);
             });
 
-            // Get the question IDs
             const currentQuestionId = questionContainer.getAttribute('data-question-id');
             const previousQuestionId = previousQuestionContainer.getAttribute('data-question-id');
 
             console.log('Current question ID:', currentQuestionId);
             console.log('Previous question ID:', previousQuestionId);
-            // Check if the IDs are not null before swapping
+           
             if (currentQuestionId && previousQuestionId) {
-                // Swap the question IDs
                 questionContainer.setAttribute('data-question-id', previousQuestionId);
                 previousQuestionContainer.setAttribute('data-question-id', currentQuestionId);
             }
@@ -458,6 +460,7 @@ export function showQuestionAndAnswerPossibilities(question:any, index: any, que
     questionList.appendChild(questionContainer);
 }
 
+// Reloads the current page to refresh the flows.
 export function loadFlows() {
     window.location.href = window.location.href
 }

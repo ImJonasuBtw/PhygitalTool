@@ -1,7 +1,8 @@
-import {addQuestionButton, editForm, loadFlows, showQuestionAndAnswerPossibilities} from "./flowUI";
+﻿import {addQuestionButton, editForm, loadFlows, showQuestionAndAnswerPossibilities} from "./flowUI";
 import {Flow, FlowTypeEnum} from "./flow";
 import {handleErrorResponseAdd, handleErrorResponseEdit} from "./flowValidation";
 
+// Adds a new flow to the specified subtheme.
 export async function AddFlow(newFlow: Flow, subthemeId: string |  undefined): Promise<void> {
     const response = await fetch('/api/FlowCreation/AddFlowToSubtheme', {
         method: 'POST',
@@ -25,6 +26,8 @@ export async function AddFlow(newFlow: Flow, subthemeId: string |  undefined): P
         await handleErrorResponseAdd(response)
     }
 }
+
+// Updates the information of an existing flow and gets al the data from the edit form.
 async function updateFlowForm(flowId: number): Promise<void> {
     const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
     const informationInput = document.getElementById('description') as HTMLTextAreaElement;
@@ -111,7 +114,6 @@ async function updateFlowForm(flowId: number): Promise<void> {
     })
         .then(async response => {
             if (response.ok) {
-                console.log('Flow updated successfully');
                 loadFlows();
             } else {
                 await handleErrorResponseEdit(response)
@@ -122,6 +124,8 @@ async function updateFlowForm(flowId: number): Promise<void> {
             alert('Error updating flow: ' + error);
         });
 }
+
+// Uploads a file to the server and returns its URL.
 export async function uploadFile(formData: FormData): Promise<string | null> {
     try {
         const fileResponse = await fetch('/api/files/uploadFile', {
@@ -137,12 +141,12 @@ export async function uploadFile(formData: FormData): Promise<string | null> {
     }
 }
 
+// Deletes a flow from the server.
 export function deleteFlow(FlowId: number) {
     fetch(`/api/FlowCreation/DeleteFlow/${FlowId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            console.log('Flow deleted successfully');
             loadFlows();
         } else {
             console.error('Failed to delete Flow');
@@ -151,14 +155,12 @@ export function deleteFlow(FlowId: number) {
     })
 }
 
-
-
+// Deletes a question from the server.
 export function deleteQuestion(questionId: number) {
     fetch(`/api/FlowCreation/DeleteQuestion/${questionId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            console.log('Question deleted successfully');
         } else {
             console.error('Failed to delete question');
             return response.text().then(text => Promise.reject(text));
@@ -166,12 +168,12 @@ export function deleteQuestion(questionId: number) {
     })
 }
 
+// Deletes an answer possibility from the server.
 export function deleteAnswerPossibility(AnswerPossibilityId: number) {
     fetch(`/api/FlowCreation/DeleteAnswerPossibility/${AnswerPossibilityId}`, {
         method: 'DELETE'
     }).then(response => {
         if (response.ok) {
-            console.log('AnswerPossibility deleted successfully');
         } else {
             console.error('Failed to AnswerPossibility');
             return response.text().then(text => Promise.reject(text));
@@ -179,37 +181,14 @@ export function deleteAnswerPossibility(AnswerPossibilityId: number) {
     })
 }
 
-export async function addNewFlowToSubtheme(newFlow: Flow, subthemeId: string | undefined){
-    const response = await fetch('/api/FlowCreation/AddFlowToSubtheme', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            FlowName: newFlow.flowName,
-            FlowDescription: newFlow.flowDescription,
-            FlowType: newFlow.flowType,
-            SubthemeId: subthemeId,
-            Questions: newFlow.questions,
-            Language: newFlow.language
-        })
-    });
-    if (response.ok) {
-        loadFlows();
-
-    } else {
-        await handleErrorResponseAdd(response)
-    }
-}
+// Retrieves flow and displays the edit form for a specified flow.
 export function showEditFlowForm(flowId: number): void {
     fetch(`/api/FlowCreation/GetFlowDetails/${flowId}`)
         .then(response => response.json())
         .then((flow: Flow) => {
-            console.log(flow)
             const FlowContainer = document.getElementById('flow-container');
             if (FlowContainer) {
                 editForm(FlowContainer, flow)
-                // Render questions
                 const questionList = document.getElementById('question-list');
                 const QuestionButton = document.getElementById('QuestionButton');
                 

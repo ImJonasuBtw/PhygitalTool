@@ -53,6 +53,7 @@ function updateButtonVisibility() {
     }
 }
 
+// Fetch current data for question, flow and flow state.
 async function fetchCurrentIds() {
     try {
         const initialQuestionId = await hubConnection.invoke("GetCurrentQuestionId");
@@ -100,7 +101,6 @@ function updateFlowStateElement(flowState: string) {
 
 // Listen for updates to the question ID
 hubConnection.on("CurrentQuestionIdUpdated", newQuestionId => {
-    //console.log("Current question ID updated:", newQuestionId);
     if (newQuestionId !== currentQuestionId) {
         currentQuestionId = newQuestionId;
         refreshPageIfMatchingURL("/api/Notes", newQuestionId);
@@ -129,9 +129,9 @@ hubConnection.on("CurrentFlowIdUpdated", newFlowId => {
 
 hubConnection.onclose(error => {
     console.error("WebSocket connection closed:", error);
-    // Additional error handling or logging...
 });
 
+// Update the current question id by using data from the HTML.
 async function updateQuestionIdFromHTML() {
     if (window.location.pathname.startsWith("/CircularFlow") || window.location.pathname.startsWith("/LinearFlow")) {
         const questionIdElement = document.getElementById('QuestionId');
@@ -153,19 +153,19 @@ async function updateQuestionIdFromHTML() {
 }
 
 
-
+// Refresh a page if it matches a certain url.
 function refreshPageIfMatchingURL(url: string, newQuestionId: string) {
     if (window.location.pathname === url) {
-        //console.log("Question ID changed, refreshing page.", newQuestionId);
         const questionIdInfo = document.getElementById('currentQuestionId');
         if (questionIdInfo && newQuestionId !== questionIdInfo.innerText) {
             setTimeout(() => {
                 location.reload();
-            }, 2000); // 2000 milliseconds = 2 seconds
+            }, 2000);
         }
     }
 }
 
+// Get the question from the server with a question ID.
 async function getQuestion(questionId: any) {
     if (window.location.pathname.startsWith("/api/Notes") || window.location.pathname.startsWith("/api/Supervisors/show-supervisor-control-screen")) {
         try {

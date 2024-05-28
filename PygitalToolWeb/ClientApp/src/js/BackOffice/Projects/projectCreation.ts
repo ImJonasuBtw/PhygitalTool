@@ -13,9 +13,10 @@ export class Project {
     }
 }
 
+
+// Sets up the event listener for adding a new project by rendering the add project form and handling form submission.
 function setupAddProjectButton(): void {
     document.getElementById('add-project-button')?.addEventListener('click', () => {
-        console.log('Add button has been pressed!');
         const projectsContainer = document.getElementById('projects-container');
         if (projectsContainer) {
             renderAddProjectForm(projectsContainer);
@@ -31,15 +32,13 @@ function setupAddProjectButton(): void {
     });
 }
 
+// Sets up the confirmation modal for deleting projects.
 function setupConfirmationModal(): void {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
         const projectId = button.getAttribute('data-project-id');
         const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
-
-        console.log("Modal shown, project ID:", projectId);
-
         confirmDeleteButton.onclick = () => {
             if (projectId) {
                 deleteProject(parseInt(projectId));
@@ -52,6 +51,7 @@ function setupConfirmationModal(): void {
     });
 }
 
+// Sets up event listeners for interacting with project containers, such as editing and viewing results.
 function setupProjectContainer(): void {
     const projectsContainer = document.getElementById('projects-container');
     if (projectsContainer) {
@@ -77,6 +77,7 @@ function setupProjectContainer(): void {
     }
 }
 
+// Sets up a toggle feature to show/hide projects based on their active status.
 function setupShowProjectsToggle(): void {
     const toggleShowProjectsInput = document.getElementById("toggle-show-projects") as HTMLInputElement;
     const projectsContainer = document.getElementById("projects-container");
@@ -104,11 +105,11 @@ function setupShowProjectsToggle(): void {
     }
 }
 
+// Makes cards clickable, redirecting to the specified URL when clicked, unless a button is clicked within the card.
 function makeCardClickable(): void {
     document.querySelectorAll<HTMLElement>('.clickable').forEach(card => {
         card.addEventListener('click', (event: MouseEvent) => {
             const target = event.target as HTMLElement;
-
             if (!target.closest('button')) {
                 const url = card.getAttribute('data-href');
                 if (url) {
@@ -119,10 +120,10 @@ function makeCardClickable(): void {
     });
 }
 
+// Toggles the sidebar's visibility and adjusts the layout of the projects container accordingly.
 function setupSidebarToggle(): void {
     const toggleButton = document.querySelector('.toggle-sidebar-button') as HTMLButtonElement | null;
     const sidebar = document.querySelector('.sidebar') as HTMLElement | null;
-
     if (toggleButton && sidebar) {
         toggleButton.addEventListener('click', () => {
             sidebar.classList.toggle('active');
@@ -134,6 +135,7 @@ function setupSidebarToggle(): void {
     }
 }
 
+// Sets up DOM elements and event listeners for project management: adding projects, confirming deletion, editing projects, toggling project visibility, making project cards clickable, and toggling the sidebar.
 export function loadDOMs(): void {
     setupAddProjectButton();
     setupConfirmationModal();

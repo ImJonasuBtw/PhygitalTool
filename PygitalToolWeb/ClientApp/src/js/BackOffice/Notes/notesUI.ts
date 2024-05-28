@@ -1,3 +1,4 @@
+// Generates HTML markup for displaying notes in the projects container.
 export function NotesHtml(projectsContainer: HTMLElement, displayedQuestions: Set<unknown>, notes: {
     question: { questionId: unknown; questionText: any; };
     description: any;

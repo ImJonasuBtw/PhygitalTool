@@ -1,4 +1,4 @@
-import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
+﻿import {HubConnection, HubConnectionBuilder} from "@microsoft/signalr";
 
 let currentFlowState: string | null = null;
 const timerLength: number = 10;
@@ -51,6 +51,7 @@ hubConnection.start()
         console.error("Error establishing hub connection:", error);
     });
 
+// Pause the timer
 function pauseTimer(): void {
     console.log("ik weet dat timer gepauzeerd is");
     console.log(countdown);
@@ -65,6 +66,7 @@ function pauseTimer(): void {
     isPaused = true;
 }
 
+// Resume the timer
 function resumeTimer(): void {
     if (isPaused && timeLeft > 0) {
         isPaused = false;
@@ -73,6 +75,8 @@ function resumeTimer(): void {
     }
 }
 
+
+// Start the timeout interval
 function startSubmitTimeout(): void {
     let button: HTMLElement | null;
     button = document.getElementById('submitButton') ||
@@ -139,7 +143,7 @@ export function validateForm(): boolean {
     return true;
 }
 
-// Logic for the slider in the range question. Makes sure the right value is returned.
+// Logic for the slider in the range question.
 export function configureSlider(): void {
     const slider: HTMLInputElement = document.getElementById("myRange") as HTMLInputElement;
     const output: HTMLElement = document.getElementById("sliderValue") as HTMLElement;
@@ -206,12 +210,8 @@ export function configureSubmitButton(): void {
 }
 
 // Since the circular flow works with a timer, it's answer possibilities can't make it go to the next question immediately.
-// Uses the logic of the muliple choice question, but slightly altered so that it can only select one.
 export function configureSubmitButtonSingleChoice(): void {
     const submitButton: HTMLElement | null = document.getElementById('submitButtonSingleChoice');
-    if(submitButton) {
-        console.log("woop woop")
-    }
     submitButton?.addEventListener('click', function (): void {
         let selectedAnswer: string = "no answer";
 

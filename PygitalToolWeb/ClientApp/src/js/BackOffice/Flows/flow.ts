@@ -1,4 +1,4 @@
-import {QuestionForm, loadFlows, ShowForm} from "./flowUI";
+﻿import {QuestionForm, loadFlows, ShowForm} from "./flowUI";
 import bootstrap from "bootstrap";
 import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flowRestClient";
 
@@ -50,9 +50,9 @@ export class Flow {
     }
 }
 
+// Sets up event listeners for adding a flow and displaying the form.
 function setupAddFlowButton() {
     document.getElementById('add-Flow-button')?.addEventListener('click', () => {
-        console.log('Add button has been pressed!');
         const FlowContainer = document.getElementById('flow-container');
         if (FlowContainer) {
             ShowForm(FlowContainer);
@@ -66,7 +66,7 @@ function setupAddFlowButton() {
         }
     });
 }
-
+// Handles the form submission for adding a new flow.
 function handleSubmit(subthemeId: string | undefined) {
     return async function (event: { preventDefault: () => void; }) {
         event.preventDefault();
@@ -89,22 +89,20 @@ function handleSubmit(subthemeId: string | undefined) {
         const description = descriptionInput.value;
         const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
 
-        let flowImage = null;
+        let flowImage: string | null = ' ';
         if (fileInput.files && fileInput.files.length > 0) {
             const formData = new FormData();
             formData.append('file', fileInput.files[0]);
 
             flowImage = await uploadFile(formData);
         }
-
-        // Create a new flow instance
-        // @ts-ignore
-        const newFlow = new Flow(description, flowName,flowImage, flowType, flowLanguage, questions);
+        const newFlow = new Flow(description, flowName,flowImage ?? ' ', flowType, flowLanguage, questions);
 
         await AddFlow(newFlow, subthemeId);
     }
 }
 
+// Gathers information from question containers and returns an array of questions
 async function gatherQuestions() {
     const questionContainers = document.querySelectorAll('.question-container');
     const questions = Array.from(questionContainers).map(async (container: Element) => {
@@ -138,6 +136,7 @@ async function gatherQuestions() {
     return await Promise.all(questions);
 }
 
+// Gathers answer possibilities from the question container and returns an array of answer objects.
 function gatherAnswerPossibilities(questionContainer: HTMLElement) {
     const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
     const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
@@ -150,14 +149,13 @@ function gatherAnswerPossibilities(questionContainer: HTMLElement) {
     });
 }
 
+// Sets up confirmation modal for deleting a flow.
 function setupConfirmationModal() {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
         const FlowId = button.getAttribute('data-flow-id');
         const confirmDeleteButton = document.getElementById('delete-confirm') as HTMLButtonElement;
-
-        console.log("Modal shown, flow ID:", FlowId);
 
         confirmDeleteButton.onclick = () => {
             if (FlowId) {
@@ -171,6 +169,7 @@ function setupConfirmationModal() {
     });
 }
 
+// Sets up event listener for editing a flow when clicked on the edit button.
 function setupEditFlowContainer() {
     const FlowContainer = document.getElementById('flow-container');
     if (FlowContainer) {
@@ -187,6 +186,7 @@ function setupEditFlowContainer() {
     }
 }
 
+// Sets up DOM elements for managing flows.
 export function SetupDoms() {
     setupAddFlowButton();
     setupConfirmationModal();

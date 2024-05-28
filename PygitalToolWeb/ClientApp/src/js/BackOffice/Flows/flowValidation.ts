@@ -1,3 +1,4 @@
+// Handles error responses when adding a flow. It displays appropriate error messages based on the response status.
 export async function handleErrorResponseAdd(response: Response) {
     let errorMessage = 'Failed to add flow';
     if (response.status === 400) {
@@ -21,6 +22,8 @@ export async function handleErrorResponseAdd(response: Response) {
     }
     alert(errorMessage);
 }
+
+// Handles error responses when editing a flow. It displays appropriate error messages based on the response status.
 export async function handleErrorResponseEdit(response: Response) {
     console.error('Failed to update flow');
     if (response.status === 400) {

@@ -1,3 +1,4 @@
+// Handle responses from maintheme-related requests.
 export async function handleErrorResponse(response: Response) {
     if (response.status === 400) {
         const errorData = await response.json();

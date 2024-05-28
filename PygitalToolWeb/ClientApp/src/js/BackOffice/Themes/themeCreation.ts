@@ -11,7 +11,7 @@ export class mainTheme {
     }
 }
 
-
+// Sets up an event listener for the "Add theme" button.
 function setupAddThemeButton() {
     document.getElementById('add-theme-button')?.addEventListener('click', () => {
         console.log('Add button has been pressed!');
@@ -44,6 +44,7 @@ function setupAddThemeButton() {
     });
 }
 
+//  Sets up a confirmation modal dialog.
 function setupConfirmationModal() {
     const confirmationModal = document.getElementById('confirmationModal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
@@ -65,6 +66,7 @@ function setupConfirmationModal() {
     });
 }
 
+//  Sets up the themes container by adding a click event listener
 function setupMainThemesContainer() {
     const mainThemesContainer = document.getElementById('themes-container');
     if (mainThemesContainer) {
@@ -82,6 +84,7 @@ function setupMainThemesContainer() {
     }
 }
 
+// Initializes a DOM listener for theme-related navigation links. 
 export function loadDOMs(): void {
     setupAddThemeButton();
     setupConfirmationModal();

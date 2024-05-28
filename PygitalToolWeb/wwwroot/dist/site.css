@@ -20717,6 +20717,13 @@ body {
 .main-container .list-group .list-group-item:last-child {
   margin-bottom: 0;
 }
+.main-container #existingFlowImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 15px;
+  padding: 8px;
+}
 .main-container form {
   background-color: rgba(248, 244, 244, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -20917,9 +20924,51 @@ body {
 /*!****************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/Backoffice/Results/resultsStyles.scss ***!
   \****************************************************************************************************************************************/
+.results-container {
+  font-family: Outfit, sans-serif;
+}
+.results-container h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+.results-container h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+#results-information-container {
+  background-color: #f8f4f4;
+  padding: 2rem;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+#results-information-container p {
+  margin-bottom: 10px;
+}
+
+.question-result-container {
+  background-color: #f8f4f4;
+  margin-bottom: 20px;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.question-result-container,
+#results-information-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+body:has(.results-container) {
+  background-color: #b3d4fa;
+}
+
 .chart-container {
-  width: 500px;
+  width: 75%;
   height: auto;
+}
+
+.ai-summary {
+  width: 75%;
 }
 
 .loader {
@@ -20936,6 +20985,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.results-container #myloader {
+  margin-bottom: 50px;
+}
+
 .btn-primary {
   background-color: #b254e7;
   border-color: #a83ee4;
@@ -20944,6 +20997,36 @@ body {
 .btn-primary:hover {
   background-color: #9e27e1;
   border-color: #9e27e1;
+}
+
+.expand-table-button {
+  padding: 0;
+  margin-bottom: 5px;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  color: #b254e7;
+}
+
+.open-question-table {
+  width: 75%;
+  border-collapse: collapse;
+}
+.open-question-table th, .open-question-table td {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.dot-row {
+  display: revert;
+}
+
+.expandable-row {
+  display: revert;
+}
+
+.row-hidden {
+  display: none;
 }
 
 @keyframes spin {
@@ -21594,6 +21677,13 @@ div[class^=comments-container-] {
 
 .center {
   text-align: center;
+}
+
+.InlogMessage {
+  background-color: #ffca2c;
+  font-size: 15pt;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 /*# sourceMappingURL=site.css.map*/

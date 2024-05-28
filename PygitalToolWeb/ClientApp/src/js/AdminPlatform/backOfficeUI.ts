@@ -1,5 +1,6 @@
 import {BackOffice} from "./backOfficeCreation";
 
+// Renders the form to edit a backoffice with the provided data into the specified container's inner HTML.
 export function renderEditBackOfficeForm(container: { innerHTML: string; }, backOffice: BackOffice) {
     container.innerHTML = `
                     <h2 class="mt-4">Edit BackOffice</h2>
@@ -14,6 +15,7 @@ export function renderEditBackOfficeForm(container: { innerHTML: string; }, back
                 `;
 }
 
+// Renders the form to add a new backoffice into the specified container's inner HTML.
 export function renderAddBackOfficeForm(container: { innerHTML: string; }) {
     container.innerHTML = `
         <h2 class="mt-4">voeg nieuwe backOffice toe</h2>
@@ -28,6 +30,7 @@ export function renderAddBackOfficeForm(container: { innerHTML: string; }) {
     `;
 }
 
+// Reloads the backoffice page.
 export function loadBackOffices() {
     window.location.reload();
 }

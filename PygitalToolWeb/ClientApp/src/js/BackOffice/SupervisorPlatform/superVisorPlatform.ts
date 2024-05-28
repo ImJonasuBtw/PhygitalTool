@@ -28,11 +28,10 @@ hubConnection.start()
         console.error("Error establishing hub connection:", error);
     });
 
-// Function to fetch current question and flow IDs
+// Fetch current question and flow IDs
 async function fetchCurrentIds() {
     try {
         const initialQuestionId = await hubConnection.invoke("GetCurrentQuestionId");
-        console.log("Current question ID:", initialQuestionId);
         currentQuestionId = initialQuestionId;
         const questionText = document.getElementById("questionText") as HTMLButtonElement;
         const questionIdInfo = document.getElementById('currentQuestionId');
@@ -46,7 +45,6 @@ async function fetchCurrentIds() {
     }
     try {
         const initialFlowId = await hubConnection.invoke("GetCurrentFlowId");
-        console.log("Current flow ID:", initialFlowId);
         currentFlowId = initialFlowId;
         const flowIdInfo = document.getElementById('current_flow');
         if (flowIdInfo) {
@@ -57,6 +55,7 @@ async function fetchCurrentIds() {
     }
 }
 
+// If question id changed refresh a certain page.
 hubConnection.on("CurrentQuestionIdUpdated", newQuestionId => {
     console.log("Current question ID updated:", newQuestionId);
     if (newQuestionId !== currentQuestionId) {
@@ -65,8 +64,8 @@ hubConnection.on("CurrentQuestionIdUpdated", newQuestionId => {
     }
 });
 
+// If flow id has changed refresh a certain page.
 hubConnection.on("CurrentFlowIdUpdated", newFlowId => {
-    console.log("Current flow ID updated:", newFlowId);
     if (newFlowId !== currentFlowId) {
         currentFlowId = newFlowId;
         const flowIdInfo = document.getElementById('current_flow');
@@ -84,6 +83,7 @@ hubConnection.onclose(error => {
     console.error("WebSocket connection closed:", error);
 });
 
+// Update question with id retrieved from HTML.
 async function updateQuestionIdFromHTML() {
     if (window.location.pathname.startsWith("/CircularFlow")) {
         const questionIdElement = document.getElementById('QuestionId');
@@ -92,31 +92,27 @@ async function updateQuestionIdFromHTML() {
             if (newQuestionId) {
                 try {
                     await hubConnection.invoke("SetCurrentQuestionId", newQuestionId);
-                    console.log("Current question ID updated successfully to:", newQuestionId);
                 } catch (error) {
                     console.error("Failed to update current question ID:", error);
                 }
-            } else {
-                console.error("Question ID element is empty.");
-            }
-        } else {
-            console.error("HTML element with id 'QuestionId' not found.");
-        }
+            } 
+        } 
     }
 }
 
+// Refreshes page if it matches a certain url.
 function refreshPageIfMatchingURL(url: string, newQuestionId: string) {
     if (window.location.pathname === url) {
-        console.log("Question ID changed, refreshing page.", newQuestionId);
         const questionIdInfo = document.getElementById('currentQuestionId');
         if (questionIdInfo && newQuestionId !== questionIdInfo.innerText) {
             setTimeout(() => {
                 location.reload();
-            }, 2000); // 2000 milliseconds = 2 seconds
+            }, 2000); 
         }
     }
 }
 
+// Fetches the question 
 async function getQuestion(questionId: any) {
     if (window.location.pathname.startsWith("/api/Notes")) {
         try {
@@ -134,6 +130,7 @@ async function getQuestion(questionId: any) {
         }
     }
 }
+
 
 document.querySelectorAll('.start-flow').forEach(button => {
     button.addEventListener('click', async (event) => {

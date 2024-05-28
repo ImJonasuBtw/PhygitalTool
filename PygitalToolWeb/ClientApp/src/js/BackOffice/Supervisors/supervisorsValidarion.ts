@@ -8,6 +8,8 @@ export function validatePassword(password:string) {
     const hasNonAlphabetic = /[^A-Za-z]/.test(password);
     return hasUpperCase && hasLowerCase && hasNonAlphabetic;
 }
+
+// Handle responses from supervisor-related requests.
 export async function handleResponseSupervisor(response: Response): Promise<void> {
     if (!response.ok) {
         if (response.status === 400 || response.status === 409) {
@@ -20,8 +22,6 @@ export async function handleResponseSupervisor(response: Response): Promise<void
         }
         return;
     }
-    const data = await response.json();
-    console.log('Success:', data);
     alert('Supervisor succesvol toegevoegd!');
     await loadSupervisors(Number(backOfficeId))
 }

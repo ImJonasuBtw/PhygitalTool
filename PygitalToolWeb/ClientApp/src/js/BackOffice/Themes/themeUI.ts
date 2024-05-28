@@ -1,6 +1,7 @@
 ﻿import {mainTheme} from "./themeCreation";
 
 
+// Creates a edit form for a maintheme and adds it to the HTML.
 export function getEditMainThemeFormHtml(mainthemesContainer: { innerHTML: string; }, mainTheme : mainTheme ):void  {
     mainthemesContainer.innerHTML = `
             <h2 class="mt-4">Edit Maintheme</h2>
@@ -19,6 +20,8 @@ export function getEditMainThemeFormHtml(mainthemesContainer: { innerHTML: strin
             </form>
         `;
 }
+
+// Creates a form to add a maintheme and adds it to the HTML.
 export function getAddMainThemeFormHtml(themesContainer: { innerHTML: string; } ):void  {
     themesContainer.innerHTML = `
             <h2 class="mt-4">voeg nieuw thema toe</h2>
@@ -37,7 +40,7 @@ export function getAddMainThemeFormHtml(themesContainer: { innerHTML: string; } 
         `;
 }
 
-
+// Loads the mainthemes and shows the right page.
 export function loadMainThemes() {
     const scriptElement = document.getElementById('mainThemePage-script');
     const projectId = scriptElement?.dataset.projectId;
