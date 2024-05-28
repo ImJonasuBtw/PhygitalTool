@@ -3,7 +3,6 @@ import bootstrap from "bootstrap";
 import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flowRestClient";
 
 
-
 export enum QuestionType {
     SingleChoice,
     MultipleChoice,
@@ -20,7 +19,7 @@ export const Language =
         English: 0,
         Dutch: 1,
         French: 2,
-        German : 3
+        German: 3
     }
 
 export class Flow {
@@ -28,6 +27,7 @@ export class Flow {
     public flowName: string;
     public flowType: number;
     public language: number;
+    public flowImage: string | null;
     public questions: {
         questionId: number;
         questionText: string;
@@ -40,10 +40,11 @@ export class Flow {
         questionImage: string | null;
     }[];
 
-    constructor(description: string, flowName: string, flowType: number, language: number, questions: any[]) {
+    constructor(description: string, flowName: string, flowImage: string, flowType: number, language: number, questions: any[]) {
         this.flowDescription = description;
         this.flowName = flowName;
         this.flowType = flowType;
+        this.flowImage = flowImage;
         this.language = language;
         this.questions = questions || [];
     }
@@ -65,7 +66,8 @@ function setupAddFlowButton() {
         }
     });
 }
-function handleSubmit(subthemeId :string | undefined) {
+
+function handleSubmit(subthemeId: string | undefined) {
     return async function (event: { preventDefault: () => void; }) {
         event.preventDefault();
 
@@ -85,13 +87,24 @@ function handleSubmit(subthemeId :string | undefined) {
         if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
         const flowName = flowNameInput.value;
         const description = descriptionInput.value;
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+
+        let flowImage = null;
+        if (fileInput.files && fileInput.files.length > 0) {
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            flowImage = await uploadFile(formData);
+        }
 
         // Create a new flow instance
-        const newFlow = new Flow(description, flowName, flowType, flowLanguage, questions);
+        // @ts-ignore
+        const newFlow = new Flow(description, flowName,flowImage, flowType, flowLanguage, questions);
 
         await AddFlow(newFlow, subthemeId);
     }
 }
+
 async function gatherQuestions() {
     const questionContainers = document.querySelectorAll('.question-container');
     const questions = Array.from(questionContainers).map(async (container: Element) => {
@@ -124,6 +137,7 @@ async function gatherQuestions() {
 
     return await Promise.all(questions);
 }
+
 function gatherAnswerPossibilities(questionContainer: HTMLElement) {
     const answerPossibilityInputs = questionContainer.querySelectorAll('.answer-possibility-input') as NodeListOf<HTMLInputElement>;
     const filteredAnswerPossibilities = Array.from(answerPossibilityInputs).filter(input => input.value.trim() !== '');
@@ -173,7 +187,7 @@ function setupEditFlowContainer() {
     }
 }
 
-export  function  SetupDoms(){
+export function SetupDoms() {
     setupAddFlowButton();
     setupConfirmationModal();
     setupEditFlowContainer();

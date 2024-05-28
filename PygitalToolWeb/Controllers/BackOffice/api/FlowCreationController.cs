@@ -36,7 +36,7 @@ public class FlowCreationController : ControllerBase
         var questions = flow.Questions.Select(q => (q.QuestionText, q.QuestionType, q.QuestionImage, q.AnswerPossibilities.Select(a => a.Description).ToList())).ToList();
 
         _unitOfWork.BeginTransaction();
-        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName, flow.FlowType, flow.Language, flow.SubthemeId, questions);
+        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName,flow.FlowImage ,flow.FlowType, flow.Language, flow.SubthemeId, questions);
         _unitOfWork.Commit();
 
         return Ok();
@@ -93,6 +93,7 @@ public class FlowCreationController : ControllerBase
                 FlowId = FlowId,
                 FlowDescription = flow.FlowDescription,
                 FlowName = flow.FlowName,
+                FlowImage = flow.FlowImage,
                 FlowType = flow.FlowType,
                 Language = flow.Language,
                 SubthemeId = flow.SubThemeId,
@@ -137,6 +138,7 @@ public class FlowCreationController : ControllerBase
             _projectManager.UpdateFlowWithQuestionsAndAnswers(
                 flowId: FlowId,
                 flowName: flowModel.FlowName,
+                flowImage: flowModel.FlowImage,
                 flowDescription: flowModel.FlowDescription,
                 flowType: flowModel.FlowType,
                 language: flowModel.Language,

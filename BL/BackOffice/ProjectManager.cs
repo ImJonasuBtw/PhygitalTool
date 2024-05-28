@@ -220,7 +220,7 @@ public class ProjectManager : IProjectManager
         _repositoryProject.UpdateMainTheme(existingMainTheme);
     }
 
-    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, FlowType flowType,
+    public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, string flowImage, FlowType flowType,
         Language language, int subthemeId,
         List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)>
             questions)
@@ -232,6 +232,7 @@ public class ProjectManager : IProjectManager
             FlowType = flowType,
             Language = language,
             SubThemeId = subthemeId,
+            FlowImage = flowImage
         };
 
         Flow newFlow = AddFlow(domainFlow);
@@ -275,6 +276,7 @@ public class ProjectManager : IProjectManager
     public void UpdateFlowWithQuestionsAndAnswers(
         int flowId,
         string flowName,
+        string flowImage,
         string flowDescription,
         FlowType flowType,
         Language language,
@@ -287,6 +289,7 @@ public class ProjectManager : IProjectManager
         }
 
         existingFlow.FlowName = flowName;
+        existingFlow.FlowImage = flowImage;
         existingFlow.FlowDescription = flowDescription;
         existingFlow.FlowType = flowType;
         existingFlow.Language = language;

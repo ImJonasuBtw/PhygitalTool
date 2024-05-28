@@ -39,5 +39,7 @@ export function getAddMainThemeFormHtml(themesContainer: { innerHTML: string; } 
 
 
 export function loadMainThemes() {
-    window.location.href = window.location.href;
+    const scriptElement = document.getElementById('mainThemePage-script');
+    const projectId = scriptElement?.dataset.projectId;
+    window.location.href = '/Projects?projectid=' + projectId;
 }

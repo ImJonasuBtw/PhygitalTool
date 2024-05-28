@@ -46,5 +46,5 @@ export function renderAddProjectForm(container: { innerHTML: string; }) {
         `;
 }
 export function loadProjects() {
-    window.location.href = window.location.href;
+    window.location.href = '/BackOffice';
 }

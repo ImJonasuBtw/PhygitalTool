@@ -38,5 +38,8 @@ export function ShowAddForm(subThemasContainer: HTMLElement){
         `;
 }
 export function loadSubThemes() {
-    window.location.href = window.location.href;
+
+    const scriptElement = document.getElementById('subThemePage-script');
+    const mainThemeId = scriptElement?.dataset.mainthemeId;
+    window.location.href = '/Themes?themeid='+ mainThemeId;
 }
