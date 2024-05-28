@@ -103,7 +103,9 @@ using (var scope = app.Services.CreateScope())
         var userInputFactory = new UserInputFactory(answerRepository, userInputRepository, flowRepository);
         var amountOfFlows = ctx.Flows.Count();
 
-        userInputFactory.GenerateRandomUserInputForAllFlows(amountOfFlows, 50);
+        //generate random user inputs
+        //the generator will cycle through each flow and its questions 50 times.
+        userInputFactory.GenerateRandomUserInputForAllFlows(50);
         Console.WriteLine("UserInputs Generated");
     }
 }

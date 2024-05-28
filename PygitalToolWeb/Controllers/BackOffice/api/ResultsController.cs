@@ -87,9 +87,6 @@ public class ResultsController : Controller
         }
     }
 
-
-
-
     public IActionResult Index(int projectId)
     {
         Project project = _projectManager.GetProjectWithThemes(projectId);
