@@ -1,6 +1,6 @@
-﻿import {QuestionForm, loadFlows, ShowForm} from "./flowUI";
+﻿import {QuestionForm, loadFlows, ShowForm} from "./flow-ui";
 import bootstrap from "bootstrap";
-import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flowRestClient";
+import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flow-restclient";
 
 
 export enum QuestionType {
@@ -52,12 +52,12 @@ export class Flow {
 
 // Sets up event listeners for adding a flow and displaying the form.
 function setupAddFlowButton() {
-    document.getElementById('add-Flow-button')?.addEventListener('click', () => {
+    document.getElementById('add-flow-button')?.addEventListener('click', () => {
         const FlowContainer = document.getElementById('flow-container');
         if (FlowContainer) {
             ShowForm(FlowContainer);
 
-            const scriptElement = document.getElementById('flowPage-script');
+            const scriptElement = document.getElementById('flow-page-script');
             const subthemeId = scriptElement?.dataset.subthemeid;
 
             document.getElementById('add-question-button')?.addEventListener('click', QuestionForm);
@@ -66,12 +66,13 @@ function setupAddFlowButton() {
         }
     });
 }
+
 // Handles the form submission for adding a new flow.
 function handleSubmit(subthemeId: string | undefined) {
     return async function (event: { preventDefault: () => void; }) {
         event.preventDefault();
 
-        const flowNameInput = document.getElementById('flowName') as HTMLInputElement;
+        const flowNameInput = document.getElementById('flow-name') as HTMLInputElement;
         const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
         const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
         if (!flowTypeRadio) {
@@ -82,7 +83,7 @@ function handleSubmit(subthemeId: string | undefined) {
 
         const questions = await gatherQuestions();
 
-        const flowLanguageSelect = document.getElementById('flowLanguage') as HTMLSelectElement;
+        const flowLanguageSelect = document.getElementById('flow-language') as HTMLSelectElement;
         const flowLanguage = parseInt(flowLanguageSelect.value);
         if (!flowNameInput || !descriptionInput || !flowTypeRadio) return;
         const flowName = flowNameInput.value;
@@ -96,7 +97,7 @@ function handleSubmit(subthemeId: string | undefined) {
 
             flowImage = await uploadFile(formData);
         }
-        const newFlow = new Flow(description, flowName,flowImage ?? ' ', flowType, flowLanguage, questions);
+        const newFlow = new Flow(description, flowName, flowImage ?? ' ', flowType, flowLanguage, questions);
 
         await AddFlow(newFlow, subthemeId);
     }
@@ -151,7 +152,7 @@ function gatherAnswerPossibilities(questionContainer: HTMLElement) {
 
 // Sets up confirmation modal for deleting a flow.
 function setupConfirmationModal() {
-    const confirmationModal = document.getElementById('confirmationModal');
+    const confirmationModal = document.getElementById('confirmation-modal');
     confirmationModal?.addEventListener('show.bs.modal', (event: any) => {
         const button = event.relatedTarget as HTMLElement;
         const FlowId = button.getAttribute('data-flow-id');

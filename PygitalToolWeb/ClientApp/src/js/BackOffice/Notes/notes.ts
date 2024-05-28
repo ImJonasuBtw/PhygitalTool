@@ -1,4 +1,4 @@
-import {AddNote, loadNotes} from "./notesRestClient";
+import {AddNote, loadNotes} from "./notes-restclient";
 
 export class Note {
     public QuestionId: number | undefined;
@@ -12,10 +12,10 @@ export class Note {
 
 // Handles the submission of a note, ensuring the note description is filled, retrieving the question ID, creating a note object, and attempting to add it. Any errors are logged.
 function setupSubmitNoteButton() {
-    document.getElementById("submitNote")?.addEventListener('click', async function (event) {
+    document.getElementById("submit-note")?.addEventListener('click', async function (event) {
         event.preventDefault();
-        const noteDescription = document.getElementById("questionNote") as HTMLInputElement;
-        const questionText = document.getElementById("questionText") as HTMLButtonElement;
+        const noteDescription = document.getElementById("question-note") as HTMLInputElement;
+        const questionText = document.getElementById("question-text") as HTMLButtonElement;
 
         if (!noteDescription.value.trim()) {
            alert("Vul de notitie in")

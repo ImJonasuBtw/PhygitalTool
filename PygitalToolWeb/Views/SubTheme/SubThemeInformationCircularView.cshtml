@@ -6,7 +6,7 @@
 <p>@Model.SubTheme.SubThemeInformation</p>
 
 
-<a class="nav-link text-dark" id="submitButton"
+<a class="nav-link text-dark" id="submit-button"
    asp-area=""
    asp-controller="CircularFlow"
    asp-action="GetNextQuestion"
@@ -33,5 +33,5 @@
 
 
 @section Scripts {
-    <script id="questionPage-script" src="~/dist/questionsPage.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
+    <script id="question-page-script" src="~/dist/questions_page.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
 }

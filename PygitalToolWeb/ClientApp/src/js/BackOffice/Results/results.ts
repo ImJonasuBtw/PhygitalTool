@@ -25,7 +25,7 @@ import {
     showLoader
 } from "./results-ui";
 
-import {generateSummary} from "../Gemini/gemini";
+import {generateSummary} from "../gemini/gemini";
 
 // Displays result counts, creates container and loader elements, shows the loader, clears existing charts, generates new data and charts, creates export buttons, and hides the loader.
 export async function showResults() {

@@ -33,7 +33,7 @@
 
         <img class="qr-code pt-3" src="@Url.Action("Generate", "QrCode", new { data = fullUrl })" alt="QR Code" style="width:500px; height:500px;"/>
     </div>
-    <div class="informationContainer col-md-10 p-5">
+    <div class="information-container col-md-10 p-5">
 
 
         <h2>@Model.SubTheme.SubThemeName</h2>
@@ -50,7 +50,7 @@
         }
         @if (Model.FlowType == FlowType.Circular)
         {
-            <a class="nav-link text-dark" id="submitButton" asp-area="" asp-controller="CircularFlow"
+            <a class="nav-link text-dark" id="submit-button" asp-area="" asp-controller="CircularFlow"
                asp-action="GetFirstQuestion"
                asp-route-flowId="@Model.FlowId"
                asp-route-subThemeId="@Model.SubTheme.SubThemeId">
@@ -67,5 +67,5 @@
 </div>
 
 @section Scripts {
-    <script id="questionPage-script" src="~/dist/questionsPage.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
+    <script id="question-page-script" src="~/dist/questions_page.entry.js" data-flowtype="@Model.FlowType.ToString().ToLower()" defer="defer" ></script>
 }

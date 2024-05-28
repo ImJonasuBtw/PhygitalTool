@@ -56,7 +56,7 @@
                                     <button class="btn btn-outline-secondary edit-subtheme-button" data-subtheme-id="@subTheme.SubThemeId" title="Edit Project">
                                         <i class="bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-subtheme-id="@subTheme.SubThemeId" title="Delete Project">
+                                    <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmation-modal" data-subtheme-id="@subTheme.SubThemeId" title="Delete Project">
                                         <i class="bi-trash"></i>
                                     </button>
                                 </div>
@@ -72,18 +72,18 @@
         </div>
 
 
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmation-modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Wil je zeker verwijderen?</h5>
+                        <h5 class="modal-title" id="modal-label">Wil je zeker verwijderen?</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         Ben je zeker dat je dit wilt verwijderen?
                     </div>
                     <div class="modal-footer">
-                        <form id="deleteForm" action="" method="post">
+                        <form id="delete-form" action="" method="post">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nee</button>
                             <button id="delete-confirm" type="submit" class="btn btn-danger">ja</button>
                         </form>
@@ -93,13 +93,13 @@
         </div>
 
 
-        <button type="button"  id="add-subtheme-button" class="roundedAddButton">+</button>
+        <button type="button"  id="add-subtheme-button" class="rounded-add-button">+</button>
 
 
     </div>
 
     @section Scripts {
-        <script id="subThemePage-script" src="~/dist/subThemePage.entry.js" defer="defer" data-maintheme-id="@Model.ThemeId"></script>
+        <script id="sub-theme-page-script" src="~/dist/sub_theme_page.entry.js" defer="defer" data-maintheme-id="@Model.ThemeId"></script>
     }
 
 </div>
