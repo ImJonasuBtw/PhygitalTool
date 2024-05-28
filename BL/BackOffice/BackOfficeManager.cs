@@ -5,8 +5,7 @@ namespace PhygitalTool.BL.BackOffice;
 public class BackOfficeManager : IBackOfficeManager
 {
     private readonly IRepositoryBackOffice _repositoryBackOffice;
-
-
+    
     public BackOfficeManager(IRepositoryBackOffice repositoryBackOffice)
     {
         _repositoryBackOffice = repositoryBackOffice;
