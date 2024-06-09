@@ -22,4 +22,6 @@ public interface IRepositoryBackOffice
     void RemoveBackOffice(int backOfficeId);
     
     void UpdateBackOffice(BackOffice backOffice);
+    
+    BackOffice ReadBackOfficeWithProjectsAndStuff(int backofficeId);
 }

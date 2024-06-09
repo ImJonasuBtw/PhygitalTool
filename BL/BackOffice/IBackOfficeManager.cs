@@ -13,4 +13,5 @@ public interface IBackOfficeManager
     void DeleteBackOffice(int backOfficeId);
     
     void UpdateBackOffice(Domain.Platform.BackOffice existingBackOffice);
+    Domain.Platform.BackOffice GetBackOfficeWithProjectsAndStuff(int backofficeId);
 } 
