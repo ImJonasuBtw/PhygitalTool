@@ -34,6 +34,7 @@ export async function showResults() {
         createContainerAndLoaderElements();
         showLoader();
         clearCharts()
+        // @ts-ignore
         createExportButtons(await generateDataAndCharts());
         hideLoader();
     } catch (error) {
@@ -48,68 +49,78 @@ export async function showResults() {
 async function generateDataAndCharts() {
     let projectIdPage = parseInt(getDataProjectId());
     const data = await getAllAnswersWithQuestions();
-    
-    if (Array.isArray(data)) {
-        const questionAnswers: { [questionText: string]: Set<string> } = {};
-        const answerCounts: { [answer: string]: number } = {};
-        const questionTypes: { [questionText: string]: number } = {};
 
-        for (const answer of data) {
-            const flowId = answer.question.flowId;
+    if (!Array.isArray(data)) {
+        console.error('Data is not in the expected format');
+        return;
+    }
+
+    const questionAnswers: { [questionText: string]: Set<string> } = {};
+    const answerCounts: { [answer: string]: number } = {};
+    const questionTypes: { [questionText: string]: number } = {};
+    const projectFlowIds = new Map<number, number>();
+
+    for (const answer of data) {
+        const flowId = answer.question.flowId;
+
+        if (!projectFlowIds.has(flowId)) {
             const project = await getProjectFromFlowId(flowId);
-            const projectId = project.projectId;
-
-            if (projectId == projectIdPage) {
-                const questionText = answer.question.questionText;
-                const answerText = answer.answerText;
-                const questionType = answer.question.questionType;
-
-                if (!questionAnswers[questionText]) {
-                    questionAnswers[questionText] = new Set();
-                }
-
-                questionAnswers[questionText].add(answerText);
-                questionTypes[questionText] = (questionType);
-                answerCounts[answerText] = (answerCounts[answerText] || 0) + 1;
-            }
+            projectFlowIds.set(flowId, project.projectId);
         }
 
-        let counter = 0;
-        for (const questionText in questionAnswers) {
+        const projectId = projectFlowIds.get(flowId);
+
+        if (projectId === projectIdPage) {
+            const questionText = answer.question.questionText;
+            const answerText = answer.answerText;
+            const questionType = answer.question.questionType;
+
+            if (!questionAnswers[questionText]) {
+                questionAnswers[questionText] = new Set();
+            }
+
+            questionAnswers[questionText].add(answerText);
+            questionTypes[questionText] = questionType;
+            answerCounts[answerText] = (answerCounts[answerText] || 0) + 1;
+        }
+    }
+
+    let counter = 0;
+    const summaryPromises: Promise<void>[] = [];
+
+    for (const questionText in questionAnswers) {
+        if (questionTypes.hasOwnProperty(questionText)) {
+            const uniqueAnswers = Array.from(questionAnswers[questionText]);
+            const answerData: { answer: string, count: number }[] = uniqueAnswers.map(answer => ({
+                answer: answer,
+                count: answerCounts[answer]
+            }));
+
+            createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
+
             if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 2) {
-                if (Object.hasOwnProperty.call(questionAnswers, questionText)) {
-                    const uniqueAnswers = Array.from(questionAnswers[questionText]);
-                    const answerData: { answer: string, count: number }[] = [];
-
-                    createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
-
-                    uniqueAnswers.forEach(answer => {
-                        const count = answerCounts[answer];
-                        answerData.push({answer: answer, count: count});
-                    });
-
-                    if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 1) {
-                        answerData.sort((a, b) => b.count - a.count);
-                    }
-
-                    createCanvasElement(counter);
-                    configureChart(counter, answerData);
+                if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 1) {
+                    answerData.sort((a, b) => b.count - a.count);
                 }
-            } else {
-                createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
 
-                const uniqueAnswers = Array.from(questionAnswers[questionText]);
-                const aiSummary = await generateSummary(uniqueAnswers.toString());
-                createOpenQuestionResultElement(aiSummary, counter, uniqueAnswers);
+                createCanvasElement(counter);
+                configureChart(counter, answerData);
+            } else {
+                const aiSummaryPromise = generateSummary(uniqueAnswers.toString()).then(aiSummary => {
+                    createOpenQuestionResultElement(aiSummary, counter, uniqueAnswers);
+                });
+                summaryPromises.push(aiSummaryPromise);
             }
             counter++;
         }
-        expandOpenQuestionResultTables();
-    } else {
-        console.error('Data is not in the expected format');
     }
+
+    await Promise.all(summaryPromises);
+    expandOpenQuestionResultTables();
+
     return data;
 }
+
 
 // Fetches and displays counts of main themes, sub themes, and flows associated with a project's user inputs.
 async function showResultCounts() {
@@ -133,26 +144,25 @@ async function showResultCounts() {
 
         createResultCountsTitleElement();
 
-        for (const mainThemeIdStr in mainThemeCounts) {
-            const mainThemeId = parseInt(mainThemeIdStr);
-            const count = mainThemeCounts[mainThemeId];
-            const mainThemeDetails = await getMainThemeDetails(mainThemeId);
-            createResultCountsMainThemeElement(mainThemeDetails.themeName, count);
-        }
+        const mainThemeIds = Object.keys(mainThemeCounts).map(Number);
+        const subThemeIds = Object.keys(subThemeCounts).map(Number);
+        const flowIds = Object.keys(flowCounts).map(Number);
 
-        for (const subThemeIdStr in subThemeCounts) {
-            const subThemeId = parseInt(subThemeIdStr);
-            const count = subThemeCounts[subThemeId];
-            const subThemeDetails = await getSubThemeDetails(subThemeId);
-            createResultCountsSubThemeElement(subThemeDetails.subThemeName, count);
-        }
+        const mainThemeDetails = await Promise.all(mainThemeIds.map(id => getMainThemeDetails(id)));
+        const subThemeDetails = await Promise.all(subThemeIds.map(id => getSubThemeDetails(id)));
+        const flowDetails = await Promise.all(flowIds.map(id => getFlowDetails(id)));
 
-        for (const flowIdStr in flowCounts) {
-            const flowId = parseInt(flowIdStr);
-            const count = flowCounts[flowId];
-            const flowDetails = await getFlowDetails(flowId);
-            createResultCountsFlowElement(flowDetails.flowName, count);
-        }
+        mainThemeDetails.forEach((details, index) => {
+            createResultCountsMainThemeElement(details.themeName, mainThemeCounts[mainThemeIds[index]]);
+        });
+
+        subThemeDetails.forEach((details, index) => {
+            createResultCountsSubThemeElement(details.subThemeName, subThemeCounts[subThemeIds[index]]);
+        });
+
+        flowDetails.forEach((details, index) => {
+            createResultCountsFlowElement(details.flowName, flowCounts[flowIds[index]]);
+        });
     } else {
         console.error('Data is niet in het verwachte formaat');
     }
