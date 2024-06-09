@@ -1,6 +1,6 @@
 ﻿@using PhygitalTool.Domain.Util
 @using Microsoft.IdentityModel.Tokens
-@model PhygitalTool.Domain.Projects.MainTheme
+@model PhygitalTool.Domain.Platform.BackOffice
 
 @{
     ViewBag.Title = "Title";
@@ -9,29 +9,41 @@
 
 <body class="animated-background">
 <h2>Kies een thema:</h2>
-@foreach (var subtheme in Model.SubThemes)
-{ <div class="row">
-<div class="col-md-4 m-2">
-    <div class="card p-3">
-        <h4>@subtheme.SubThemeName :</h4>
-        @foreach (var flow in subtheme.Flows)
-        {
-            if (!flow.Questions.IsNullOrEmpty())
-            {
-                var controller = flow.FlowType == FlowType.Linear ? "LinearFlow" : "CircularFlow";
-                var action = "StartFlow";
-                var flowTypeName = flow.FlowType == FlowType.Linear ? "Linear" : "Circulair";
+@foreach (var project in Model.Projects)
+{
+    @foreach (var maintheme in project.MainThemes)
+    {
+        <h3>@maintheme.ThemeName</h3>
 
-                <a class="btn btn-primary me-2 full-width-btn mt-3" asp-area=""
-                   asp-controller="@controller"
-                   asp-action="@action"
-                   asp-route-flowId="@flow.FlowId">
-                    @flow.FlowName (@flowTypeName)
-                </a>
+        @foreach (var subtheme in maintheme.SubThemes)
+        {
+            {
+                <div class="row">
+                    <div class="col-md-4 m-2">
+                        <div class="card p-3">
+                            <h4>@subtheme.SubThemeName :</h4>
+                            @foreach (var flow in subtheme.Flows)
+                            {
+                                if (!flow.Questions.IsNullOrEmpty())
+                                {
+                                    var controller = flow.FlowType == FlowType.Linear ? "LinearFlow" : "CircularFlow";
+                                    var action = "StartFlow";
+                                    var flowTypeName = flow.FlowType == FlowType.Linear ? "Linear" : "Circulair";
+
+                                    <a class="btn btn-primary me-2 full-width-btn mt-3" asp-area=""
+                                       asp-controller="@controller"
+                                       asp-action="@action"
+                                       asp-route-flowId="@flow.FlowId">
+                                        @flow.FlowName (@flowTypeName)
+                                    </a>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
             }
         }
-    </div>
-    </div>
- </div>
+    }
 }
+
 </body>

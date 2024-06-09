@@ -25,10 +25,22 @@ public class BackOfficeRepository : IRepositoryBackOffice
 
         return backOffice;
     }
+    
+    
 
     public BackOffice ReadBackOffice(int backofficeId)
     {
         return _context.BackOffices.Include(bo => bo.Projects)
+            .SingleOrDefault(office => office.BackOfficeId == backofficeId);
+    }
+    
+    public BackOffice ReadBackOfficeWithProjectsAndStuff(int backofficeId)
+    {
+        return _context.BackOffices.Include(bo => bo.Projects)
+            .ThenInclude(project => project.MainThemes)
+            .ThenInclude(theme => theme.SubThemes)
+            .ThenInclude(s =>  s.Flows)
+            .ThenInclude(flow => flow.Questions)
             .SingleOrDefault(office => office.BackOfficeId == backofficeId);
     }
 
