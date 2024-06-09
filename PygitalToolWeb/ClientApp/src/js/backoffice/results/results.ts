@@ -96,9 +96,9 @@ async function generateDataAndCharts() {
                 count: answerCounts[answer]
             }));
 
-            createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
-
             if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 2) {
+                createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
+                
                 if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 1) {
                     answerData.sort((a, b) => b.count - a.count);
                 }
@@ -106,10 +106,11 @@ async function generateDataAndCharts() {
                 createCanvasElement(counter);
                 configureChart(counter, answerData);
             } else {
-                const aiSummaryPromise = generateSummary(uniqueAnswers.toString()).then(aiSummary => {
-                    createOpenQuestionResultElement(aiSummary, counter, uniqueAnswers);
-                });
-                summaryPromises.push(aiSummaryPromise);
+                createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
+                
+                const uniqueAnswers = Array.from(questionAnswers[questionText]);
+                const aiSummary = await generateSummary(uniqueAnswers.toString());
+                createOpenQuestionResultElement(aiSummary, counter, uniqueAnswers);
             }
             counter++;
         }
@@ -118,7 +119,11 @@ async function generateDataAndCharts() {
     await Promise.all(summaryPromises);
     expandOpenQuestionResultTables();
 
-    return data;
+    if (data === undefined) {
+        console.error('Data is undefined');
+    } else {
+        return data;
+    }
 }
 
 
@@ -171,10 +176,10 @@ async function showResultCounts() {
 // Sets up click functionality for elements with the 'clickable' class to navigate to the URL specified in their 'data-href' attribute upon click.
 function setupCardClickable(){
     document.addEventListener('DOMContentLoaded', function (this: Document) {
-        var clickableCards = document.querySelectorAll('.clickable');
+        const clickableCards = document.querySelectorAll('.clickable');
         clickableCards.forEach(function (card) {
             card.addEventListener('click', function (this: HTMLElement) {
-                var url = this.getAttribute('data-href');
+                const url = this.getAttribute('data-href');
                 if (url !== null) {
                     window.location.href = url;
                 } else {
@@ -192,7 +197,7 @@ function setupResultsButton(): void {
         // Add a click event listener to each button
         buttons.forEach(button => {
             button.addEventListener('click', function(this: HTMLElement) {
-                var url = this.getAttribute('data-href');
+                const url = this.getAttribute('data-href');
                 if (url !== null) {
                     window.location.href = url;
                 } else {
@@ -276,7 +281,7 @@ export function getQuestionTypeName(questionType: number): string {
         case 2:
             return 'Range';
         case 3:
-
+            return 'Open';
         default:
             return 'Unknown';
     }
