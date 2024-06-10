@@ -31,7 +31,7 @@ public class ProjectCreationController : Controller
         try
         {
             _unitOfWork.BeginTransaction();
-            _projectManager.AddProject(project.ProjectName, project.Description, project.CreationDate, project.Status,
+            _projectManager.AddProject(project.Description, project.ProjectName, project.CreationDate, project.Status,
                 project.BackOfficeId);
             _unitOfWork.Commit();
             return NoContent();

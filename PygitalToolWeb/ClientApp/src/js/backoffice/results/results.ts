@@ -98,7 +98,7 @@ async function generateDataAndCharts() {
 
             if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 2) {
                 createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
-                
+
                 if (questionTypes[questionText] >= 0 && questionTypes[questionText] <= 1) {
                     answerData.sort((a, b) => b.count - a.count);
                 }
@@ -107,7 +107,7 @@ async function generateDataAndCharts() {
                 configureChart(counter, answerData);
             } else {
                 createQuestionAndResultsContainerElements(counter, questionTypes[questionText], questionText);
-                
+
                 const uniqueAnswers = Array.from(questionAnswers[questionText]);
                 const aiSummary = await generateSummary(uniqueAnswers.toString());
                 createOpenQuestionResultElement(aiSummary, counter, uniqueAnswers);
@@ -187,7 +187,7 @@ function setupCardClickable(){
                 }
             });
         });
-    }); 
+    });
 }
 
 // Sets up click functionality for elements with the 'results-btn' class to navigate to the URL specified in their 'data-href' attribute upon click.
@@ -289,6 +289,6 @@ export function getQuestionTypeName(questionType: number): string {
 
 // Loads the necessary DOM elements and functionality for displaying results.
 export function loadDOMResults(): void {
-   setupCardClickable();
-   setupResultsButton()
+    setupCardClickable();
+    setupResultsButton()
 }
