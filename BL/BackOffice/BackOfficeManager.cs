@@ -20,6 +20,11 @@ public class BackOfficeManager : IBackOfficeManager
     {
         return _repositoryBackOffice.ReadBackOffice(backofficeId);
     }
+    public Domain.Platform.BackOffice GetBackOfficeWithProjectsAndStuff(int backofficeId)
+    {
+        return _repositoryBackOffice.ReadBackOfficeWithProjectsAndStuff(backofficeId);
+    }
+    
 
     public void AddBackOffice(Domain.Platform.BackOffice backOffice)
     {

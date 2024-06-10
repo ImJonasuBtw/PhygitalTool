@@ -33,12 +33,6 @@
                             >
                                 GebruikersPlatform
                             </a>
-                            <a class="btn btn-primary btn-block"
-                               asp-controller="SubTheme"
-                               asp-action="ShowSubThemeSelection"
-                               asp-route-mainThemeId="1">
-                                Kies bevraging
-                            </a>
                             <partial name="_LoginPartial"></partial>
                         }
                         @if (User.IsInRole("User"))

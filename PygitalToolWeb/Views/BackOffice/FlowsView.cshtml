@@ -30,6 +30,12 @@
                    asp-action="index">
                     Projecten
                 </a>
+                <a class="nav-link"
+                   asp-controller="SubTheme"
+                   asp-action="ShowSubThemeSelection"
+                   asp-route-backOfficeId="@Model.MainTheme.Project.BackOffice.BackOfficeId">
+                    Kiosk Modus
+                </a>
                 <a class="nav-link" asp-area="" asp-controller="Themes"
                    asp-action="index"
                    asp-route-themeId="@Model.MainThemeId">
