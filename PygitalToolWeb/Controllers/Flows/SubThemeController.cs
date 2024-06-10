@@ -8,12 +8,12 @@ namespace PhygitalTool.Web.Controllers.Flows;
 public class SubThemeController : Controller
 {
     private readonly IFlowManager _flowManager;
-    private readonly IProjectManager _projectManager;
+    private readonly IBackOfficeManager _backOfficeManager;
 
-    public SubThemeController(IFlowManager iFlowManager, IProjectManager projectManager)
+    public SubThemeController(IFlowManager iFlowManager, IBackOfficeManager backOfficeManager)
     {
         _flowManager = iFlowManager;
-        _projectManager = projectManager;
+        _backOfficeManager = backOfficeManager;
     }
 
     // Returns the information view after a user/supervisor selects a subtheme
@@ -23,9 +23,9 @@ public class SubThemeController : Controller
         return View("SubThemeInformationBeginView", flow);
     }
 
-    public IActionResult ShowSubThemeSelection(int mainThemeId )
+    public IActionResult ShowSubThemeSelection(int backOfficeId )
     {
-        var mainTheme = _projectManager.GetThemeWithSubthemes(mainThemeId);
+        var mainTheme = _backOfficeManager.GetBackOfficeWithProjectsAndStuff (backOfficeId);
         return View("SubThemeSelectionView", mainTheme);
     }
 }

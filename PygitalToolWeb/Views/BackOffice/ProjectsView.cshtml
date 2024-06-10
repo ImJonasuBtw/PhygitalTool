@@ -31,6 +31,12 @@
                 </a>
                 <a href="#" class="nav-link pt-0">Begeleiders</a>
                 <a href="#" class="nav-link pt-0">Notities</a>
+                   <a class="nav-link"
+                                   asp-controller="SubTheme"
+                                   asp-action="ShowSubThemeSelection"
+                                   asp-route-backOfficeId="@Model.BackOfficeId">
+                                    Kiosk Modus
+                                </a>
                 <a class="nav-link pt-0" asp-area="" asp-controller="Home"asp-action="index">Terug</a>
                 <a href="/Identity/Account/Logout" class="nav-link">Afmelden</a>
             </div>
