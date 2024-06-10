@@ -15,7 +15,7 @@ export function NotesHtml(projectsContainer: HTMLElement, displayedQuestions: Se
             return `
                                 <div class="card">
                                 <div class=" card-body note">
-                                    <h5 class=" card-title text-body">Question: ${note.question.questionText}</h5>
+                                    <h5 class=" card-title text-body">Vragen: ${note.question.questionText}</h5>
                                     <p class="text-body">${note.description}</p>
                                 </div>
                                 </div>

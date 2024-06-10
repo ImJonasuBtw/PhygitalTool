@@ -7,7 +7,7 @@ export function ShowEditForm(subthemesContainer: HTMLElement, subTheme : subThem
                     <h2 class="mt-4">Subthema aanpassen</h2>
                     <form id="edit-subtheme-form">
                         <div class="mb-3">
-                            <label for="subtheme-name" class="form-label">Subthema Naam</label>
+                            <label for="subtheme-name" class="form-label">Subthema naam</label>
                             <input type="text" class="form-control" id="subtheme-name" required value="${subTheme.subThemeName}">
                         </div>
                         <div class="mb-3">
@@ -26,7 +26,7 @@ export function ShowAddForm(subThemasContainer: HTMLElement){
             <h2 class="mt-4">Voeg nieuw subthema toe</h2>
             <form id="new-project-form">
                 <div class="mb-3">
-                    <label for="sub-theme-name" class="form-label">Subthema Naam</label>
+                    <label for="sub-theme-name" class="form-label">Subthema naam</label>
                     <input type="text" class="form-control" id="sub-theme-name" required>
                 </div>
                 <div class="mb-3">

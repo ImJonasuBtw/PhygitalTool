@@ -6,7 +6,7 @@ export function renderEditProjectForm(container: { innerHTML: string; }, project
                     <h2 class="mt-4">Edit Project</h2>
                     <form id="edit-project-form">
                         <div class="mb-3">
-                            <label for="project-name" class="form-label">Project Naam</label>
+                            <label for="project-name" class="form-label">Project naam</label>
                             <input type="text" class="form-control" id="project-name" required value="${project.projectName}">
                         </div>
                         <div class="mb-3">
@@ -29,7 +29,7 @@ export function renderEditProjectForm(container: { innerHTML: string; }, project
 // Renders a form for adding a new project.
 export function renderAddProjectForm(container: { innerHTML: string; }) {
     container.innerHTML = `
-            <h2 class="mt-4">Voeg nieuw Project toe</h2>
+            <h2 class="mt-4">Voeg nieuw project toe</h2>
             <form id="new-project-form">
                 <div class="mb-3">
                     <label for="project-name" class="form-label">Project naam</label>
