@@ -14,6 +14,6 @@ export async function handleErrorResponse(response: Response) {
         }
     } else {
         const text = await response.text();
-        alert('Toevoeging/update van BackOffice mislukt: ' + text);
+        alert('Toevoeging/update van de backOffice mislukt: ' + text);
     }
 }

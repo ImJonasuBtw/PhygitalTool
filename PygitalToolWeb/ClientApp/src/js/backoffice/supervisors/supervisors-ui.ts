@@ -6,7 +6,7 @@ export function addSupervisor() {
     const projectsContainer = document.getElementById('projects-container');
     if (projectsContainer) {
         projectsContainer.innerHTML = `
-            <h3>Nieuwe supervisor toevoegen</h3>
+            <h3>Nieuwe begleider toevoegen</h3>
             <form id="supervisor-form" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username">Naam:</label>

@@ -76,7 +76,7 @@ function handleSubmit(subthemeId: string | undefined) {
         const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
         const flowTypeRadio = document.querySelector('input[name="flowType"]:checked') as HTMLInputElement;
         if (!flowTypeRadio) {
-            alert('Please select a flow type.');
+            alert('Selecteer een flow type');
             return;
         }
         const flowType = flowTypeRadio.value === 'Circular' ? FlowTypeEnum.Circular : FlowTypeEnum.Linear;
