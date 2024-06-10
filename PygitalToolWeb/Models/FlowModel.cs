@@ -28,4 +28,6 @@ public class FlowModel
     
     [Required(ErrorMessage = "FlowImage is required")]
     public string FlowImage { get; set; }
+    
+    public int BackOfficeId { get; set; }
 }

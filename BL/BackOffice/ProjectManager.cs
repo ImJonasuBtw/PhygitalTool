@@ -1,4 +1,5 @@
-﻿using PhygitalTool.DAL.IRepositorys;
+﻿using PhygitalTool.BL.Users;
+using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
 using PhygitalTool.Domain.Projects;
 using PhygitalTool.Domain.Util;
@@ -12,16 +13,18 @@ public class ProjectManager : IProjectManager
     private readonly IRepositoryQuestion _repositoryQuestion;
     private readonly IRepositoryAnswerPossibility _answerPossibilityRepository;
     private readonly IRepositoryNote _noteRepository;
-
+    private readonly IUserManager _userManager;
+    
     public ProjectManager(IRepositoryProject repositoryProject, IRepositoryFlow repositoryFlow,
         IRepositoryQuestion repositoryQuestion, IRepositoryAnswerPossibility answerPossibilityRepository,
-        IRepositoryNote noteRepository)
+        IRepositoryNote noteRepository, IUserManager userManager)
     {
         _repositoryProject = repositoryProject;
         _repositoryFlow = repositoryFlow;
         _repositoryQuestion = repositoryQuestion;
         _answerPossibilityRepository = answerPossibilityRepository;
         _noteRepository = noteRepository;
+        _userManager = userManager;
     }
 
     public void AddProject(string description, string projectName, DateTime creationDate, ProjectStatus status,
@@ -219,7 +222,7 @@ public class ProjectManager : IProjectManager
     public Flow AddFlowWithQuestionsAndAnswers(string flowDescription, string flowName, string flowImage, FlowType flowType,
         Language language, int subthemeId,
         List<(string QuestionText, QuestionType questionType, string QuestionImage, List<string> AnswerDescriptions)>
-            questions)
+            questions, int backOfficeId)
     {
         var domainFlow = new Flow()
         {
@@ -233,6 +236,8 @@ public class ProjectManager : IProjectManager
 
         Flow newFlow = AddFlow(domainFlow);
         domainFlow.FlowId = newFlow.FlowId;
+        
+        _userManager.AddFlowToSupervisor(newFlow.FlowId, backOfficeId);
 
         if (questions != null && questions.Count > 0)
         {

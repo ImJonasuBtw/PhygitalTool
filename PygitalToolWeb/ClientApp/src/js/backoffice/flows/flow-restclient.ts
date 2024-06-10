@@ -1,5 +1,5 @@
 ﻿import {addQuestionButton, editForm, loadFlows, showQuestionAndAnswerPossibilities} from "./flow-ui";
-import {Flow, FlowTypeEnum} from "./flow";
+import {backOfficeId, Flow, FlowTypeEnum} from "./flow";
 import {handleErrorResponseAdd, handleErrorResponseEdit} from "./flow-validation";
 
 // Adds a new flow to the specified subtheme.
@@ -16,7 +16,8 @@ export async function AddFlow(newFlow: Flow, subthemeId: string | undefined): Pr
             SubthemeId: subthemeId,
             Questions: newFlow.questions,
             Language: newFlow.language,
-            FlowImage: newFlow.flowImage
+            FlowImage: newFlow.flowImage,
+            BackOfficeId: backOfficeId
         })
     });
     if (response.ok) {
