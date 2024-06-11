@@ -27,7 +27,7 @@ public interface IProjectManager
     
     void DeleteProject(int projectId);
     
-    void AddNote(int questionId, string noteDesc);
+    void AddNote(int questionId, string noteDescription);
     
     IEnumerable<Note> GetNotes();
     
