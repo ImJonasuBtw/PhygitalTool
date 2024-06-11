@@ -1,35 +1,20 @@
 // Generates HTML markup for displaying notes in the projects container.
-export function NotesHtml(projectsContainer: HTMLElement, displayedQuestions: Set<unknown>, notes: {
-    question: { questionId: unknown; questionText: any; };
-    description: any;
-}[]) {
+export function NotesHtml(projectsContainer: HTMLElement) {
+    const backofficeId = projectsContainer.getAttribute('backoffice-id');
     projectsContainer.innerHTML = `
-                <h2>Notities</h2>
-                <div class="list-group">
-                    ${notes.map((note: {
-        question: { questionId: unknown; questionText: any; };
-        description: any;
-    }) => {
-        if (!displayedQuestions.has(note.question.questionId)) {
-            displayedQuestions.add(note.question.questionId);
-            return `
-                                <div class="card">
-                                <div class=" card-body note">
-                                    <h5 class=" card-title text-body">Question: ${note.question.questionText}</h5>
-                                    <p class="text-body">${note.description}</p>
+    <div class="row">
+                    <div class="m-2">
+                        <div class="card clickable" data-project-id="@project.ProjectId" data-href="@Url.Action("Index", "Projects", new { projectId = project.ProjectId })">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">Kies de juiste flow en bekijk daar de notities</h5>
                                 </div>
-                                </div>
-                            `;
-        } else {
-            return `
-                                <div class="card">
-                                <div class="card-body note">
-                                    <p class="text-body">${note.description}</p>
-                                </div>
-                                </div>
-                            `;
-        }
-    }).join('')}
-                </div>
+                                <p class="card-text">Begin bij de projecten en ga verder tot de flow</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            
                 `;
 }

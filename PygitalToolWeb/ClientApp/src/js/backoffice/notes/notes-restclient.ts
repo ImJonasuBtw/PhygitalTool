@@ -19,6 +19,7 @@ export async function AddNote(newNote: Note, noteDescription: HTMLInputElement )
         const responseText = await response.text();
         if (responseText) {
             const data = JSON.parse(responseText);
+            console.log('Success:', data);
         }
     } else {
         console.error('Failed to post note:', response.statusText);
@@ -28,14 +29,8 @@ export async function AddNote(newNote: Note, noteDescription: HTMLInputElement )
 
 // Loads notes from the server and displays them on the page.
 export function loadNotes() {
-    fetch('/api/Notes/GetNotes')
-        .then(response => response.json())
-        .then((notes) => {
             const projectsContainer = document.getElementById('projects-container');
-            const displayedQuestions = new Set();
             if (projectsContainer) {
-                NotesHtml(projectsContainer,displayedQuestions,notes)
+                NotesHtml(projectsContainer)
             }
-        })
-        .catch(error => console.error('Error loading notes:', error));
 }

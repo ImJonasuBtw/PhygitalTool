@@ -3,7 +3,7 @@
 let currentFlowState: string | null = null;
 const timerLength: number = 10;
 let timeLeft: number = timerLength;
-let countdown:  NodeJS.Timeout | null;
+let countdown: NodeJS.Timeout | null;
 let isPaused: boolean = false;
 let submitTimeout: NodeJS.Timeout | null = null;
 const progressBar = document.querySelector('.progress-bar') as HTMLElement;
@@ -22,8 +22,7 @@ hubConnection.on("FlowStateUpdated", newFlowState => {
         pauseTimer();
     } else if (newFlowState === "running") {
         resumeTimer();
-    }
-    else if (newFlowState === "stopped") {
+    } else if (newFlowState === "stopped") {
         window.location.href = `/api/Supervisors/show-start-screen`;
     }
 });
@@ -35,7 +34,7 @@ hubConnection.start()
             pauseTimer();
         } else if (currentFlowState === "running") {
             resumeTimer();
-        }else if (currentFlowState === "stopped") {
+        } else if (currentFlowState === "stopped") {
             window.location.href = `/api/Supervisors/show-start-screen`;
         }
         try {
@@ -87,6 +86,7 @@ function startSubmitTimeout(): void {
                 button.click();
             }
         }
+
         submitTimeout = setTimeout(clickButton, timeLeft * 1000);
 
         button.addEventListener('click', function () {
@@ -183,53 +183,59 @@ export function configureAnswerButtons(): void {
 
 // Configures the submit button to return the correct selected value(s) when being pressed.
 export function configureSubmitButton(): void {
-    const submitButton: HTMLElement | null = document.getElementById('submit-button');
-    submitButton?.addEventListener('click', function (): void {
-        const selectedAnswers: string[] = [];
+    const questionType = document.getElementById('questiontype-multiplechoice');
+    if (questionType) {
+        const submitButton: HTMLElement | null = document.getElementById('submit-button');
+        submitButton?.addEventListener('click', function (): void {
+            const selectedAnswers: string[] = [];
 
-        const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answer-button');
-        answerButtons.forEach(button => {
-            if (button.classList.contains('selected')) {
-                const value = button.getAttribute('value');
-                if (value !== null) { // Check for `null` before pushing
-                    selectedAnswers.push(value);
+            const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answer-button');
+            answerButtons.forEach(button => {
+                if (button.classList.contains('selected')) {
+                    const value = button.getAttribute('value');
+                    if (value !== null) { // Check for `null` before pushing
+                        selectedAnswers.push(value);
+                    }
                 }
-            }
+            });
+
+            const hiddenInput: HTMLInputElement = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'selectedAnswers';
+            hiddenInput.value = JSON.stringify(selectedAnswers);
+            document.getElementById('answers-form')?.appendChild(hiddenInput);
+
+            (document.getElementById('answers-form') as HTMLFormElement)?.submit();
         });
-
-        const hiddenInput: HTMLInputElement = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'selectedAnswers';
-        hiddenInput.value = JSON.stringify(selectedAnswers);
-        document.getElementById('answers-form')?.appendChild(hiddenInput);
-
-        (document.getElementById('answers-form') as HTMLFormElement)?.submit();
-    });
+    }
 }
 
 // Since the circular flow works with a timer, it's answer possibilities can't make it go to the next question immediately.
 export function configureSubmitButtonSingleChoice(): void {
-    const submitButton: HTMLElement | null = document.getElementById('submit-button-single-choice');
-    submitButton?.addEventListener('click', function (): void {
-        let selectedAnswer: string = "no answer";
+    const questionType = document.getElementById('questiontype-singlechoice');
+    if (questionType) {
+        const submitButton: HTMLElement | null = document.getElementById('submit-button');
+        submitButton?.addEventListener('click', function (): void {
+            let selectedAnswer: string = "no answer";
 
-        const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answer-button-single-choice')
-        answerButtons.forEach(button => {
-            if (button.classList.contains('selected')) {
-                const value = button.getAttribute('value');
-                if (value) {
-                    selectedAnswer = value;
+            const answerButtons: NodeListOf<Element> = document.querySelectorAll('.answer-button-single-choice')
+            answerButtons.forEach(button => {
+                if (button.classList.contains('selected')) {
+                    const value = button.getAttribute('value');
+                    if (value) {
+                        selectedAnswer = value;
+                    }
                 }
-            }
-        });
+            });
 
-        const hiddenInput: HTMLInputElement = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'selectedAnswer';
-        hiddenInput.value = selectedAnswer;
-        document.querySelector('.answers-form-single-choice')?.appendChild(hiddenInput);
-        (document.querySelector('.answers-form-single-choice') as HTMLFormElement)?.submit();
-    });
+            const hiddenInput: HTMLInputElement = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'selectedAnswer';
+            hiddenInput.value = selectedAnswer;
+            document.querySelector('.answers-form-single-choice')?.appendChild(hiddenInput);
+            (document.querySelector('.answers-form-single-choice') as HTMLFormElement)?.submit();
+        });
+    }
 }
 
 // Configures the answer buttons for a single choice question in a circular flow to deselect when another is pressed.

@@ -9,6 +9,7 @@ public interface IRepositoryFlow
     int ReadTotalAmountOfFlows();
     
     Flow ReadFlowWithQuestionAndAnswerpossibilities(int flowId);
+    Flow ReadFlowWithQuestionsAndNotesAndSubtheme(int flowId);
     
     Flow CreateFlow(Flow flow);
     

@@ -106,6 +106,7 @@ using (var scope = app.Services.CreateScope())
         //generate random user inputs
         //the generator will cycle through each flow and its questions 50 times.
         userInputFactory.GenerateRandomUserInputForAllFlows(50);
+        userInputFactory.GenerateOpenAnswers();
         Console.WriteLine("UserInputs Generated");
     }
 }

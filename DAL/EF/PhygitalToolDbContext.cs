@@ -58,7 +58,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<MainTheme>().Property(m => m.ThemeId).ValueGeneratedOnAdd();
         modelBuilder.Entity<Question>().Property(q => q.QuestionId).ValueGeneratedOnAdd();
         modelBuilder.Entity<AnswerPossibility>().Property(a=>a.AnswerPossibilityId).ValueGeneratedOnAdd();
-        modelBuilder.Entity<Note>().Property(n => n.NoteId).ValueGeneratedOnAdd();
+        //modelBuilder.Entity<Note>().Property(n => n.NoteId).ValueGeneratedOnAdd();
         modelBuilder.Entity<ContactInformation>()
             .HasKey(ci => ci.ContactInformationId);
 
@@ -86,6 +86,7 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .HasOne(n => n.Question)
             .WithMany(q => q.Notes)
             .HasForeignKey(q => q.QuestionId);
+        
 
         modelBuilder.Entity<Supervisor>()
             .HasOne(s => s.BackOffice)
@@ -121,6 +122,11 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .WithMany(s => s.Flows)
             .HasForeignKey(f => f.SupervisorId);
         
+        modelBuilder.Entity<Flow>()
+            .HasOne(s => s.SubTheme)
+            .WithMany(s => s.Flows)
+            .HasForeignKey(f => f.SubThemeId);
+        
         modelBuilder.Entity<Question>()
             .HasMany(q => q.AnswerPossibilities)
             .WithOne() 
@@ -131,6 +137,12 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .HasMany(q => q.Answers)
             .WithOne() 
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Question>()
+            .HasMany(q => q.Notes)
+            .WithOne(n => n.Question) 
+            .HasForeignKey(f => f.QuestionId);
+
 
         modelBuilder.Entity<Answer>()
             .HasOne(a => a.Question) 

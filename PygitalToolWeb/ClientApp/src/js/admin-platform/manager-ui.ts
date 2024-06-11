@@ -26,7 +26,7 @@ export function addManager() {
     const backOfficeContainer = document.getElementById('backoffice-container');
     if (backOfficeContainer) {
         backOfficeContainer.innerHTML = `
-            <h3>Voeg nieuwe begeleider toe</h3>
+            <h3>Voeg nieuwe beheerder toe</h3>
             <form id="managersForm" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="userName">Naam:</label>

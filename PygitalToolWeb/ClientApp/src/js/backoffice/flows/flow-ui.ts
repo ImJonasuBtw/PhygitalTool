@@ -4,7 +4,7 @@ import {deleteAnswerPossibility, deleteQuestion} from "./flow-restclient";
 // Renders a form to add a new flow to the specified container.
 export function ShowForm(FlowContainer: { innerHTML: string; }): void {
     FlowContainer.innerHTML = `
-            <h2 class="mt-4">Nieuwe stroom toevoegen</h2>
+            <h2 class="mt-4">Nieuwe flow toevoegen</h2>
             <form id="new-flow-form">
                 <div class="mb-3">
                     <label for="flow-name" class="form-label">Flow naam</label>
@@ -15,11 +15,11 @@ export function ShowForm(FlowContainer: { innerHTML: string; }): void {
                     <textarea class="form-control" id="description" required></textarea>
                 </div>
                  <div class="mb-3">
-                    <label for="flow-logo" class="form-label">Flow Logo</label>
+                    <label for="flow-logo" class="form-label">Flow logo</label>
                     <input type="file" class="form-control" id="flow-logo" accept="image/*">
                 </div>
                 <div class="mb-3">
-                     <label class="form-label">Flow Type</label>
+                     <label class="form-label">Flow type</label>
                          <div class="form-check">
                               <input class="form-check-input" type="radio" name="flowType" id="circular-flow" value="Circular">
                               <label class="form-check-label" for="circular-flow"> Circulair </label>
@@ -45,8 +45,8 @@ export function ShowForm(FlowContainer: { innerHTML: string; }): void {
                           </div>
                           <button type="button" id="add-question-button" class="add-question-button btn btn-primary me-2 mt-3">Add Question</button>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Flow</button>
-                <button type="button" class="btn btn-secondary" id="cancel-button">Cancel</button>
+                <button type="submit" class="btn btn-primary">Flow toevoegen </button>
+                <button type="button" class="btn btn-secondary" id="cancel-button">Annuleer</button>
             </form>
         `;
 }
@@ -170,7 +170,7 @@ export function editForm(FlowContainer: { innerHTML: string; }, flow: Flow): voi
                              <input type="text" class="form-control" id="flow-name" required value="${flow.flowName}">
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Beschrijvind</label>
+                            <label for="description" class="form-label">Beschrijving</label>
                             <textarea class="form-control" id="description" required>${flow.flowDescription}</textarea>
                         </div>
                         

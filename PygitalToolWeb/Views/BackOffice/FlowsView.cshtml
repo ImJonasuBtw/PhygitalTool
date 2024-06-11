@@ -17,7 +17,7 @@
                     {
                         <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
                         <h5>@manager.UserName</h5>
-                        <p>mycompany</p>
+                        <p>@Model.MainTheme.Project.BackOffice.Name</p>
                     }
                 }
             </div>
@@ -57,6 +57,15 @@
                                     <h5 class="card-title">@flow.FlowName</h5>
                                 </div>
                                 <p class="card-text">@flow.FlowDescription</p>
+                                <div class="pt-3 pb-3">
+                                     <a class="nav-link fw-bold btn btn-primary me-2 full-width-btn p-2"
+                                                                                        asp-controller="ShowNotesForBackoffice"
+                                                                                        asp-action="index"
+                                                                                        asp-route-flowId="@flow.FlowId">
+                                                                                         Notities
+                                                                                     </a>
+                                </div>
+                                
                                 <div>
                                     <button class="btn btn-outline-secondary edit-flow-button" data-flow-id="@flow.FlowId" title="Edit Flow">
                                         <i class="bi-pencil"></i>
@@ -80,7 +89,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modal-label">Wil je zeker verwijderen?</h5>
+                <h5 class="modal-title" id="modal-label">Wil je dit zeker verwijderen?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -99,7 +108,7 @@
 <button type="button" id="add-flow-button" class="rounded-add-button">+</button>
 
 @section Scripts {
-    <script id="flow-page-script" src="~/dist/flow_page.entry.js" data-subthemeId="@Model.SubThemeId" defer="defer"></script>
+    <script id="flow-page-script" src="~/dist/flow_page.entry.js" data-subthemeId="@Model.SubThemeId" data-backofficeId="@Model.MainTheme.Project.BackOfficeId" defer="defer"></script>
 }
 
 </body>

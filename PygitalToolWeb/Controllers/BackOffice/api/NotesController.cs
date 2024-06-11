@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhygitalTool.BL;
 using PhygitalTool.BL.BackOffice;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Web.Models;
 
 
 namespace PhygitalTool.Web.Controllers.BackOffice.api;
@@ -19,21 +20,24 @@ public class NotesController : Controller
         _projectManager = projectManager;
         _unitOfWork = unitOfWork;
     }
-
+    
     [HttpPost("PostNote")]
-    public IActionResult PostNote(Note note)
+    public IActionResult PostNote(NoteModel note)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
-        }
-
+        } 
+        
         _unitOfWork.BeginTransaction();
         _projectManager.AddNote(note.QuestionId, note.Description);
         _unitOfWork.Commit();
-
+        
         return NoContent();
     }
+
+
+
 
     [Authorize(Roles = "Manager,Supervisor")]
     [HttpGet("GetNotes")]

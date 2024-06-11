@@ -47,6 +47,7 @@
 
             @if (Model.QuestionType == QuestionType.Open)
             {
+                <p class="d-none" id="questiontype-open"></p>
                 <form method="post" action="/Question/SaveAnswerAndUserInput"onsubmit="return validateForm()">
                     <textarea type="text" class="form-control" id="selected-answer" name="selectedAnswer" placeholder="Typ hier je antwoord"></textarea>
                     <button type="submit" class="btn btn-primary submit-button mt-3" id="submit">Submit</button>
@@ -58,6 +59,7 @@
             }
             @if (Model.QuestionType == QuestionType.Range)
             {
+                <p class="d-none" id="questiontype-range"></p>
                 <p>@Localizer[ResourcesFlow.ChoseOne]</p>
 
                 <div class="slider-container">
@@ -80,6 +82,7 @@
             }
             @if (Model.QuestionType == QuestionType.MultipleChoice)
             {
+                <p class="d-none" id="questiontype-multiplechoice"></p>
                 <p>@Localizer[ResourcesFlow.ChoseMulptiple]</p>
                 <div class="row">
                     <div class="col-md-6 left-column p-3">
@@ -122,6 +125,7 @@
             }
             @if (Model.QuestionType == QuestionType.SingleChoice)
             {
+                <p class="d-none" id="questiontype-singlechoice"></p>
                 <p>@Localizer[ResourcesFlow.ChoseOne]</p>
 
                 <div class="row">
@@ -163,7 +167,7 @@
                     </div>
                 </div>
 
-                <form  id="answers-form" method="post" action="/Question/SaveAnswerAndUserInput" class="answers-form-single-choice">
+                <form id="answers-form" method="post" action="/Question/SaveAnswerAndUserInput" class="answers-form-single-choice">
                     <button type="button" class="btn btn-primary submit-button submit-button-single-choice" id="submit-button">@Localizer[ResourcesFlow.Submit]</button>
                     <input type="hidden" name="currentFlow" value="@Model.FlowId"/>
                     <input type="hidden" name="currentQuestion" value="@Model.QuestionId"/>
