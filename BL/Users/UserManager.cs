@@ -38,6 +38,12 @@ public class UserManager : IUserManager
         _repositoryIdeas.CreateIdea(idea);
     }
 
+    public void AddFlowToSupervisor(int flowId, int backofficeId)
+    {
+        GetSuperVisorsForBackoffice(backofficeId).ToList()
+            .ForEach(s => _repositoryBackOffice.CreateFlowToSupervisor(flowId, s.Id));
+    }
+
     public IdentityUser GetUser(string userId)
     {
         return _repositoryIdeas.ReadUser(userId);

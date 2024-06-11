@@ -17,7 +17,7 @@
                     {
                         <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid">
                         <h5>@manager.UserName</h5>
-                        <p>mycompany</p>
+                        <p>@Model.MainTheme.Project.BackOffice.Name</p>
                     }
                 }
             </div>
@@ -99,7 +99,7 @@
 <button type="button" id="add-flow-button" class="rounded-add-button">+</button>
 
 @section Scripts {
-    <script id="flow-page-script" src="~/dist/flow_page.entry.js" data-subthemeId="@Model.SubThemeId" defer="defer"></script>
+    <script id="flow-page-script" src="~/dist/flow_page.entry.js" data-subthemeId="@Model.SubThemeId" data-backofficeId="@Model.MainTheme.Project.BackOfficeId" defer="defer"></script>
 }
 
 </body>

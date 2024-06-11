@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using PhygitalTool.BL.BackOffice;
+using PhygitalTool.BL.Users;
 using PhygitalTool.Domain.FlowPackage;
 
 
@@ -14,12 +15,14 @@ using Models;
 public class FlowCreationController : ControllerBase
 {
     private readonly IProjectManager _projectManager;
+    private readonly IUserManager _userManager;
     private readonly UnitOfWork _unitOfWork;
 
-    public FlowCreationController(IProjectManager projectManager, UnitOfWork unitOfWork)
+    public FlowCreationController(IProjectManager projectManager, UnitOfWork unitOfWork, IUserManager userManager)
     {
         _projectManager = projectManager;
         _unitOfWork = unitOfWork;
+        _userManager = userManager;
     }
 
     [Authorize(Roles = "Manager")]
@@ -35,7 +38,7 @@ public class FlowCreationController : ControllerBase
         var questions = flow.Questions.Select(q => (q.QuestionText, q.QuestionType, q.QuestionImage, q.AnswerPossibilities.Select(a => a.Description).ToList())).ToList();
 
         _unitOfWork.BeginTransaction();
-        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName,flow.FlowImage ,flow.FlowType, flow.Language, flow.SubthemeId, questions);
+        _projectManager.AddFlowWithQuestionsAndAnswers(flow.FlowDescription, flow.FlowName,flow.FlowImage ,flow.FlowType, flow.Language, flow.SubthemeId, questions, flow.BackOfficeId);
         _unitOfWork.Commit();
 
         return NoContent();

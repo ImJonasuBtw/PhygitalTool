@@ -11,6 +11,7 @@ public interface IUserManager
     IEnumerable<Idea> GetAllIdeasWithUsers();
     
     void AddIdeas(string title, string description, string userId);
+    public void AddFlowToSupervisor(int flowId, int backofficeId);
     
     public void AddCommentToIdea(string description, string userId, int ideaId);
     

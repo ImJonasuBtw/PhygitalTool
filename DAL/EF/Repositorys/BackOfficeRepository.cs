@@ -44,6 +44,15 @@ public class BackOfficeRepository : IRepositoryBackOffice
             .SingleOrDefault(office => office.BackOfficeId == backofficeId);
     }
 
+    public void CreateFlowToSupervisor(int flowId, string supervisorId)
+    {
+        var supervisor = _context.Supervisors.Find(supervisorId);
+        var flow = _context.Flows.Find(flowId);
+        if (supervisor == null || flow == null) throw new ArgumentException("Supervisor or Flow Not Found");
+        supervisor.Flows.Add(flow);
+        _context.SaveChanges();
+    }
+
     public IEnumerable<Supervisor> ReadSuperVisorsForBackoffice(int backofficeId)
     {
         return _context.BackOffices.AsNoTracking().Where(b => b.BackOfficeId == backofficeId).SelectMany(b => b.Supervisors);

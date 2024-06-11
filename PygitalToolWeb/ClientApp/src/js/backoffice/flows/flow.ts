@@ -2,7 +2,11 @@
 import bootstrap from "bootstrap";
 import {AddFlow, deleteFlow, showEditFlowForm, uploadFile} from "./flow-restclient";
 
+const scriptElement = document.getElementById('flow-page-script');
+export const backOfficeId = scriptElement?.dataset.backofficeid;
 
+
+console.log("Backoffice id : "+backOfficeId)
 export enum QuestionType {
     SingleChoice,
     MultipleChoice,

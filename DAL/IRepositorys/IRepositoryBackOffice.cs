@@ -24,4 +24,5 @@ public interface IRepositoryBackOffice
     void UpdateBackOffice(BackOffice backOffice);
     
     BackOffice ReadBackOfficeWithProjectsAndStuff(int backofficeId);
+    void CreateFlowToSupervisor(int flowId, string supervisorId);
 }
