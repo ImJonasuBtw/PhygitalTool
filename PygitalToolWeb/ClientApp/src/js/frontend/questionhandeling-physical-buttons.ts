@@ -1,16 +1,16 @@
-const key1U1: string = "w";
-const key2U1: string = "a";
-const key3U1: string = "s";
-const key4U1: string = "d";
-const key5U1: string = "f";
-const keySubmitU1: string = " ";
+const key1U1: string = "1";
+const key2U1: string = "2";
+const key3U1: string = "3";
+const key4U1: string = "4";
+const key5U1: string = "5";
+const keySubmitU1: string = "6";
 
-const key1U2: string = "1";
-const key2U2: string = "2";
-const key3U2: string = "3";
-const key4U2: string = "4";
-const key5U2: string = "5";
-const keySubmitU2: string = "6";
+const key1U2: string = "q";
+const key2U2: string = "w";
+const key3U2: string = "e";
+const key4U2: string = "r";
+const key5U2: string = "t";
+const keySubmitU2: string = "y";
 
 function addEventListenerToKeyPress(button: HTMLButtonElement, key: string) {
     if (button) {
@@ -45,6 +45,7 @@ export function linkKeyPressesToButtons() {
     const submitButtons: Array<HTMLButtonElement> = [
         document.getElementById('submit') as HTMLButtonElement,
         document.getElementById('submit-button') as HTMLButtonElement,
+        document.getElementById('submit-button-single-choice') as HTMLButtonElement,
         document.getElementById('submit-button-circular') as HTMLButtonElement];
     
     const keysUser1: Array<string> = [key1U1, key2U1, key3U1, key4U1, key5U1];

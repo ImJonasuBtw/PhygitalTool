@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using PhygitalTool.BL;
@@ -53,18 +54,27 @@ public class QuestionController : Controller
 
     // Saves users input for multiple choice questions. Takes all the selected answers and saves them using a string array.
     [HttpPost]
-    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion,
-        int subThemeId)
+    public IActionResult SaveAnswersAndUserInput(string[] selectedAnswers, int currentFlow, int currentQuestion, int subThemeId)
     {
         SubTheme subTheme = _projectManager.GetSubTheme(subThemeId);
         int mainThemeId = subTheme.MainThemeId;
         MainTheme mainTheme = _projectManager.GetMainTheme(mainThemeId);
         int projectId = mainTheme.ProjectId;
 
-        for (int i = 0; i < selectedAnswers.Length; i++)
+        var input = selectedAnswers[0];
+        var values = new List<string>();
+
+        const string pattern = "\"([^\"]*)\"";
+        var matches = Regex.Matches(input, pattern);
+        
+        foreach (Match match in matches)
         {
-            _flowManager.AddUserAnswer(selectedAnswers[i].Equals("[]") ? "no answer" : selectedAnswers[i], currentFlow,
-                currentQuestion, projectId, mainThemeId, subThemeId);
+            values.Add(match.Groups[1].Value);
+        }
+
+        foreach (var value in values.Where(value => value != ""))
+        {
+            _flowManager.AddUserAnswer(value, currentFlow, currentQuestion, projectId, mainThemeId, subThemeId);
         }
 
         if (_flowManager.GetFlow(currentFlow).FlowType == FlowType.Circular)

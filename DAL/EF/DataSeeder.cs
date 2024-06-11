@@ -196,7 +196,7 @@ public static class DataSeeder
         var range1 = new Question("Ben jij van plan om te gaan stemmen bij de aankomende lokale verkiezingen?",
             QuestionType.Range);
         //  Open
-        var open1 = new Question("Je bent schepen van onderwijs voor een dag: waar zet je dan vooral op in? ",
+        var open1 = new Question("Wat vind jij de belangrijkste prioriteiten en beleidsdoeleinden waar een gemeentebestuur zich bezig mee zou moeten houden?",
             QuestionType.Open);
 
         // Circular Flow
@@ -237,7 +237,7 @@ public static class DataSeeder
         var answerPossibility37 = new AnswerPossibility("Het delen van documenten en presentaties");
         var answerPossibility38 = new AnswerPossibility("Het stellen en beantwoorden van vragen in discussieforums");
         var answerPossibility39 = new AnswerPossibility("Het deelnemen aan virtuele klassen of live streaming van lessen");
-        var answerPossibility40 = new AnswerPossibility(" Het ontvangen van feedback van leraren op opdrachten");
+        var answerPossibility40 = new AnswerPossibility("Het ontvangen van feedback van leraren op opdrachten");
         multipleChoice3.AnswerPossibilities.Add(answerPossibility37);
         multipleChoice3.AnswerPossibilities.Add(answerPossibility38);
         multipleChoice3.AnswerPossibilities.Add(answerPossibility39);
@@ -298,8 +298,6 @@ public static class DataSeeder
         var answerPossibility31 = new AnswerPossibility("Eerder wel");
         var answerPossibility32 = new AnswerPossibility("Zeker wel");
         
-        
-
         // Creating SubThemes
         var subTheme1 = new SubTheme("KiesIntenties",
             "Ben je nog aan het twijfelen over op wie je wilt stemmen bij de aankomende verkiezingen? Het is belangrijk om te overwegen welke kandidaten het beste aansluiten bij jouw waarden en visie voor de toekomst van onze gemeente. Neem de tijd om de verschillende partijprogramma's te bekijken en de standpunten van de kandidaten te onderzoeken, zodat je een weloverwogen keuze kunt maken op verkiezingsdag.");
@@ -359,9 +357,7 @@ public static class DataSeeder
         var flow2 = new Flow("Bevraging milieu", FlowType.Circular, Language.Dutch, "flow over milieu");
         var flow3 = new Flow("Bevraging platf studenten", FlowType.Circular, Language.Dutch,
             "Bevraging over samenwerkingsplatform voor middelbare studenten");
-        //Creating Userinputs
-        var userInput1 = new UserInput(1, 2, 1, 1, 1);
-
+        
         // Adding Flows to SubTheme
         subTheme2.Flows.Add(flow1);
         subTheme2.Flows.Add(flow2);
@@ -383,8 +379,7 @@ public static class DataSeeder
         flow3.Questions.Add(range3);
         flow3.Questions.Add(multipleChoice3);
         flow3.Questions.Add(open3);
-
-       
+        
         // Adding objects to the context
         context.SubThemes.Add(subTheme1);
         context.SubThemes.Add(subTheme2);

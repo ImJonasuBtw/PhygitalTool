@@ -84,4 +84,46 @@ public class UserInputFactory
 
         return domainAnswer.AnswerId;
     }
+
+    public void GenerateOpenAnswers()
+    {
+        var values = new List<string>
+        {
+            "Het aanpakken van de woningcrisis en zorgen voor betaalbare woningen is cruciaal om de leefbaarheid in de gemeente te waarborgen.",
+            "Investeren in groene energie en milieuvriendelijke initiatieven is essentieel voor een gezonde toekomst voor onze kinderen en het behoud van onze planeet.",
+            "Het verbeteren van wegen, fietspaden en openbaar vervoer zorgt voor een veiliger en efficiënter verplaatsingsnetwerk voor iedereen.",
+            "Goede scholen en voorzieningen voor jongeren zijn van groot belang voor hun ontwikkeling en toekomstperspectieven.",
+            "Toegankelijke en kwalitatieve gezondheidszorg en ondersteuning voor kwetsbare groepen moeten prioriteit krijgen om een gezonde gemeenschap te bevorderen.",
+            "Het stimuleren van lokale bedrijven en het aantrekken van nieuwe werkgelegenheid is cruciaal voor economische groei en stabiliteit.",
+            "Een veilige leefomgeving door middel van effectieve criminaliteitspreventie en handhaving verhoogt het gevoel van veiligheid voor alle inwoners.",
+            "Investeren in culturele voorzieningen en recreatiemogelijkheden draagt bij aan de sociale cohesie en levenskwaliteit in de gemeente.",
+            "Het verbeteren van digitale voorzieningen en internettoegang is essentieel voor modern werken, onderwijs en communicatie.",
+            "Het bevorderen van gelijke kansen en het respecteren van diversiteit zorgt voor een inclusieve samenleving waar iedereen zich thuis voelt."
+        };
+        
+        foreach (var answerText in values)
+        {
+
+            var domainAnswer = new Answer()
+            {
+                AnswerText = answerText,
+                QuestionId = 4
+            };
+
+            var newAnswer = _answerRepository.CreateAndReturnAnswer(domainAnswer);
+            
+            var userInput = new UserInput()
+            {
+                AnswerId = newAnswer.AnswerId,
+                FlowId = 1,
+                SubThemeId = 2,
+                MainThemeId = 1,
+                ProjectId = 1
+            };
+
+            _repositoryUserInput.CreateUserInput(userInput);
+        }
+        
+        
+    }
 }
