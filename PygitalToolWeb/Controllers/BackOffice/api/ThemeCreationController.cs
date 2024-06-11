@@ -81,6 +81,7 @@ public class ThemeCreationController : Controller
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
+    
 
     [Authorize(Roles = "Manager")]
     [HttpPut("UpdateMainTheme/{mainThemeId}")]

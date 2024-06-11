@@ -30,8 +30,8 @@
                     Projecten <span class="badge badge-primary ">@Model.Projects.Count</span>
                 </a>
                 <a href="#" class="nav-link pt-0">Begeleiders</a>
-                <a href="#" class="nav-link pt-0">Notities</a>
-                   <a class="nav-link"
+                <a class="nav-link"> Notities </a>
+                <a class="nav-link"
                                    asp-controller="SubTheme"
                                    asp-action="ShowSubThemeSelection"
                                    asp-route-backOfficeId="@Model.BackOfficeId">
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Projects -->
-        <div class="col-md-9 main-container" id="projects-container">
+        <div class="col-md-9 main-container" id="projects-container" backoffice-id="@Model.BackOfficeId">
             <h2 class="mt-4">Projecten</h2>
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="toggle-show-projects">

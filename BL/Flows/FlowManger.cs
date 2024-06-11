@@ -81,6 +81,12 @@ public class FlowManger : IFlowManager
     {
         return _repositoryFlow.ReadFlow(flowId);
     }
+    
+    public Flow GetFlowWithQuestionsAndNotesAndSubtheme(int flowId)
+    {
+        return _repositoryFlow.ReadFlowWithQuestionsAndNotesAndSubtheme(flowId);
+    }
+
 
     // Returns a collection of question from a certain flow
     public ICollection<Question> GetFlowQuestions(int flowId)

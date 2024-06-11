@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhygitalTool.DAL.IRepositorys;
 using PhygitalTool.Domain.FlowPackage;
+using PhygitalTool.Domain.Projects;
 
 namespace PhygitalTool.DAL.EF.Repositorys;
 
@@ -33,6 +34,19 @@ public class FlowRepository : IRepositoryFlow
     {
         return _context.Flows.Include(f => f.Questions)
             .ThenInclude(question => question.AnswerPossibilities)
+            .AsNoTracking()
+            .SingleOrDefault(flow => flow.FlowId == flowId);
+    }
+    
+    public Flow ReadFlowWithQuestionsAndNotesAndSubtheme(int flowId)
+    {
+        return _context.Flows.Include(f => f.SubTheme)
+            .ThenInclude(s => s.MainTheme)
+            .ThenInclude(m => m.Project)
+            .ThenInclude(p => p.BackOffice)
+            .ThenInclude(b => b.Managers)
+            .Include(f => f.Questions)
+            .ThenInclude(question => question.Notes)
             .AsNoTracking()
             .SingleOrDefault(flow => flow.FlowId == flowId);
     }

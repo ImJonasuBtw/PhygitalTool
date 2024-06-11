@@ -480,9 +480,12 @@ public static class DataSeeder
             }
         }
 
-        Note note1 = new Note(1, "Dit is een moeilijke vraag");
+        Note note1 = new Note( 1,1, "Dit is een moeilijke vraag");
+        Note note2 = new Note(2,2, "Dit is een moeilijkere vraag");
         context.Notes.Add(note1);
-        
+        context.Notes.Add(note2);
+        singleChoice1.Notes.Add(note1);
+        range1.Notes.Add(note2);
         
         context.SaveChanges();
         context.ChangeTracker.Clear();

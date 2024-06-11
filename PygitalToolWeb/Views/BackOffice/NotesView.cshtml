@@ -1,0 +1,72 @@
+﻿@model PhygitalTool.Domain.FlowPackage.Flow
+
+@{
+    ViewBag.Title = "title";
+}
+
+<body class="animated-background">
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <div class="col-md-3 sidebar">
+            <!-- User Info -->
+            <div class="text-center mt-4">
+                @foreach (var manager in Model.SubTheme.MainTheme.Project.BackOffice.Managers)
+                {
+                    if (manager.UserName == User.Identity?.Name)
+                    {
+                        <img src="@manager.ImageUrl" alt="Profile Picture" class="rounded-circle img-fluid card-img">
+                        <h5>@manager.UserName</h5>
+                        <p>mycompany</p>
+                    }
+                }
+            </div>
+
+            <div class="nav flex-column">
+                <a class="nav-link" asp-area="" asp-controller="BackOffice"
+                   asp-action="index">
+                    Projecten <span class="badge badge-primary ">@Model.SubTheme.MainTheme.Project.BackOffice.Projects.Count  </span>
+                </a>
+                <a href="#" class="nav-link pt-0">Begeleiders</a>
+                <a href="#" class="nav-link active"> Notities </a>
+                <a class="nav-link"
+                   asp-controller="SubTheme"
+                   asp-action="ShowSubThemeSelection"
+                   asp-route-backOfficeId="@Model.SubTheme.MainTheme.Project.BackOffice.BackOfficeId">
+                                    Kiosk Modus
+                                </a>
+                <a class="nav-link pt-0" asp-area="" asp-controller="Home" asp-action="index">Terug</a>
+                <a href="/Identity/Account/Logout" class="nav-link">Afmelden</a>
+            </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="col-md-9 main-container" id="projects-container" backoffice-id="@Model.SubTheme.MainTheme.Project.BackOffice.BackOfficeId">
+            <h2 class="mt-4">Notities per vraag</h2>
+
+            <div class="row">
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="m-2">
+                        <div class="card clickable" data-question-id="@question.QuestionId">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="card-title">@question.QuestionText</h5>
+                                </div>
+                                @foreach(var note in question.Notes)
+                                {
+                                    <p>@note.Description</p>
+                                }
+                               </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>

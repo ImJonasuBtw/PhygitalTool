@@ -41,10 +41,14 @@ public class ProjectManager : IProjectManager
         _repositoryProject.CreateProject(newProject);
     }
 
+    
     public void AddNote(int questionId, string noteDesc)
     {
-        var newNote = new Note
+        int currentNoteCount = _noteRepository.ReadAllNotes().ToList().Count();
+        int newNoteId = currentNoteCount + 1;
+        Note newNote = new Note
         {
+            NoteId = newNoteId,
             QuestionId = questionId,
             Description = noteDesc
         };
