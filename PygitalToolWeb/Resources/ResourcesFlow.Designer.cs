@@ -105,7 +105,7 @@ namespace PhygitalTool.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Intresse?.
+        ///   Looks up a localized string similar to Interesse?.
         /// </summary>
         internal static string InterestHeading {
             get {

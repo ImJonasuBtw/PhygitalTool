@@ -64,7 +64,8 @@
   // Kleuren voor de knoppen in de tweede kolom
   $colors-second-column: (variables.$btn-color-4, variables.$btn-color-5, variables.$btn-color-6);
 
-  $colors-range: (variables.$btn-color-1, variables.$btn-color-2, variables.$btn-color-3, variables.$btn-color-4, variables.$btn-color-5, variables.$btn-color-6);
+  // Kleuren voor range
+  $colors-range: (variables.$btn-color-1, variables.$btn-color-4, variables.$btn-color-2, variables.$btn-color-5, variables.$btn-color-3, variables.$btn-color-6);
 
   // Loop over de knoppen in de eerste kolom en pas de achtergrondkleur toe op basis van de positie
   @for $i from 1 through length($colors-first-column) {
@@ -79,6 +80,8 @@
       background-color: nth($colors-second-column, $i);
     }
   }
+  
+  // Loop over de knoppen in de range en pas de achtergrondkleur toe op basis van de positie
   @for $i from 1 through length($colors-range) {
     .answer-range:nth-child(#{$i}) {
       background-color: nth($colors-range, $i);
