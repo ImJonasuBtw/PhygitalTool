@@ -82,10 +82,10 @@ public class PhygitalToolDbContext : IdentityDbContext<IdentityUser>
             .WithMany(b => b.Managers)
             .HasForeignKey(m => m.BackOfficeId);
         
-        modelBuilder.Entity<Question>()
-            .HasMany(q => q.Notes)
-            .WithOne(n => n.Question)
-            .HasForeignKey(n => n.QuestionId);
+        modelBuilder.Entity<Note>()
+            .HasOne(n => n.Question)
+            .WithMany(q => q.Notes)
+            .HasForeignKey(q => q.QuestionId);
         
 
         modelBuilder.Entity<Supervisor>()
