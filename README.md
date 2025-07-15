@@ -1,50 +1,52 @@
-# Integratieproject 1 (2023-2024)
+# Integration Project 1 (2023–2024)
 
 ## Team Qflow
 
-### Teamleden
+### Team Members
 
-- Amarylis Van den Broeck
-- Jonas Nikolopoulos
-- Hannelie Somers
-- Mandara Kudaliyanage Don Perera
-- Rayan Boufker
+- Amarylis Van den Broeck  
+- Jonas Nikolopoulos  
+- Hannelie Somers  
+- Mandara Kudaliyanage Don Perera  
+- Rayan Boufker  
 
-## Projectomschrijving
+## Project Description
 
-Dit project betreft een Phygtital tool die gebruikers in staat stelt om zowel lineaire als circulaire workflows te
-doorlopen. De tool bestaat uit een backoffice en een gebruikersplatform, waarbij de gebruikers intuïtief door
-verschillende processen kunnen navigeren.
+This project involves a Phygital tool that enables users to go through both linear and circular workflows.  
+The tool consists of a back office and a user platform, where users can intuitively navigate through various processes.
 
-## Aanvullende Informatie
+## Additional Information
 
-### Testgebruikers Credentials
+### Test User Credentials
 
-Om in te loggen en de applicatie te testen, kunt u de volgende testgebruikers gebruiken:
+To log in and test the application, you can use the following test accounts:
 
-- **Admin**
-    - Email: admin1@example.com
-    - Wachtwoord: Test23!
+- **Admin**  
+  - Email: admin1@example.com  
+  - Password: Test23!
 
-- **Manager**
-    - Email: manager1@example.com
-    - Wachtwoord: Test23!
+- **Manager**  
+  - Email: manager1@example.com  
+  - Password: Test23!
 
-- **Supervisor**
-    - Email: supervisor1@example.com
-    - Wachtwoord: Test23!
+- **Supervisor**  
+  - Email: supervisor1@example.com  
+  - Password: Test23!
 
-- **User**
-    - Email: user1@example.com
-    - Wachtwoord: Test23!
+- **User**  
+  - Email: user1@example.com  
+  - Password: Test23!
 
-### Instructies om het project te compileren en te runnen
+### Instructions to Compile and Run the Project
 
-1. Clone de repository naar uw lokale machine
-2. Open de repository in een IDE naar keuze
-3. Compileer met dotnet Build in de terminal
-4. Run met dotnet Run in de terminal
-5. Open de webapplicatie in uw browser
-6. Log in met de bovenstaande testgebruikers
+1. Clone the repository to your local machine  
+2. Open the repository in an IDE of your choice  
+3. Compile using `dotnet build` in the terminal  
+4. Run using `dotnet run` in the terminal  
+5. Open the web application in your browser  
+6. Log in using the test users above
 
+### File Upload Notice
 
+To enable file upload functionality and display uploaded images correctly, you must link the project to a **Google Cloud Bucket**.  
+Ensure your cloud storage is properly configured and accessible from the application.
